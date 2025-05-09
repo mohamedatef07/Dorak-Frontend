@@ -63,6 +63,11 @@ a {
   text-decoration: none;
   color: black;
 }
+.form-check-input:checked {
+  background-color: var(--main-bg-color-Light);
+  border-color: var(--main-bg-color-Light);
+}
+
 /* Nav Bar */
 .nav {
   position: fixed;

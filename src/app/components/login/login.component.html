@@ -1,1 +1,94 @@
-<p>login works!</p>
+<div class="p-4">
+  <div class="brand-logo text-white bold"></div>
+  <div
+    class="login d-flex justify-content-center align-items-center min-vh-100"
+  >
+    <div class="bg-white p-5 rounded shadow col-11 col-md-5">
+      <h1 class="text-center text-dark mb-4 fs-3 fw-semibold">Log In</h1>
+      <form [formGroup]="loginForm" (ngSubmit)="handelLoginSubmit()">
+        <div class="d-flex align-items-center justify-content-center">
+          <span class="login-status text-danger bold">{{ loginStatus }}</span>
+        </div>
+        <div class="mb-3">
+          <label for="username" class="form-label text-dark">User Name</label>
+          <input
+            type="text"
+            aria-describedby="userNameHelp"
+            class="form-control"
+            id="userName"
+            name="userName"
+            formControlName="userName"
+          />
+          @if(loginForm.controls['userName'].invalid &&
+          loginForm.controls['userName'].touched){
+          <small id="userNameHelp" class="form-text">
+            @if(loginForm.controls['userName'].hasError('required')){
+            <span class="text-danger">User Name is Required</span>
+            }@else if(loginForm.controls['userName'].hasError('minlength')){
+            <span class="text-danger"
+              >User Name should be at least 8 Characters</span
+            >
+            }@else if(loginForm.controls['userName'].hasError('whiteSpace')){
+            <span class="text-danger"
+              >User Name must contains no White Space</span
+            >
+            }
+          </small>
+          }
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label text-dark">Password</label>
+          <div class="input-group">
+            <input
+              [type]="showPassword ? 'text' : 'password'"
+              class="form-control"
+              id="password"
+              formControlName="password"
+              placeholder="Enter Your Password"
+            />
+            <span
+              class="input-group-text"
+              (click)="togglePasswordVisibility()"
+              style="cursor: pointer"
+            >
+              <i [ngClass]="showPassword ? 'pi pi-eye-slash' : 'pi pi-eye'"></i>
+            </span>
+          </div>
+          @if(loginForm.controls['password'].invalid&&loginForm.controls['password'].touched){
+          <small id="passwordHelp" class="form-text">
+            @if(loginForm.controls['password'].hasError('required')){
+            <span class="text-danger">Password is Required</span>
+            }@else if(loginForm.controls['password'].hasError('minlength')){
+            <span class="text-danger"
+              >Password should be at least 8 Characters</span
+            >
+            }
+          </small>
+          }
+        </div>
+        <div class="mb-3 form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            id="rememberMe"
+            name="rememberMe"
+            formControlName="rememberMe"
+          />
+          <label class="form-check-label" for="rememberMe">Remember Me</label>
+        </div>
+        <button type="submit" class="btn main-btn text-white w-100">
+          Login
+        </button>
+      </form>
+      <p class="text-center mt-3">
+        Don't have an account?
+        <a
+          [routerLink]="['/register']"
+          routerLinkActive="router-link-active"
+          class="signup-link fw-semibold text-dark"
+          >Sign Up</a
+        >
+      </p>
+    </div>
+  </div>
+</div>
