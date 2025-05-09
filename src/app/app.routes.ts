@@ -7,21 +7,21 @@ import { OwnerLayoutComponent } from './features/owner/components/owner-layout/o
 import { ClientLayoutComponent } from './features/client/components/client-layout/client-layout.component';
 
 export const routes: Routes = [
-  {
-    path: 'owner',
-    component: OwnerLayoutComponent,
-    children: [{ path: '' }, { path: '' }, { path: '' }],
-  },
-  {
-    path: 'provider',
-    component: ProviderLayoutComponent,
-    children: [{ path: '' }, { path: '' }, { path: '' }],
-  },
-  {
-    path: 'client',
-    component: ClientLayoutComponent,
-    children: [{ path: '' }, { path: '' }, { path: '' }],
-  },
+  // {
+  //   path: 'owner',
+  //   component: OwnerLayoutComponent,
+  //   children: [{ path: '' }, { path: '' }, { path: '' }],
+  // },
+  // {
+  //   path: 'provider',
+  //   component: ProviderLayoutComponent,
+  //   children: [{ path: '' }, { path: '' }, { path: '' }],
+  // },
+  // {
+  //   path: 'client',
+  //   component: ClientLayoutComponent,
+  //   children: [{ path: '' }, { path: '' }, { path: '' }],
+  // },
   { path: 'login', component: LoginComponent, title: 'Login' },
   { path: 'register', component: RegisterComponent, title: 'Register' },
   { path: '**', component: NotFoundComponent, title: 'Not Found' },
