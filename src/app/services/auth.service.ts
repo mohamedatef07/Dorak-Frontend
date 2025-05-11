@@ -22,5 +22,6 @@ export class AuthService {
   }
   logOut() {
     sessionStorage.removeItem('token');
+    return this.httpClient.post<ApiResponse<null>>(`${environment.apiUrl}/api/account/signout`,{});
   }
 }
