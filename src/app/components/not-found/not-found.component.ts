@@ -8,14 +8,4 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './not-found.component.html',
   styleUrl: './not-found.component.css',
 })
-export class NotFoundComponent {
-  authServices = inject(AuthService);
-  router = inject(Router);
-  HandelLogOut() {
-    this.authServices.logOut().subscribe({
-      next: (res) => {
-        this.router.navigate(['/login']);
-      },
-    });
-  }
-}
+export class NotFoundComponent {}

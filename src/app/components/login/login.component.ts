@@ -10,7 +10,7 @@ import {
 } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { NgClass } from '@angular/common';
-
+import { CookieService } from 'ngx-cookie-service';
 @Component({
   selector: 'app-login',
   imports: [RouterLink, ReactiveFormsModule, NgClass],
@@ -25,8 +25,9 @@ export class LoginComponent {
     return hasWhiteSpace ? { whiteSpace: true } : null;
   }
   fb = inject(FormBuilder);
-  accountServices = inject(AuthService);
+  authServices = inject(AuthService);
   router = inject(Router);
+  cookie = inject(CookieService);
   loginStatus!: String;
   showPassword = false;
   loginForm = this.fb.group({
@@ -52,9 +53,9 @@ export class LoginComponent {
       RememberMe: this.loginForm.value.rememberMe || '',
     };
     const rememberMe = this.loginForm.value.rememberMe;
-    this.accountServices.logIn(LoginData).subscribe({
+    this.authServices.logIn(LoginData).subscribe({
       next: (res) => {
-        sessionStorage.setItem('token', res.Data.Token);
+        this.cookie.set('token', res.Data.Token);
         this.router.navigate(['/home']);
       },
       error: (err) => {
@@ -65,4 +66,11 @@ export class LoginComponent {
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
   }
+  // HandelLogOut() {
+  //   this.authServices.logOut().subscribe({
+  //     next: (res) => {
+  //       this.router.navigate(['/login']);
+  //     },
+  //   });
+  // }
 }
