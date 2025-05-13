@@ -6,13 +6,14 @@ import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ILoginResponseData } from '../types/ILoginResponseData';
-
+import { CookieService } from 'ngx-cookie-service';
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+  cookie = inject(CookieService);
   getAuthToken() {
-    return sessionStorage.getItem('token') || '';
+    return this.cookie.get('token') || '';
   }
   httpClient = inject(HttpClient);
 
@@ -44,7 +45,10 @@ export class AuthService {
     );
   }
   logOut() {
-    sessionStorage.removeItem('token');
-    return this.httpClient.post<ApiResponse<null>>(`${environment.apiUrl}/api/account/signout`,{});
+    this.cookie.delete('token');
+    return this.httpClient.post<ApiResponse<null>>(
+      `${environment.apiUrl}/api/account/signout`,
+      {}
+    );
   }
 }

@@ -67,6 +67,19 @@ a {
   background-color: var(--main-bg-color-Light);
   border-color: var(--main-bg-color-Light);
 }
+.btn:focus,
+.btn:active {
+  background-color: var(--button-bg-color-Light) !important;
+}
+.main-bg {
+  background-color: var(--main-bg-color-Light);
+}
+.main-btn {
+  background-color: var(--button-bg-color-Light);
+}
+.main-text-Color {
+  color: var(--text-color-Light);
+}
 
 /* Nav Bar */
 .nav {
