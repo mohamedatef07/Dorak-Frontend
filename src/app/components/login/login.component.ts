@@ -56,6 +56,7 @@ export class LoginComponent {
     this.authServices.logIn(LoginData).subscribe({
       next: (res) => {
         this.cookie.set('token', res.Data.Token);
+        this.cookie.set('role', res.Data.Roles[0]);
         this.router.navigate(['/home']);
       },
       error: (err) => {
