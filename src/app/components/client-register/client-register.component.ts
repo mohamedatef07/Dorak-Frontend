@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors, FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgClass } from '@angular/common';
 import { ApiResponse } from '../../types/ApiResponse';
 import { IClientRegisterRequest } from '../../types/IClientRegisterRequest';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -166,4 +166,5 @@ export class ClientRegisterComponent {
     const control = this.clientRegisterForm.get(controlName);
     return control ? control.valid && (control.dirty || control.touched) : false;
   }
+
 }

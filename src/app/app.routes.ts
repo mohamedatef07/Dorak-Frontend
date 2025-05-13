@@ -26,9 +26,18 @@ export const routes: Routes = [
   //   component: ClientLayoutComponent,
   //   children: [{ path: '' }, { path: '' }, { path: '' }],
   // },
+
+
+  // ----------------------------------
+
+  // canActivate: [AuthGuard, RoleGuard], data: { expectedRole: 'Client' }
+
+  // ----------------------------------
+
   { path: 'login', component: LoginComponent, title: 'Login' },
   { path: 'register', component: RegisterComponent, title: 'Register' },
   { path: 'client-register', component: ClientRegisterComponent, title: 'Client Register' },
+  { path: 'unauthorized', component: UnauthorizedComponent, title: 'Unauthorized' },
   { path: '**', component: NotFoundComponent, title: 'Not Found' },
   {
     path: 'unauthorized',

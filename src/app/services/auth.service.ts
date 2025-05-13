@@ -12,22 +12,22 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class AuthService {
   cookie = inject(CookieService);
+  httpClient = inject(HttpClient);
+
   getAuthToken() {
     return this.cookie.get('token') || '';
   }
-  httpClient = inject(HttpClient);
 
   isAuthenticated(): boolean {
     const token = this.getAuthToken();
     return !!token;
   }
 
-
   getUserRole(): string | null {
-    return sessionStorage.getItem('role');
+    return this.cookie.get('role') || null;
   }
 
- register(registerData: IClientRegisterRequest): Observable<ApiResponse<null>> {
+  register(registerData: IClientRegisterRequest): Observable<ApiResponse<null>> {
     return this.httpClient.post<ApiResponse<null>>(
       `${environment.apiUrl}/api/account/Register`,
       registerData
