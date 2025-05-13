@@ -1,115 +1,259 @@
-<div class="container mt-5">
-  <h2>Client Registration</h2>
-  <form [formGroup]="clientRegisterForm" (ngSubmit)="onSubmit()">
-    <div class="form-group">
-      <label for="firstName">First Name</label>
-      <input
-        type="text"
-        class="form-control"
-        id="firstName"
-        formControlName="firstName"
-      >
-      <div *ngIf="clientRegisterForm.get('firstName')?.invalid && clientRegisterForm.get('firstName')?.touched" class="text-danger">
-        First name is required.
-      </div>
+<div class="p-4">
+  <div class="brand-logo text-white bold"></div>
+  <div class="login d-flex justify-content-center align-items-center min-vh-100">
+    <div class="bg-white p-5 rounded shadow col-11 col-md-5">
+      <h1 class="text-center text-dark mb-4 fs-3 fw-semibold">Sign Up</h1>
+      <form [formGroup]="clientRegisterForm" (ngSubmit)="onSubmit()">
+        <div *ngIf="isLoading" class="text-center mb-3">
+          <span>Loading...</span>
+        </div>
+
+        <!-- UserName -->
+        <div class="mb-3">
+          <label for="userName" class="form-label text-dark">User Name</label>
+          <input
+            type="text"
+            aria-describedby="userNameHelp"
+            class="form-control"
+            id="userName"
+            name="userName"
+            formControlName="userName"
+          />
+          <small *ngIf="hasError('userName', 'required')" id="userNameHelp" class="form-text text-danger">
+            User Name is Required
+          </small>
+          <small *ngIf="hasError('userName', 'minlength')" id="userNameHelp" class="form-text text-danger">
+            User Name should be at least 6 Characters
+          </small>
+          <small *ngIf="hasError('userName', 'maxlength')" id="userNameHelp" class="form-text text-danger">
+            User Name should not exceed 100 Characters
+          </small>
+        </div>
+  <!-- First Name and Last Name -->
+        <div class="row mb-3">
+          <div class="col-md-6 mb-3 mb-md-0">
+            <label for="firstName" class="form-label text-dark">First Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="firstName"
+              name="firstName"
+              formControlName="firstName"
+            />
+          </div>
+          <div class="col-md-6">
+            <label for="lastName" class="form-label text-dark">Last Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="lastName"
+              name="lastName"
+              formControlName="lastName"
+            />
+          </div>
+        </div>
+        <!-- Email -->
+        <div class="mb-3">
+          <label for="email" class="form-label text-dark">Email</label>
+          <input
+            type="email"
+            aria-describedby="emailHelp"
+            class="form-control"
+            id="email"
+            name="email"
+            formControlName="email"
+          />
+          <small *ngIf="hasError('email', 'required')" id="emailHelp" class="form-text text-danger">
+            Email is Required
+          </small>
+          <small *ngIf="hasError('email', 'email')" id="emailHelp" class="form-text text-danger">
+            Please enter a valid email address
+          </small>
+          <small *ngIf="hasError('email', 'maxlength')" id="emailHelp" class="form-text text-danger">
+            Email should not exceed 100 Characters
+          </small>
+        </div>
+
+        <!-- Password and Confirm Password -->
+        <div class="row mb-3">
+          <div class="col-md-6 mb-3 mb-md-0">
+            <label for="password" class="form-label text-dark">Password</label>
+            <div class="input-group">
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                formControlName="password"
+                placeholder="Enter Your Password"
+              />
+            </div>
+            <small *ngIf="hasError('password', 'required')" id="passwordHelp" class="form-text text-danger">
+              Password is Required
+            </small>
+            <small *ngIf="hasError('password', 'minlength')" id="passwordHelp" class="form-text text-danger">
+              Password should be at least 8 Characters
+            </small>
+            <small *ngIf="hasError('password', 'maxlength')" id="passwordHelp" class="form-text text-danger">
+              Password should not exceed 100 Characters
+            </small>
+            <small *ngIf="hasError('password', 'noUppercase')" id="passwordHelp" class="form-text text-danger">
+              Password must contain at least one uppercase letter
+            </small>
+          </div>
+          <div class="col-md-6">
+            <label for="confirmPassword" class="form-label text-dark">Confirm Password</label>
+            <div class="input-group">
+              <input
+                type="password"
+                class="form-control"
+                id="confirmPassword"
+                formControlName="confirmPassword"
+                placeholder="Confirm Your Password"
+              />
+            </div>
+            <small *ngIf="hasError('confirmPassword', 'required')" id="confirmPasswordHelp" class="form-text text-danger">
+              Confirm Password is Required
+            </small>
+            <small *ngIf="hasError('confirmPassword', 'maxlength')" id="confirmPasswordHelp" class="form-text text-danger">
+              Confirm Password should not exceed 100 Characters
+            </small>
+            <small *ngIf="clientRegisterForm.errors?.['passwordMismatch'] && clientRegisterForm.get('confirmPassword')?.touched" id="confirmPasswordHelp" class="form-text text-danger">
+              Passwords do not match
+            </small>
+          </div>
+        </div>
+
+        <!-- Phone Number -->
+        <div class="mb-3">
+          <label for="phoneNumber" class="form-label text-dark">Phone Number</label>
+          <input
+            type="text"
+            aria-describedby="phoneNumberHelp"
+            class="form-control"
+            id="phoneNumber"
+            name="phoneNumber"
+            formControlName="phoneNumber"
+          />
+          <small *ngIf="hasError('phoneNumber', 'required')" id="phoneNumberHelp" class="form-text text-danger">
+            Phone Number is Required
+          </small>
+          <small *ngIf="hasError('phoneNumber', 'minlength')" id="phoneNumberHelp" class="form-text text-danger">
+            Phone Number should be at least 6 Characters
+          </small>
+          <small *ngIf="hasError('phoneNumber', 'maxlength')" id="phoneNumberHelp" class="form-text text-danger">
+            Phone Number should not exceed 100 Characters
+          </small>
+          <small *ngIf="hasError('phoneNumber', 'pattern')" id="phoneNumberHelp" class="form-text text-danger">
+            Please enter a valid phone number (e.g., +1234567890)
+          </small>
+        </div>
+
+
+
+        <!-- Gender and Birth Date -->
+        <div class="row mb-3">
+          <div class="col-md-6 mb-3 mb-md-0">
+            <label for="gender" class="form-label text-dark">Gender</label>
+            <select
+              class="form-control"
+              id="gender"
+              name="gender"
+              formControlName="gender"
+            >
+              <option value="" disabled>Select Gender</option>
+              <option *ngFor="let gender of genders" [value]="gender">{{ gender }}</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label for="birthDate" class="form-label text-dark">Birth Date</label>
+            <input
+              type="date"
+              class="form-control"
+              id="birthDate"
+              name="birthDate"
+              formControlName="birthDate"
+            />
+          </div>
+        </div>
+
+        <!-- Street and City -->
+        <div class="row mb-3">
+          <div class="col-md-6 mb-3 mb-md-0">
+            <label for="street" class="form-label text-dark">Street</label>
+            <input
+              type="text"
+              class="form-control"
+              id="street"
+              name="street"
+              formControlName="street"
+            />
+          </div>
+          <div class="col-md-6">
+            <label for="city" class="form-label text-dark">City</label>
+            <input
+              type="text"
+              class="form-control"
+              id="city"
+              name="city"
+              formControlName="city"
+            />
+          </div>
+        </div>
+
+        <!-- Governorate and Country -->
+        <div class="row mb-3">
+          <div class="col-md-6 mb-3 mb-md-0">
+            <label for="governorate" class="form-label text-dark">Governorate</label>
+            <input
+              type="text"
+              class="form-control"
+              id="governorate"
+              name="governorate"
+              formControlName="governorate"
+            />
+          </div>
+          <div class="col-md-6">
+            <label for="country" class="form-label text-dark">Country</label>
+            <input
+              type="text"
+              class="form-control"
+              id="country"
+              name="country"
+              formControlName="country"
+            />
+          </div>
+        </div>
+
+        <!-- Image (File Upload) -->
+        <!-- <div class="mb-3">
+          <label for="image" class="form-label text-dark">Profile Image</label>
+          <input
+            type="file"
+            class="form-control"
+            id="image"
+            name="image"
+            formControlName="image"
+          />
+        </div> -->
+
+        <button type="submit" class="btn main-btn text-white w-100" [disabled]="isLoading">
+          Sign Up
+        </button>
+        <div class="d-flex align-items-center justify-content-center">
+          <span *ngIf="errorMessage" class="login-status text-danger bold">{{ errorMessage }}</span>
+          <span *ngIf="successMessage" class="login-status text-success bold">{{ successMessage }}</span>
+        </div>
+      </form>
+      <p class="text-center mt-3">
+        Already have an account?
+        <a
+          [routerLink]="['/login']"
+          routerLinkActive="router-link-active"
+          class="signup-link fw-semibold text-dark"
+        >
+          Log In
+        </a>
+      </p>
     </div>
-    <div class="form-group">
-      <label for="lastName">Last Name</label>
-      <input
-        type="text"
-        class="form-control"
-        id="lastName"
-        formControlName="lastName"
-      >
-      <div *ngIf="clientRegisterForm.get('lastName')?.invalid && clientRegisterForm.get('lastName')?.touched" class="text-danger">
-        Last name is required.
-      </div>
-    </div>
-    <div class="form-group">
-      <label for="gender">Gender</label>
-      <select
-        class="form-control"
-        id="gender"
-        formControlName="gender"
-      >
-        <option value="" disabled>Select Gender</option>
-        <option *ngFor="let gender of genders" [value]="gender">{{ gender }}</option>
-      </select>
-      <div *ngIf="clientRegisterForm.get('gender')?.invalid && clientRegisterForm.get('gender')?.touched" class="text-danger">
-        Gender is required.
-      </div>
-    </div>
-    <div class="form-group">
-      <label for="birthDate">Birth Date</label>
-      <input
-        type="date"
-        class="form-control"
-        id="birthDate"
-        formControlName="birthDate"
-      >
-      <div *ngIf="clientRegisterForm.get('birthDate')?.invalid && clientRegisterForm.get('birthDate')?.touched" class="text-danger">
-        Birth date is required.
-      </div>
-    </div>
-    <div class="form-group">
-      <label for="street">Street</label>
-      <input
-        type="text"
-        class="form-control"
-        id="street"
-        formControlName="street"
-      >
-      <div *ngIf="clientRegisterForm.get('street')?.invalid && clientRegisterForm.get('street')?.touched" class="text-danger">
-        Street is required.
-      </div>
-    </div>
-    <div class="form-group">
-      <label for="city">City</label>
-      <input
-        type="text"
-        class="form-control"
-        id="city"
-        formControlName="city"
-      >
-      <div *ngIf="clientRegisterForm.get('city')?.invalid && clientRegisterForm.get('city')?.touched" class="text-danger">
-        City is required.
-      </div>
-    </div>
-    <div class="form-group">
-      <label for="governorate">Governorate</label>
-      <input
-        type="text"
-        class="form-control"
-        id="governorate"
-        formControlName="governorate"
-      >
-      <div *ngIf="clientRegisterForm.get('governorate')?.invalid && clientRegisterForm.get('governorate')?.touched" class="text-danger">
-        Governorate is required.
-      </div>
-    </div>
-    <div class="form-group">
-      <label for="country">Country</label>
-      <input
-        type="text"
-        class="form-control"
-        id="country"
-        formControlName="country"
-      >
-      <div *ngIf="clientRegisterForm.get('country')?.invalid && clientRegisterForm.get('country')?.touched" class="text-danger">
-        Country is required.
-      </div>
-    </div>
-    <div class="form-group">
-      <label for="image">Image URL (Optional)</label>
-      <input
-        type="text"
-        class="form-control"
-        id="image"
-        formControlName="image"
-      >
-    </div>
-    <button type="submit" class="btn btn-primary mt-3" [disabled]="clientRegisterForm.invalid">Register as Client</button>
-    <div *ngIf="successMessage" class="text-success mt-3">{{ successMessage }}</div>
-    <div *ngIf="errorMessage" class="text-danger mt-3">{{ errorMessage }}</div>
-  </form>
+  </div>
 </div>

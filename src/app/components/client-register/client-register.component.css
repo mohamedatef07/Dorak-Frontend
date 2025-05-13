@@ -1,6 +1,26 @@
-.container {
-  max-width: 600px;
-  .form-group {
-    margin-bottom: 1rem;
-  }
+/* Ensure form elements match the login component's styling */
+.form-control {
+  font-family: Poppins-regular;
+  color: var(--text-color-Light);
+}
+
+.main-btn{
+  background-color: var(--button-bg-color-Light);
+}
+
+.main-bg{
+  background-color: var(--main-bg-color-Light);
+}
+
+.text-success {
+  color: #28a745; /* Bootstrap success color for success messages */
+}
+
+.login-status {
+  font-size: 1rem;
+}
+
+/* Adjust file input to match other inputs */
+input[type="file"] {
+  padding: 0.375rem 0.75rem; /* Match Bootstrap form-control padding */
 }
