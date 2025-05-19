@@ -24,7 +24,7 @@
   --border-radius: 12px;
   --transition: all 0.5s ease;
   --padding: 20px;
-  --button-padding: 20px 25px;
+  --button-padding: 10px 15px;
 }
 @font-face {
   font-family: Poppins-regular;
@@ -71,6 +71,9 @@ a {
 .btn:active {
   background-color: var(--button-bg-color-Light) !important;
 }
+.btn:hover{
+  background-color: var(--hover-text-Light) !important;
+}
 .main-bg {
   background-color: var(--main-bg-color-Light);
 }
@@ -79,6 +82,18 @@ a {
 }
 .main-text-Color {
   color: var(--text-color-Light);
+}
+.main-radius {
+  border-radius: var(--border-radius);
+}
+.main-padding {
+  padding: var(--padding);
+}
+.main-btn-padding {
+  padding: var(--button-padding);
+}
+.p-rating-icon {
+  color: #f1c40f !important;
 }
 
 /* Nav Bar */

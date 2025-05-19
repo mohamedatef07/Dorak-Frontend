@@ -27,7 +27,16 @@ export class AuthService {
     return this.cookie.get('role') || null;
   }
 
-  register(registerData: IClientRegisterRequest): Observable<ApiResponse<null>> {
+  getUserId() {
+    const token = this.getAuthToken();
+    const tokenParts = token?.split('.');
+    if (tokenParts?.length !== 3) return null;
+    const payload = JSON.parse(atob(tokenParts[1]));
+    return payload.Id;
+  }
+  register(
+    registerData: IClientRegisterRequest
+  ): Observable<ApiResponse<null>> {
     return this.httpClient.post<ApiResponse<null>>(
       `${environment.apiUrl}/api/account/Register`,
       registerData
@@ -35,7 +44,10 @@ export class AuthService {
   }
 
   createClient(id: string, client: any): Observable<ApiResponse<any>> {
-    return this.httpClient.post<ApiResponse<any>>(`${environment.apiUrl}/api/account/CreateClient?id=${id}`, client)
+    return this.httpClient.post<ApiResponse<any>>(
+      `${environment.apiUrl}/api/account/CreateClient?id=${id}`,
+      client
+    );
   }
 
   logIn(loginData: ILoginRequest): Observable<ApiResponse<ILoginResponseData>> {

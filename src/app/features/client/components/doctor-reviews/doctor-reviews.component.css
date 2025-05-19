@@ -1,0 +1,6 @@
+.review:not(:last-child){
+  border-bottom: 2px solid white ;
+}
+::ng-deep .review-star .p-rating-icon {
+  width: 1rem !important;
+}
