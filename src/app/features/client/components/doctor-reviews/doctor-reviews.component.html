@@ -1,0 +1,15 @@
+<div class="reviews main-bg main-padding main-radius">
+  <h3 class="text-white text-center">Reviews</h3>
+  @for(review of reviews; track $index){
+  <div class="review pb-1 pt-1">
+    <h5 class="client-name text-white">{{ review.ClientName }}</h5>
+    <p-rating
+      class="review-star pt-2 pb-2"
+      [(ngModel)]="review.Rate"
+      [readonly]="true"
+    />
+    <p class="review-description text-white">{{ review.Review }}</p>
+    <span class="text-white">{{ review.Date }}</span>
+  </div>
+  }
+</div>

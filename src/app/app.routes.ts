@@ -9,24 +9,30 @@ import { ClientLayoutComponent } from './features/client/components/client-layou
 import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
 import { AuthGuard } from './guards/auth.guard';
 import { RoleGuard } from './guards/role.guard';
+import { DoctorDetailsComponent } from './features/client/components/doctor-details/doctor-details.component';
 
 export const routes: Routes = [
-  // {
-  //   path: 'owner',
-  //   component: OwnerLayoutComponent,
-  //   children: [{ path: '' }, { path: '' }, { path: '' }],
-  // },
-  // {
-  //   path: 'provider',
-  //   component: ProviderLayoutComponent,
-  //   children: [{ path: '' }, { path: '' }, { path: '' }],
-  // },
-  // {
-  //   path: 'client',
-  //   component: ClientLayoutComponent,
-  //   children: [{ path: '' }, { path: '' }, { path: '' }],
-  // },
-
+  {
+    //   path: 'owner',
+    //   component: OwnerLayoutComponent,
+    //   children: [{ path: '' }, { path: '' }, { path: '' }],
+    // },
+    // {
+    //   path: 'provider',
+    //   component: ProviderLayoutComponent,
+    //   children: [{ path: '' }, { path: '' }, { path: '' }],
+    // },
+    // {
+    path: 'client',
+    component: ClientLayoutComponent,
+    children: [
+      {
+        path: 'doctor-details',
+        component: DoctorDetailsComponent,
+        title: 'Doctor Details',
+      },
+    ],
+  },
 
   // ----------------------------------
 
@@ -36,11 +42,19 @@ export const routes: Routes = [
 
   { path: 'login', component: LoginComponent, title: 'Login' },
   { path: 'register', component: RegisterComponent, title: 'Register' },
-  { path: 'client-register', component: ClientRegisterComponent, title: 'Client Register' },
-  { path: 'unauthorized', component: UnauthorizedComponent, title: 'Unauthorized' },
+  {
+    path: 'client-register',
+    component: ClientRegisterComponent,
+    title: 'Client Register',
+  },
+  {
+    path: 'unauthorized',
+    component: UnauthorizedComponent,
+    title: 'Unauthorized',
+  },
   { path: '**', component: NotFoundComponent, title: 'Not Found' },
   {
     path: 'unauthorized',
-    component: UnauthorizedComponent
+    component: UnauthorizedComponent,
   },
 ];
