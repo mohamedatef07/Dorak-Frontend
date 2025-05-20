@@ -1,0 +1,67 @@
+<div class="container-fluid p-3 py-5">
+  <div class="row">
+    <!-- Sidebar -->
+    <div class="col-12 col-md-3 mb-3">
+      <div class="card shadow-sm  text-center">
+        <div class="card-body d-grid gap-2">
+          <button pButton type="button" label="My profile" class="p-button-sm w-100 mt-1"></button>
+          <button pButton type="button" label="Change my password" class="p-button-outlined p-button-sm w-100 mt-1"></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main content -->
+    <div class="col-12 col-md-9">
+      <div class="card p-4 shadow-sm">
+        <!-- Profile Section -->
+        <div class="d-flex flex-column flex-md-row align-items-center mb-4 gap-3">
+          <p-avatar
+            image="https://www.w3schools.com/howto/img_avatar.png"
+            shape="circle"
+            class="avatar">
+          </p-avatar>
+          <div class="text-center text-md-start">
+            <h5 class="fw-bold mb-1">Amir Nasser</h5>
+            <p class="mb-0">Contact: +1234567890</p>
+            <p class="mb-0">Email Address: exampl.com</p>
+          </div>
+        </div>
+
+        <h6 class="fw-bold mb-3">My Appointments:</h6>
+
+        @for (appointment of appointments; let i = $index; track $index) {
+          <div class="appointment-card p-3 mb-3 rounded d-flex flex-column flex-md-row align-items-center justify-content-between"
+               [ngClass]="i % 2 === 0 ? 'bg-lightblue' : 'bg-darkblue text-white'">
+
+            <div class="d-flex align-items-center mb-3 mb-md-0">
+              <p-avatar
+                image="https://www.w3schools.com/howto/img_avatar.png"
+                shape="circle"
+                class="me-3 avatar">
+              </p-avatar>
+              <div>
+                <div class="fw-bold">{{ appointment.name }}</div>
+                <div>Rate {{ appointment.rate }}</div>
+                <div>{{ appointment.specialization }}</div>
+                <div>{{ appointment.date }}</div>
+              </div>
+            </div>
+
+            <div class="text-md-end text-center">
+              <div class="fw-bold mb-1">
+                {{ appointment.quarter }}
+                @if (i === 1) {
+                  <span class="badge bg-secondary ms-2">Export As</span>
+                }
+              </div>
+              <button pButton icon="pi pi-pencil" class="p-button-sm p-button-rounded p-button-text me-2"
+                      (click)="editAppointment(i)"></button>
+              <button pButton icon="pi pi-trash" class="p-button-sm p-button-rounded p-button-danger p-button-text"
+                      (click)="deleteAppointment(i)"></button>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>
