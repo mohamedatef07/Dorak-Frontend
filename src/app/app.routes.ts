@@ -10,6 +10,7 @@ import { UnauthorizedComponent } from './components/unauthorized/unauthorized.co
 import { AuthGuard } from './guards/auth.guard';
 import { RoleGuard } from './guards/role.guard';
 import { DoctorDetailsComponent } from './features/client/components/doctor-details/doctor-details.component';
+import { ClientProfileComponent } from './components/client-profile/client-profile.component';
 
 export const routes: Routes = [
   {
@@ -30,6 +31,11 @@ export const routes: Routes = [
         path: 'doctor-details',
         component: DoctorDetailsComponent,
         title: 'Doctor Details',
+      },
+      {
+        path: 'client-profile',
+        component: ClientProfileComponent,
+        title: 'Client-Profile',
       },
     ],
   },
