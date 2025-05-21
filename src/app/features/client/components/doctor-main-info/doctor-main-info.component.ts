@@ -1,6 +1,6 @@
 import { Component, inject, NgModule, OnInit } from '@angular/core';
 import { ClientService } from '../../services/client.service';
-import { IDoctorMainInfo } from '../../../../types/IDoctorMainInfo';
+import { IDoctorMainInfo } from '../../models/IDoctorMainInfo';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RatingModule } from 'primeng/rating';
 

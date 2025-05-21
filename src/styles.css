@@ -77,7 +77,7 @@ a {
 .main-bg {
   background-color: var(--main-bg-color-Light);
 }
-.main-btn {
+.main-btn-bg {
   background-color: var(--button-bg-color-Light);
 }
 .main-text-Color {
