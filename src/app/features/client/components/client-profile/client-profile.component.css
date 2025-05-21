@@ -1,0 +1,5 @@
+.avatar {
+  width: clamp(60px, 8vw, 100px);
+  height: clamp(60px, 8vw, 100px);
+}
+
