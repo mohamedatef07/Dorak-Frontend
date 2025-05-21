@@ -5,20 +5,13 @@ import { AuthService } from '../../../services/auth.service';
 import { IDoctorMainInfo } from '../models/IDoctorMainInfo';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
-import { IDoctorBookingInfo } from '../../../types/IDoctorBookingInfo';
-import { ICenterServices } from '../../../types/ICenterServices';
-import { IDoctorReviews } from '../../../types/IDoctorReviews';
-import { IClientReviews } from '../../../types/IClientReviews';
-import { IDoctorsSearchResult } from '../../../types/IDoctorsSearchResult';
-import { IDoctorCenterServices } from '../../../types/IDoctorCenterServices';
 import { IClientProfileAppointment } from '../models/IClientProfileAppointment';
+import { IMakeAppointment } from '../models/IMakeAppointment';
 import { IDoctorBookingInfo } from '../models/IDoctorBookingInfo';
 import { ICenterServices } from '../models/ICenterServices';
 import { IDoctorReviews } from '../models/IDoctorReviews';
-import { IClientReviews } from '../models/IClientReviews';
-import { IDoctorsSearchResult } from '../models/IDoctorsSearchResult';
 import { IDoctorCenterServices } from '../models/IDoctorCenterServices';
-import { IMakeAppointment } from '../models/IMakeAppointment';
+import { IDoctorsSearchResult } from '../models/IDoctorsSearchResult';
 
 @Injectable({
   providedIn: 'root',
