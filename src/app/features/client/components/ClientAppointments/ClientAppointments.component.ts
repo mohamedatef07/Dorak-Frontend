@@ -19,7 +19,8 @@ export class ClientAppointmentsComponent implements OnInit {
     ngOnInit() {
     this.clientServices.getClientAppointments().subscribe({
       next: (res) => {
-        this.appointments.push(...res.Data);
+        this.appointments=[...res.Data];
+        console.log(res.Data);
       },
       error: (err) => {
         console.error('Error while fetching doctor reviews:', err);
