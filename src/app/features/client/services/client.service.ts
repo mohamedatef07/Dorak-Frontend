@@ -5,6 +5,13 @@ import { AuthService } from '../../../services/auth.service';
 import { IDoctorMainInfo } from '../models/IDoctorMainInfo';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
+import { IDoctorBookingInfo } from '../../../types/IDoctorBookingInfo';
+import { ICenterServices } from '../../../types/ICenterServices';
+import { IDoctorReviews } from '../../../types/IDoctorReviews';
+import { IClientReviews } from '../../../types/IClientReviews';
+import { IDoctorsSearchResult } from '../../../types/IDoctorsSearchResult';
+import { IDoctorCenterServices } from '../../../types/IDoctorCenterServices';
+import { IClientProfileAppointment } from '../models/IClientProfileAppointment';
 import { IDoctorBookingInfo } from '../models/IDoctorBookingInfo';
 import { ICenterServices } from '../models/ICenterServices';
 import { IDoctorReviews } from '../models/IDoctorReviews';
@@ -69,5 +76,10 @@ export class ClientService {
     return this.httpClient.get<ApiResponse<Array<IDoctorsSearchResult>>>(
       `${environment.apiUrl}/api/client/search?searchText=${searchText}&specialization=${specialization}&city=${city}`
     );
+  }
+
+  getClientAppointments(): Observable<ApiResponse<Array<IClientProfileAppointment>>> {
+    return this.httpClient.get<ApiResponse<Array<IClientProfileAppointment>>>
+    (`${environment.apiUrl}/api/client/get-all-appointment/289d8803-e985-403f-9d2e-a2bca09708a8`);
   }
 }
