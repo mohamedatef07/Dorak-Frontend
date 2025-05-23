@@ -65,8 +65,8 @@ export class ClientService {
     );
   }
 
-  getClientAppointments(): Observable<ApiResponse<Array<IClientProfileAppointment>>> {
-    return this.httpClient.get<ApiResponse<Array<IClientProfileAppointment>>>
-    (`${environment.apiUrl}/api/client/get-all-appointment/289d8803-e985-403f-9d2e-a2bca09708a8`);
+  getClientAppointments(userId:string): Observable<ApiResponse<IClientProfileAppointment>> {
+    return this.httpClient.get<ApiResponse<IClientProfileAppointment>>
+    (`${environment.apiUrl}/api/client/Profile-all-appointment/${userId}`);
   }
 }

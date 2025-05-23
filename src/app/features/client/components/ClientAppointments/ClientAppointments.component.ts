@@ -1,7 +1,8 @@
+import { IAppointment } from './../../models/IAppointment';
 import { ClientService } from './../../services/client.service';
 import { AvatarModule } from 'primeng/avatar';
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, Input } from '@angular/core';
 import { IClientProfileAppointment } from '../../models/IClientProfileAppointment';
 
 
@@ -12,20 +13,11 @@ import { IClientProfileAppointment } from '../../models/IClientProfileAppointmen
   styleUrls: ['./ClientAppointments.component.css']
 })
 export class ClientAppointmentsComponent implements OnInit {
-  clientServices = inject(ClientService);
 
-  appointments:Array<IClientProfileAppointment> = [];
+  @Input() appointments: Array<IAppointment> = [];
   constructor() {}
     ngOnInit() {
-    this.clientServices.getClientAppointments().subscribe({
-      next: (res) => {
-        this.appointments=[...res.Data];
-        console.log(res.Data);
-      },
-      error: (err) => {
-        console.error('Error while fetching doctor reviews:', err);
-      },
-    });
+
   }
   // appointments = Array(6).fill({
   //   name: 'Mohamed Ahmed',

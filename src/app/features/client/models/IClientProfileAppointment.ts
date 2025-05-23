@@ -1,8 +1,10 @@
+import { IAppointment } from "./IAppointment";
+
 export interface IClientProfileAppointment {
- AppointmentId : number
-  ProviderId: string
-   ProviderName :string
-   Rate :number
-   Specialization : string
-   AppointmentDate :Date
+ ID :number;
+ Image :string;
+ Name :string;
+ Phone :string;
+ Email :string;
+ Appointments: IAppointment[];
 }
