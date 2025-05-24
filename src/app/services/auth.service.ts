@@ -32,7 +32,7 @@ export class AuthService {
     const tokenParts = token?.split('.');
     if (tokenParts?.length !== 3) return null;
     const payload = JSON.parse(atob(tokenParts[1]));
-    return payload.Id;
+    return payload["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"];
   }
   register(
     registerData: IClientRegisterRequest

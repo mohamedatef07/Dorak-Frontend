@@ -1,8 +1,9 @@
 import { Component, inject, NgModule, OnInit } from '@angular/core';
 import { ClientService } from '../../services/client.service';
-import { IDoctorMainInfo } from '../../../../types/IDoctorMainInfo';
+import { IDoctorMainInfo } from '../../models/IDoctorMainInfo';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RatingModule } from 'primeng/rating';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-doctor-main-info',
@@ -12,6 +13,8 @@ import { RatingModule } from 'primeng/rating';
 })
 export class DoctorMainInfoComponent implements OnInit {
   clientServices = inject(ClientService);
+  messageServices = inject(MessageService);
+
   mainInfo: IDoctorMainInfo = {
     FullName: '',
     Image: '',
@@ -30,7 +33,12 @@ export class DoctorMainInfoComponent implements OnInit {
         this.mainInfo.Bio = res.Data.Bio;
       },
       error: (err) => {
-        console.error('Error while fetching doctor main info:', err);
+        this.messageServices.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'The server is experiencing an issue, Please try again soon.',
+          life: 4000,
+        });
       },
     });
   }

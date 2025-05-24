@@ -1,7 +1,7 @@
 export interface IDoctorBookingInfo {
   CenterId: number;
-  ShiftType: number;
+  ShiftId: number;
   Date: Date;
-  StartTime: string;
-  EndTime: string;
+  StartTime: Date;
+  EndTime: Date;
 }
