@@ -19,7 +19,7 @@ import { IDoctorsSearchResult } from '../models/IDoctorsSearchResult';
 export class ClientService {
   httpClient = inject(HttpClient);
   authServices = inject(AuthService);
-  id = '92e208ca-78e0-4d86-948a-e596cdc7c365';
+  id = '2293a1da-9c6c-4239-bde5-433abf0039f4';
   constructor() {}
   getMainInfo(): Observable<ApiResponse<IDoctorMainInfo>> {
     return this.httpClient.get<ApiResponse<IDoctorMainInfo>>(

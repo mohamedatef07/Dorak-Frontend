@@ -5,6 +5,7 @@ import { RatingModule } from 'primeng/rating';
 import { IDoctorReviews } from '../../models/IDoctorReviews';
 import { CarouselModule } from 'primeng/carousel';
 import { CommonModule } from '@angular/common';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-doctor-reviews',
@@ -20,6 +21,8 @@ import { CommonModule } from '@angular/common';
 })
 export class DoctorReviewsComponent implements OnInit {
   clientServices = inject(ClientService);
+  messageServices = inject(MessageService);
+
   reviews: Array<IDoctorReviews> = [];
   constructor() {}
   ngOnInit() {
@@ -28,7 +31,12 @@ export class DoctorReviewsComponent implements OnInit {
         this.reviews = [...res.Data];
       },
       error: (err) => {
-        console.error('Error while fetching doctor reviews:', err);
+        this.messageServices.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'The server is experiencing an issue, Please try again soon.',
+          life: 4000,
+        });
       },
     });
   }

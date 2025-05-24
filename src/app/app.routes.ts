@@ -11,19 +11,22 @@ import { AuthGuard } from './guards/auth.guard';
 import { RoleGuard } from './guards/role.guard';
 import { DoctorDetailsComponent } from './features/client/components/doctor-details/doctor-details.component';
 import { ClientProfileComponent } from './features/client/components/client-profile/client-profile.component';
+import { ScheduleComponent } from './features/provider/components/schedule/schedule.component';
 
 export const routes: Routes = [
+  // {
+  //   path: 'owner',
+  //   component: OwnerLayoutComponent,
+  //   children: [{ path: '' }, { path: '' }, { path: '' }],
+  // },
   {
-    //   path: 'owner',
-    //   component: OwnerLayoutComponent,
-    //   children: [{ path: '' }, { path: '' }, { path: '' }],
-    // },
-    // {
-    //   path: 'provider',
-    //   component: ProviderLayoutComponent,
-    //   children: [{ path: '' }, { path: '' }, { path: '' }],
-    // },
-    // {
+    path: 'provider',
+    component: ProviderLayoutComponent,
+    children: [
+      { path: 'schedule', component: ScheduleComponent, title: 'Schedule' },
+    ],
+  },
+  {
     path: 'client',
     component: ClientLayoutComponent,
     children: [
