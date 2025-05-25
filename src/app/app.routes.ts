@@ -12,6 +12,11 @@ import { RoleGuard } from './guards/role.guard';
 import { DoctorDetailsComponent } from './features/client/components/doctor-details/doctor-details.component';
 import { ClientProfileComponent } from './features/client/components/client-profile/client-profile.component';
 import { ScheduleComponent } from './features/provider/components/schedule/schedule.component';
+import { PatientQueueComponent } from './features/provider/components/patient-queue/patient-queue.component';
+import { ReportsComponent } from './features/provider/components/reports/reports.component';
+import { DashboardComponent } from './features/provider/components/dashboard/dashboard.component';
+import { ProviderProfileComponent } from './features/provider/components/provider-profile/provider-profile.component';
+import { ProviderSettingsComponent } from './features/provider/components/provider-settings/provider-settings.component';
 
 export const routes: Routes = [
   // {
@@ -23,7 +28,24 @@ export const routes: Routes = [
     path: 'provider',
     component: ProviderLayoutComponent,
     children: [
+      { path: 'dashboard', component: DashboardComponent, title: 'Dashboard' },
+      {
+        path: 'patient-queue',
+        component: PatientQueueComponent,
+        title: 'Patient Queue',
+      },
       { path: 'schedule', component: ScheduleComponent, title: 'Schedule' },
+      { path: 'reports', component: ReportsComponent, title: 'Reports' },
+      {
+        path: 'profile',
+        component: ProviderProfileComponent,
+        title: 'Profile',
+      },
+      {
+        path: 'settings',
+        component: ProviderSettingsComponent,
+        title: 'Settings',
+      },
     ],
   },
   {

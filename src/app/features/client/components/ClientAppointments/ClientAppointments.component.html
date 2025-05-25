@@ -1,32 +1,46 @@
 @for (appointment of appointments; let i = $index; track $index) {
-<div class="appointment-card p-3 mb-3 rounded d-flex flex-column flex-md-row align-items-center justify-content-between"
-               [ngClass]="i % 2 === 0 ? 'bg-lightblue' : 'bg-darkblue text-white'">
+<div
+  class="appointment-card p-3 mb-3 rounded d-flex flex-column flex-md-row align-items-center justify-content-between"
+  [ngClass]="i % 2 === 0 ? 'bg-lightblue' : 'bg-darkblue text-white'"
+>
+  <div class="d-flex align-items-center mb-3 mb-md-0">
+    <p-avatar
+      image="https://www.w3schools.com/howto/img_avatar.png"
+      shape="circle"
+      class="me-3 avatar"
+    >
+    </p-avatar>
+    <div>
+      <div class="fw-bold">{{ appointment.ProviderName }}</div>
+      <p-rating
+        class="review-star pt-2 pb-2"
+        [(ngModel)]="appointment.Rate"
+        [readonly]="true"
+      />
+      <div>{{ appointment.Specialization }}</div>
+      <div>{{ appointment.AppointmentDate }}</div>
+    </div>
+  </div>
 
-            <div class="d-flex align-items-center mb-3 mb-md-0">
-              <p-avatar
-                image="https://www.w3schools.com/howto/img_avatar.png"
-                shape="circle"
-                class="me-3 avatar">
-              </p-avatar>
-              <div>
-                <div class="fw-bold">{{ appointment.ProviderName }}</div>
-                <div>Rate {{ appointment.Rate }}</div>
-                <div>{{ appointment.Specialization }}</div>
-                <div>{{ appointment.AppointmentDate }}</div>
-              </div>
-            </div>
-
-            <div class="text-md-end text-center">
-              <div class="fw-bold mb-1">
-                <!-- {{ appointment.quarter }} -->
-                @if (i === 1) {
-                  <span class="badge bg-secondary ms-2">Export As</span>
-                }
-              </div>
-              <button pButton icon="pi pi-pencil" class="p-button-sm p-button-rounded p-button-text me-2"
-                      (click)="editAppointment(i)"></button>
-              <button pButton icon="pi pi-trash" class="p-button-sm p-button-rounded p-button-danger p-button-text"
-                      (click)="deleteAppointment(i)"></button>
-            </div>
-          </div>
-        }
+  <div class="text-md-end text-center">
+    <div class="fw-bold mb-1">
+      <!-- {{ appointment.quarter }} -->
+      @if (i === 1) {
+      <span class="badge bg-secondary ms-2">Export As</span>
+      }
+    </div>
+    <button
+      pButton
+      icon="pi pi-pencil"
+      class="p-button-sm p-button-rounded p-button-text me-2"
+      (click)="editAppointment(i)"
+    ></button>
+    <button
+      pButton
+      icon="pi pi-trash"
+      class="p-button-sm p-button-rounded p-button-danger p-button-text"
+      (click)="deleteAppointment(i)"
+    ></button>
+  </div>
+</div>
+}
