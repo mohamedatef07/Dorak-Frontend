@@ -13,16 +13,16 @@ import { DoctorDetailsComponent } from './features/client/components/doctor-deta
 
 export const routes: Routes = [
   {
-    //   path: 'owner',
-    //   component: OwnerLayoutComponent,
-    //   children: [{ path: '' }, { path: '' }, { path: '' }],
-    // },
-    // {
-    //   path: 'provider',
-    //   component: ProviderLayoutComponent,
-    //   children: [{ path: '' }, { path: '' }, { path: '' }],
-    // },
-    // {
+    path: 'owner',
+    component: OwnerLayoutComponent,
+    // children: [{ path: '' }, { path: '' }, { path: '' }],
+  },
+  // {
+  //   path: 'provider',
+  //   component: ProviderLayoutComponent,
+  //   children: [{ path: '' }, { path: '' }, { path: '' }],
+  // },
+  {
     path: 'client',
     component: ClientLayoutComponent,
     children: [
