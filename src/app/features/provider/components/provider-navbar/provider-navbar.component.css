@@ -1,0 +1,3 @@
+#dropdown-list li .dropdown-item:last-child {
+  cursor: pointer;
+}

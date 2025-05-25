@@ -295,6 +295,11 @@ a {
   padding: 0.5rem;
   border-radius: 0 12px 12px 0;
 }
+/* Main */
+main .container > p {
+  color: var(--text-color-Light);
+  font-size: 2rem;
+}
 /* Side Bar */
 .side-bar {
   position: fixed;
