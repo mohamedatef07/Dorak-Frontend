@@ -12,6 +12,7 @@ import { ICenterServices } from '../models/ICenterServices';
 import { IDoctorReviews } from '../models/IDoctorReviews';
 import { IDoctorCenterServices } from '../models/IDoctorCenterServices';
 import { IDoctorsSearchResult } from '../models/IDoctorsSearchResult';
+import { IClientProfile } from '../models/IClientProfile';
 
 @Injectable({
   providedIn: 'root',
@@ -71,8 +72,8 @@ export class ClientService {
     );
   }
 
-  getClientAppointments(): Observable<ApiResponse<Array<IClientProfileAppointment>>> {
-    return this.httpClient.get<ApiResponse<Array<IClientProfileAppointment>>>
-    (`${environment.apiUrl}/api/client/get-all-appointment/289d8803-e985-403f-9d2e-a2bca09708a8`);
+  getClientProfileAndAppointments(userId:string): Observable<ApiResponse<IClientProfile>> {
+    return this.httpClient.get<ApiResponse<IClientProfile>>
+    (`${environment.apiUrl}/api/client/Profile-all-appointment/${userId}`);
   }
 }
