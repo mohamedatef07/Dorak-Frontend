@@ -5,7 +5,6 @@ import { AuthService } from '../../../services/auth.service';
 import { IDoctorMainInfo } from '../models/IDoctorMainInfo';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
-import { IClientProfileAppointment } from '../models/IClientProfileAppointment';
 import { IMakeAppointment } from '../models/IMakeAppointment';
 import { IDoctorBookingInfo } from '../models/IDoctorBookingInfo';
 import { ICenterServices } from '../models/ICenterServices';
@@ -74,6 +73,6 @@ export class ClientService {
 
   getClientProfileAndAppointments(userId:string): Observable<ApiResponse<IClientProfile>> {
     return this.httpClient.get<ApiResponse<IClientProfile>>
-    (`${environment.apiUrl}/api/client/Profile-all-appointment/${userId}`);
+    (`${environment.apiUrl}/api/client/profile-all-appointment/${userId}`);
   }
 }
