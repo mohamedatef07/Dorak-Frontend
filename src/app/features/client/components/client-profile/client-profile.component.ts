@@ -8,6 +8,7 @@ import { SidebarClientProfileComponent } from "../SidebarClientProfile/SidebarCl
 import { ClientAppointmentsComponent } from "../ClientAppointments/ClientAppointments.component";
 import { ClientService } from '../../services/client.service';
 import { IClientProfile } from '../../models/IClientProfile';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-client-profile',
@@ -34,12 +35,14 @@ export class ClientProfileComponent {
       this.clientServices.getClientProfileAndAppointments(this.userid).subscribe({
         next: (res) => {
           this.client = res.Data;
-          console.log(res.Data);
+          console.log(res.Data.Image);
+          this.client.Image = environment.apiUrl+res.Data.Image;
         },
         error: (err) => {
           console.error('Error while fetching client profile:', err);
         },
       });
+
     }
 
 }
