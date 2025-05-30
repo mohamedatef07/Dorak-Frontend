@@ -6,6 +6,7 @@ import { IDoctorScheduleDetails } from '../models/IDoctorScheduleDetails';
 import { environment } from '../../../../environments/environment';
 import { Observable } from 'rxjs';
 import { IShiftDetails } from '../models/IShiftDetails';
+import { IQueueEntries } from '../models/IQueueEntries';
 
 @Injectable({
   providedIn: 'root',
@@ -27,6 +28,11 @@ export class ProviderService {
   ): Observable<ApiResponse<IShiftDetails>> {
     return this.httpClient.get<ApiResponse<IShiftDetails>>(
       `${environment.apiUrl}/api/provider/shift-details?shiftId=${shiftId}`
+    );
+  }
+  getQueueEntries(): Observable<ApiResponse<Array<IQueueEntries>>> {
+    return this.httpClient.get<ApiResponse<Array<IQueueEntries>>>(
+      `${environment.apiUrl}/api/provider/queue-entries?providerId=${this.id}`
     );
   }
 }

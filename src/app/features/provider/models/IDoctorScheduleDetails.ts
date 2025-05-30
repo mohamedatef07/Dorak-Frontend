@@ -1,5 +1,4 @@
 import { ShiftType } from '../../../Enums/ShiftType.enum';
-
 export interface IDoctorScheduleDetails {
   CenterId: number;
   ShiftId: number;
