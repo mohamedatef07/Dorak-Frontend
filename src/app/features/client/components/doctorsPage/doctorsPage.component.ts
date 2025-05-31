@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { ClientService } from '../../services/client.service';
 import { IDoctorsCard } from '../../../../types/IDoctorsCard';
 import { Router } from '@angular/router';
-import { IDoctorFilter } from '../../../../types/IDoctorFilter';
+import { IDoctorFilter } from '../../..//..//types/IDoctorFilter';
 
 @Component({
   selector: 'app-doctorsPage',

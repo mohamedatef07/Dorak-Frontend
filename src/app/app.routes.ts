@@ -19,9 +19,11 @@ import { ProviderProfileComponent } from './features/provider/components/provide
 import { ProviderSettingsComponent } from './features/provider/components/provider-settings/provider-settings.component';
 import { LandingpageLayoutComponent } from './features/landingpage/landingpage-layout/landingpage-layout/landingpage-layout.component';
 import { HeroComponent } from './features/landingpage/components/hero/hero.component';
-import { DoctorsComponent } from './features/landingpage/components/doctors/doctors.component';
 import { ReviewComponent } from './features/landingpage/components/review/review.component';
 import { CertificationsComponent } from './features/landingpage/components/Certifications/Certifications.component';
+import { DoctorsPageComponent } from './features/client/components/doctorsPage/doctorsPage.component';
+import { LandingpageRegisterComponent } from './features/landingpage/components/landingpageRegister/landingpageRegister.component';
+import { DoctorsLandingPageComponent } from './features/landingpage/components/doctors-landingPage/doctors-landingPage.component';
 
 export const routes: Routes = [
   // {
@@ -79,6 +81,10 @@ export const routes: Routes = [
         component: ClientProfileComponent,
         title: 'Client Profile',
       },
+       {
+    path: 'doctors-Page',
+    component: DoctorsPageComponent
+  }
     ],
   },
 
@@ -96,30 +102,25 @@ export const routes: Routes = [
 
 
       { path: 'doctors',
-        component:DoctorsComponent
-      },
+        component:DoctorsLandingPageComponent
+       },
        { path: 'review',
         component:ReviewComponent
        },
        { path: 'certfication',
         component:CertificationsComponent
        },
+        { path: 'Register',
+        component:LandingpageRegisterComponent
+       },
+
 
 
 
       ]
       ,
    },
-  {
-    path: 'client',
-    component: ClientLayoutComponent,
-    children: [
-  {
-    path: 'doctorsPage',
-    component: DoctorsPageComponent,
-  }
-]
-  },
+
 
 
 
