@@ -129,8 +129,8 @@ a {
   background-color: #fcebeb !important;
   color: #de3333 !important;
   border: 1px solid #ef9a9a !important;
-  border-radius: 6px !important;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+  border-radius: 0.4rem !important;
+  box-shadow: 0 2px 0.3rem rgba(0, 0, 0, 0.1) !important;
   padding: 1rem !important;
   display: flex !important;
   align-items: center !important;
@@ -178,8 +178,8 @@ a {
   background-color: #f0fcf4 !important;
   color: #43b56d !important;
   border-color: #f0fcf4 !important;
-  border-radius: 6px !important;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+  border-radius: 0.4rem !important;
+  box-shadow: 0 2px 0.3rem rgba(0, 0, 0, 0.1) !important;
   padding: 1rem !important;
   display: flex !important;
   align-items: center !important;
@@ -226,8 +226,8 @@ a {
   background-color: #f0f7ff !important;
   color: #2866eb !important;
   border-color: #c2dcff !important;
-  border-radius: 6px !important;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+  border-radius: 0.4rem !important;
+  box-shadow: 0 2px 0.3rem rgba(0, 0, 0, 0.1) !important;
   padding: 1rem !important;
   display: flex !important;
   align-items: center !important;
