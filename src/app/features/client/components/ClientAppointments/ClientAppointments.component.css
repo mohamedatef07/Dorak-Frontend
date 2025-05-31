@@ -1,0 +1,20 @@
+.avatar {
+  width: clamp(60px, 8vw, 100px);
+  height: clamp(60px, 8vw, 100px);
+}
+
+.bg-lightblue {
+  background-color: #d7effb;
+}
+
+.bg-darkblue {
+  background-color: #002f4b;
+}
+
+.appointment-card {
+  transition: transform 0.2s ease;
+}
+
+.appointment-card:hover {
+  transform: scale(1.01);
+}
