@@ -1,0 +1,8 @@
+.arrow-down::after {
+  content: '▼';
+  margin-left: 0.15rem;
+}
+.arrow-right::after {
+  content: '▶';
+  margin-left: 0.15rem;
+}

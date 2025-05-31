@@ -10,12 +10,19 @@ import { UnauthorizedComponent } from './components/unauthorized/unauthorized.co
 import { AuthGuard } from './guards/auth.guard';
 import { RoleGuard } from './guards/role.guard';
 import { DoctorDetailsComponent } from './features/client/components/doctor-details/doctor-details.component';
+import { ManageOperatorsComponent } from './features/owner/components/ManageOperators/ManageOperators.component';
 
 export const routes: Routes = [
   {
     path: 'owner',
     component: OwnerLayoutComponent,
-    // children: [{ path: '' }, { path: '' }, { path: '' }],
+    children: [
+      {
+        path: 'manage-operators',
+        component:ManageOperatorsComponent,
+        title: 'Manage Operators'
+      }
+    ],
   },
   // {
   //   path: 'provider',
