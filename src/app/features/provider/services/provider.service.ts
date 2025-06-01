@@ -14,13 +14,13 @@ import { IQueueEntries } from '../models/IQueueEntries';
 export class ProviderService {
   httpClient = inject(HttpClient);
   authServices = inject(AuthService);
-  id = '2293a1da-9c6c-4239-bde5-433abf0039f4';
+  providerId = this.authServices.getUserId();
   constructor() {}
   getDoctorScheduleDetails(): Observable<
     ApiResponse<Array<IDoctorScheduleDetails>>
   > {
     return this.httpClient.get<ApiResponse<Array<IDoctorScheduleDetails>>>(
-      `${environment.apiUrl}/api/provider/schedule-details?providerId=${this.id}`
+      `${environment.apiUrl}/api/provider/schedule-details?providerId=${this.providerId}`
     );
   }
   getShiftDetails(
@@ -32,7 +32,7 @@ export class ProviderService {
   }
   getQueueEntries(): Observable<ApiResponse<Array<IQueueEntries>>> {
     return this.httpClient.get<ApiResponse<Array<IQueueEntries>>>(
-      `${environment.apiUrl}/api/provider/queue-entries?providerId=${this.id}`
+      `${environment.apiUrl}/api/provider/queue-entries?providerId=${this.providerId}`
     );
   }
 }
