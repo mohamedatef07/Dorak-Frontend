@@ -17,6 +17,9 @@ import { ReportsComponent } from './features/provider/components/reports/reports
 import { DashboardComponent } from './features/provider/components/dashboard/dashboard.component';
 import { ProviderProfileComponent } from './features/provider/components/provider-profile/provider-profile.component';
 import { ProviderSettingsComponent } from './features/provider/components/provider-settings/provider-settings.component';
+import { EditProfileComponent } from './features/client/components/edit-profile/edit-profile.component';
+import { UpcomingAppointmentsComponent } from './features/client/components/upcoming-appointments/upcoming-appointments.component';
+import { LastAppointmentComponent } from './features/client/components/last-appointment/last-appointment.component';
 
 export const routes: Routes = [
   // {
@@ -73,6 +76,21 @@ export const routes: Routes = [
         path: 'client-profile',
         component: ClientProfileComponent,
         title: 'Client Profile',
+      },
+       {
+        path: 'client-edit-profile',
+        component: EditProfileComponent,
+        title: 'Edit Client Profile',
+      },
+       {
+        path: 'client-upcoming-appointments',
+        component: UpcomingAppointmentsComponent,
+        title: 'Client Upcoming Appointments',
+      },
+       {
+        path: 'last-appointment',
+        component: LastAppointmentComponent,
+        title: 'Last Appointment',
       },
     ],
   },

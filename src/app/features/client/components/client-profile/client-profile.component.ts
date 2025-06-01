@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { AvatarModule } from 'primeng/avatar';
-import { SidebarClientProfileComponent } from "../SidebarClientProfile/SidebarClientProfile.component";
 import { ClientAppointmentsComponent } from "../ClientAppointments/ClientAppointments.component";
 import { ClientService } from '../../services/client.service';
 import { IClientProfile } from '../../models/IClientProfile';
@@ -12,7 +11,7 @@ import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-client-profile',
-  imports: [CommonModule, ButtonModule, CardModule, AvatarModule, SidebarClientProfileComponent, ClientAppointmentsComponent],
+  imports: [CommonModule, ButtonModule, CardModule, AvatarModule, ClientAppointmentsComponent],
   templateUrl: './client-profile.component.html',
   styleUrl: './client-profile.component.css'
 })
