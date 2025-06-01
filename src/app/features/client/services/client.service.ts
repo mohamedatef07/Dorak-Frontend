@@ -75,4 +75,6 @@ export class ClientService {
     return this.httpClient.get<ApiResponse<IClientProfile>>
     (`${environment.apiUrl}/api/client/profile-all-appointment/${userId}`);
   }
+
+  
 }
