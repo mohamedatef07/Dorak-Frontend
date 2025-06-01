@@ -1,0 +1,19 @@
+.filter {
+  width: fit-content;
+  background-color: white;
+  border: 1px solid var(--button-bg-color-Light);
+  border-radius: var(--border-radius);
+}
+.filter > div {
+  color: var(--text-color-Light);
+}
+.filter > div:not(:last-child) {
+  border-right: 1px solid var(--button-bg-color-Light);
+}
+.filter > div select {
+  border: none;
+  cursor: pointer;
+}
+.filter .reset-filter p {
+  color: #ea0234;
+}
