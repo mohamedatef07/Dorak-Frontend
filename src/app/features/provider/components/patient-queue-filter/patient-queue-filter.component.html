@@ -32,48 +32,32 @@
   >
     Filter By
   </div>
-  <div class="date d-flex justify-content-center align-items-center p-3 gap-2">
-    <button type="button">
-      Date
-      <svg
-        width="11"
-        height="11"
-        viewBox="0 0 16 8"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M7.99977 8.00052C7.41644 8.00052 6.83311 7.77552 6.39144 7.33385L0.958105 1.90052C0.716439 1.65885 0.716439 1.25885 0.958105 1.01719C1.19977 0.775521 1.59977 0.775521 1.84144 1.01719L7.27477 6.45052C7.67477 6.85052 8.32477 6.85052 8.72477 6.45052L14.1581 1.01719C14.3998 0.775521 14.7998 0.775521 15.0414 1.01719C15.2831 1.25885 15.2831 1.65885 15.0414 1.90052L9.60811 7.33385C9.16644 7.77552 8.58311 8.00052 7.99977 8.00052Z"
-          fill="#012a4a"
-        />
-      </svg>
-    </button>
-  </div>
   <div
     class="patient-type d-flex justify-content-center align-items-center p-3 gap-2"
   >
-    <select name="patient-type">
-      <option value="" selected disabled hidden>Patient Type</option>
-      <option value="normal">Normal</option>
-      <option value="urgent">Urgent</option>
-      <option value="consultation">Consultation</option>
-      <option value="medical-rep">Medical Rep</option>
-    </select>
+    <p-select
+      [options]="PatientTypes"
+      [(ngModel)]="selectedPatientType"
+      placeholder="Patient Type"
+      class="w-full md:w-56"
+      (onChange)="filterQueueEntries()"
+    />
   </div>
   <div
     class="patient-status d-flex justify-content-center align-items-center ps-2 pe-2 gap-2"
   >
-    <select name="patient-status">
-      <option value="" selected disabled hidden>Patient Status</option>
-      <option value="completed">Completed</option>
-      <option value="in-progress">In Progress</option>
-      <option value="waiting">Waiting</option>
-    </select>
+    <p-select
+      [options]="PatientStatus"
+      [(ngModel)]="selectedPatientStatus"
+      placeholder="Patient Status"
+      class="w-full md:w-56"
+      (onChange)="filterQueueEntries()"
+    />
   </div>
   <div
     class="reset-filter d-flex justify-content-center align-items-center ps-2 pe-2 gap-2"
   >
-    <button class="d-flex gap-1" id="reset-btn" type="button">
+    <button class="d-flex gap-1" id="reset-btn" type="button" (click)="resetFilter()">
       <p class="mb-0">Reset Filter</p>
       <div
         class="reset-filter-icon d-flex justify-content-center align-items-center"
