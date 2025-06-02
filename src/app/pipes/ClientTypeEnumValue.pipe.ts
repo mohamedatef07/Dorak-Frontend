@@ -6,9 +6,7 @@ import { ClientType } from '../Enums/ClientType.enum';
 })
 export class ClientTypeEnumValuePipe implements PipeTransform {
   transform(value: ClientType): string {
-    if (!value) {
-      return '';
-    }
+
     return ClientType[value];
   }
 }

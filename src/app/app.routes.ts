@@ -20,6 +20,8 @@ import { ProviderSettingsComponent } from './features/provider/components/provid
 import { EditProfileComponent } from './features/client/components/edit-profile/edit-profile.component';
 import { UpcomingAppointmentsComponent } from './features/client/components/upcoming-appointments/upcoming-appointments.component';
 import { LastAppointmentComponent } from './features/client/components/last-appointment/last-appointment.component';
+import { ClientLiveQueueComponent } from './features/client/components/Client-Live-Queue/Client-Live-Queue.component';
+import { ClientWalletComponent } from './features/client/components/ClientWallet/ClientWallet.component';
 
 export const routes: Routes = [
   // {
@@ -91,6 +93,16 @@ export const routes: Routes = [
         path: 'last-appointment',
         component: LastAppointmentComponent,
         title: 'Last Appointment',
+      },
+       {
+        path: 'client-live-queue',
+        component: ClientLiveQueueComponent,
+        title: 'Live Queue Appointment',
+      },
+       {
+        path: 'client-wallet',
+        component: ClientWalletComponent,
+        title: 'Client Wallet',
       },
     ],
   },

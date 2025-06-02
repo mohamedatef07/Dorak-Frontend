@@ -7,10 +7,7 @@ import { AppointmentStatus } from '../Enums/AppointmentStatus.enum';
 export class AppointmentStatusEnumValuePipe implements PipeTransform {
 
   transform(value: AppointmentStatus): string {
-    if (!value) {
-          return '';
-        }
-        return AppointmentStatus[value];
+    return AppointmentStatus[value];
   }
 
 }

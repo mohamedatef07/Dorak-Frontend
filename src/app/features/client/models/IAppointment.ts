@@ -1,3 +1,4 @@
+import { ClientType } from '../../../Enums/ClientType.enum';
 import { AppointmentStatus } from './../../../Enums/AppointmentStatus.enum';
 export interface IAppointment {
   appointmentId: number;
@@ -5,9 +6,7 @@ export interface IAppointment {
   LastName: string|null;
   AppointmentDate: Date;
   AppointmentStatus: AppointmentStatus;
-  CreatedAt: Date;
-  UpdatedAt: Date;
-  ClientType: ClientTypes
+  clientType: ClientType;
   Fees: number;
   AdditionalFees: number;//0
   EstimatedTime: Date;
@@ -22,4 +21,7 @@ export interface IAppointment {
   ShiftId: number;
   UserId: string|null;
   TemporaryClientId: number|null;
+  ProviderName:string;
+  Rate: number;
+  Specialization: string|null;
 }

@@ -1,16 +1,25 @@
-import { IAppointment } from './../../models/IAppointment';
 import { Component, inject, OnInit } from '@angular/core';
 import { ClientService } from '../../services/client.service';
 import { AuthService } from '../../../../services/auth.service';
+import { FormsModule } from '@angular/forms';
+import { RatingModule } from 'primeng/rating';
+import { AvatarModule } from 'primeng/avatar';
+import { CommonModule } from '@angular/common';
+import { IClientProfileAppointment } from '../../models/IClientProfileAppointment';
+
 
 @Component({
   selector: 'app-upcoming-appointments',
+  imports:[ CommonModule,
+    AvatarModule,
+    RatingModule,
+    FormsModule],
   templateUrl: './upcoming-appointments.component.html',
   styleUrls: ['./upcoming-appointments.component.css']
 })
 export class UpcomingAppointmentsComponent implements OnInit {
 
-   Appointments:IAppointment[]= [];
+   Appointments:IClientProfileAppointment[]= [];
    clientServices = inject(ClientService);
     cAuthServices = inject(AuthService);
   constructor() { }
