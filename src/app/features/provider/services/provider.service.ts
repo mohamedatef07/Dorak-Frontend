@@ -7,6 +7,7 @@ import { environment } from '../../../../environments/environment';
 import { Observable } from 'rxjs';
 import { IShiftDetails } from '../models/IShiftDetails';
 import { IQueueEntries } from '../models/IQueueEntries';
+import { IProviderProfile } from '../../../types/IProviderProfile';
 
 @Injectable({
   providedIn: 'root',
@@ -35,4 +36,15 @@ export class ProviderService {
       `${environment.apiUrl}/api/provider/queue-entries?providerId=${this.id}`
     );
   }
+getProviderProfile(): Observable<ApiResponse<IProviderProfile>> {
+  return this.httpClient.get<ApiResponse<IProviderProfile>>(
+    `${environment.apiUrl}/api/Provider/ProviderProfile`
+  );
 }
+
+  }
+
+
+
+
+

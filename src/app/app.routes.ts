@@ -15,7 +15,6 @@ import { ScheduleComponent } from './features/provider/components/schedule/sched
 import { PatientQueueComponent } from './features/provider/components/patient-queue/patient-queue.component';
 import { ReportsComponent } from './features/provider/components/reports/reports.component';
 import { DashboardComponent } from './features/provider/components/dashboard/dashboard.component';
-import { ProviderProfileComponent } from './features/provider/components/provider-profile/provider-profile.component';
 import { ProviderSettingsComponent } from './features/provider/components/provider-settings/provider-settings.component';
 import { LandingpageLayoutComponent } from './features/landingpage/landingpage-layout/landingpage-layout/landingpage-layout.component';
 import { HeroComponent } from './features/landingpage/components/hero/hero.component';
@@ -24,6 +23,8 @@ import { CertificationsComponent } from './features/landingpage/components/Certi
 import { DoctorsPageComponent } from './features/client/components/doctorsPage/doctorsPage.component';
 import { LandingpageRegisterComponent } from './features/landingpage/components/landingpageRegister/landingpageRegister.component';
 import { DoctorsLandingPageComponent } from './features/landingpage/components/doctors-landingPage/doctors-landingPage.component';
+import { ProviderProfileComponent } from './features/provider/components/provider-profile/provider-profile.component';
+import { ProviderSidebarComponent } from './features/provider/components/provider-sidebar/provider-sidebar.component';
 
 export const routes: Routes = [
   // {
@@ -36,6 +37,7 @@ export const routes: Routes = [
     component: ProviderLayoutComponent,
     children: [
       { path: 'dashboard', component: DashboardComponent, title: 'Dashboard' },
+      {path:'provider-profile',component:ProviderProfileComponent,title:'profile'},
       {
         path: 'patient-queue',
         component: PatientQueueComponent,
@@ -43,16 +45,14 @@ export const routes: Routes = [
       },
       { path: 'schedule', component: ScheduleComponent, title: 'Schedule' },
       { path: 'reports', component: ReportsComponent, title: 'Reports' },
-      {
-        path: 'profile',
-        component: ProviderProfileComponent,
-        title: 'Profile',
-      },
+
       {
         path: 'settings',
         component: ProviderSettingsComponent,
         title: 'Settings',
       },
+    
+
     ],
   },
   {

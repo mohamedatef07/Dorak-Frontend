@@ -4,7 +4,7 @@
   box-sizing: border-box;
 }
 :root {
- -main-bg-color-Light: #2a6f97;
+  --main-bg-color-Light: #2a6f97;
   --bg-color-Light: #ecf0f1;
   --text-color-Light: #012a4a;
   --side-bar-text-color-Light: #ecf0f1;
@@ -270,8 +270,8 @@ a {
 }
 
 /* Nav Bar */
-/* .nav {
-  position: fixed;
+.nav {
+  position: absolute;
   left: 18%;
   width: 82%;
   min-height: 4.5rem;
@@ -357,7 +357,7 @@ a {
   background-color: var(--main-bg-color-Light);
   padding: 0.5rem;
   border-radius: 0 12px 12px 0;
-} */
+}
 /* Side Bar */
 .side-bar {
   position: fixed;
