@@ -12,6 +12,7 @@ import { IDoctorReviews } from '../models/IDoctorReviews';
 import { IDoctorCenterServices } from '../models/IDoctorCenterServices';
 import { IDoctorsSearchResult } from '../models/IDoctorsSearchResult';
 import { IClientProfile } from '../models/IClientProfile';
+import { IAppointment } from '../models/IAppointment';
 
 @Injectable({
   providedIn: 'root',
@@ -76,5 +77,14 @@ export class ClientService {
     (`${environment.apiUrl}/api/client/profile-all-appointment/${userId}`);
   }
 
-  
+  getUpcomingAppointments(userId:string): Observable<ApiResponse<IAppointment[]>> {
+    return this.httpClient.get<ApiResponse<IAppointment[]>>
+    (`${environment.apiUrl}/api/client/upcoming-appointments/${userId}`);
+
+  }
+  getLastAppointment(userId:string): Observable<ApiResponse<IAppointment>> {
+    return this.httpClient.get<ApiResponse<IAppointment>>
+    (`${environment.apiUrl}/api/client/last-appointment/${userId}`);
+
+  }
 }
