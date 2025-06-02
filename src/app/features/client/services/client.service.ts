@@ -1,3 +1,4 @@
+import { CheckoutRequest } from './../models/CheckoutRequest';
 import { ApiResponse } from './../../../types/ApiResponse';
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
@@ -12,6 +13,9 @@ import { IDoctorReviews } from '../models/IDoctorReviews';
 import { IDoctorCenterServices } from '../models/IDoctorCenterServices';
 import { IDoctorsSearchResult } from '../models/IDoctorsSearchResult';
 import { IClientProfile } from '../models/IClientProfile';
+import { IAppointment } from '../models/IAppointment';
+import { IClientProfileAppointment } from '../models/IClientProfileAppointment';
+import { IClientWalletProfile } from '../models/IClientWalletProfile';
 
 @Injectable({
   providedIn: 'root',
@@ -76,5 +80,26 @@ export class ClientService {
     (`${environment.apiUrl}/api/client/profile-all-appointment/${userId}`);
   }
 
-  
+  getUpcomingAppointments(userId:string): Observable<ApiResponse<IClientProfileAppointment[]>> {
+    return this.httpClient.get<ApiResponse<IClientProfileAppointment[]>>
+    (`${environment.apiUrl}/api/client/upcoming-appointments/${userId}`);
+
+  }
+  getLastAppointment(userId:string): Observable<ApiResponse<IAppointment>> {
+    return this.httpClient.get<ApiResponse<IAppointment>>
+    (`${environment.apiUrl}/api/client/last-appointment/${userId}`);
+
+  }
+
+  Checkout(CheckoutRequest:CheckoutRequest):Observable<CheckoutRequest >{
+    return this.httpClient.post<CheckoutRequest>
+    (`${environment.apiUrl}/api/client/Checkout`,CheckoutRequest);
+  }
+
+
+  ClientWalletAndProfile(userId: string): Observable<ApiResponse<IClientWalletProfile>> {
+    return this.httpClient.get<ApiResponse<IClientWalletProfile>>(
+      `${environment.apiUrl}/api/client/client-wallet/${userId}`
+    );
+  }
 }
