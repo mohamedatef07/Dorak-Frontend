@@ -29,10 +29,10 @@
       </a>
       <ul class="submenu" *ngIf="isSubmenuOpen">
         <li class="mb-1">
-          <a routerLink="/owner/manage-doctors/add">Add Doctor</a>
+          <a routerLink="/owner/manage-doctors/add-operator">Add Operator</a>
         </li>
         <li class="mb-1">
-          <a routerLink="/owner/manage-doctors/list">List Doctors</a>
+          <a routerLink="/owner">Delete Operators</a>
         </li>
       </ul>
     </li>
@@ -51,7 +51,7 @@
     </li>
 
     <li class="mb-2" routerLinkActive="selected" [routerLinkActiveOptions]="{ exact: false }">
-      <a (click)="toggleOperatorSubmenu()" class="cursor-pointer" routerLink="/owner/manage-operators">
+      <a (click)="toggleOperatorSubmenu()" class="cursor-pointer" [routerLink]="['/owner/manage-operators']">
         <div class="reports-icon">
           <svg fill="#ECF0F1" height="40px" width="40px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve">
@@ -135,7 +135,7 @@
       </a>
       <ul class="submenu" *ngIf="isOperatorSubmenuOpen">
         <li class="mb-1">
-          <a routerLink="/owner/manage-doctors/add">Add Doctor</a>
+          <a [routerLink]="['/owner/add-operator']">Add Operator</a>
         </li>
         <li class="mb-1">
           <a routerLink="/owner/manage-doctors/list">List Doctors</a>

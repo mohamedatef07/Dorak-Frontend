@@ -21,7 +21,7 @@ export class ClientService {
   httpClient = inject(HttpClient);
   authServices = inject(AuthService);
   id = '2293a1da-9c6c-4239-bde5-433abf0039f4';
-  constructor() {}
+  constructor() { }
   getMainInfo(): Observable<ApiResponse<IDoctorMainInfo>> {
     return this.httpClient.get<ApiResponse<IDoctorMainInfo>>(
       `${environment.apiUrl}/api/client/main-info?providerId=${this.id}`
@@ -72,8 +72,8 @@ export class ClientService {
     );
   }
 
-  getClientProfileAndAppointments(userId:string): Observable<ApiResponse<IClientProfile>> {
+  getClientProfileAndAppointments(userId: string): Observable<ApiResponse<IClientProfile>> {
     return this.httpClient.get<ApiResponse<IClientProfile>>
-    (`${environment.apiUrl}/api/client/Profile-all-appointment/${userId}`);
+      (`${environment.apiUrl}/api/client/Profile-all-appointment/${userId}`);
   }
 }

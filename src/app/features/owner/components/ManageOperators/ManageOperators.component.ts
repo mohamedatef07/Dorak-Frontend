@@ -15,13 +15,13 @@ export class ManageOperatorsComponent implements OnInit {
   private ownerService = inject(OwnerService);
   operators: IOperator[] = [];
   centerId = 1;
-
   constructor() { }
-
+  
   ngOnInit() {
     this.ownerService.getOperatorsByCenterId(this.centerId).subscribe({
       next: (res: ApiResponse<IOperator[]>) => {
-        this.operators = res.Data || [];
+        this.operators = [...res.Data];
+        console.log(res.Data);
       },
       error: (err: any) => {
         console.error('Error while fetching operators:', err);

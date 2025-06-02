@@ -18,6 +18,7 @@ import { DashboardComponent } from './features/provider/components/dashboard/das
 import { ProviderProfileComponent } from './features/provider/components/provider-profile/provider-profile.component';
 import { ProviderSettingsComponent } from './features/provider/components/provider-settings/provider-settings.component';
 import { ManageOperatorsComponent } from './features/owner/components/ManageOperators/ManageOperators.component';
+import { AddOperatorComponent } from './features/owner/components/AddOperator/AddOperator.component';
 
 export const routes: Routes = [
   // {
@@ -50,16 +51,23 @@ export const routes: Routes = [
     ],
   },
   {
-
     path: 'owner',
     component: OwnerLayoutComponent,
     children: [
       {
         path: 'manage-operators',
-        component:ManageOperatorsComponent,
-        title: 'Manage Operators'
+        component: ManageOperatorsComponent,
+        title: 'Manage Operators',
+        // children: [
+
+        // ]
+      },
+      {
+        path: 'add-operator',
+        component: AddOperatorComponent,
+        title: 'Add Operator'
       }
-    ],
+    ]
   },
   // {
   //   path: 'provider',
