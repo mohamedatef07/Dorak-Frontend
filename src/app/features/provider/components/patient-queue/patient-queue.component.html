@@ -10,10 +10,15 @@
           class="patient-queue-search"
         ></app-patient-queue-search>
       </div>
-      <app-patient-queue-filter></app-patient-queue-filter>
+      <app-patient-queue-filter
+        (filterPatientTypeChanged)="onFilterPatientTypeChanged($event)"
+        (filterPatientStatusChanged)="onFilterPatientStatusChanged($event)"
+      ></app-patient-queue-filter>
     </section>
     <app-patient-queue-table
       [searchText]="globalSearchValue"
+      [patientStatus]="filterPatientStatusValue"
+      [patientType]="filterPatientTypeValue"
     ></app-patient-queue-table>
   </div>
 </main>

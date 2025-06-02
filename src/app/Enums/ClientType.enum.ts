@@ -1,5 +1,5 @@
 export enum ClientType {
-  Unknown,
+  none,
   Normal,
   Urgent,
   Consultation,

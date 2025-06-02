@@ -1,3 +1,4 @@
+import { QueueAppointmentStatus } from './../../../../Enums/QueueAppointmentStatus.enum';
 import { Component, inject, Input, OnInit, SimpleChanges } from '@angular/core';
 import { ProviderService } from '../../services/provider.service';
 import { MessageService } from 'primeng/api';
@@ -6,7 +7,8 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { TimeStringToDatePipe } from '../../../../pipes/TimeStringToDate.pipe';
 import { ClientTypeEnumValuePipe } from '../../../../pipes/ClientTypeEnumValue.pipe';
 import { QueueAppointmentStatusEnumValuePipe } from '../../../../pipes/QueueAppointmentStatusEnumValue.pipe';
-import { QueueAppointmentStatus } from '../../../../Enums/QueueAppointmentStatus.enum';
+import { FormsModule } from '@angular/forms';
+import { ClientType } from '../../../../Enums/ClientType.enum';
 
 @Component({
   selector: 'app-patient-queue-table',
@@ -27,6 +29,8 @@ export class PatientQueueTableComponent implements OnInit {
   originalQueueEntries: Array<IQueueEntries> = [];
   tempQueueEntries: Array<IQueueEntries> = [];
   @Input() searchText: string = '';
+  @Input() patientStatus: string = '';
+  @Input() patientType: string = '';
 
   constructor() {}
 
@@ -50,6 +54,36 @@ export class PatientQueueTableComponent implements OnInit {
     if (changes['searchText']) {
       this.handelQueueEntriesSearch();
     }
+    if (changes['patientStatus']) {
+      this.handelQueueEntriesPatientStatusFilter();
+    }
+    if (changes['patientType']) {
+      this.handelQueueEntriesPatientTypeFilter();
+    }
+  }
+
+  handelQueueEntriesPatientStatusFilter() {
+    if (!this.patientStatus || this.patientStatus.trim() == '') {
+      this.originalQueueEntries = this.tempQueueEntries;
+      return;
+    }
+    this.originalQueueEntries = this.tempQueueEntries;
+    const filteredQueueEntries = this.originalQueueEntries.filter(
+      (entry) =>
+        this.getAppointmentStatusValue(entry.Status) === this.patientStatus
+    );
+    this.originalQueueEntries = [...filteredQueueEntries];
+  }
+  handelQueueEntriesPatientTypeFilter() {
+    if (!this.patientType || this.patientType.trim() == '') {
+      this.originalQueueEntries = this.tempQueueEntries;
+      return;
+    }
+    this.originalQueueEntries = this.tempQueueEntries;
+    const filteredQueueEntries = this.originalQueueEntries.filter(
+      (entry) => this.getClientTypeValue(entry.ClientType) === this.patientType
+    );
+    this.originalQueueEntries = [...filteredQueueEntries];
   }
   handelQueueEntriesSearch() {
     if (!this.searchText || this.searchText.trim() == '') {
@@ -62,4 +96,11 @@ export class PatientQueueTableComponent implements OnInit {
     );
     this.originalQueueEntries = [...filteredQueueEntries];
   }
+  getClientTypeValue(value: ClientType) {
+    return ClientType[value];
+  }
+  getAppointmentStatusValue(value: QueueAppointmentStatus) {
+    return QueueAppointmentStatus[value];
+  }
+
 }
