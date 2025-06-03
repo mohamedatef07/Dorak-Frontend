@@ -1,7 +1,9 @@
   <body>
+          <form [formGroup]="personalForm">
+
     <!-- Main -->
     <main>
-      
+
         <div class="settings-container">
           <div class="tab-content">
 
@@ -10,36 +12,29 @@
               <h2 class="section-title">Professional Information Settings</h2>
               <div class="settings-card">
                 <div class="mb-3">
-                  <label for="specialization" class="form-label"
-                    >Specialization</label
-                  >
-                  <input type="text" class="form-control" id="specialization" />
+                  <label for="Specialization" class="form-label" >Specialization</label>
+               <input type="text" class="form-control" formControlName="Specialization" />
                 </div>
                 <div class="mb-3">
-                  <label for="experience" class="form-label">Experience</label>
-                  <input type="text" class="form-control" id="experience" />
+                  <label for="ExperienceYears" class="form-label">Experience</label>
+               <input type="text" class="form-control" formControlName="ExperienceYears" />
                 </div>
                 <div class="mb-3">
-                  <label for="hospitalName" class="form-label"
-                    >Hospital Name</label
-                  >
-                  <input type="text" class="form-control" id="hospitalName" />
+                  <label for="LicenseNumber" class="form-label">Medical License Number</label >
+               <input type="text" class="form-control" formControlName="LicenseNumber" />
                 </div>
                 <div class="mb-3">
-                  <label for="licenseNumber" class="form-label"
-                    >Medical License Number</label
-                  >
-                  <input type="text" class="form-control" id="licenseNumber" />
-                </div>
-                <div class="mb-3">
-                  <label for="about" class="form-label">About</label>
-                  <textarea class="form-control" id="about"></textarea>
+                  <label for="Bio" class="form-label">About</label>
+                  <textarea class="form-control" formControlName="Bio"></textarea>
                 </div>
               </div>
             </div>
-             <div class="setting-btns d-flex gap-5 pt-4">
-            <button type="button" class="btn Save-btn mt-3" >Save</button>
-            <button type="button" class="btn Cancel-btn mt-3" >Cancel</button>
+              <div class="setting-btns d-flex gap-5 pt-4">
+         <button  type="button" class="btn Save-btn mt-3" (click)="onSubmit()"> Save </button>
+         <button  type="button" class="btn Cancel-btn mt-3"(click)="onCancel()" > Cancel  </button>
           </div>
           </div>
         </div>
+        </main>
+          </form>
+  </body>

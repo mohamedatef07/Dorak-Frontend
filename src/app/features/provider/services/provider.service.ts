@@ -47,9 +47,25 @@ updateProfile(data: FormData): Observable<{ message: string; status: number; dat
     'http://localhost:5139/api/Provider/UpdateProfile',
     data
   );
+}
+
+updateProfileinformation(data: FormData): Observable<{ message: string; status: number; data: any }> {
+  return this.httpClient.put<{ message: string; status: number; data: any }>(
+    'http://localhost:5139/api/Provider/update-professional-info',
+    data
+  );
 
 }
 
+changePassword(data: FormData): Observable<{ message: string; status: number; data: any }> {
+  return this.httpClient.put<{ message: string; status: number; data: any }>(
+    'http://localhost:5139/api/Account/change-password',
+    data
+  );
+
+
+
+}
 
 }
 
