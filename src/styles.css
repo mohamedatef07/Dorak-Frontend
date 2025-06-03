@@ -21,11 +21,37 @@
   --active-bg: #ccf0eb;
   --waiting-text: #6226ef;
   --waiting-bg: #e0d4fc;
+
+  /* Unified modern vars */
+  --bg-primary: #ecf0f1;
+  --bg-dark: #012a4a;
+  --text-primary: #012a4a;
+  --text-dark: #ecf0f1;
+  --btn-bg: #61A5C2;
+  --btn-text: #fff;
+  --alert-color: #f39c12;
+  --success-color: #2ecc71;
+
+  /* Fonts */
+  --font-heading: 'Poppins', sans-serif;
+  --font-body: 'DINNextLTArabic', sans-serif;
+
+  /* Font Sizes */
+  --font-page-header: 32px;
+  --font-inner-header: 24px;
+  --font-p: 16px;
+  --font-button: 18px;
+
+  /* Sizing */
   --border-radius: 12px;
   --transition: all 0.5s ease;
   --padding: 20px;
-  --button-padding: 10px 15px;
+  --button-padding: 20px 25px;
+  --btn-padding: 20px 25px;
+  --card-radius: 12px;
+  --icon-size: 35px;
 }
+
 @font-face {
   font-family: Poppins-regular;
   src: url(../public/fonts/Poppins-Regular.ttf);
@@ -245,7 +271,7 @@ a {
 
 /* Nav Bar */
 .nav {
-  position: fixed;
+  position: absolute;
   left: 18%;
   width: 82%;
   min-height: 4.5rem;

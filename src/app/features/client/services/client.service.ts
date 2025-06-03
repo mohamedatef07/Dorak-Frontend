@@ -1,6 +1,6 @@
 import { CheckoutRequest } from './../models/CheckoutRequest';
 import { ApiResponse } from './../../../types/ApiResponse';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import { IDoctorMainInfo } from '../models/IDoctorMainInfo';
@@ -16,6 +16,8 @@ import { IClientProfile } from '../models/IClientProfile';
 import { IAppointment } from '../models/IAppointment';
 import { IClientProfileAppointment } from '../models/IClientProfileAppointment';
 import { IClientWalletProfile } from '../models/IClientWalletProfile';
+import { IDoctorsCard } from '../../../types/IDoctorsCard';
+import { IDoctorFilter } from '../../../types/IDoctorFilter';
 
 @Injectable({
   providedIn: 'root',
@@ -25,6 +27,29 @@ export class ClientService {
   authServices = inject(AuthService);
   id = '2293a1da-9c6c-4239-bde5-433abf0039f4';
   constructor() {}
+
+  getAllDoctorsCards(): Observable<ApiResponse<IDoctorsCard[]>> {
+    return this.httpClient.get<ApiResponse<IDoctorsCard[]>>(
+      `${environment.apiUrl}/API/Client/cards`);
+  }
+
+searchDoctors(searchText: string = '', city: string = '', specialization: string = ''): Observable<ApiResponse<IDoctorsCard[]>> {
+  const params = new HttpParams()
+    .set('searchText', searchText)
+    .set('city', city)
+    .set('specialization', specialization);
+
+  return this.httpClient.get<ApiResponse<IDoctorsCard[]>>(
+    'http://localhost:5139/api/Client/search', { params }
+  );
+}
+
+searchDoctorsByFilter(filter: IDoctorFilter) {
+  return this.httpClient.post<ApiResponse<IDoctorsCard[]>>(
+    'http://localhost:5139/api/Client/filter',
+    filter
+  );
+}
   getMainInfo(): Observable<ApiResponse<IDoctorMainInfo>> {
     return this.httpClient.get<ApiResponse<IDoctorMainInfo>>(
       `${environment.apiUrl}/api/client/main-info?providerId=${this.id}`

@@ -1,0 +1,31 @@
+
+  <body>
+    <!-- Main -->
+    <main>
+      <div class="container d-flex flex-column gap-3 pt-4 pb-4 pe-0 ps-0">
+        <p class="fw-bold m-0">Settings</p>
+        <ul
+          class="setting-tabs d-flex justify-content-between m-0 p-0">
+          <li class="setting-item">
+            <a class="setting-link"  routerLink="personal-setting" routerLinkActive="active">Personal</a>
+          </li>
+
+          <li class="setting-item">
+            <a class="setting-link" routerLink="professional-setting" routerLinkActive="active"
+              >Professional Information</a
+            >
+          </li>
+          <li class="setting-item">
+            <a class="setting-link" routerLink="security-setting" routerLinkActive="active">Security</a>
+          </li>
+          <li class="setting-item">
+            <a class="setting-link" href="#preferences">System Preferences</a>
+          </li>
+        </ul>
+
+        </div>
+    </main>
+  </body>
+
+<!-- مكان عرض محتوى التاب -->
+<router-outlet></router-outlet>

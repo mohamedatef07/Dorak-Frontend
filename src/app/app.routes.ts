@@ -15,13 +15,24 @@ import { ScheduleComponent } from './features/provider/components/schedule/sched
 import { PatientQueueComponent } from './features/provider/components/patient-queue/patient-queue.component';
 import { ReportsComponent } from './features/provider/components/reports/reports.component';
 import { DashboardComponent } from './features/provider/components/dashboard/dashboard.component';
+import { LandingpageLayoutComponent } from './features/landingpage/landingpage-layout/landingpage-layout/landingpage-layout.component';
+import { HeroComponent } from './features/landingpage/components/hero/hero.component';
+import { ReviewComponent } from './features/landingpage/components/review/review.component';
+import { CertificationsComponent } from './features/landingpage/components/Certifications/Certifications.component';
+import { DoctorsPageComponent } from './features/client/components/doctorsPage/doctorsPage.component';
+import { LandingpageRegisterComponent } from './features/landingpage/components/landingpageRegister/landingpageRegister.component';
+import { DoctorsLandingPageComponent } from './features/landingpage/components/doctors-landingPage/doctors-landingPage.component';
 import { ProviderProfileComponent } from './features/provider/components/provider-profile/provider-profile.component';
-import { ProviderSettingsComponent } from './features/provider/components/provider-settings/provider-settings.component';
 import { EditProfileComponent } from './features/client/components/edit-profile/edit-profile.component';
 import { UpcomingAppointmentsComponent } from './features/client/components/upcoming-appointments/upcoming-appointments.component';
 import { LastAppointmentComponent } from './features/client/components/last-appointment/last-appointment.component';
 import { ClientLiveQueueComponent } from './features/client/components/Client-Live-Queue/Client-Live-Queue.component';
 import { ClientWalletComponent } from './features/client/components/ClientWallet/ClientWallet.component';
+import { ProviderSidebarComponent } from './features/provider/components/provider-sidebar/provider-sidebar.component';
+import { PersonalSettingComponent } from './features/provider/components/personalSetting/personalSetting.component';
+import { ProfessionalInformationComponent } from './features/provider/components/ProfessionalInformation/ProfessionalInformation.component';
+import { SecurityProfileComponent } from './features/provider/components/SecurityProfile/SecurityProfile.component';
+import { ProviderSettingComponent } from './features/provider/components/Provider-Setting/Provider-Setting.component';
 
 export const routes: Routes = [
   // {
@@ -34,6 +45,7 @@ export const routes: Routes = [
     component: ProviderLayoutComponent,
     children: [
       { path: 'dashboard', component: DashboardComponent, title: 'Dashboard' },
+      {path:'provider-profile',component:ProviderProfileComponent,title:'profile'},
       {
         path: 'patient-queue',
         component: PatientQueueComponent,
@@ -41,16 +53,17 @@ export const routes: Routes = [
       },
       { path: 'schedule', component: ScheduleComponent, title: 'Schedule' },
       { path: 'reports', component: ReportsComponent, title: 'Reports' },
-      {
-        path: 'profile',
-        component: ProviderProfileComponent,
-        title: 'Profile',
-      },
-      {
-        path: 'settings',
-        component: ProviderSettingsComponent,
-        title: 'Settings',
-      },
+       {
+      path: 'profile-setting',
+      component: ProviderSettingComponent,
+      children: [
+        { path: '', redirectTo: 'personal-setting', pathMatch: 'full' },
+        { path: 'personal-setting', component: PersonalSettingComponent },
+        { path: 'professional-setting', component: ProfessionalInformationComponent },
+        { path: 'security-setting', component: SecurityProfileComponent },
+      ]
+    }
+
     ],
   },
   {
@@ -70,9 +83,9 @@ export const routes: Routes = [
     component: ClientLayoutComponent,
     children: [
       {
-        path: 'doctor-details',
-        component: DoctorDetailsComponent,
-        title: 'Doctor Details',
+       path: 'doctor-details/:id',
+      component: DoctorDetailsComponent,
+      title: 'Doctor Details',
       },
       {
         path: 'client-profile',
@@ -104,6 +117,10 @@ export const routes: Routes = [
         component: ClientWalletComponent,
         title: 'Client Wallet',
       },
+       {
+    path: 'doctors-Page',
+    component: DoctorsPageComponent
+  }
     ],
   },
 
@@ -112,6 +129,37 @@ export const routes: Routes = [
   // canActivate: [AuthGuard, RoleGuard], data: { expectedRole: 'Client' }
 
   // ----------------------------------
+
+
+  {
+    path: 'home',
+    component: LandingpageLayoutComponent,
+    children: [
+
+
+      { path: 'doctors',
+        component:DoctorsLandingPageComponent
+       },
+       { path: 'review',
+        component:ReviewComponent
+       },
+       { path: 'certfication',
+        component:CertificationsComponent
+       },
+        { path: 'Register',
+        component:LandingpageRegisterComponent
+       },
+
+
+
+
+      ]
+      ,
+   },
+
+
+
+
 
   { path: 'login', component: LoginComponent, title: 'Login' },
   { path: 'register', component: RegisterComponent, title: 'Register' },
