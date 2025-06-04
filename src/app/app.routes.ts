@@ -15,7 +15,6 @@ import { ScheduleComponent } from './features/provider/components/schedule/sched
 import { PatientQueueComponent } from './features/provider/components/patient-queue/patient-queue.component';
 import { ReportsComponent } from './features/provider/components/reports/reports.component';
 import { DashboardComponent } from './features/provider/components/dashboard/dashboard.component';
-import { ProviderSettingsComponent } from './features/provider/components/provider-settings/provider-settings.component';
 import { LandingpageLayoutComponent } from './features/landingpage/landingpage-layout/landingpage-layout/landingpage-layout.component';
 import { HeroComponent } from './features/landingpage/components/hero/hero.component';
 import { ReviewComponent } from './features/landingpage/components/review/review.component';
@@ -25,6 +24,10 @@ import { LandingpageRegisterComponent } from './features/landingpage/components/
 import { DoctorsLandingPageComponent } from './features/landingpage/components/doctors-landingPage/doctors-landingPage.component';
 import { ProviderProfileComponent } from './features/provider/components/provider-profile/provider-profile.component';
 import { ProviderSidebarComponent } from './features/provider/components/provider-sidebar/provider-sidebar.component';
+import { PersonalSettingComponent } from './features/provider/components/personalSetting/personalSetting.component';
+import { ProfessionalInformationComponent } from './features/provider/components/ProfessionalInformation/ProfessionalInformation.component';
+import { SecurityProfileComponent } from './features/provider/components/SecurityProfile/SecurityProfile.component';
+import { ProviderSettingComponent } from './features/provider/components/Provider-Setting/Provider-Setting.component';
 
 export const routes: Routes = [
   // {
@@ -45,13 +48,16 @@ export const routes: Routes = [
       },
       { path: 'schedule', component: ScheduleComponent, title: 'Schedule' },
       { path: 'reports', component: ReportsComponent, title: 'Reports' },
-
-      {
-        path: 'settings',
-        component: ProviderSettingsComponent,
-        title: 'Settings',
-      },
-    
+       {
+      path: 'profile-setting',
+      component: ProviderSettingComponent,
+      children: [
+        { path: '', redirectTo: 'personal-setting', pathMatch: 'full' },
+        { path: 'personal-setting', component: PersonalSettingComponent },
+        { path: 'professional-setting', component: ProfessionalInformationComponent },
+        { path: 'security-setting', component: SecurityProfileComponent },
+      ]
+    }
 
     ],
   },
@@ -72,9 +78,9 @@ export const routes: Routes = [
     component: ClientLayoutComponent,
     children: [
       {
-        path: 'doctor-details',
-        component: DoctorDetailsComponent,
-        title: 'Doctor Details',
+       path: 'doctor-details/:id',
+      component: DoctorDetailsComponent,
+      title: 'Doctor Details',
       },
       {
         path: 'client-profile',

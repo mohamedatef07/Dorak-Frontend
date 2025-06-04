@@ -8,7 +8,6 @@ import { environment } from '../../../../../environments/environment';
 @Component({
   selector: 'app-provider-profile',
   standalone: true,
-  imports:[ProviderSidebarComponent],
   templateUrl: './provider-profile.component.html',
   styleUrls: ['./provider-profile.component.css']
 })

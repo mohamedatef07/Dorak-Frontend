@@ -42,9 +42,15 @@ getProviderProfile(): Observable<ApiResponse<IProviderProfile>> {
   );
 }
 
-  }
+updateProfile(data: FormData): Observable<{ message: string; status: number; data: any }> {
+  return this.httpClient.put<{ message: string; status: number; data: any }>(
+    'http://localhost:5139/api/Provider/UpdateProfile',
+    data
+  );
+
+}
 
 
-
+}
 
 

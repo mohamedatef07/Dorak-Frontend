@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { DoctorMainInfoComponent } from '../doctor-main-info/doctor-main-info.component';
 import { DoctorReviewsComponent } from '../doctor-reviews/doctor-reviews.component';
 import { BookingComponent } from '../booking/booking.component';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -11,7 +12,15 @@ import { BookingComponent } from '../booking/booking.component';
   imports: [DoctorMainInfoComponent, DoctorReviewsComponent, BookingComponent]
 })
 export class DoctorDetailsComponent implements OnInit {
-  constructor() {}
+    doctorId!: string;
 
-  ngOnInit() {}
+  constructor(private route: ActivatedRoute) {}
+
+
+  ngOnInit() {
+        this.route.paramMap.subscribe(params => {
+      this.doctorId = params.get('id')!;
+    });
+
+  }
 }

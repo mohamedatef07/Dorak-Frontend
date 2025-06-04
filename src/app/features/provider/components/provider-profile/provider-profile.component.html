@@ -6,32 +6,32 @@
         <section class="general-info d-flex align-content-center p-4">
           <div class="doctor-img d-flex">
             <img [src]="fullImagePath" alt="Doctor Profile" />
- 
+
           </div>
           <div class="info flex-grow-1 d-flex flex-column ms-5 gap-3">
             <div class="doctor-name d-flex align-items-center gap-5">
+              <span>FullName</span>
               <span class="full-name">{{ profile?.FullName }}</span>
-              <p class="m-0">Alfred Murray</p>
             </div>
             <div class="doctor-email d-flex align-items-center gap-5">
+              <span>Email</span>
               <span class="email">{{profile?.Email}}</span>
-              <p class="m-0">Alfred Murray</p>
             </div>
             <div class="doctor-phone d-flex align-items-center gap-5">
+             <span>Phone</span>
               <span class="phone">{{profile?.Phone}}</span>
-              <p class="m-0">0123456789</p>
             </div>
             <div class="doctor-gender d-flex align-items-center gap-5">
+               <span>Gender</span>
               <span class="gender">{{profile?.Gender === genderEnum.Male
       ? 'Male'
       : profile?.Gender === genderEnum.Female
         ? 'Female'
         : 'Not specified'}}</span>
-              <p class="m-0">Male</p>
             </div>
             <div class="doctor-birthDate d-flex align-items-center gap-5">
+            <span>BirthDate</span>
               <span class="birthDate">{{profile?.BirthDate}}</span>
-              <p class="m-0">10-10-1999</p>
             </div>
           </div>
         </section>
@@ -41,21 +41,19 @@
           <div class="info-container p-4">
             <div class="info d-flex flex-column gap-3">
               <div
-                class="doctor-specialization d-flex align-items-center gap-5"
-              >
+                class="doctor-specialization d-flex align-items-center gap-5">
+                 <span>Specialization</span>
                 <span class="specialization">{{profile?.Specialization}}</span>
-                <p class="m-0">General Surgery</p>
               </div>
               <div class="doctor-experience d-flex align-items-center gap-5">
+                <span>Experience</span>
                 <span class="experience">{{profile?.Experience}}</span>
-                <p class="m-0">14</p>
               </div>
 
               <div
-                class="medical-license-number d-flex align-items-center gap-5"
-              >
+                class="medical-license-number d-flex align-items-center gap-5">
+                <span>MedicalLicenseNumber</span>
                 <span class="license-number">{{profile?.MedicalLicenseNumber}}</span>
-                <p class="m-0">13497866236654128799</p>
               </div>
 
             </div>
