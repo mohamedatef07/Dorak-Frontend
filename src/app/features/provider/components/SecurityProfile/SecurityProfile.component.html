@@ -1,25 +1,26 @@
   <body>
+<form [formGroup]="personalForm">
+
     <!-- Main -->
     <main>
       <div class="container d-flex flex-column gap-3 pt-4 pb-4 pe-0 ps-0">
-        
+
         <div class="settings-container">
           <div class="tab-content">
 
-            <!-- Professional Information Tab -->
+            <!-- security Tab -->
             <div class="tab-pane fade show active" id="security-tab">
               <h2 class="section-title">Security Settings</h2>
               <div class="settings-card">
               <h5 class="mb-3">Change Password</h5>
                 <div class="mb-3">
-                  <label for="Old Password<" class="form-label"
-                    >Old Password</label
+                  <label for="Old Password" class="form-label">Old Password</label
                   >
-                  <input type="password" class="form-control" id="Old Password" />
+               <input type="password" class="form-control" formControlName="OldPassword" />
                 </div>
                 <div class="mb-3">
                   <label for="newPassword" class="form-label">New Password</label>
-                  <input type="password" class="form-control" id="newPassword" />
+               <input type="password" class="form-control" formControlName="NewPassword" />
 
                      </div>
                 <div class="mb-3 form-check">
@@ -34,14 +35,13 @@
                 </div>
                 </div>
          <div class="setting-btns d-flex gap-5 pt-4">
-            <button type="button" class="btn Save-btn mt-3" >Save</button>
-            <button type="button" class="btn Cancel-btn mt-3">Cancel</button>
+            <button  type="button" class="btn Save-btn mt-3" (click)="onSubmit()"> Save </button>
+            <button  type="button" class="btn Cancel-btn mt-3"(click)="onCancel()" > Cancel  </button>
           </div>
-
-
               </div>
             </div>
-
-
           </div>
         </div>
+        </main>
+</form>
+</body>
