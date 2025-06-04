@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { CertificationsComponent } from './Certifications.component';
+import { CertificationsComponent } from './certifications.component';
 
 describe('CertificationsComponent', () => {
   let component: CertificationsComponent;
@@ -11,9 +11,8 @@ describe('CertificationsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CertificationsComponent ]
-    })
-    .compileComponents();
+      declarations: [CertificationsComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
