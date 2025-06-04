@@ -61,7 +61,6 @@ export class PatientQueueTableComponent implements OnInit {
       this.handelQueueEntriesPatientTypeFilter();
     }
   }
-
   handelQueueEntriesPatientStatusFilter() {
     if (!this.patientStatus || this.patientStatus.trim() == '') {
       this.originalQueueEntries = this.tempQueueEntries;
@@ -102,5 +101,4 @@ export class PatientQueueTableComponent implements OnInit {
   getAppointmentStatusValue(value: QueueAppointmentStatus) {
     return QueueAppointmentStatus[value];
   }
-
 }
