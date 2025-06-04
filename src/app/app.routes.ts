@@ -23,6 +23,11 @@ import { DoctorsPageComponent } from './features/client/components/doctorsPage/d
 import { LandingpageRegisterComponent } from './features/landingpage/components/landingpageRegister/landingpageRegister.component';
 import { DoctorsLandingPageComponent } from './features/landingpage/components/doctors-landingPage/doctors-landingPage.component';
 import { ProviderProfileComponent } from './features/provider/components/provider-profile/provider-profile.component';
+import { EditProfileComponent } from './features/client/components/edit-profile/edit-profile.component';
+import { UpcomingAppointmentsComponent } from './features/client/components/upcoming-appointments/upcoming-appointments.component';
+import { LastAppointmentComponent } from './features/client/components/last-appointment/last-appointment.component';
+import { ClientLiveQueueComponent } from './features/client/components/Client-Live-Queue/Client-Live-Queue.component';
+import { ClientWalletComponent } from './features/client/components/ClientWallet/ClientWallet.component';
 import { ProviderSidebarComponent } from './features/provider/components/provider-sidebar/provider-sidebar.component';
 import { PersonalSettingComponent } from './features/provider/components/personalSetting/personalSetting.component';
 import { ProfessionalInformationComponent } from './features/provider/components/ProfessionalInformation/ProfessionalInformation.component';
@@ -86,6 +91,31 @@ export const routes: Routes = [
         path: 'client-profile',
         component: ClientProfileComponent,
         title: 'Client Profile',
+      },
+       {
+        path: 'client-edit-profile',
+        component: EditProfileComponent,
+        title: 'Edit Client Profile',
+      },
+       {
+        path: 'client-upcoming-appointments',
+        component: UpcomingAppointmentsComponent,
+        title: 'Client Upcoming Appointments',
+      },
+       {
+        path: 'last-appointment',
+        component: LastAppointmentComponent,
+        title: 'Last Appointment',
+      },
+       {
+        path: 'client-live-queue',
+        component: ClientLiveQueueComponent,
+        title: 'Live Queue Appointment',
+      },
+       {
+        path: 'client-wallet',
+        component: ClientWalletComponent,
+        title: 'Client Wallet',
       },
        {
     path: 'doctors-Page',

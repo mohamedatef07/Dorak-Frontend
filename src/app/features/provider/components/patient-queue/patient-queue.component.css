@@ -1,0 +1,7 @@
+main .container .search-filter .search-heading-container p {
+  color: var(--text-color-Light);
+  font-size: 2rem;
+}
+.patient-queue-search {
+  width: 70%;
+}

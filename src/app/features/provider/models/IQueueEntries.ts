@@ -7,6 +7,6 @@ export interface IQueueEntries {
   CurrentQueuePosition: number | null;
   ArrivalTime: Date;
   AppointmentDate: Date;
-  Type: ClientType;
-  QueueAppointmentStatus: QueueAppointmentStatus;
+  ClientType: ClientType;
+  Status: QueueAppointmentStatus;
 }
