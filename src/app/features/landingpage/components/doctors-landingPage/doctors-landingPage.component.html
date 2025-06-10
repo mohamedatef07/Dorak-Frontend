@@ -1,0 +1,34 @@
+  <!-- Doctor listings -->
+    <div class="col-lg-9 col-md-8">
+      <h4 class="content-title">All Specialties</h4>
+
+      <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
+        <div class="col" *ngFor="let doc of doctors">
+          <div class="doctor-card">
+            <img [src]="'images/doctorimg.png'" />
+
+            <div class="card-body">
+              <div class="doctor-name">{{ doc.FullName }}</div>
+              <div class="doctor-specialty">{{ doc.Specialization }}</div>
+              <div class="features">
+                <div class="feature">
+                  <i class="fa-solid fa-star feature-icon"></i> {{ doc.Rate }}
+                </div>
+                <div class="feature">
+                  <i class="fa-regular fa-clock feature-icon"></i> {{ doc.EstimatedDuration }}
+                </div>
+                <div class="feature">
+                  <i class="fa-solid fa-dollar-sign feature-icon"></i> {{ doc.Price }}
+                </div>
+                <div class="feature">
+                  <i class="fa-solid fa-location-dot feature-icon"></i> {{ doc.City }}
+                </div>
+              </div>
+              <button class="book-button">
+                BOOK NOW
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>

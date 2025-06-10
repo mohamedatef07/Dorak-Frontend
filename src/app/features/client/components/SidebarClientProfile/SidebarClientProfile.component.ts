@@ -1,9 +1,10 @@
 import { ButtonModule } from 'primeng/button';
 import { Component, OnInit } from '@angular/core';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-SidebarClientProfile',
-  imports:[ButtonModule],
+  imports:[ButtonModule, RouterLink,RouterLinkActive],
   templateUrl: './SidebarClientProfile.component.html',
   styleUrls: ['./SidebarClientProfile.component.css']
 })

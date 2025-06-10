@@ -1,33 +1,20 @@
-<div class="container-fluid p-3 py-5">
-  <div class="row">
-    <!-- Sidebar -->
-    <div class="col-12 col-md-3 mb-3">
-      <app-SidebarClientProfile></app-SidebarClientProfile>
-    </div>
-    <!-- Main content -->
-    <div class="col-12 col-md-9">
-      <div class="card p-4 shadow-sm">
-        <!-- Profile Section -->
-        <div
-          class="d-flex flex-column flex-md-row align-items-center mb-4 gap-3"
-        >
-          <p-avatar
-            image="https://www.w3schools.com/howto/img_avatar.png"
-            shape="circle"
-            class="avatar"
-          >
-          </p-avatar>
-          <div class="text-center text-md-start">
-            <h5 class="fw-bold mb-1">{{client.Name}}</h5>
-            <p class="mb-0">Contact: {{client.Phone}}</p>
-            <p class="mb-0">Email Address: {{client.Email}}</p>
-          </div>
-        </div>
+<!-- Main content -->
 
-        <h6 class="fw-bold mb-3">My Appointments:</h6>
-
-        <app-ClientAppointments [appointments]="this.client.Appointments"></app-ClientAppointments>
-      </div>
+<div class="card p-4 shadow-sm">
+  <!-- Profile Section -->
+  <div class="d-flex flex-column flex-md-row align-items-center mb-4 gap-3">
+    <p-avatar image="{{ client.Image }}" shape="circle" class="avatar">
+    </p-avatar>
+    <div class="text-center text-md-start">
+      <h5 class="fw-bold mb-1">{{ client.Name }}</h5>
+      <p class="mb-0">Contact: {{ client.Phone }}</p>
+      <p class="mb-0">Email Address: {{ client.Email }}</p>
     </div>
   </div>
+
+  <h6 class="fw-bold mb-3">My Appointments:</h6>
+
+  <app-ClientAppointments
+    [appointments]="this.client.Appointments"
+  ></app-ClientAppointments>
 </div>

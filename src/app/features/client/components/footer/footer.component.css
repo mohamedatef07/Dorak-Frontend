@@ -1,0 +1,15 @@
+.clientfooter {
+  margin-top: 20px;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  min-height: 4.5rem;
+  background-color: white;
+
+}
+.clientfooter .container .copyright {
+  color: var(--text-color-Light);
+}
+.clientfooter .container div ul li a {
+  color: var(--text-color-Light);
+}

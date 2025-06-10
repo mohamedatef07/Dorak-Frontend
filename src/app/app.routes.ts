@@ -7,19 +7,34 @@ import { ProviderLayoutComponent } from './features/provider/components/provider
 import { OwnerLayoutComponent } from './features/owner/components/owner-layout/owner-layout.component';
 import { ClientLayoutComponent } from './features/client/components/client-layout/client-layout.component';
 import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
-import { AuthGuard } from './guards/auth.guard';
-import { RoleGuard } from './guards/role.guard';
 import { DoctorDetailsComponent } from './features/client/components/doctor-details/doctor-details.component';
 import { ClientProfileComponent } from './features/client/components/client-profile/client-profile.component';
 import { ScheduleComponent } from './features/provider/components/schedule/schedule.component';
 import { PatientQueueComponent } from './features/provider/components/patient-queue/patient-queue.component';
 import { ReportsComponent } from './features/provider/components/reports/reports.component';
 import { DashboardComponent } from './features/provider/components/dashboard/dashboard.component';
+import { ReviewComponent } from './features/landingpage/components/review/review.component';
+import { CertificationsComponent } from './features/landingpage/components/certifications/certifications.component';
+import { DoctorsPageComponent } from './features/client/components/doctorsPage/doctorsPage.component';
+import { LandingPageRegisterComponent } from './features/landingpage/components/landingPageRegister/landingPageRegister.component';
+import { DoctorsLandingPageComponent } from './features/landingpage/components/doctors-landingPage/doctors-landingPage.component';
 import { ProviderProfileComponent } from './features/provider/components/provider-profile/provider-profile.component';
 import { ProviderSettingsComponent } from './features/provider/components/provider-settings/provider-settings.component';
 import { ManageOperatorsComponent } from './features/owner/components/ManageOperators/ManageOperators.component';
 import { AddOperatorComponent } from './features/owner/components/AddOperator/AddOperator.component';
 import { CreateAppointmentComponent } from './features/owner/components/CreateAppointment/CreateAppointment.component';
+import { EditProfileComponent } from './features/client/components/edit-profile/edit-profile.component';
+import { UpcomingAppointmentsComponent } from './features/client/components/upcoming-appointments/upcoming-appointments.component';
+import { LastAppointmentComponent } from './features/client/components/last-appointment/last-appointment.component';
+import { ClientLiveQueueComponent } from './features/client/components/Client-Live-Queue/Client-Live-Queue.component';
+import { ClientWalletComponent } from './features/client/components/ClientWallet/ClientWallet.component';
+import { ProviderSidebarComponent } from './features/provider/components/provider-sidebar/provider-sidebar.component';
+import { PersonalSettingComponent } from './features/provider/components/personalSetting/personalSetting.component';
+import { ProfessionalInformationComponent } from './features/provider/components/ProfessionalInformation/ProfessionalInformation.component';
+import { SecurityProfileComponent } from './features/provider/components/SecurityProfile/SecurityProfile.component';
+import { ProviderSettingComponent } from './features/provider/components/Provider-Setting/Provider-Setting.component';
+import { LandingPageLayoutComponent } from './features/landingpage/components/landingPage-layout/landingPage-layout.component';
+
 
 export const routes: Routes = [
   // {
@@ -33,6 +48,11 @@ export const routes: Routes = [
     children: [
       { path: 'dashboard', component: DashboardComponent, title: 'Dashboard' },
       {
+        path: 'provider-profile',
+        component: ProviderProfileComponent,
+        title: 'profile',
+      },
+      {
         path: 'patient-queue',
         component: PatientQueueComponent,
         title: 'Patient Queue',
@@ -40,14 +60,17 @@ export const routes: Routes = [
       { path: 'schedule', component: ScheduleComponent, title: 'Schedule' },
       { path: 'reports', component: ReportsComponent, title: 'Reports' },
       {
-        path: 'profile',
-        component: ProviderProfileComponent,
-        title: 'Profile',
-      },
-      {
-        path: 'settings',
-        component: ProviderSettingsComponent,
-        title: 'Settings',
+        path: 'profile-setting',
+        component: ProviderSettingComponent,
+        children: [
+          { path: '', redirectTo: 'personal-setting', pathMatch: 'full' },
+          { path: 'personal-setting', component: PersonalSettingComponent },
+          {
+            path: 'professional-setting',
+            component: ProfessionalInformationComponent,
+          },
+          { path: 'security-setting', component: SecurityProfileComponent },
+        ],
       },
     ],
   },
@@ -81,12 +104,11 @@ export const routes: Routes = [
   //   children: [{ path: '' }, { path: '' }, { path: '' }],
   // },
   {
-
     path: 'client',
     component: ClientLayoutComponent,
     children: [
       {
-        path: 'doctor-details',
+        path: 'doctor-details/:id',
         component: DoctorDetailsComponent,
         title: 'Doctor Details',
       },
@@ -94,6 +116,35 @@ export const routes: Routes = [
         path: 'client-profile',
         component: ClientProfileComponent,
         title: 'Client Profile',
+      },
+      {
+        path: 'client-edit-profile',
+        component: EditProfileComponent,
+        title: 'Edit Client Profile',
+      },
+      {
+        path: 'client-upcoming-appointments',
+        component: UpcomingAppointmentsComponent,
+        title: 'Client Upcoming Appointments',
+      },
+      {
+        path: 'last-appointment',
+        component: LastAppointmentComponent,
+        title: 'Last Appointment',
+      },
+      {
+        path: 'client-live-queue',
+        component: ClientLiveQueueComponent,
+        title: 'Live Queue Appointment',
+      },
+      {
+        path: 'client-wallet',
+        component: ClientWalletComponent,
+        title: 'Client Wallet',
+      },
+      {
+        path: 'doctors-Page',
+        component: DoctorsPageComponent,
       },
     ],
   },
@@ -103,6 +154,17 @@ export const routes: Routes = [
   // canActivate: [AuthGuard, RoleGuard], data: { expectedRole: 'Client' }
 
   // ----------------------------------
+
+  {
+    path: 'home',
+    component: LandingPageLayoutComponent,
+    children: [
+      { path: 'doctors', component: DoctorsLandingPageComponent },
+      { path: 'review', component: ReviewComponent },
+      { path: 'certification', component: CertificationsComponent },
+      { path: 'register', component: LandingPageRegisterComponent },
+    ],
+  },
 
   { path: 'login', component: LoginComponent, title: 'Login' },
   { path: 'register', component: RegisterComponent, title: 'Register' },

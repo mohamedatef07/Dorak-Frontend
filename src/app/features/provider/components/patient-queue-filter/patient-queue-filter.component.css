@@ -1,0 +1,27 @@
+.filter {
+  width: fit-content;
+  background-color: white;
+  border: 1px solid var(--button-bg-color-Light);
+  border-radius: var(--border-radius);
+}
+.filter > div {
+  color: var(--text-color-Light);
+}
+.filter > div:not(:last-child) {
+  border-right: 1px solid var(--button-bg-color-Light);
+}
+.filter .reset-filter p {
+  color: #ea0234;
+}
+::ng-deep .p-select .p-icon {
+  margin-left: 0.4rem !important;
+  width: 1.1rem !important;
+}
+::ng-deep .p-select-list-container {
+  padding: 0.5rem !important;
+  background-color: white !important;
+  color: var(--text-color-Light) !important;
+}
+::ng-deep .p-select-option {
+  padding: 0.5rem !important;
+}
