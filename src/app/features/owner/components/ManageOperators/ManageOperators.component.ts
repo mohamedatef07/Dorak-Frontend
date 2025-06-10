@@ -28,4 +28,22 @@ export class ManageOperatorsComponent implements OnInit {
       },
     });
   }
+
+  DeleteOperator(OperatorId:string):void {
+    console.log(OperatorId);
+    if (!confirm('Are you sure you want to delete this operator?')) {
+    return;
+  }
+
+  this.ownerService.deleteOperatorById(OperatorId).subscribe({
+    next: (res) => {
+      this.operators = this.operators.filter(op => op.OperatorId !== OperatorId);
+      console.log('Operator deleted successfully');
+    },
+    error: (err) => {
+      console.error('Failed to delete operator:', err);
+      alert('Failed to delete operator. Please try again.');
+    }
+  });
+  }
 }

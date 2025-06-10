@@ -4,6 +4,7 @@ export interface IAddOperator {
     PhoneNumber:string;
     Password:string;
     ConfirmPassword:string;
+    Role:string;
     FirstName:string;
     LastName:string;
     Gender:string;

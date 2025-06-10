@@ -19,6 +19,7 @@ import { ProviderProfileComponent } from './features/provider/components/provide
 import { ProviderSettingsComponent } from './features/provider/components/provider-settings/provider-settings.component';
 import { ManageOperatorsComponent } from './features/owner/components/ManageOperators/ManageOperators.component';
 import { AddOperatorComponent } from './features/owner/components/AddOperator/AddOperator.component';
+import { CreateAppointmentComponent } from './features/owner/components/CreateAppointment/CreateAppointment.component';
 
 export const routes: Routes = [
   // {
@@ -66,6 +67,11 @@ export const routes: Routes = [
         path: 'add-operator',
         component: AddOperatorComponent,
         title: 'Add Operator'
+      },
+      {
+        path: 'create-appointment',
+        component: CreateAppointmentComponent,
+        title: 'Create Appointment'
       }
     ]
   },
