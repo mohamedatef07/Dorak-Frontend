@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ILoginResponseData } from '../types/ILoginResponseData';
 import { CookieService } from 'ngx-cookie-service';
+import { IAddOperator } from '../types/IAddOperator';
 @Injectable({
   providedIn: 'root',
 })
@@ -40,6 +41,14 @@ export class AuthService {
     return this.httpClient.post<ApiResponse<null>>(
       `${environment.apiUrl}/api/account/Register`,
       registerData
+    );
+  }
+  Operatorregister(
+    OperatorData:IAddOperator
+  ): Observable<ApiResponse<null>>{
+    return this.httpClient.post<ApiResponse<null>>(
+      `${environment.apiUrl}/api/account/Register`,
+      OperatorData
     );
   }
 

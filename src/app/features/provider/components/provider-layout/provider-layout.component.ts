@@ -6,7 +6,7 @@ import { ProviderSidebarComponent } from "../provider-sidebar/provider-sidebar.c
 
 @Component({
   selector: 'app-provider-layout',
-  imports: [RouterOutlet, ProviderFooterComponent, ProviderNavbarComponent, ProviderSidebarComponent],
+  imports: [RouterOutlet, ProviderNavbarComponent, ProviderSidebarComponent],
   templateUrl: './provider-layout.component.html',
   styleUrl: './provider-layout.component.css',
 })

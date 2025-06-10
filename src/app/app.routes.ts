@@ -19,6 +19,10 @@ import { DoctorsPageComponent } from './features/client/components/doctorsPage/d
 import { LandingPageRegisterComponent } from './features/landingpage/components/landingPageRegister/landingPageRegister.component';
 import { DoctorsLandingPageComponent } from './features/landingpage/components/doctors-landingPage/doctors-landingPage.component';
 import { ProviderProfileComponent } from './features/provider/components/provider-profile/provider-profile.component';
+import { ProviderSettingsComponent } from './features/provider/components/provider-settings/provider-settings.component';
+import { ManageOperatorsComponent } from './features/owner/components/ManageOperators/ManageOperators.component';
+import { AddOperatorComponent } from './features/owner/components/AddOperator/AddOperator.component';
+import { CreateAppointmentComponent } from './features/owner/components/CreateAppointment/CreateAppointment.component';
 import { EditProfileComponent } from './features/client/components/edit-profile/edit-profile.component';
 import { UpcomingAppointmentsComponent } from './features/client/components/upcoming-appointments/upcoming-appointments.component';
 import { LastAppointmentComponent } from './features/client/components/last-appointment/last-appointment.component';
@@ -30,6 +34,7 @@ import { ProfessionalInformationComponent } from './features/provider/components
 import { SecurityProfileComponent } from './features/provider/components/SecurityProfile/SecurityProfile.component';
 import { ProviderSettingComponent } from './features/provider/components/Provider-Setting/Provider-Setting.component';
 import { LandingPageLayoutComponent } from './features/landingpage/components/landingPage-layout/landingPage-layout.component';
+
 
 export const routes: Routes = [
   // {
@@ -72,7 +77,26 @@ export const routes: Routes = [
   {
     path: 'owner',
     component: OwnerLayoutComponent,
-    // children: [{ path: '' }, { path: '' }, { path: '' }],
+    children: [
+      {
+        path: 'manage-operators',
+        component: ManageOperatorsComponent,
+        title: 'Manage Operators',
+        // children: [
+
+        // ]
+      },
+      {
+        path: 'add-operator',
+        component: AddOperatorComponent,
+        title: 'Add Operator'
+      },
+      {
+        path: 'create-appointment',
+        component: CreateAppointmentComponent,
+        title: 'Create Appointment'
+      }
+    ]
   },
   // {
   //   path: 'provider',
