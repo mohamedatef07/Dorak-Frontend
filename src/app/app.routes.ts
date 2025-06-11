@@ -7,7 +7,7 @@ import { UnauthorizedComponent } from './components/unauthorized/unauthorized.co
 import { ProviderManagementComponent } from './components/provider-management/provider-management.component';
 import { AddProviderComponent } from './components/add-provider/add-provider.component';
 import {SearchProviderComponent} from './components/search-provider/search-provider.component';
-import {ProviderProfileComponent} from './components/provider-profile/provider-profile.component';
+import {ProviderProfilesComponent} from './components/provider-profile/provider-profile.component';
 import { CenterProviderProfileComponent } from './components/center-provider-profile/center-provider-profile.component';
 import { ScheduleOptionsComponent } from './components/schedule-options/schedule-options.component'
 import { ManuallyScheduleComponent } from './components/manually-schedule/manually-schedule.component';
@@ -32,7 +32,6 @@ import { DoctorsPageComponent } from './features/client/components/doctorsPage/d
 import { LandingPageRegisterComponent } from './features/landingpage/components/landingPageRegister/landingPageRegister.component';
 import { DoctorsLandingPageComponent } from './features/landingpage/components/doctors-landingPage/doctors-landingPage.component';
 import { ProviderProfileComponent } from './features/provider/components/provider-profile/provider-profile.component';
-import { ProviderSettingsComponent } from './features/provider/components/provider-settings/provider-settings.component';
 import { ManageOperatorsComponent } from './features/owner/components/ManageOperators/ManageOperators.component';
 import { AddOperatorComponent } from './features/owner/components/AddOperator/AddOperator.component';
 import { CreateAppointmentComponent } from './features/owner/components/CreateAppointment/CreateAppointment.component';
@@ -187,7 +186,7 @@ export const routes: Routes = [
   {path: 'provider-management', component: ProviderManagementComponent, title: 'Provider Management' },
   {path: 'add-provider', component: AddProviderComponent, title: 'Add Provider' },
   {path: 'search-provider', component: SearchProviderComponent, title: 'Search Provider' },
-  { path: 'provider-profile/:id', component: ProviderProfileComponent, title: 'Provider Profile' },
+  { path: 'provider-profile/:id', component: ProviderProfilesComponent, title: 'Provider Profile' },
   {path: 'center-provider-profile/:id', component: CenterProviderProfileComponent, title: 'Provider Profile' },
   {path: 'schedule-options/:providerId', component: ScheduleOptionsComponent, title: 'Schedule Options' },
   {path: 'manually-schedule/:id', component: ManuallyScheduleComponent, title: 'Manually Schedule' },

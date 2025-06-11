@@ -14,7 +14,7 @@ import { ApiResponse } from '../../types/ApiResponse';
   standalone: true,
   imports: [CommonModule, FormsModule, MatButtonModule]
 })
-export class ProviderProfileComponent implements OnInit {
+export class ProviderProfilesComponent implements OnInit {
   provider: IProviderViewModel | null = null;
   errorMessage: string = '';
   isLoading: boolean = false;

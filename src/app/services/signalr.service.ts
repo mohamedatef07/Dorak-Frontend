@@ -6,7 +6,7 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class SignalRService {
-  private hubConnection: signalR.HubConnection | null = null; // Initialize with null
+  private hubConnection: signalR.HubConnection | null = null;
   public queueStatusUpdate = new Subject<{ liveQueueId: number; newStatus: string }>();
 
   constructor() {
@@ -17,12 +17,17 @@ export class SignalRService {
   private startConnection() {
     this.hubConnection = new signalR.HubConnectionBuilder()
       .withUrl('http://localhost:5139/queueHub')
+      .withAutomaticReconnect()
       .build();
 
     this.hubConnection
       .start()
       .then(() => console.log('SignalR connection started'))
       .catch(err => console.error('Error while starting SignalR connection: ', err));
+
+  
+    this.hubConnection.onreconnected(() => console.log('SignalR reconnected'));
+    this.hubConnection.onclose(() => console.log('SignalR connection closed, attempting to reconnect...'));
   }
 
   private registerOnServerEvents() {
@@ -35,11 +40,14 @@ export class SignalRService {
     }
   }
 
-
   public reconnectIfNeeded() {
     if (!this.hubConnection || this.hubConnection.state === signalR.HubConnectionState.Disconnected) {
       this.startConnection();
       this.registerOnServerEvents();
     }
+  }
+
+  public getConnectionState(): signalR.HubConnectionState {
+    return this.hubConnection ? this.hubConnection.state : signalR.HubConnectionState.Disconnected;
   }
 }

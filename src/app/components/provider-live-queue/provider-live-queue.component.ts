@@ -185,17 +185,17 @@ export class ProviderLiveQueueComponent implements OnInit {
       const queue = this.liveQueues.find(q => q.LiveQueueId === update.liveQueueId);
       if (queue) {
         queue.Status = this.stringToStatus(update.newStatus);
-        // this.cdr.detectChanges();
+        // this.cdr.detectChanges(); // Uncomment if using OnPush change detection
       }
     });
   }
 
   private checkSignalRConnection() {
     setInterval(() => {
-      if (!this.signalRService || !this.signalRService['hubConnection'] || this.signalRService['hubConnection'].state === signalR.HubConnectionState.Disconnected) {
+      if (!this.signalRService || this.signalRService.getConnectionState() === signalR.HubConnectionState.Disconnected) {
         console.warn('SignalR connection lost or not established, attempting to reconnect...');
         this.signalRService.reconnectIfNeeded();
       }
-    }, 5000);
+    }, 5000); // Check every 5 seconds
   }
 }
