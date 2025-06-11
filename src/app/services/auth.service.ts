@@ -7,12 +7,22 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ILoginResponseData } from '../types/ILoginResponseData';
 import { CookieService } from 'ngx-cookie-service';
+import { IAddOperator } from '../types/IAddOperator';
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   cookie = inject(CookieService);
   httpClient = inject(HttpClient);
+  private currentCenterId: number = 1 // Default value, can be changed later through jwt token
+
+  getCenterId(): number {
+    return this.currentCenterId;
+  }
+
+  setCenterId(centerId: number): void {
+    this.currentCenterId = centerId;
+  }
 
   getAuthToken() {
     return this.cookie.get('token') || '';
@@ -40,6 +50,14 @@ export class AuthService {
     return this.httpClient.post<ApiResponse<null>>(
       `${environment.apiUrl}/api/account/Register`,
       registerData
+    );
+  }
+  Operatorregister(
+    OperatorData:IAddOperator
+  ): Observable<ApiResponse<null>>{
+    return this.httpClient.post<ApiResponse<null>>(
+      `${environment.apiUrl}/api/account/Register`,
+      OperatorData
     );
   }
 

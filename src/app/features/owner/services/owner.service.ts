@@ -1,32 +1,48 @@
-import { environment } from './../../../../environments/environment';
 import { inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { ICenterShifts } from '../models/ICenterShifts';
-import { Observable } from 'rxjs';
 import { ApiResponse } from '../../../types/ApiResponse';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../environments/environment';
+import { IOperator } from '../../../types/IOperator';
+import { ICreateAppointment } from '../../../types/ICreateAppointment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class OwnerService {
-  httpClient = inject(HttpClient);
-  constructor() {}
+  private httpClient = inject(HttpClient);
 
-  getAllCenterShifts(
+  constructor() { }
+
+  getOperatorsByCenterId(
     centerId: number
-  ): Observable<ApiResponse<Array<ICenterShifts>>> {
-    return this.httpClient.get<ApiResponse<Array<ICenterShifts>>>(
-      `${environment.apiUrl}/api/shift/get-all-center-shifts/?centerId=${centerId}`
+  ): Observable<ApiResponse<IOperator[]>> {
+    return this.httpClient.get<ApiResponse<IOperator[]>>(
+      `${environment.apiUrl}/api/center/OperatorstoCenter?centerId=${centerId}`
     );
   }
-  startShift(shiftId: number): Observable<ApiResponse<null>> {
-    return this.httpClient.get<ApiResponse<null>>(
-      `${environment.apiUrl}/api/operator/start-shift/?shiftId=${shiftId}&operatorId=358ad212-3cb5-4819-b2c8-3d3f335f153f`
+
+  addOperatorByCenterId(
+    operatorData: FormData
+  ): Observable<ApiResponse<any>> {
+    return this.httpClient.post<ApiResponse<any>>(
+      `${environment.apiUrl}/api/account/Register`,
+      operatorData
     );
   }
-  cancelShift(shiftId: number): Observable<ApiResponse<null>> {
-    return this.httpClient.get<ApiResponse<null>>(
-      `${environment.apiUrl}/api/operator/cancel-shift/?shiftId=${shiftId}`
+
+  deleteOperatorById(operatorId: string): Observable<ApiResponse<any>> {
+    return this.httpClient.delete<ApiResponse<any>>(
+      `${environment.apiUrl}/api/Operator/Delete?operatorid=${operatorId}`
     );
+  }
+
+  reserveAppointment(
+    appointmentData: ICreateAppointment
+  ): Observable<ApiResponse<any>> {
+    return this.httpClient.post<ApiResponse<any>>(
+      `${environment.apiUrl}/api/Operator/reserve-appointment`,
+      appointmentData
+    )
   }
 }

@@ -26,6 +26,7 @@ export class ClientService {
   httpClient = inject(HttpClient);
   authServices = inject(AuthService);
   id = '2293a1da-9c6c-4239-bde5-433abf0039f4';
+
   constructor() {}
 
   getAllDoctorsCards(): Observable<ApiResponse<IDoctorsCard[]>> {
@@ -50,6 +51,7 @@ searchDoctorsByFilter(filter: IDoctorFilter) {
     filter
   );
 }
+
   getMainInfo(): Observable<ApiResponse<IDoctorMainInfo>> {
     return this.httpClient.get<ApiResponse<IDoctorMainInfo>>(
       `${environment.apiUrl}/api/client/main-info?providerId=${this.id}`
@@ -100,8 +102,9 @@ searchDoctorsByFilter(filter: IDoctorFilter) {
     );
   }
 
-  getClientProfileAndAppointments(userId:string): Observable<ApiResponse<IClientProfile>> {
+  getClientProfileAndAppointments(userId: string): Observable<ApiResponse<IClientProfile>> {
     return this.httpClient.get<ApiResponse<IClientProfile>>
+
     (`${environment.apiUrl}/api/client/profile-all-appointment/${userId}`);
   }
 
@@ -126,5 +129,6 @@ searchDoctorsByFilter(filter: IDoctorFilter) {
     return this.httpClient.get<ApiResponse<IClientWalletProfile>>(
       `${environment.apiUrl}/api/client/client-wallet/${userId}`
     );
+
   }
 }

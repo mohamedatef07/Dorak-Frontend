@@ -1,0 +1,40 @@
+<div class="doctor-list-container">
+  <div class="filter-bar">
+    <input type="text" placeholder="Enter search term..." class="search-input" />
+    <button class="search-button">Search</button>
+    <div class="sort-filter">
+      <select>
+        <option>Sort by...</option>
+        <option>Order Type</option>
+        <option>Specialization</option>
+      </select>
+      <button class="reset-filter">Reset Filter</button>
+    </div>
+  </div>
+  <table class="doctor-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Mobile</th>
+        <th>Specialization</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <!-- <tbody>
+      <tr *ngFor="let doctor of doctors">
+        <td>{{ doctor.id }}</td>
+        <td>{{ doctor.name }}</td>
+        <td>{{ doctor.mobile }}</td>
+        <td>{{ doctor.specialization }}</td>
+        <td>
+          <button class="view-profile">View Profile</button>
+          <button class="delete">Delete</button>
+        </td>
+      </tr>
+    </tbody> -->
+  </table>
+  <div class="pagination">
+    Showing 6 of 20 <button>Previous</button> <button>Next</button>
+  </div>
+</div>
