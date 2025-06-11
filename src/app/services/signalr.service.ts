@@ -25,7 +25,7 @@ export class SignalRService {
       .then(() => console.log('SignalR connection started'))
       .catch(err => console.error('Error while starting SignalR connection: ', err));
 
-  
+
     this.hubConnection.onreconnected(() => console.log('SignalR reconnected'));
     this.hubConnection.onclose(() => console.log('SignalR connection closed, attempting to reconnect...'));
   }

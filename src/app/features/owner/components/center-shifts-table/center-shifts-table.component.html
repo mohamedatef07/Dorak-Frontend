@@ -23,17 +23,38 @@
           {{ shift.EndTime.toString() | TimeStringToDate | date : "h:mm a" }}
         </td>
         <td class="start">
-          <button type="button" class="btn start-btn" (click)="startShift(shift.ShiftId)">
+          <button
+            type="button"
+            class="btn start-btn"
+            (click)="startShift(shift.ShiftId)"
+          >
             Start
           </button>
         </td>
         <td class="cancel">
-          <button type="button" class="btn cancel-btn" (click)="cancelShift(shift.ShiftId)">
-            Cancel
-          </button>
+          <p-toast />
+          <p-confirmpopup>
+            <ng-template>
+              <div
+                class="flex flex-col items-center w-full gap-4 border-b border-surface-200 dark:border-surface-700 p-4 mb-4 pb-0"
+              >
+                <p>Do you want to cancel this shift?</p>
+              </div>
+            </ng-template>
+          </p-confirmpopup>
+          <p-button
+            class="btn cancel-btn"
+            (click)="cancelShift(shift.ShiftId, $event)"
+            label="Cancel"
+            severity="danger"
+          />
         </td>
         <td class="details">
-          <button type="button" class="btn" (click)="shiftDetails(shift.ShiftId)">
+          <button
+            type="button"
+            class="btn"
+            (click)="shiftDetails(shift.ShiftId)"
+          >
             Details
           </button>
         </td>
