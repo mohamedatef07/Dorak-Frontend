@@ -3,10 +3,23 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { ClientRegisterComponent } from './components/client-register/client-register.component';
+import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
+import { ProviderManagementComponent } from './components/provider-management/provider-management.component';
+import { AddProviderComponent } from './components/add-provider/add-provider.component';
+import {SearchProviderComponent} from './components/search-provider/search-provider.component';
+import {ProviderProfilesComponent} from './components/provider-profile/provider-profile.component';
+import { CenterProviderProfileComponent } from './components/center-provider-profile/center-provider-profile.component';
+import { ScheduleOptionsComponent } from './components/schedule-options/schedule-options.component'
+import { ManuallyScheduleComponent } from './components/manually-schedule/manually-schedule.component';
+import { WeeklyScheduleComponent } from './components/weekly-schedule/weekly-schedule.component';
+import { ProviderLiveQueueComponent } from './components/provider-live-queue/provider-live-queue.component';
+
+import { DeleteProviderComponent } from './components/delete-provider/delete-provider.component';
+import { ProviderScheduleComponent } from './components/provider-schedule/provider-schedule.component';
+
 import { ProviderLayoutComponent } from './features/provider/components/provider-layout/provider-layout.component';
 import { OwnerLayoutComponent } from './features/owner/components/owner-layout/owner-layout.component';
 import { ClientLayoutComponent } from './features/client/components/client-layout/client-layout.component';
-import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
 import { DoctorDetailsComponent } from './features/client/components/doctor-details/doctor-details.component';
 import { ClientProfileComponent } from './features/client/components/client-profile/client-profile.component';
 import { ScheduleComponent } from './features/provider/components/schedule/schedule.component';
@@ -19,7 +32,6 @@ import { DoctorsPageComponent } from './features/client/components/doctorsPage/d
 import { LandingPageRegisterComponent } from './features/landingpage/components/landingPageRegister/landingPageRegister.component';
 import { DoctorsLandingPageComponent } from './features/landingpage/components/doctors-landingPage/doctors-landingPage.component';
 import { ProviderProfileComponent } from './features/provider/components/provider-profile/provider-profile.component';
-import { ProviderSettingsComponent } from './features/provider/components/provider-settings/provider-settings.component';
 import { ManageOperatorsComponent } from './features/owner/components/ManageOperators/ManageOperators.component';
 import { AddOperatorComponent } from './features/owner/components/AddOperator/AddOperator.component';
 import { CreateAppointmentComponent } from './features/owner/components/CreateAppointment/CreateAppointment.component';
@@ -34,6 +46,7 @@ import { ProfessionalInformationComponent } from './features/provider/components
 import { SecurityProfileComponent } from './features/provider/components/SecurityProfile/SecurityProfile.component';
 import { ProviderSettingComponent } from './features/provider/components/Provider-Setting/Provider-Setting.component';
 import { LandingPageLayoutComponent } from './features/landingpage/components/landingPage-layout/landingPage-layout.component';
+
 
 
 export const routes: Routes = [
@@ -168,15 +181,21 @@ export const routes: Routes = [
 
   { path: 'login', component: LoginComponent, title: 'Login' },
   { path: 'register', component: RegisterComponent, title: 'Register' },
-  {
-    path: 'client-register',
-    component: ClientRegisterComponent,
-    title: 'Client Register',
-  },
-  {
-    path: 'unauthorized',
-    component: UnauthorizedComponent,
-    title: 'Unauthorized',
-  },
+  { path: 'client-register', component: ClientRegisterComponent, title: 'Client Register' },
+  { path: 'unauthorized', component: UnauthorizedComponent, title: 'Unauthorized' },
+  {path: 'provider-management', component: ProviderManagementComponent, title: 'Provider Management' },
+  {path: 'add-provider', component: AddProviderComponent, title: 'Add Provider' },
+  {path: 'search-provider', component: SearchProviderComponent, title: 'Search Provider' },
+  { path: 'provider-profile/:id', component: ProviderProfilesComponent, title: 'Provider Profile' },
+  {path: 'center-provider-profile/:id', component: CenterProviderProfileComponent, title: 'Provider Profile' },
+  {path: 'schedule-options/:providerId', component: ScheduleOptionsComponent, title: 'Schedule Options' },
+  {path: 'manually-schedule/:id', component: ManuallyScheduleComponent, title: 'Manually Schedule' },
+  {path: 'weekly-schedule/:id', component: WeeklyScheduleComponent, title: 'Weekly Schedule' },
+  {path: 'provider-live-queue/:id', component: ProviderLiveQueueComponent, title: 'Provider Live Queue' },
+
+  {path: 'provider-schedule', component: ProviderScheduleComponent, title: 'Provider Schedule' },
+  {path: 'delete-provider', component: DeleteProviderComponent, title: 'Delete Provider' },
+
   { path: '**', component: NotFoundComponent, title: 'Not Found' },
+
 ];

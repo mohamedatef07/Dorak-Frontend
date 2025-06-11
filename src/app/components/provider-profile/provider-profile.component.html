@@ -1,0 +1,45 @@
+<div *ngIf="isLoading" class="loading">
+  Loading provider details...
+</div>
+
+<div *ngIf="errorMessage && !isLoading" class="error-message">
+  {{ errorMessage }}
+</div>
+
+<div *ngIf="provider && !isLoading && !errorMessage" class="profile-container">
+  <!-- Back Button -->
+  <button mat-button class="back-button" (click)="goBack()">Back to Search</button>
+
+  <!-- Profile Layout -->
+  <div class="profile-layout">
+    <!-- Left Panel (Doctor Information) -->
+    <div class="left-panel">
+      <h2>Doctor Information</h2>
+      <div class="profile-image">
+        <img *ngIf="provider.Image" [src]="provider.Image" alt="Provider Image" class="provider-image" />
+        <img *ngIf="!provider.Image" src="https://via.placeholder.com/150" alt="Placeholder Image" class="provider-image" />
+      </div>
+      <div class="doctor-details">
+        <h1>{{ provider.FirstName || 'Unknown' }} {{ provider.LastName || '' }}</h1>
+        <p><strong>Bio:</strong> {{ provider.Bio || 'N/A' }}</p>
+        <p><strong>Email:</strong> {{ provider.Email || 'N/A' }}</p>
+        <p><strong>Phone Number:</strong> {{ provider.PhoneNumber || 'N/A' }}</p>
+      </div>
+    </div>
+
+    <!-- Right Panel (Specialization and Actions) -->
+    <div class="right-panel">
+      <div class="specialization-section">
+        <h3>Specialization:</h3>
+        <ul>
+          <li *ngIf="provider.Specialization">{{ provider.Specialization }}</li>
+        </ul>
+      </div>
+      <div class="actions">
+        <button mat-raised-button color="primary" (click)="sendInvite()" [disabled]="!selectedDate" matTooltip="Send an invitation to this provider">
+          Send Invite
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

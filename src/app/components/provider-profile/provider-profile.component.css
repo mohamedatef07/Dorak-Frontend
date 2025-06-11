@@ -1,0 +1,80 @@
+*{
+  font-weight: 600;
+}
+
+.loading {
+  text-align: center;
+  padding: 20px;
+  font-size: 16px;
+  color: #666;
+}
+
+.error-message {
+  color: red;
+  text-align: center;
+  padding: 20px;
+  font-size: 16px;
+}
+
+.profile-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.back-button {
+  margin-bottom: 20px;
+  color: #007bff;
+}
+
+.provider-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.provider-image {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ddd;
+}
+
+.provider-info h1 {
+  margin: 0;
+  font-size: 28px;
+  color: #333;
+}
+
+.provider-info p {
+  margin: 5px 0;
+  font-size: 16px;
+  color: #555;
+}
+
+.provider-details {
+  margin-bottom: 30px;
+}
+
+.provider-details p {
+  margin: 10px 0;
+  font-size: 16px;
+  color: #555;
+}
+
+.provider-details p strong {
+  display: inline-block;
+  width: 120px;
+  color: #333;
+}
+
+.actions {
+  text-align: center;
+}
+
+.actions button {
+  font-size: 16px;
+  padding: 10px 20px;
+}
