@@ -5,8 +5,9 @@ import { Subject } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class SignalRService {
-  private hubConnection: signalR.HubConnection | null = null;
+export class SignalRtestService {
+
+ private hubConnection: signalR.HubConnection | null = null;
   public queueStatusUpdate = new Subject<{ liveQueueId: number; newStatus: string }>();
 
   constructor() {
@@ -25,7 +26,7 @@ export class SignalRService {
       .then(() => console.log('SignalR connection started'))
       .catch(err => console.error('Error while starting SignalR connection: ', err));
 
-  
+
     this.hubConnection.onreconnected(() => console.log('SignalR reconnected'));
     this.hubConnection.onclose(() => console.log('SignalR connection closed, attempting to reconnect...'));
   }

@@ -15,11 +15,10 @@
                     class="col-md-3 text-center d-flex flex-column justify-content-center align-items-center p-4"
                   >
                    <div class="profile-image-container mb-3">
-                   <img
-                 [src]="imagePreview "
-                 alt="Profile"
-                 class="profile-image rounded-circle"
-                  style="width: 150px; height: 150px; object-fit: cover;"/>
+                    <img *ngIf="imagePreview" [src]="imagePreview" alt="Profile Image" />
+
+
+
                   </div>
                   <button type="button" class="btn upload-btn mt-2" (click)="fileInput.click()">Upload</button>
                   <input #fileInput type="file" hidden accept="image/*" (change)="onImageChange($event)" />
@@ -56,9 +55,12 @@
           </div>
           <div class="setting-btns d-flex gap-5 pt-4">
          <button  type="button" class="btn Save-btn mt-3" (click)="onSubmit()"> Save </button>
+
          <button  type="button" class="btn Cancel-btn mt-3"(click)="onCancel()" > Cancel  </button>
           </div>
-
+          <div *ngIf="successMessage" class="alert alert-success">
+  {{ successMessage }}
+</div>
     </main>
    </form>
   </body>
