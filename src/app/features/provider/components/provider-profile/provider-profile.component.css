@@ -1,0 +1,55 @@
+/* Main */
+main .container > p {
+  color: var(--text-color-Light);
+  font-size: 2rem;
+}
+/* General Information */
+main .container .general-info {
+  width: 80%;
+  background-color: white;
+  border-radius: var(--border-radius);
+}
+main .container .general-info .doctor-img {
+  border-right: 2px solid var(--main-bg-color-Light);
+}
+main .container .general-info .doctor-img img {
+  width: 9.4rem;
+  height: 9.4rem;
+}
+main .container .general-info .info div span {
+  font-size: 1.3rem;
+  color: var(--text-color-Light);
+}
+main .container .general-info .info div p {
+  color: var(--text-color-Light);
+}
+/* Professional Information */
+main .container .professional-information > p {
+  color: var(--text-color-Light);
+  font-size: 2rem;
+}
+main .container .professional-information .info-container {
+  width: 80%;
+  background-color: white;
+  border-radius: var(--border-radius);
+}
+main .container .professional-information .info-container .info div span {
+  font-size: 1.3rem;
+  color: var(--text-color-Light);
+}
+main .container .professional-information .info-container .info div p {
+  color: var(--text-color-Light);
+}
+/* Bio */
+main .container .bio > p {
+  color: var(--text-color-Light);
+  font-size: 2rem;
+}
+main .container .bio .info-container {
+  width: 80%;
+  background-color: white;
+  border-radius: var(--border-radius);
+}
+main .container .bio .info-container .info {
+  color: var(--text-color-Light);
+}

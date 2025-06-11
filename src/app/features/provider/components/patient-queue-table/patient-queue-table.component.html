@@ -1,0 +1,54 @@
+<section class="patients-queue">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col" class="patient-no">Patient No.</th>
+        <th scope="col" class="patient-name">Name</th>
+        <th scope="col" class="patient-arrival-time">Arrival Time</th>
+        <th scope="col" class="patient-date">Date</th>
+        <th scope="col" class="patient-type">Type</th>
+        <th scope="col" class="patient-status">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for(entry of originalQueueEntries; track $index){
+      <tr>
+        <td class="patient-no">{{ entry.CurrentQueuePosition }}</td>
+        <td class="patient-name">{{ entry.FullName }}</td>
+        <td class="patient-arrival-time">
+          {{
+            entry.ArrivalTime.toString() | TimeStringToDate | date : "h:mm a"
+          }}
+        </td>
+        <td class="patient-date">
+          {{ entry.AppointmentDate | date : "MMM d, y" }}
+        </td>
+        <td class="patient-type">
+          {{ entry.ClientType | ClientTypeEnumValue }}
+        </td>
+        <td class="patient-status">
+          <span
+            class="p-2"
+            [ngClass]="{
+              'completed-badge':
+                entry.Status == QueueAppointmentStatus.Completed,
+              'inProgress-badge':
+                entry.Status == QueueAppointmentStatus.InProgress,
+              'waiting-badge': entry.Status == QueueAppointmentStatus.Waiting,
+              'notChecked-badge':
+                entry.Status == QueueAppointmentStatus.NotChecked
+            }"
+            >{{ entry.Status | QueueAppointmentStatusEnumValue }}</span
+          >
+        </td>
+      </tr>
+      }@empty {
+      <tr>
+        <td colspan="6" class="text-center py-4 text-muted">
+          No Queue Entries Found
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</section>

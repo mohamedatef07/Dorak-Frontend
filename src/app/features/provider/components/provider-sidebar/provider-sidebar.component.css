@@ -1,0 +1,11 @@
+.side-bar ul .sidebar-item.active-link .sidebar-link div svg path {
+  fill: #012a4a !important;
+}
+.side-bar ul .sidebar-item.active-link .sidebar-link {
+  color: var(--text-color-Light);
+  font-weight: bold;
+}
+.side-bar ul .sidebar-item.active-link {
+  background-color: var(--bg-color-Light);
+  border-radius: var(--border-radius) 0 0 var(--border-radius);
+}

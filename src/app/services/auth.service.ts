@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ILoginResponseData } from '../types/ILoginResponseData';
 import { CookieService } from 'ngx-cookie-service';
+import { IAddOperator } from '../types/IAddOperator';
 @Injectable({
   providedIn: 'root',
 })
@@ -36,15 +37,35 @@ export class AuthService {
     return this.cookie.get('role') || null;
   }
 
-  register(registerData: IClientRegisterRequest): Observable<ApiResponse<null>> {
+  getUserId() {
+    const token = this.getAuthToken();
+    const tokenParts = token?.split('.');
+    if (tokenParts?.length !== 3) return null;
+    const payload = JSON.parse(atob(tokenParts[1]));
+    return payload["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"];
+  }
+  register(
+    registerData: IClientRegisterRequest
+  ): Observable<ApiResponse<null>> {
     return this.httpClient.post<ApiResponse<null>>(
       `${environment.apiUrl}/api/account/Register`,
       registerData
     );
   }
+  Operatorregister(
+    OperatorData:IAddOperator
+  ): Observable<ApiResponse<null>>{
+    return this.httpClient.post<ApiResponse<null>>(
+      `${environment.apiUrl}/api/account/Register`,
+      OperatorData
+    );
+  }
 
   createClient(id: string, client: any): Observable<ApiResponse<any>> {
-    return this.httpClient.post<ApiResponse<any>>(`${environment.apiUrl}/api/account/CreateClient?id=${id}`, client)
+    return this.httpClient.post<ApiResponse<any>>(
+      `${environment.apiUrl}/api/account/CreateClient?id=${id}`,
+      client
+    );
   }
 
   logIn(loginData: ILoginRequest): Observable<ApiResponse<ILoginResponseData>> {

@@ -1,0 +1,80 @@
+<div class="filter d-flex">
+  <div
+    class="filter-icon d-flex justify-content-center align-items-center p-3 gap-2"
+  >
+    <svg
+      width="25"
+      height="25"
+      viewBox="0 0 37 37"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M18.5 15C28.165 15 36 11.866 36 8C36 4.13401 28.165 1 18.5 1C8.83502 1 1 4.13401 1 8C1 11.866 8.83502 15 18.5 15Z"
+        stroke="#012A4A"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M1 8C1.00259 12.0033 2.81323 15.7071 5.83018 18.4521C10.0305 22.2738 14.4615 26.8213 14.4615 32.5V32.5C14.4615 34.433 16.2696 36 18.5 36C20.7304 36 22.5385 34.433 22.5385 32.5V32.5C22.5385 26.8213 26.9695 22.2738 31.1698 18.4521C34.1868 15.7071 35.9974 12.0033 36 8"
+        stroke="#012A4A"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  </div>
+  <div
+    class="filteration-type d-flex justify-content-center align-items-center p-3 gap-2"
+  >
+    Filter By
+  </div>
+  <div
+    class="patient-type d-flex justify-content-center align-items-center p-3 gap-2"
+  >
+    <p-select
+      [options]="PatientTypes"
+      [(ngModel)]="selectedPatientType"
+      placeholder="Patient Type"
+      class="w-full md:w-56"
+      (onChange)="filterQueueEntries()"
+    />
+  </div>
+  <div
+    class="patient-status d-flex justify-content-center align-items-center ps-2 pe-2 gap-2"
+  >
+    <p-select
+      [options]="PatientStatus"
+      [(ngModel)]="selectedPatientStatus"
+      placeholder="Patient Status"
+      class="w-full md:w-56"
+      (onChange)="filterQueueEntries()"
+    />
+  </div>
+  <div
+    class="reset-filter d-flex justify-content-center align-items-center ps-2 pe-2 gap-2"
+  >
+    <button class="d-flex gap-1" id="reset-btn" type="button" (click)="resetFilter()">
+      <p class="mb-0">Reset Filter</p>
+      <div
+        class="reset-filter-icon d-flex justify-content-center align-items-center"
+      >
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 25 28"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M14.2032 4.41492C13.2695 4.2785 12.5002 3.5267 12.5002 2.5831C12.5002 1.06095 10.6598 0.298657 9.5835 1.37498L7.34418 3.6143C6.16467 4.7938 6.16467 6.70616 7.34418 7.88566L9.5835 10.125C10.6598 11.2013 12.5002 10.439 12.5002 8.91686C12.5002 7.97325 13.2726 7.19091 14.1984 7.3735C18.2146 8.16563 21.2502 11.7122 21.2502 15.9583C21.2502 20.7854 17.3272 24.7083 12.5002 24.7083C8.16772 24.7083 4.56363 21.5482 3.87049 17.4105C3.73742 16.6161 3.09724 15.9583 2.29183 15.9583C1.48641 15.9583 0.823938 16.6145 0.923297 17.4138C1.63913 23.1721 6.54724 27.625 12.5002 27.625C18.946 27.625 24.1668 22.4041 24.1668 15.9583C24.1668 10.091 19.8411 5.23866 14.2032 4.41492Z"
+            fill="#EA0234"
+          />
+        </svg>
+      </div>
+    </button>
+  </div>
+</div>

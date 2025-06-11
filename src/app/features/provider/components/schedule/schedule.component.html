@@ -1,0 +1,33 @@
+<main>
+  <div class="container d-flex flex-column gap-3 pt-4 pb-4 pe-0 ps-0 m-0">
+    <p class="fw-bold m-0">Schedule</p>
+    <p-datepicker [(ngModel)]="dateNow" [inline]="true">
+      <ng-template pTemplate="date" let-date>
+        <div class="day-cell" [ngStyle]="getStyle(date)">
+          <div>{{ date.day }}</div>
+          @if(getShiftsForDate(date).length > 0){
+          <div class="shifts">
+            @for(shift of getShiftsForDate(date); track $index){
+            <ng-container>
+              <span
+                class="shift-dot"
+                (click)="showShiftDetails(shift?.ShiftId)"
+              >
+                <div class="start-time">
+                  Start:
+                  {{
+                    shift?.StartTime?.toString()
+                      | TimeStringToDate
+                      | date : "h:mm a"
+                  }}
+                </div>
+              </span>
+            </ng-container>
+            }
+          </div>
+          }
+        </div>
+      </ng-template>
+    </p-datepicker>
+  </div>
+</main>
