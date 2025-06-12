@@ -8,7 +8,7 @@ import { IPaginationViewModel } from '../../types/IPaginationViewModel';
 import { ClientType } from '../../types/Enums/ClientType';
 import { QueueAppointmentStatus } from '../../types/Enums/QueueAppointmentStatus';
 import { IProviderViewModel } from '../../types/IProviderViewModel';
-import { SignalRService } from '../../services/signalr.service';
+import { SignalRService } from '../../services/signalR.service';
 import * as signalR from '@microsoft/signalr';
 
 @Component({
