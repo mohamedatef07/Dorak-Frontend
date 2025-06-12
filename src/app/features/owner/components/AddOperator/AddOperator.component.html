@@ -1,0 +1,51 @@
+<form [formGroup]="AddOperatorForm" (ngSubmit)="HandleSubmitForm()">
+  <div>
+    <label for="userName">Username</label>
+    <input id="userName" type="text" formControlName="UserName" placeholder="Enter username" />
+  </div>
+
+  <div>
+    <label for="email">Email</label>
+    <input id="email" type="email" formControlName="Email" placeholder="Enter email" />
+  </div>
+
+  <div>
+    <label for="phoneNumber">Phone Number</label>
+    <input id="phoneNumber" type="text" formControlName="PhoneNumber" placeholder="Enter phone number" />
+  </div>
+
+  <div>
+    <label for="password">Password</label>
+    <input id="password" type="password" formControlName="Password" placeholder="Enter password" />
+  </div>
+
+  <div>
+    <label for="confirmPassword">Confirm Password</label>
+    <input id="confirmPassword" type="password" formControlName="ConfirmPassword" placeholder="Confirm password" />
+  </div>
+
+  <div>
+    <label for="firstName">First Name</label>
+    <input id="firstName" type="text" formControlName="FirstName" placeholder="Enter first name" />
+  </div>
+
+  <div>
+    <label for="lastName">Last Name</label>
+    <input id="lastName" type="text" formControlName="LastName" placeholder="Enter last name" />
+  </div>
+
+  <div>
+    <label for="gender">Gender</label>
+    <select id="gender" formControlName="Gender">
+      <option [value]="1">Male</option>
+      <option [value]="2">Female</option>
+    </select>
+  </div>
+
+  <div>
+    <label for="CenterID">Center ID</label>
+    <input id="CenterID" type="text" formControlName="CenterId" placeholder="Enter Center ID" readonly/>
+  </div>
+
+  <button type="submit">Register</button>
+</form>

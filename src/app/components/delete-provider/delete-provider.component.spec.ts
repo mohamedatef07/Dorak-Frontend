@@ -3,21 +3,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { LandingpageLayoutComponent } from './landingpage-layout.component';
+import { DeleteProviderComponent } from './delete-provider.component';
 
-describe('LandingpageLayoutComponent', () => {
-  let component: LandingpageLayoutComponent;
-  let fixture: ComponentFixture<LandingpageLayoutComponent>;
+describe('DeleteProviderComponent', () => {
+  let component: DeleteProviderComponent;
+  let fixture: ComponentFixture<DeleteProviderComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LandingpageLayoutComponent ]
+      declarations: [ DeleteProviderComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LandingpageLayoutComponent);
+    fixture = TestBed.createComponent(DeleteProviderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

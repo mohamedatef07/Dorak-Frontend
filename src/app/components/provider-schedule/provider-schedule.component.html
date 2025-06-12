@@ -1,0 +1,68 @@
+<div *ngIf="isLoading" class="loading">
+  Loading providers...
+</div>
+
+<div *ngIf="errorMessage && !isLoading" class="error-message">
+  {{ errorMessage }}
+</div>
+
+<div *ngIf="!isLoading" class="controls">
+
+  <mat-form-field appearance="fill">
+    <mat-label>Specialization</mat-label>
+    <mat-select [(ngModel)]="specializationFilter" (ngModelChange)="onSpecializationFilterChange($event)">
+      <mat-option value="All">All</mat-option>
+      <mat-option *ngFor="let spec of specializations" [value]="spec" [disabled]="spec === 'All'">{{ spec }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <button mat-button (click)="resetFilters()">Reset Filter</button>
+</div>
+
+<div *ngIf="!isLoading" class="table-container">
+  <mat-table [dataSource]="dataSource" matSort (matSortChange)="onSortChange($event)">
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef> ID </mat-header-cell>
+      <mat-cell *matCellDef="let row; let i = index"> {{ (pageIndex * pageSize) + i + 1 }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        {{ row.FirstName || 'Unknown' }} {{ row.LastName || '' }}
+        <a [routerLink]="['/center-provider-profile', row.ProviderId || '']" class="view-profile-link">View Profile</a>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="phoneNumber">
+      <mat-header-cell *matHeaderCellDef> Mobile </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row.PhoneNumber || 'N/A' }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="specialization">
+      <mat-header-cell *matHeaderCellDef> Specialization </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row.Specialization || 'N/A' }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="select">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <button class="view-profile-link select-pill" (click)="navigateToScheduleOptions(row.ProviderId)">
+          Select
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+</div>
+
+<div *ngIf="!isLoading && dataSource.data.length === 0 && !errorMessage" class="no-data">
+  No providers found.
+</div>
+
+<div *ngIf="!isLoading" class="pagination-controls">
+  <button mat-button (click)="previousPage()" [disabled]="pageIndex === 0">Previous</button>
+  <span class="pagination-info">Showing {{ getDisplayRange() }} of {{ totalItems }}</span>
+  <button mat-button (click)="nextPage()" [disabled]="(pageIndex + 1) * pageSize >= totalItems">Next</button>
+</div>

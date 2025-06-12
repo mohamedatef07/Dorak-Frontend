@@ -22,3 +22,6 @@
   background-color: white !important;
   color: var(--text-color-Light) !important;
 }
+::ng-deep .p-select-option {
+  padding: 0.5rem !important;
+}

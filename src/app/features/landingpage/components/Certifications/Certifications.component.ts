@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-Certifications',
-  templateUrl: './Certifications.component.html',
-  styleUrls: ['./Certifications.component.css',
+  templateUrl: './certifications.component.html',
+  styleUrls: ['./certifications.component.css',
               '..//../../../styles/general.css'
   ]
 })

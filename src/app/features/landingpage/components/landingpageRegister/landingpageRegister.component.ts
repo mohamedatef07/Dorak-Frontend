@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-landingpageRegister',
-  templateUrl: './landingpageRegister.component.html',
-  styleUrls: ['./landingpageRegister.component.css',
+  selector: 'app-landingPageRegister',
+  templateUrl: './landingPageRegister.component.html',
+  styleUrls: ['./landingPageRegister.component.css',
               '..//../../../styles/general.css'
   ]
 })
-export class LandingpageRegisterComponent implements OnInit {
+export class LandingPageRegisterComponent implements OnInit {
 
   constructor() { }
 

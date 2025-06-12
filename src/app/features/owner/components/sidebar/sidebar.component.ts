@@ -1,32 +1,42 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { RouterLink, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.css']
+  styleUrls: ['./sidebar.component.css'],
+  imports: [RouterLink, RouterModule,CommonModule],
 })
 export class SidebarComponent implements OnInit {
   currentDate: string = '';
   currentTime: string = '';
-  constructor() { }
+  isSubmenuOpen = false;
+  isOperatorSubmenuOpen = false;
 
+  constructor() { }
   ngOnInit(): void {
     this.updateDateTime();
-
     setInterval(() => {
       this.updateDateTime();
-    }, 1000); // updates every second
+    }, 1000);
   }
 
-updateDateTime() {
-  const now = new Date();
+  toggleSubmenu() {
+    this.isSubmenuOpen = !this.isSubmenuOpen;
+  }
 
-  const day = String(now.getDate()).padStart(2, '0');
-  const month = String(now.getMonth() + 1).padStart(2, '0'); // months are 0-indexed
-  const year = now.getFullYear();
+  toggleOperatorSubmenu() {
+    this.isOperatorSubmenuOpen = !this.isOperatorSubmenuOpen;
+  }
 
-  this.currentDate = `${day}/${month}/${year}`;
-  this.currentTime = now.toLocaleTimeString(); // keeps standard format like "5:35:00 PM"
-}
+  updateDateTime() {
+    const now = new Date();
+    const day = String(now.getDate()).padStart(2, '0');
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const year = now.getFullYear();
 
+    this.currentDate = `${day}/${month}/${year}`;
+    this.currentTime = now.toLocaleTimeString();
+  }
 }

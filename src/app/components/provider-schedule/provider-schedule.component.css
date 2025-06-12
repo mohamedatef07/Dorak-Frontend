@@ -1,0 +1,276 @@
+/* Provider Table Component Styles */
+
+/* Container and general layout */
+:host {
+  display: block;
+  padding: 20px;
+  background-color: var(--bg-color-Light);
+}
+
+.loading, .error-message, .no-data {
+  padding: 20px;
+  text-align: center;
+  border-radius: var(--border-radius);
+  margin-bottom: 20px;
+}
+
+.loading {
+  color: var(--waiting-text);
+  background-color: var(--waiting-bg);
+}
+
+.error-message {
+  color: var(--error-text);
+  background-color: var(--error-bg);
+  padding: 15px;
+}
+
+.no-data {
+  background-color: white;
+  padding: 30px;
+  color: var(--text-color-Light);
+  border-radius: var(--border-radius);
+}
+
+/* Controls section */
+.controls {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 15px;
+}
+
+.controls button:first-child {
+  background-color: var(--button-bg-color-Light);
+  color: white;
+  padding: 8px 20px;
+  border-radius: var(--border-radius);
+  font-weight: 500;
+  margin-right: 20px;
+  height: 45px;
+}
+
+mat-form-field {
+  margin-right: auto;
+  width: 180px;
+}
+
+button[mat-button] {
+  transition: var(--transition);
+}
+
+button[mat-button]:hover:not([disabled]) {
+  background-color: var(--hover-bg-Light);
+  color: var(--hover-text-Light);
+}
+
+.controls button:last-child {
+  color: var(--button-bg-color-Light);
+  display: flex;
+  align-items: center;
+}
+
+.controls button:last-child::before {
+  content: "↺";
+  margin-right: 5px;
+  font-size: 14px;
+}
+
+/* Table container */
+.table-container {
+  background-color: white;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Table styles */
+mat-table {
+  width: 100%;
+}
+
+mat-header-row {
+  background-color: var(--main-bg-color-Light);
+  min-height: 56px;
+}
+
+mat-header-cell {
+  color: white;
+  font-weight: 500;
+  font-size: 15px;
+}
+
+mat-row {
+  min-height: 60px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+mat-row:nth-child(odd) {
+  background-color: #fbfbfb;
+}
+
+mat-cell {
+  color: var(--text-color-Light);
+  font-size: 14px;
+}
+
+/* ID column */
+.mat-column-id {
+  flex: 0 0 60px;
+  justify-content: center;
+  padding-left: 10px;
+}
+
+/* Name column with view profile link */
+.mat-column-name {
+  flex: 0 0 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.provider-name {
+  color: var(--text-color-Light);
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.view-profile-link, .selectbtn {
+  color: white;
+  background-color: var(--button-bg-color-Light);
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  width: fit-content;
+  text-align: center;
+  transition: var(--transition);
+}
+
+.view-profile-link:hover {
+  background-color: #1d5a7d;
+}
+
+/* Status column with status indicators */
+.mat-column-status {
+  flex: 0 0 120px;
+}
+
+mat-cell.mat-column-status {
+  font-weight: 500;
+}
+
+/* Status styling based on value */
+mat-cell.mat-column-status:has(span:contains("Online")) span {
+  background-color: var(--active-bg);
+  color: var(--active-text);
+  padding: 6px 12px;
+  border-radius: 30px;
+  font-size: 13px;
+}
+
+mat-cell.mat-column-status:has(span:contains("Offline")) span {
+  background-color: var(--error-bg);
+  color: var(--error-text);
+  padding: 6px 12px;
+  border-radius: 30px;
+  font-size: 13px;
+}
+
+mat-cell.mat-column-status:has(span:contains("Onhold")) span {
+  background-color: var(--alert-bg);
+  color: var(--alert-text);
+  padding: 6px 12px;
+  border-radius: 30px;
+  font-size: 13px;
+}
+
+/* Specialization column */
+.mat-column-specialization {
+  flex: 0 0 180px;
+}
+
+/* Add Date column */
+.mat-column-addDate {
+  flex: 0 0 120px;
+}
+
+/* Pagination controls */
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0;
+  gap: 20px;
+}
+
+.pagination-info {
+  color: var(--text-color-Light);
+  font-size: 14px;
+}
+
+.pagination-controls button {
+  color: var(--button-bg-color-Light);
+  min-width: 100px;
+}
+
+.pagination-controls button[disabled] {
+  color: #ccc;
+}
+
+/* Fix for Angular Material styles */
+::ng-deep .mat-select-arrow {
+  color: var(--main-bg-color-Light) !important;
+}
+
+::ng-deep .mat-select-value {
+  color: var(--text-color-Light) !important;
+}
+
+::ng-deep .mat-form-field-underline {
+  background-color: var(--main-bg-color-Light) !important;
+}
+
+/* Status text styling workaround since :has() may not be fully supported */
+::ng-deep mat-cell.mat-column-status {
+  display: flex;
+  align-items: center;
+}
+
+::ng-deep mat-cell.mat-column-status:not(:empty) {
+  position: relative;
+}
+
+mat-cell.mat-column-status span {
+  display: inline-block;
+}
+
+/* Create status pill manually */
+mat-cell.mat-column-status {
+  position: relative;
+}
+
+/* Special styling for specific statuses */
+/* These will work even if the :has() selector above doesn't work in some browsers */
+.status-online {
+  background-color: var(--active-bg);
+  color: var(--active-text);
+  padding: 6px 12px;
+  border-radius: 30px;
+  font-size: 13px;
+}
+
+.status-offline {
+  background-color: var(--error-bg);
+  color: var(--error-text);
+  padding: 6px 12px;
+  border-radius: 30px;
+  font-size: 13px;
+}
+
+.status-onhold {
+  background-color: var(--alert-bg);
+  color: var(--alert-text);
+  padding: 6px 12px;
+  border-radius: 30px;
+  font-size: 13px;
+}

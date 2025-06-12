@@ -1,0 +1,103 @@
+<form [formGroup]="CreateAppointmentForm" (ngSubmit)="HandleSubmitForm()">
+  <div>
+    <label>Appointment Date</label>
+    <input type="date" formControlName="AppointmentDate" />
+  </div>
+
+<div>
+  <label>Appointment Status</label>
+  <select formControlName="AppointmentStatus">
+    <option value="">Select Status</option>
+    <option value="1">Confirmed</option>
+    <option value="2">Pending</option>
+    <option value="3">Cancelled</option>
+  </select>
+</div>
+
+<div>
+  <label>Appointment Type</label>
+  <select formControlName="AppointmentType">
+    <option value="">Select Type</option>
+    <option value="1">Urgent</option>
+    <option value="2">Normal</option>
+  </select>
+</div>
+
+<div>
+  <label>Client Type</label>
+  <select formControlName="clientType">
+    <option value="">Select Client Type</option>
+    <option value="1">Normal</option>
+    <option value="2">Urgent</option>
+    <option value="3">Consultation</option>
+  </select>
+</div>
+
+  <div>
+    <label>Fees</label>
+    <input type="number" formControlName="Fees" />
+  </div>
+
+  <div>
+    <label>Additional Fees</label>
+    <input type="number" formControlName="AdditionalFees" />
+  </div>
+
+  <div>
+    <label>Operator</label>
+    <select formControlName="OperatorId">
+      <option value="">Select Operator</option>
+      <!-- Replace with dynamic options -->
+      <!-- <option *ngFor="let op of operators" [value]="op.id">{{ op.name }}</option> -->
+    </select>
+  </div>
+
+  <div>
+    <label>Provider</label>
+    <select formControlName="ProviderId">
+      <option value="">Select Provider</option>
+      <!-- <option *ngFor="let pr of providers" [value]="pr.id">{{ pr.name }}</option> -->
+    </select>
+  </div>
+
+  <div>
+    <label>Center</label>
+    <select formControlName="CenterId">
+      <option value="">Select Center</option>
+      <!-- <option *ngFor="let center of centers" [value]="center.id">{{ center.name }}</option> -->
+    </select>
+  </div>
+
+  <div>
+    <label>Service</label>
+    <select formControlName="ServiceId">
+      <option value="">Select Service</option>
+      <!-- <option *ngFor="let service of services" [value]="service.id">{{ service.name }}</option> -->
+    </select>
+  </div>
+
+  <div>
+    <label>Shift</label>
+    <select formControlName="ShiftId">
+      <option value="">Select Shift</option>
+      <!-- <option *ngFor="let shift of shifts" [value]="shift.id">{{ shift.name }}</option> -->
+    </select>
+  </div>
+
+  <div>
+    <label>Contact Info</label>
+    <input type="text" formControlName="ContactInfo" />
+  </div>
+
+  <div>
+    <label>First Name</label>
+    <input type="text" formControlName="FirstName" />
+  </div>
+
+  <div>
+    <label>Last Name</label>
+    <input type="text" formControlName="LastName" />
+  </div>
+
+  <button type="submit" [disabled]="CreateAppointmentForm.invalid">Submit</button>
+</form>
