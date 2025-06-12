@@ -5,8 +5,9 @@ import { Subject } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class SignalRService {
-  private hubConnection: signalR.HubConnection | null = null;
+export class SignalRtestService {
+
+ private hubConnection: signalR.HubConnection | null = null;
   public queueStatusUpdate = new Subject<{ liveQueueId: number; newStatus: string }>();
 
   constructor() {

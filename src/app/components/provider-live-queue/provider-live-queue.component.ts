@@ -8,8 +8,9 @@ import { IPaginationViewModel } from '../../types/IPaginationViewModel';
 import { ClientType } from '../../types/Enums/ClientType';
 import { QueueAppointmentStatus } from '../../types/Enums/QueueAppointmentStatus';
 import { IProviderViewModel } from '../../types/IProviderViewModel';
-import { SignalRService } from '../../services/signalR.service';
+
 import * as signalR from '@microsoft/signalr';
+import { SignalRtestService } from '../../services/signalRtest.service';
 
 @Component({
   selector: 'app-provider-live-queue',
@@ -27,7 +28,7 @@ export class ProviderLiveQueueComponent implements OnInit {
   totalItems: number = 0;
   providerName: string = 'Loading...';
 
-  constructor(private apiService: ApiService, private signalRService: SignalRService) {}
+  constructor(private apiService: ApiService, private signalRService: SignalRtestService) {}
 
   ngOnInit(): void {
     this.loadProviderName();
