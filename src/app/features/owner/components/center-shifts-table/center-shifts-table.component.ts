@@ -27,7 +27,7 @@ export class CenterShiftsTableComponent {
   route = inject(Router);
   centerShifts!: Array<ICenterShifts>;
   centerId = 1;
-
+  DateNow = new Date();
   ngOnInit() {
     this.ownerServices.getAllCenterShifts(this.centerId).subscribe({
       next: (res) => {
