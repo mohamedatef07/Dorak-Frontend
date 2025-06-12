@@ -38,6 +38,9 @@
             <button  type="button" class="btn Save-btn mt-3" (click)="onSubmit()"> Save </button>
             <button  type="button" class="btn Cancel-btn mt-3"(click)="onCancel()" > Cancel  </button>
           </div>
+             <div *ngIf="successMessage" class="alert alert-success">
+  {{ successMessage }}
+             </div>
               </div>
             </div>
           </div>

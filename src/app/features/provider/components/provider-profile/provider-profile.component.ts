@@ -19,16 +19,18 @@ genderEnum = GenderType;
   constructor(private ProviderPrpfileService:ProviderService) { }
 
 getProviderProfile(): void {
-this.ProviderPrpfileService.getProviderProfile().subscribe({
-      next: (res) => {
-        this.profile = res.Data;
+  this.ProviderPrpfileService.getProviderProfile().subscribe({
+    next: (res) => {
+      this.profile = res.Data;
+            console.log(res.Data)
 
-        if (this.profile?.Image) {
-          this.fullImagePath = environment.apiUrl + this.profile.Image;
-        }
-      },
-      error: (err) => console.error('Error loading profile:', err)
+      if (this.profile?.Image) {
+        this.fullImagePath = `${environment.apiUrl}${this.profile.Image}`;
+            console.log( this.fullImagePath)
 
+      }
+    },
+    error: (err) => console.error('Error loading profile:', err)
   });
 }
 
