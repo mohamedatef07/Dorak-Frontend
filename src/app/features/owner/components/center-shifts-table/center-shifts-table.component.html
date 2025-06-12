@@ -27,7 +27,6 @@
             type="button"
             class="btn start-btn"
             (click)="startShift(shift.ShiftId)"
-            [disabled]="shift.ShiftDate.getDay() == DateNow.getDay() && shift.StartTime <= DateNow.getTime()"
           >
             Start
           </button>
