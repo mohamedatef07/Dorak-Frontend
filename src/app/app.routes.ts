@@ -46,15 +46,20 @@ import { ProfessionalInformationComponent } from './features/provider/components
 import { SecurityProfileComponent } from './features/provider/components/SecurityProfile/SecurityProfile.component';
 import { ProviderSettingComponent } from './features/provider/components/Provider-Setting/Provider-Setting.component';
 import { LandingPageLayoutComponent } from './features/landingpage/components/landingPage-layout/landingPage-layout.component';
-
-
+import { CenterShiftsComponent } from './features/owner/components/center-shifts/center-shifts.component';
 
 export const routes: Routes = [
-  // {
-  //   path: 'owner',
-  //   component: OwnerLayoutComponent,
-  //   children: [{ path: '' }, { path: '' }, { path: '' }],
-  // },
+  {
+    path: 'owner',
+    component: OwnerLayoutComponent,
+    children: [
+      {
+        path: 'center-shifts',
+        component: CenterShiftsComponent,
+        title: 'Center Shifts',
+      },
+    ],
+  },
   {
     path: 'provider',
     component: ProviderLayoutComponent,
@@ -177,6 +182,7 @@ export const routes: Routes = [
       { path: 'certification', component: CertificationsComponent },
       { path: 'register', component: LandingPageRegisterComponent },
     ],
+    title: 'Home',
   },
 
   { path: 'login', component: LoginComponent, title: 'Login' },
