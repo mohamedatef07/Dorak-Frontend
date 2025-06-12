@@ -24,19 +24,27 @@
   color: #edf1f2 !important;
 }
 ::ng-deep .p-confirmpopup {
-  background-color: white;
-  padding: 1rem;
-  border-radius: var(--border-radius);
+  background-color: white !important;
+  padding: 1rem !important;
+  border-radius: var(--border-radius) !important;
 }
+::ng-deep .p-confirmpopup-content {
+  display: flex !important;
+}
+
 ::ng-deep .p-confirmpopup .p-confirmpopup-footer {
-  display: flex;
-  justify-content: space-around;
+  display: flex !important;
+  justify-content: space-around !important;
 }
 ::ng-deep .p-confirmpopup-footer .p-button-label {
-  border: 2px solid #ededed;
-  padding: 0.4rem;
-  border-radius: var(--border-radius);
+  border: 2px solid #ededed !important;
+  padding: 0.4rem !important;
+  border-radius: var(--border-radius) !important;
 }
 ::ng-deep .p-confirmpopup .p-confirmpopup-message {
-  margin-left: 1rem;
+  margin-left: 1rem !important;
+  margin-bottom: 1.5rem !important;
+}
+::ng-deep .p-confirmpopup .pi-exclamation-triangle {
+  margin-bottom: 1.5rem !important;
 }
