@@ -14,34 +14,25 @@
     <tbody>
       @for(shift of centerShifts; track $index){
       <tr>
-        <td class="provider-name">{{ shift.ProviderName }}</td>
-        <td class="shift-date">{{ shift.ShiftDate | date : "MMM d, y" }}</td>
+        <td class="provider-name">{{ shift?.ProviderName }}</td>
+        <td class="shift-date">{{ shift?.ShiftDate | date : "MMM d, y" }}</td>
         <td class="start-time">
-          {{ shift.StartTime.toString() | TimeStringToDate | date : "h:mm a" }}
+          {{ shift.StartTime }}
         </td>
         <td class="end-time">
-          {{ shift.EndTime.toString() | TimeStringToDate | date : "h:mm a" }}
+          {{ shift.EndTime}}
         </td>
         <td class="start">
           <button
             type="button"
             class="btn start-btn"
             (click)="startShift(shift.ShiftId)"
+            [disabled]="isTimePassed(shift)"
           >
             Start
           </button>
         </td>
         <td class="cancel">
-          <p-toast />
-          <p-confirmpopup>
-            <ng-template>
-              <div
-                class="flex flex-col items-center w-full gap-4 border-b border-surface-200 dark:border-surface-700 p-4 mb-4 pb-0"
-              >
-                <p>Do you want to cancel this shift?</p>
-              </div>
-            </ng-template>
-          </p-confirmpopup>
           <p-button
             class="btn cancel-btn"
             (click)="cancelShift(shift.ShiftId, $event)"

@@ -23,28 +23,35 @@
   background-color: #db3545 !important;
   color: #edf1f2 !important;
 }
-::ng-deep .p-confirmpopup {
+::ng-deep .p-confirmdialog {
   background-color: white !important;
   padding: 1rem !important;
   border-radius: var(--border-radius) !important;
 }
-::ng-deep .p-confirmpopup-content {
+::ng-deep .p-confirmdialog-content {
   display: flex !important;
 }
 
-::ng-deep .p-confirmpopup .p-confirmpopup-footer {
+::ng-deep .p-confirmdialog .p-dialog-footer {
   display: flex !important;
   justify-content: space-around !important;
 }
-::ng-deep .p-confirmpopup-footer .p-button-label {
+::ng-deep .p-dialog-footer .p-button-label {
   border: 2px solid #ededed !important;
   padding: 0.4rem !important;
   border-radius: var(--border-radius) !important;
+  font-size: 1.2rem !important;
 }
-::ng-deep .p-confirmpopup .p-confirmpopup-message {
+::ng-deep .p-confirmdialog .p-confirmdialog-message {
+  font-size: 1.2rem !important;
   margin-left: 1rem !important;
   margin-bottom: 1.5rem !important;
 }
-::ng-deep .p-confirmpopup .pi-exclamation-triangle {
+::ng-deep .p-confirmdialog .pi-exclamation-triangle {
+  font-size: 1.3rem !important;
   margin-bottom: 1.5rem !important;
+}
+::ng-deep .p-confirmdialog .p-icon {
+  width: 1.3rem !important;
+  height: 1.3rem !important;
 }
