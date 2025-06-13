@@ -15,7 +15,7 @@ export class OwnerService {
   authServices = inject(AuthService);
   httpClient = inject(HttpClient);
   // operatorId = this.authServices.getUserId();
-  operatorId = '358ad212-3cb5-4819-b2c8-3d3f335f153f'
+  operatorId = '358ad212-3cb5-4819-b2c8-3d3f335f153f';
 
   constructor() {}
 
@@ -60,9 +60,12 @@ export class OwnerService {
       `${environment.apiUrl}/api/operator/start-shift/?shiftId=${shiftId}&operatorId=${this.operatorId}`
     );
   }
-  cancelShift(shiftId: number): Observable<ApiResponse<null>> {
+  cancelShift(
+    shiftId: number,
+    centerId: number
+  ): Observable<ApiResponse<null>> {
     return this.httpClient.get<ApiResponse<null>>(
-      `${environment.apiUrl}/api/operator/cancel-shift/?shiftId=${shiftId}`
+      `${environment.apiUrl}/api/operator/cancel-shift/?shiftId=${shiftId}&centerId=${centerId}`
     );
   }
 }
