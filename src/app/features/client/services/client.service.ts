@@ -33,7 +33,10 @@ export class ClientService {
     return this.httpClient.get<ApiResponse<IDoctorsCard[]>>(
       `${environment.apiUrl}/API/Client/cards`);
   }
-
+  getDoctorsById():Observable<ApiResponse<any>>{
+    return this.httpClient.get<ApiResponse<any>>(
+      `${environment.apiUrl}/api/Provider`);
+  }
 searchDoctors(searchText: string = '', city: string = '', specialization: string = ''): Observable<ApiResponse<IDoctorsCard[]>> {
   const params = new HttpParams()
     .set('searchText', searchText)

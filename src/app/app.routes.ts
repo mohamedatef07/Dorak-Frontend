@@ -27,9 +27,9 @@ import { PatientQueueComponent } from './features/provider/components/patient-qu
 import { ReportsComponent } from './features/provider/components/reports/reports.component';
 import { DashboardComponent } from './features/provider/components/dashboard/dashboard.component';
 import { ReviewComponent } from './features/landingpage/components/review/review.component';
-import { CertificationsComponent } from './features/landingpage/components/certifications/certifications.component';
+// import { CertificationsComponent } from './features/landingpage/components/certifications/certifications.component';
 import { DoctorsPageComponent } from './features/client/components/doctorsPage/doctorsPage.component';
-import { LandingPageRegisterComponent } from './features/landingpage/components/landingPageRegister/landingPageRegister.component';
+// import { LandingPageRegisterComponent } from './features/landingpage/components/landingpageRegister4'
 import { DoctorsLandingPageComponent } from './features/landingpage/components/doctors-landingPage/doctors-landingPage.component';
 import { ProviderProfileComponent } from './features/provider/components/provider-profile/provider-profile.component';
 import { ManageOperatorsComponent } from './features/owner/components/ManageOperators/ManageOperators.component';
@@ -46,6 +46,7 @@ import { ProfessionalInformationComponent } from './features/provider/components
 import { SecurityProfileComponent } from './features/provider/components/SecurityProfile/SecurityProfile.component';
 import { ProviderSettingComponent } from './features/provider/components/Provider-Setting/Provider-Setting.component';
 import { LandingPageLayoutComponent } from './features/landingpage/components/landingPage-layout/landingPage-layout.component';
+import { CheckoutComponent } from './features/client/components/checkout/checkout.component';
 
 
 
@@ -159,6 +160,10 @@ export const routes: Routes = [
         path: 'doctors-Page',
         component: DoctorsPageComponent,
       },
+      {
+        path:'checkout',
+        component:CheckoutComponent,
+      }
     ],
   },
 
@@ -174,8 +179,8 @@ export const routes: Routes = [
     children: [
       { path: 'doctors', component: DoctorsLandingPageComponent },
       { path: 'review', component: ReviewComponent },
-      { path: 'certification', component: CertificationsComponent },
-      { path: 'register', component: LandingPageRegisterComponent },
+      // { path: 'certification', component: CertificationsComponent },
+      // { path: 'register', component: LandingPageRegisterComponent },
     ],
   },
 
