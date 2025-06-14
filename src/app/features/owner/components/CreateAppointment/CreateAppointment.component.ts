@@ -41,7 +41,7 @@ export class CreateAppointmentComponent implements OnInit {
   }
 
   HandleSubmitForm() {
-    console.log(this.CreateAppointmentForm);
+    // console.log(this.CreateAppointmentForm);
     if (this.CreateAppointmentForm.invalid) {
       this.CreateAppointmentForm.markAllAsTouched();
       return;
@@ -54,10 +54,10 @@ export class CreateAppointmentComponent implements OnInit {
     const raw = this.CreateAppointmentForm.value;
 
     const appointmentData = {
-      AppointmentDate: raw.AppointmentDate, // Already a proper string "YYYY-MM-DD"
-      AppointmentStatus: +raw.AppointmentStatus, // 👈 cast to number
+      AppointmentDate: raw.AppointmentDate, 
+      AppointmentStatus: +raw.AppointmentStatus, 
       AppointmentType: +raw.AppointmentType,
-      clientType: +raw.clientType,             // 👈 cast to number and use lowercase key
+      clientType: +raw.clientType,             
       Fees: +raw.Fees,
       AdditionalFees: raw.AdditionalFees ? +raw.AdditionalFees : 0,
       OperatorId: raw.OperatorId,
@@ -69,7 +69,7 @@ export class CreateAppointmentComponent implements OnInit {
       FirstName: raw.FirstName,
       LastName: raw.LastName,
     };
-    console.log(appointmentData);
+    // console.log(appointmentData);
 
     this.ownerService.reserveAppointment(appointmentData).subscribe({
       next: (response: ApiResponse<ICreateAppointment>) => {
@@ -86,8 +86,5 @@ export class CreateAppointmentComponent implements OnInit {
         console.error('Error:', error);
       }
     });
-
-
   }
-
 }
