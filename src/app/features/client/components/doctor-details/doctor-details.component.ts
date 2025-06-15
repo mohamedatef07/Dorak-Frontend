@@ -14,12 +14,14 @@ import { ActivatedRoute } from '@angular/router';
 export class DoctorDetailsComponent implements OnInit {
     doctorId!: string;
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute) {
+  }
 
 
   ngOnInit() {
         this.route.paramMap.subscribe(params => {
       this.doctorId = params.get('id')!;
+      console.log(this.doctorId)
     });
 
   }
