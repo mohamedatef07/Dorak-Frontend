@@ -116,11 +116,6 @@ export const routes: Routes = [
       }
     ]
   },
-  // {
-  //   path: 'provider',
-  //   component: ProviderLayoutComponent,
-  //   children: [{ path: '' }, { path: '' }, { path: '' }],
-  // },
   {
     path: 'client',
     component: ClientLayoutComponent,

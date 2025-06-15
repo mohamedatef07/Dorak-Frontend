@@ -14,20 +14,19 @@
     <tbody>
       @for(shift of centerShifts; track $index){
       <tr>
-        <td class="provider-name">{{ shift?.ProviderName }}</td>
-        <td class="shift-date">{{ shift?.ShiftDate | date : "MMM d, y" }}</td>
+        <td class="provider-name">{{ shift.ProviderName }}</td>
+        <td class="shift-date">{{ shift.ShiftDate | date : "MMM d, y" }}</td>
         <td class="start-time">
-          {{ shift.StartTime }}
+          {{ shift.StartTime.toString() | TimeStringToDate | date : "h:mm a" }}
         </td>
         <td class="end-time">
-          {{ shift.EndTime}}
+          {{ shift.EndTime.toString() | TimeStringToDate | date : "h:mm a" }}
         </td>
         <td class="start">
           <button
             type="button"
             class="btn start-btn"
-            (click)="startShift(shift.ShiftId)"
-            [disabled]="isTimePassed(shift)"
+            (click)="startShift(shift)"
           >
             Start
           </button>
