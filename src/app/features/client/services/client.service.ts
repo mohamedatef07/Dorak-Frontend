@@ -141,4 +141,11 @@ searchDoctorsByFilter(filter: IDoctorFilter) {
     );
 
   }
+
+  ClientLiveQueue(appointmentId:number): Observable<ApiResponse<IClientWalletProfile>> {
+    return this.httpClient.get<ApiResponse<IClientWalletProfile>>(
+      `${environment.apiUrl}/api/client/queue/by-appointment/${appointmentId}`
+    );
+  }
+
 }
