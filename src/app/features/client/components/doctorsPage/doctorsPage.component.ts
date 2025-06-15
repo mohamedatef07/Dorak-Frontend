@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -17,6 +18,10 @@ import { IDoctorFilter } from '../../..//..//types/IDoctorFilter';
   ]
 })
 export class DoctorsPageComponent implements OnInit {
+
+    constructor(private _clientService: ClientService , private router: Router) {}
+
+
   searchText: string = '';
   specialty: string = '';
   city: string = '';
@@ -51,27 +56,17 @@ export class DoctorsPageComponent implements OnInit {
   AvailableDate: undefined
 };
 
-
   doctors: IDoctorsCard[] = [];
   filteredDoctors: IDoctorsCard[] = [];
 
-  constructor(private cardDoctorService: ClientService , private router: Router) {}
 
-
-goToDetails(Id: number | undefined): void {
-  if (!Id) {
-    console.error("Invalid doctor ID");
-    return;
-  }
-  this.router.navigate(['client/doctor-details', Id]);
-}
 
   ngOnInit(): void {
     this.getAllDoctors();
   }
 
   getAllDoctors(): void {
-    this.cardDoctorService.getAllDoctorsCards().subscribe({
+    this._clientService.getAllDoctorsCards().subscribe({
       next: (res) => {
         this.doctors = res.Data;
         this.filteredDoctors = [...this.doctors];
@@ -152,7 +147,7 @@ for (const key in rawBody) {
 }
 
 
-  this.cardDoctorService.searchDoctorsByFilter(body).subscribe({
+  this._clientService.searchDoctorsByFilter(body).subscribe({
     next: (res) => {
       this.filteredDoctors = res.Data;
     },
@@ -162,7 +157,7 @@ for (const key in rawBody) {
 
 
 searchDoctors(): void {
-  this.cardDoctorService.getAllDoctorsCards().subscribe({
+  this._clientService.getAllDoctorsCards().subscribe({
     next: (res) => {
       this.doctors = res.Data;
       const keyword = this.searchText.trim().toLowerCase();
