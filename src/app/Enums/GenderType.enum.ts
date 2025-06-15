@@ -1,6 +1,5 @@
 export enum GenderType {
-
   none,
-Male,
-Female
+  Male,
+  Female,
 }
