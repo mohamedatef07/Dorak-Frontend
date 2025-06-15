@@ -111,6 +111,7 @@ searchDoctorsByFilter(filter: IDoctorFilter) {
     (`${environment.apiUrl}/api/client/profile-all-appointment/${userId}`);
   }
 
+
   getUpcomingAppointments(userId:string): Observable<ApiResponse<IClientProfileAppointment[]>> {
     return this.httpClient.get<ApiResponse<IClientProfileAppointment[]>>
     (`${environment.apiUrl}/api/client/upcoming-appointments/${userId}`);
@@ -127,6 +128,12 @@ searchDoctorsByFilter(filter: IDoctorFilter) {
     (`${environment.apiUrl}/api/client/Checkout`,request);
   }
 
+  changePassword(data: FormData): Observable<{ message: string; status: number; data: any }> {
+  return this.httpClient.put<{ message: string; status: number; data: any }>(
+    'http://localhost:5139/api/Account/change-password',
+    data
+  );
+}
 
   ClientWalletAndProfile(userId: string): Observable<ApiResponse<IClientWalletProfile>> {
     return this.httpClient.get<ApiResponse<IClientWalletProfile>>(
