@@ -48,6 +48,9 @@ import { ProviderSettingComponent } from './features/provider/components/Provide
 import { LandingPageLayoutComponent } from './features/landingpage/components/landingPage-layout/landingPage-layout.component';
 import { CheckoutComponent } from './features/client/components/checkout/checkout.component';
 import { CenterShiftsComponent } from './features/owner/components/center-shifts/center-shifts.component';
+import { ChangePasswordComponent } from './features/client/components/Change-Password/Change-Password.component';
+
+
 
 export const routes: Routes = [
   {
@@ -148,13 +151,17 @@ export const routes: Routes = [
         title: 'Client Wallet',
       },
       {
-        path: 'doctors-Page',
+        path: 'doctors-page',
         component: DoctorsPageComponent,
       },
       {
-        path: 'checkout',
-        component: CheckoutComponent,
+        path:'checkout',
+        component:CheckoutComponent,
       },
+      {
+        path: 'change-password',
+        component: ChangePasswordComponent
+      }
     ],
   },
 
