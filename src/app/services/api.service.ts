@@ -11,7 +11,7 @@ import { IProviderAssignmentViewModel } from '../types/IProviderAssignmentViewMo
 import { IWeeklyProviderAssignmentViewModel } from '../types/IWeeklyProviderAssignmentViewModel';
 import { IProviderLiveQueueViewModel } from '../types/IProviderLiveQueueViewModel';
 import { IUpdateQueueStatusViewModel } from '../types/IUpdateQueueStatusViewModel';
-import { GenderType } from '../types/Enums/GenderType';
+import { GenderType } from '../Enums/GenderType.enum';
 
 @Injectable({
   providedIn: 'root'

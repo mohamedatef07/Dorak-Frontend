@@ -27,8 +27,10 @@
             type="button"
             class="btn start-btn"
             (click)="startShift(shift)"
+            [disabled]="shift.ShiftType === ShiftType.OnGoing"
+            [ngClass]="{ isStarted: shift.ShiftType === ShiftType.OnGoing }"
           >
-            Start
+            @if(shift.ShiftType === ShiftType.OnGoing){On Going}@else{Start}
           </button>
         </td>
         <td class="cancel">

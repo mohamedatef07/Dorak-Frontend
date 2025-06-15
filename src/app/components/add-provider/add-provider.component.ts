@@ -1,5 +1,3 @@
-
-
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -14,7 +12,7 @@ import { ApiService } from '../../services/api.service';
 import { IRegistrationViewModel } from '../../types/IRegistrationViewModel';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ProviderType } from '../../types/Enums/ProviderType';
+import { ProviderType } from '../../Enums/ProviderType.enum';
 
 @Component({
   selector: 'app-add-provider',
@@ -29,8 +27,8 @@ import { ProviderType } from '../../types/Enums/ProviderType';
     MatSelectModule,
     MatButtonModule,
     MatDatepickerModule,
-    MatNativeDateModule
-  ]
+    MatNativeDateModule,
+  ],
 })
 export class AddProviderComponent implements OnInit {
   model: IRegistrationViewModel = this.createEmptyModel();
@@ -38,7 +36,7 @@ export class AddProviderComponent implements OnInit {
   providerTypes: { value: ProviderType; label: string }[] = [
     { value: ProviderType.None, label: 'None' },
     { value: ProviderType.Temporary, label: 'Temporary' },
-    { value: ProviderType.Permanent, label: 'Permanent' }
+    { value: ProviderType.Permanent, label: 'Permanent' },
   ];
   minPasswordLength = 8;
   minUsernameLength = 6;
@@ -80,7 +78,7 @@ export class AddProviderComponent implements OnInit {
 
       Availability: '',
       EstimatedDuration: null,
-      Rate: null
+      Rate: null,
     };
   }
 
@@ -104,21 +102,38 @@ export class AddProviderComponent implements OnInit {
       this.errorMessage = 'Failed to read the image file.';
       this.selectedFile = null;
       this.model.Image = '';
-
     };
 
     reader.readAsDataURL(this.selectedFile);
   }
 
   validateForm(): boolean {
-    const requiredFields = ['FirstName', 'LastName', 'Email', 'PhoneNumber', 'Specialization', 'UserName', 'Password', 'ConfirmPassword', 'Gender', 'BirthDate', 'ProviderType'];
-    const missingFields = requiredFields.filter(field => {
+    const requiredFields = [
+      'FirstName',
+      'LastName',
+      'Email',
+      'PhoneNumber',
+      'Specialization',
+      'UserName',
+      'Password',
+      'ConfirmPassword',
+      'Gender',
+      'BirthDate',
+      'ProviderType',
+    ];
+    const missingFields = requiredFields.filter((field) => {
       const value = this.model[field as keyof IRegistrationViewModel];
-      return value === undefined || value === null || (typeof value === 'string' && value.trim() === '');
+      return (
+        value === undefined ||
+        value === null ||
+        (typeof value === 'string' && value.trim() === '')
+      );
     });
 
     if (missingFields.length > 0) {
-      this.errorMessage = `Please fill all required fields: ${missingFields.join(', ')}.`;
+      this.errorMessage = `Please fill all required fields: ${missingFields.join(
+        ', '
+      )}.`;
       return false;
     }
 
@@ -164,35 +179,57 @@ export class AddProviderComponent implements OnInit {
     this.apiService.addProviderAndAssignIt(this.model).subscribe({
       next: (providerId: string) => {
         this.isSubmitting = false;
-        this.snackBar.open('Provider added successfully!', 'Close', { duration: 3000 });
+        this.snackBar.open('Provider added successfully!', 'Close', {
+          duration: 3000,
+        });
         console.log('API Response - providerId:', providerId);
         console.log('Type of providerId:', typeof providerId);
         console.log('Is providerId empty?', providerId === '');
 
-        if (providerId && typeof providerId === 'string' && providerId.trim() !== '') {
-          console.log('Navigating to schedule-options with providerId:', providerId);
-          this.router.navigate(['/schedule-options', providerId]).then(success => {
-            console.log('Navigation successful:', success);
-            if (!success) {
-              console.error('Navigation failed: Route not resolved');
+        if (
+          providerId &&
+          typeof providerId === 'string' &&
+          providerId.trim() !== ''
+        ) {
+          console.log(
+            'Navigating to schedule-options with providerId:',
+            providerId
+          );
+          this.router
+            .navigate(['/schedule-options', providerId])
+            .then((success) => {
+              console.log('Navigation successful:', success);
+              if (!success) {
+                console.error('Navigation failed: Route not resolved');
+                this.router.navigate(['/add-provider']);
+              }
+            })
+            .catch((err) => {
+              console.error('Navigation error:', err);
               this.router.navigate(['/add-provider']);
-            }
-          }).catch(err => {
-            console.error('Navigation error:', err);
-            this.router.navigate(['/add-provider']);
-          });
+            });
         } else {
           console.error('Invalid providerId received:', providerId);
-          this.snackBar.open('Failed to proceed: Invalid provider ID', 'Close', { duration: 5000 });
+          this.snackBar.open(
+            'Failed to proceed: Invalid provider ID',
+            'Close',
+            { duration: 5000 }
+          );
         }
       },
       error: (err: HttpErrorResponse) => {
         this.isSubmitting = false;
-        const errorDetail = err.error?.errors ? Object.entries(err.error.errors).map(([key, value]) => `${key}: ${(value as string[]).join(', ')}`).join('; ') : err.error?.title || err.message;
+        const errorDetail = err.error?.errors
+          ? Object.entries(err.error.errors)
+              .map(
+                ([key, value]) => `${key}: ${(value as string[]).join(', ')}`
+              )
+              .join('; ')
+          : err.error?.title || err.message;
         this.errorMessage = errorDetail || 'Failed to add provider.';
         this.snackBar.open(this.errorMessage, 'Close', { duration: 5000 });
         console.error('API error:', err);
-      }
+      },
     });
   }
 }

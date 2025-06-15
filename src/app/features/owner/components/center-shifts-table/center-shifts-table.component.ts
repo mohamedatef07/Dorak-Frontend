@@ -2,16 +2,15 @@ import { ICenterShifts } from './../../models/ICenterShifts';
 import { Component, inject } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { TimeStringToDatePipe } from '../../../../pipes/TimeStringToDate.pipe';
-import { DatePipe } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { OwnerService } from '../../services/owner.service';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ButtonModule } from 'primeng/button';
-import { ToastModule } from 'primeng/toast';
 import { UpdateShiftsListSRService } from '../../../../services/signalR Services/updateShiftsListSR.service';
+import { ShiftType } from '../../../../Enums/ShiftType.enum';
 @Component({
   selector: 'app-center-shifts-table',
-  imports: [TimeStringToDatePipe, DatePipe, ButtonModule],
+  imports: [TimeStringToDatePipe, DatePipe, ButtonModule, CommonModule],
   templateUrl: './center-shifts-table.component.html',
   styleUrl: './center-shifts-table.component.css',
 })
@@ -23,6 +22,7 @@ export class CenterShiftsTableComponent {
   route = inject(Router);
   centerShifts: Array<ICenterShifts> = [];
   centerId = 1;
+  ShiftType = ShiftType;
 
   ngOnInit() {
     this.ownerServices.getAllCenterShifts(this.centerId).subscribe({
