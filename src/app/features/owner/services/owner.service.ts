@@ -3,8 +3,8 @@ import { ApiResponse } from '../../../types/ApiResponse';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
-import { IOperator } from '../../../types/IOperator';
-import { ICreateAppointment } from '../../../types/ICreateAppointment';
+import { IOperator } from '../models/IOperator';
+import { ICreateAppointment } from '../models/ICreateAppointment';
 
 @Injectable({
   providedIn: 'root',

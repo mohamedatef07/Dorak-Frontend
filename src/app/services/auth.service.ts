@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ILoginResponseData } from '../types/ILoginResponseData';
 import { CookieService } from 'ngx-cookie-service';
-import { IAddOperator } from '../types/IAddOperator';
+import { IAddOperator } from '../features/owner/models/IAddOperator';
 @Injectable({
   providedIn: 'root',
 })

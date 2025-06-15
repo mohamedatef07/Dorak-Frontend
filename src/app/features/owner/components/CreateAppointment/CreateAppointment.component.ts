@@ -3,7 +3,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { OwnerService } from '../../services/owner.service';
 import { ApiResponse } from '../../../../types/ApiResponse';
-import { ICreateAppointment } from '../../../../types/ICreateAppointment';
+import { ICreateAppointment } from '../../models/ICreateAppointment';
 
 @Component({
   selector: 'app-CreateAppointment',
@@ -13,11 +13,13 @@ import { ICreateAppointment } from '../../../../types/ICreateAppointment';
 })
 export class CreateAppointmentComponent implements OnInit {
   private ownerService = inject(OwnerService);
+  private Records: 
   CreateAppointmentForm: FormGroup;
   errorMessage: string | null = null;
   successMessage: string | null = null;
   isSubmitting = false;
   constructor() {
+    
     this.CreateAppointmentForm = new FormGroup({
       AppointmentDate: new FormControl('', Validators.required),
       AppointmentStatus: new FormControl('', Validators.required),
