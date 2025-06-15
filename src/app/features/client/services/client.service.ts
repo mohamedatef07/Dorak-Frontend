@@ -33,9 +33,9 @@ export class ClientService {
     return this.httpClient.get<ApiResponse<IDoctorsCard[]>>(
       `${environment.apiUrl}/API/Client/cards`);
   }
-  getDoctorsById():Observable<ApiResponse<any>>{
+  getDoctorsById(id:string):Observable<ApiResponse<any>>{
     return this.httpClient.get<ApiResponse<any>>(
-      `${environment.apiUrl}/api/Provider`);
+      `${environment.apiUrl}/api/Provider/GetProviderById/${id}`);
   }
 searchDoctors(searchText: string = '', city: string = '', specialization: string = ''): Observable<ApiResponse<IDoctorsCard[]>> {
   const params = new HttpParams()
@@ -122,9 +122,9 @@ searchDoctorsByFilter(filter: IDoctorFilter) {
 
   }
 
-  Checkout(CheckoutRequest:CheckoutRequest):Observable<CheckoutRequest >{
+  Checkout(request:CheckoutRequest):Observable<CheckoutRequest >{
     return this.httpClient.post<CheckoutRequest>
-    (`${environment.apiUrl}/api/client/Checkout`,CheckoutRequest);
+    (`${environment.apiUrl}/api/client/Checkout`,request);
   }
 
 
