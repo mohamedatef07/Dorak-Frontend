@@ -14,22 +14,23 @@
     <tbody>
       @for(shift of centerShifts; track $index){
       <tr>
-        <td class="provider-name">{{ shift?.ProviderName }}</td>
-        <td class="shift-date">{{ shift?.ShiftDate | date : "MMM d, y" }}</td>
+        <td class="provider-name">{{ shift.ProviderName }}</td>
+        <td class="shift-date">{{ shift.ShiftDate | date : "MMM d, y" }}</td>
         <td class="start-time">
-          {{ shift.StartTime }}
+          {{ shift.StartTime.toString() | TimeStringToDate | date : "h:mm a" }}
         </td>
         <td class="end-time">
-          {{ shift.EndTime}}
+          {{ shift.EndTime.toString() | TimeStringToDate | date : "h:mm a" }}
         </td>
         <td class="start">
           <button
             type="button"
             class="btn start-btn"
-            (click)="startShift(shift.ShiftId)"
-            [disabled]="isTimePassed(shift)"
+            (click)="startShift(shift)"
+            [disabled]="shift.ShiftType === ShiftType.OnGoing"
+            [ngClass]="{ isStarted: shift.ShiftType === ShiftType.OnGoing }"
           >
-            Start
+            @if(shift.ShiftType === ShiftType.OnGoing){On Going}@else{Start}
           </button>
         </td>
         <td class="cancel">

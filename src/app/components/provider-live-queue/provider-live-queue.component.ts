@@ -6,10 +6,10 @@ import { ApiResponse } from '../../types/ApiResponse';
 import { IProviderLiveQueueViewModel } from '../../types/IProviderLiveQueueViewModel';
 import { IUpdateQueueStatusViewModel } from '../../types/IUpdateQueueStatusViewModel';
 import { IPaginationViewModel } from '../../types/IPaginationViewModel';
-import { ClientType } from '../../types/Enums/ClientType';
-import { QueueAppointmentStatus } from '../../types/Enums/QueueAppointmentStatus';
 import { IProviderViewModel } from '../../types/IProviderViewModel';
 import * as signalR from '@microsoft/signalr';
+import { ClientType } from '../../Enums/ClientType.enum';
+import { QueueAppointmentStatus } from '../../Enums/QueueAppointmentStatus.enum';
 
 @Component({
   selector: 'app-provider-live-queue',
@@ -106,7 +106,7 @@ export class ProviderLiveQueueComponent implements OnInit {
 
   private mapClientType(value: number | string): ClientType {
     const numValue = typeof value === 'string' ? parseInt(value, 10) : value;
-    return (numValue as ClientType) ?? ClientType.Unknown;
+    return (numValue as ClientType) ?? ClientType.none;
   }
 
   private mapStatus(value: number | string): QueueAppointmentStatus {

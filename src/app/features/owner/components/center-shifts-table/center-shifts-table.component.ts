@@ -2,16 +2,15 @@ import { ICenterShifts } from './../../models/ICenterShifts';
 import { Component, inject } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { TimeStringToDatePipe } from '../../../../pipes/TimeStringToDate.pipe';
-import { DatePipe } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { OwnerService } from '../../services/owner.service';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ButtonModule } from 'primeng/button';
-import { ToastModule } from 'primeng/toast';
 import { UpdateShiftsListSRService } from '../../../../services/signalR Services/updateShiftsListSR.service';
+import { ShiftType } from '../../../../Enums/ShiftType.enum';
 @Component({
   selector: 'app-center-shifts-table',
-  imports: [TimeStringToDatePipe, DatePipe, ButtonModule],
+  imports: [TimeStringToDatePipe, DatePipe, ButtonModule, CommonModule],
   templateUrl: './center-shifts-table.component.html',
   styleUrl: './center-shifts-table.component.css',
 })
@@ -23,7 +22,7 @@ export class CenterShiftsTableComponent {
   route = inject(Router);
   centerShifts: Array<ICenterShifts> = [];
   centerId = 1;
-  currentTime = new Date();
+  ShiftType = ShiftType;
 
   ngOnInit() {
     this.ownerServices.getAllCenterShifts(this.centerId).subscribe({
@@ -40,7 +39,7 @@ export class CenterShiftsTableComponent {
       },
     });
     this.srService.updatedShiftsList.subscribe({
-      next: (updatedList: Array<ICenterShifts>) => {
+      next: (updatedList) => {
         this.centerShifts = [...updatedList];
       },
       error: (err) => {
@@ -53,20 +52,34 @@ export class CenterShiftsTableComponent {
       },
     });
   }
-  startShift(shiftId: number) {
-    this.ownerServices.startShift(shiftId).subscribe({
-      next: (res) => {
-        this.route.navigate(['live-queue']);
-      },
-      error: (err) => {
-        this.messageServices.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'The server is experiencing an issue, Please try again soon.',
-          life: 4000,
-        });
-      },
-    });
+  startShift(shift: ICenterShifts) {
+    const shiftDate = new Date(shift.ShiftDate + ' ' + shift.StartTime);
+    if (
+      shiftDate <= new Date() &&
+      shiftDate.getDate() === new Date().getDate()
+    ) {
+      this.ownerServices.startShift(shift.ShiftId).subscribe({
+        next: (res) => {
+          this.route.navigate(['live-queue']);
+        },
+        error: (err) => {
+          this.messageServices.add({
+            severity: 'error',
+            summary: 'Error',
+            detail:
+              'The server is experiencing an issue, Please try again soon.',
+            life: 4000,
+          });
+        },
+      });
+    } else {
+      this.messageServices.add({
+        severity: 'info',
+        summary: 'info',
+        detail: `This shift isn't ready to start just yet. Please wait for its scheduled time.`,
+        life: 4000,
+      });
+    }
   }
   cancelShift(shiftId: number, event: Event) {
     this.confirmService.confirm({
@@ -91,10 +104,14 @@ export class CenterShiftsTableComponent {
   shiftDetails(shiftId: number) {
     this.route.navigate(['shift-appointments']);
   }
-  isTimePassed(shift: ICenterShifts): boolean {
-    return (
-      shift.StartTime.getTime()>= this.currentTime.getTime() &&
-      shift.ShiftDate.getDate() === this.currentTime.getDate()
-    );
+  formatDate(date: Date): Date {
+    if (!date) return new Date();
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    const day = date.getDate();
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const seconds = date.getSeconds();
+    return new Date(year, month, day, hours, minutes, seconds);
   }
 }
