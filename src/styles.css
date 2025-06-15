@@ -27,14 +27,14 @@
   --bg-dark: #012a4a;
   --text-primary: #012a4a;
   --text-dark: #ecf0f1;
-  --btn-bg: #61A5C2;
+  --btn-bg: #61a5c2;
   --btn-text: #fff;
   --alert-color: #f39c12;
   --success-color: #2ecc71;
 
   /* Fonts */
-  --font-heading: 'Poppins', sans-serif;
-  --font-body: 'DINNextLTArabic', sans-serif;
+  --font-heading: "Poppins", sans-serif;
+  --font-body: "DINNextLTArabic", sans-serif;
 
   /* Font Sizes */
   --font-page-header: 32px;
@@ -95,7 +95,8 @@ a {
 }
 .btn {
   background-color: var(--button-bg-color-Light) !important;
-  border: none;
+  color: #edf1f2 !important;
+  border: none !important;
 }
 .btn:focus,
 .btn:active {
@@ -103,6 +104,7 @@ a {
 }
 .btn:hover {
   background-color: var(--hover-text-Light) !important;
+  color: #edf1f2 !important;
 }
 .main-bg {
   background-color: var(--main-bg-color-Light);
@@ -159,7 +161,7 @@ a {
   color: #324154 !important;
 }
 
-.p-toast-message.p-toast-message-error .p-toast-icon-close .p-icon{
+.p-toast-message.p-toast-message-error .p-toast-icon-close .p-icon {
   font-size: 1.2rem !important;
   color: #de3333 !important;
   cursor: pointer !important;
@@ -171,7 +173,7 @@ a {
   border-radius: 50% !important;
 }
 .p-toast-message.p-toast-message-error .p-toast-icon-close:hover {
-  background-color: rgba(0, 0, 0, 0.05 )!important;
+  background-color: rgba(0, 0, 0, 0.05) !important;
 }
 /* /////////////////////////////////////////// */
 .p-toast-message.p-toast-message-success {

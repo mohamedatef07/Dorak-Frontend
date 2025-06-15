@@ -3,12 +3,12 @@ import { Component, OnInit } from '@angular/core';
 import { RouterLink, RouterModule } from '@angular/router';
 
 @Component({
-  selector: 'app-sidebar',
-  templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.css'],
+  selector: 'app-owner-sidebar',
+  templateUrl: './owner-sidebar.component.html',
+  styleUrls: ['./owner-sidebar.component.css'],
   imports: [RouterLink, RouterModule,CommonModule],
 })
-export class SidebarComponent implements OnInit {
+export class OwnerSidebarComponent implements OnInit {
   currentDate: string = '';
   currentTime: string = '';
   isSubmenuOpen = false;

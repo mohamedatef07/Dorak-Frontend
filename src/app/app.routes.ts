@@ -51,11 +51,17 @@ import { CheckoutComponent } from './features/client/components/checkout/checkou
 
 
 export const routes: Routes = [
-  // {
-  //   path: 'owner',
-  //   component: OwnerLayoutComponent,
-  //   children: [{ path: '' }, { path: '' }, { path: '' }],
-  // },
+  {
+    path: 'owner',
+    component: OwnerLayoutComponent,
+    children: [
+      {
+        path: 'center-shifts',
+        component: CenterShiftsComponent,
+        title: 'Center Shifts',
+      },
+    ],
+  },
   {
     path: 'provider',
     component: ProviderLayoutComponent,
@@ -182,6 +188,7 @@ export const routes: Routes = [
       // { path: 'certification', component: CertificationsComponent },
       // { path: 'register', component: LandingPageRegisterComponent },
     ],
+    title: 'Home',
   },
 
   { path: 'login', component: LoginComponent, title: 'Login' },

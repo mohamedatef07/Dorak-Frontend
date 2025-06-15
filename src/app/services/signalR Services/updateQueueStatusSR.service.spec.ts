@@ -1,18 +1,17 @@
 /* tslint:disable:no-unused-variable */
-
 import { TestBed, async, inject } from '@angular/core/testing';
-import { LandingPageService } from './landingPage.service';
+import { UpdateQueueStatusSRService } from './updateQueueStatusSR.service';
 
-describe('Service: LandingpageService', () => {
+describe('Service: SignalRtest', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [LandingPageService],
+      providers: [UpdateQueueStatusSRService],
     });
   });
 
   it('should ...', inject(
-    [LandingPageService],
-    (service: LandingPageService) => {
+    [UpdateQueueStatusSRService],
+    (service: UpdateQueueStatusSRService) => {
       expect(service).toBeTruthy();
     }
   ));
