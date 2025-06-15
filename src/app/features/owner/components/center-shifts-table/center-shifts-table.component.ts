@@ -9,6 +9,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ButtonModule } from 'primeng/button';
 import { ToastModule } from 'primeng/toast';
 import { UpdateShiftsListSRService } from '../../../../services/signalR Services/updateShiftsListSR.service';
+
 @Component({
   selector: 'app-center-shifts-table',
   imports: [TimeStringToDatePipe, DatePipe, ButtonModule],
@@ -56,7 +57,7 @@ export class CenterShiftsTableComponent {
   startShift(shiftId: number) {
     this.ownerServices.startShift(shiftId).subscribe({
       next: (res) => {
-        this.route.navigate(['live-queue']);
+        this.route.navigate(['provider-live-queue/']);
       },
       error: (err) => {
         this.messageServices.add({

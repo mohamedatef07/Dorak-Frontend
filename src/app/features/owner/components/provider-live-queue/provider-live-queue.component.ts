@@ -1,14 +1,14 @@
-import { UpdateQueueStatusSRService } from './../../services/signalR Services/updateQueueStatusSR.service';
+import { UpdateQueueStatusSRService } from '../../../../services/signalR Services/updateQueueStatusSR.service';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ApiService } from '../../services/api.service';
-import { ApiResponse } from '../../types/ApiResponse';
-import { IProviderLiveQueueViewModel } from '../../types/IProviderLiveQueueViewModel';
-import { IUpdateQueueStatusViewModel } from '../../types/IUpdateQueueStatusViewModel';
-import { IPaginationViewModel } from '../../types/IPaginationViewModel';
-import { ClientType } from '../../types/Enums/ClientType';
-import { QueueAppointmentStatus } from '../../types/Enums/QueueAppointmentStatus';
-import { IProviderViewModel } from '../../types/IProviderViewModel';
+import { ApiService } from '../../../../services/api.service';
+import { ApiResponse } from '../../../../types/ApiResponse';
+import { IProviderLiveQueueViewModel } from '../../../../types/IProviderLiveQueueViewModel';
+import { IUpdateQueueStatusViewModel } from '../../../../types/IUpdateQueueStatusViewModel';
+import { IPaginationViewModel } from '../../../../types/IPaginationViewModel';
+import { ClientType } from '../../../../types/Enums/ClientType';
+import { QueueAppointmentStatus } from '../../../../types/Enums/QueueAppointmentStatus';
+import { IProviderViewModel } from '../../../../types/IProviderViewModel';
 import * as signalR from '@microsoft/signalr';
 
 @Component({
@@ -26,6 +26,14 @@ export class ProviderLiveQueueComponent implements OnInit {
   pageSize: number = 16;
   totalItems: number = 0;
   providerName: string = 'Loading...';
+  stats = {
+    total: 0,
+    normal: 0,
+    consultation: 0,
+    urgent: 0,
+    exist: 0,
+    done: 0,
+  };
 
   constructor(
     private apiService: ApiService,
@@ -81,7 +89,7 @@ export class ProviderLiveQueueComponent implements OnInit {
               ClientFullName: item.ClientFullName,
               ClientType: this.mapClientType(item.ClientType),
               EstimatedTime: item.EstimatedTime,
-              ArrivalTime: item.ArrivalTime,
+              ArrivalTime: item.ArrivalTime || '', 
               Status: this.mapStatus(item.Status),
               PhoneNumber: item.PhoneNumber,
               CurrentQueuePosition: item.CurrentQueuePosition,
@@ -92,16 +100,34 @@ export class ProviderLiveQueueComponent implements OnInit {
                 .map((status: number) => this.mapStatus(status)),
             }));
             this.totalItems = response.Data.Total;
+            this.calculateStats(); // Calculate statistics after loading queues
           } else {
             console.error('Failed to load live queues:', response.Message);
             this.liveQueues = [];
+            this.calculateStats(); // Recalculate with empty array if failed
           }
         },
         error: (error) => {
           console.error('Error fetching live queues:', error);
           this.liveQueues = [];
+          this.calculateStats(); // Recalculate with empty array on error
         },
       });
+  }
+
+  private calculateStats(): void {
+    this.stats = {
+      total: this.liveQueues.length,
+      normal: this.liveQueues.filter(q => q.ClientType === ClientType.Normal).length,
+      consultation: this.liveQueues.filter(q => q.ClientType === ClientType.Consultation).length,
+      urgent: this.liveQueues.filter(q => this.isUrgent(q)).length,
+      exist: this.liveQueues.filter(q => q.Status === QueueAppointmentStatus.InProgress || q.Status === QueueAppointmentStatus.Waiting).length,
+      done: this.liveQueues.filter(q => q.Status === QueueAppointmentStatus.Completed).length,
+    };
+  }
+
+  private isUrgent(queue: IProviderLiveQueueViewModel): boolean {
+    return queue.ClientType !== ClientType.Normal && queue.ClientType !== ClientType.Consultation;
   }
 
   private mapClientType(value: number | string): ClientType {
@@ -144,6 +170,7 @@ export class ProviderLiveQueueComponent implements OnInit {
       next: (response: ApiResponse<string>) => {
         if (response.Status === 200) {
           liveQueue.Status = newStatus;
+          this.calculateStats(); // Recalculate stats after status update
           console.log('Queue status updated:', response.Data);
         } else {
           console.error('Error updating queue status:', response.Message);
@@ -200,6 +227,7 @@ export class ProviderLiveQueueComponent implements OnInit {
   }
 
   formatTime(time: string): string {
+    if (!time) return 'N/A'; // Handle null or empty string
     const [hours, minutes] = time.split(':').map(Number);
     const period = hours >= 12 ? 'PM' : 'AM';
     const adjustedHours = hours % 12 || 12;
@@ -215,7 +243,8 @@ export class ProviderLiveQueueComponent implements OnInit {
       );
       if (queue) {
         queue.Status = this.stringToStatus(update.newStatus);
-        // this.cdr.detectChanges(); // Uncomment if using OnPush change detection
+        this.calculateStats(); // Recalculate stats on real-time updates
+        // this.cdr.detectChanges();
       }
     });
   }
@@ -232,6 +261,6 @@ export class ProviderLiveQueueComponent implements OnInit {
         );
         this.signalRService.reconnectIfNeeded();
       }
-    }, 5000); // Check every 5 seconds
+    }, 5000);
   }
 }

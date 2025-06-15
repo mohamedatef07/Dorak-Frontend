@@ -15,7 +15,7 @@ export class OwnerService {
   authServices = inject(AuthService);
   httpClient = inject(HttpClient);
   // operatorId = this.authServices.getUserId();
-  operatorId = '358ad212-3cb5-4819-b2c8-3d3f335f153f';
+  operatorId = 'user1-operator';
 
   constructor() {}
 
