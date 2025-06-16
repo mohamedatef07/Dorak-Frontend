@@ -184,7 +184,7 @@ export const routes: Routes = [
         title: 'Last Appointment',
       },
       {
-        path: 'client-live-queue',
+        path: 'client-live-queue/:appointmentId',
         component: ClientLiveQueueComponent,
         title: 'Live Queue Appointment',
       },
