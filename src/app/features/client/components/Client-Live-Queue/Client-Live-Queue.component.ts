@@ -40,7 +40,7 @@ export class ClientLiveQueueComponent implements OnInit {
   ClientService = inject(ClientService);
   srService = inject(UpdateQueueStatusSRService);
   LiveQueues :Array<IClientLiveQueue> = [];
-  AppointmentId:number = 2;
+  appoinmentid:number =1;
  private subscription?: Subscription;
 
   doctorInfo = {
@@ -108,7 +108,7 @@ export class ClientLiveQueueComponent implements OnInit {
       this.simulateProgress();
     });
 
-    this.ClientService.ClientLiveQueue(this.AppointmentId).subscribe({
+    this.ClientService.ClientLiveQueue(this.appoinmentid).subscribe({
       next: (res) => {
         this.LiveQueues = res.Data;
         console.log('Live Queue Data:', this.LiveQueues);
