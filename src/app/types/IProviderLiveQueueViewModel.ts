@@ -1,5 +1,6 @@
-import { ClientType } from './Enums/ClientType';
-import { QueueAppointmentStatus } from './Enums/QueueAppointmentStatus';
+import { ClientType } from "../Enums/ClientType.enum";
+import { QueueAppointmentStatus } from "../Enums/QueueAppointmentStatus.enum";
+
 
 export interface IProviderLiveQueueViewModel {
   LiveQueueId: number;

@@ -6,21 +6,15 @@ import { IDoctorsCard } from '../../../types/IDoctorsCard';
 import { environment } from '../../../../environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class LandingpageServiceService {
-    httpClient=inject(HttpClient)
+export class LandingPageService {
+  httpClient = inject(HttpClient);
 
+  constructor() {}
 
-constructor() { }
-
-  getAllDoctorsCards(): Observable<ApiResponse<IDoctorsCard[]>> {
-    return this.httpClient.get<ApiResponse<IDoctorsCard[]>>(
-      `${environment.apiUrl}/API/LandingPage/top-rated`);
-  }
-
+  // getAllDoctorsCards(): Observable<ApiResponse<IDoctorsCard[]>> {
+  //   return this.httpClient.get<ApiResponse<IDoctorsCard[]>>(
+  //     `${environment.apiUrl}/API/LandingPage/top-rated`);
+  // }
 }
-
-
-
-

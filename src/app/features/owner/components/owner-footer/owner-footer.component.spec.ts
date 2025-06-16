@@ -2,22 +2,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
-
-import { FooterComponent } from './footer.component';
+import { OwnerFooterComponent } from './owner-footer.component';
 
 describe('FooterComponent', () => {
-  let component: FooterComponent;
-  let fixture: ComponentFixture<FooterComponent>;
+  let component: OwnerFooterComponent;
+  let fixture: ComponentFixture<OwnerFooterComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FooterComponent ]
-    })
-    .compileComponents();
+      declarations: [OwnerFooterComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FooterComponent);
+    fixture = TestBed.createComponent(OwnerFooterComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
