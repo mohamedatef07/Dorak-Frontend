@@ -5,11 +5,11 @@ import { QueueAppointmentStatus } from "../Enums/QueueAppointmentStatus.enum";
 export interface IProviderLiveQueueViewModel {
   LiveQueueId: number;
   ClientFullName: string;
-  ClientType: ClientType; // Enum
-  EstimatedTime: string; // Match API string format
-  ArrivalTime: string | null; // Match API nullability
-  Status: QueueAppointmentStatus; // Enum
+  ClientType: ClientType;
+  EstimatedTime: string;
+  ArrivalTime: string | null;
+  Status: QueueAppointmentStatus;
   PhoneNumber: string;
   CurrentQueuePosition: number | null;
-  AvailableStatuses: QueueAppointmentStatus[]; // Enum array
+  AvailableStatuses: QueueAppointmentStatus[];
 }

@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
               '..//../../../styles/general.css'
   ]
 })
-export class CertificationsComponent implements OnInit {
+export class LPCertificationsComponent implements OnInit {
 
   constructor() { }
 
