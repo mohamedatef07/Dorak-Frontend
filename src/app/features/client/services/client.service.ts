@@ -18,6 +18,7 @@ import { IClientProfileAppointment } from '../models/IClientProfileAppointment';
 import { IClientWalletProfile } from '../models/IClientWalletProfile';
 import { IDoctorsCard } from '../../../types/IDoctorsCard';
 import { IDoctorFilter } from '../../../types/IDoctorFilter';
+import { IClientLiveQueue } from '../models/IClientLiveQueue';
 
 @Injectable({
   providedIn: 'root',
@@ -25,7 +26,7 @@ import { IDoctorFilter } from '../../../types/IDoctorFilter';
 export class ClientService {
   httpClient = inject(HttpClient);
   authServices = inject(AuthService);
-  id = '2293a1da-9c6c-4239-bde5-433abf0039f4';
+  id = 'b12d8a90-7f0f-4a3d-8775-80ddd7491bd8';
 
   constructor() {}
 
@@ -111,6 +112,7 @@ searchDoctorsByFilter(filter: IDoctorFilter) {
     (`${environment.apiUrl}/api/client/profile-all-appointment/${userId}`);
   }
 
+
   getUpcomingAppointments(userId:string): Observable<ApiResponse<IClientProfileAppointment[]>> {
     return this.httpClient.get<ApiResponse<IClientProfileAppointment[]>>
     (`${environment.apiUrl}/api/client/upcoming-appointments/${userId}`);
@@ -127,6 +129,12 @@ searchDoctorsByFilter(filter: IDoctorFilter) {
     (`${environment.apiUrl}/api/client/Checkout`,request);
   }
 
+  changePassword(data: FormData): Observable<{ message: string; status: number; data: any }> {
+  return this.httpClient.put<{ message: string; status: number; data: any }>(
+    'http://localhost:5139/api/Account/change-password',
+    data
+  );
+}
 
   ClientWalletAndProfile(userId: string): Observable<ApiResponse<IClientWalletProfile>> {
     return this.httpClient.get<ApiResponse<IClientWalletProfile>>(
@@ -134,4 +142,11 @@ searchDoctorsByFilter(filter: IDoctorFilter) {
     );
 
   }
+
+  ClientLiveQueue(appointmentId:number): Observable<ApiResponse<Array<IClientLiveQueue>>> {
+    return this.httpClient.get<ApiResponse<Array<IClientLiveQueue>>>(
+      `${environment.apiUrl}/api/client/queue/by-appointment/${appointmentId}`
+    );
+  }
+
 }

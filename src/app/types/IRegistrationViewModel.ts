@@ -1,6 +1,5 @@
-
-import { GenderType } from './Enums/GenderType';
-import { ProviderType } from './Enums/ProviderType';
+import { GenderType } from '../Enums/GenderType.enum';
+import { ProviderType } from '../Enums/ProviderType.enum';
 
 export class IRegistrationViewModel {
   UserName: string = '';
@@ -26,7 +25,7 @@ export class IRegistrationViewModel {
   ExperienceYears?: number | null;
   ProviderType?: ProviderType;
   LicenseNumber?: string;
-  
+
   Availability?: string;
   EstimatedDuration?: number | null;
   Rate?: number | null;

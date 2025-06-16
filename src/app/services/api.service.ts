@@ -11,7 +11,7 @@ import { IProviderAssignmentViewModel } from '../types/IProviderAssignmentViewMo
 import { IWeeklyProviderAssignmentViewModel } from '../types/IWeeklyProviderAssignmentViewModel';
 import { IProviderLiveQueueViewModel } from '../types/IProviderLiveQueueViewModel';
 import { IUpdateQueueStatusViewModel } from '../types/IUpdateQueueStatusViewModel';
-import { GenderType } from '../types/Enums/GenderType';
+import { GenderType } from '../Enums/GenderType.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -135,14 +135,15 @@ export class ApiService {
     return this.httpClient.get<ApiResponse<any[]>>(`${environment.apiUrl}/api/provider/${providerId}/assignments?centerId=${centerId}`);
   }
 
-  getProviderLiveQueues(
+ getProviderLiveQueues(
     providerId: string,
     centerId: number,
+    shiftId: number,
     pageNumber: number = 1,
     pageSize: number = 16
   ): Observable<ApiResponse<IPaginationViewModel<IProviderLiveQueueViewModel>>> {
     return this.httpClient.get<ApiResponse<IPaginationViewModel<IProviderLiveQueueViewModel>>>(
-      `${environment.apiUrl}/api/provider/GetProviderLiveQueues?providerId=${providerId}&centerId=${centerId}&pageNumber=${pageNumber}&pageSize=${pageSize}`
+      `${environment.apiUrl}/api/provider/GetProviderLiveQueues?providerId=${providerId}&centerId=${centerId}&shiftId=${shiftId}&pageNumber=${pageNumber}&pageSize=${pageSize}`
     ).pipe(
       map((response: ApiResponse<IPaginationViewModel<IProviderLiveQueueViewModel>>) => response),
       catchError((error) => {

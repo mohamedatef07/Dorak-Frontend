@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { interval, Subscription } from 'rxjs';
 
@@ -9,6 +9,9 @@ import { BadgeModule } from 'primeng/badge';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { TagModule } from 'primeng/tag';
 import { DividerModule } from 'primeng/divider';
+import { ClientService } from '../../services/client.service';
+import { UpdateQueueStatusSRService } from '../../../../services/signalR Services/updateQueueStatusSR.service';
+import { IClientLiveQueue } from '../../models/IClientLiveQueue';
 
 interface QueueItem {
   id: number;
@@ -34,6 +37,10 @@ interface QueueItem {
 })
 export class ClientLiveQueueComponent implements OnInit {
 
+  ClientService = inject(ClientService);
+  srService = inject(UpdateQueueStatusSRService);
+  LiveQueues :Array<IClientLiveQueue> = [];
+  AppointmentId:number = 2;
  private subscription?: Subscription;
 
   doctorInfo = {
@@ -100,6 +107,25 @@ export class ClientLiveQueueComponent implements OnInit {
     this.subscription = interval(5000).subscribe(() => {
       this.simulateProgress();
     });
+
+    this.ClientService.ClientLiveQueue(this.AppointmentId).subscribe({
+      next: (res) => {
+        this.LiveQueues = res.Data;
+        console.log('Live Queue Data:', this.LiveQueues);
+      },
+      error: (err) => {
+        console.error('Error fetching live queue data:', err);
+      }
+    });
+    this.srService.updatedLiveQueuesList.subscribe({
+      next: (updatedList) => {
+        this.LiveQueues = [...updatedList];
+        console.log('Updated Live Queue List:', this.LiveQueues);
+      },
+      error: (err) => {
+        console.error('Error updating live queue list:', err);
+      }
+    })
   }
 
   ngOnDestroy() {

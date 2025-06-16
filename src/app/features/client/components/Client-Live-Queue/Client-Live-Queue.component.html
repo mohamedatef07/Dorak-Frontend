@@ -1,166 +1,88 @@
-<div class="container-fluid p-3">
-  <div class="row justify-content-center">
-    <div class="col-12 col-md-8 col-lg-6">
+<body>
+    <div class="container mt-4">
+        <div class="container-card">
+            <!-- Doctor Profile -->
+            <img src="./Assest/img/doctor Profile.png" alt="Doctor" class="profile-image">
+            <h5 class="fw-bold mt-2">Mohamed Ahmed</h5>
+            <p class="text-muted">Specialization: Cardiologist</p>
 
-      <!-- Doctor Profile Card -->
-      <p-card class="mb-4 doctor-profile-card">
-        <div class="text-center">
-          <p-avatar
-            [image]="doctorInfo.image"
-            size="large"
-            shape="circle"
-            class="mb-3 doctor-avatar">
-          </p-avatar>
-          <h3 class="mb-2 doctor-name">{{ doctorInfo.name }}</h3>
-          <p class="text-muted doctor-specialty">
-            Specialization: {{ doctorInfo.specialty }}
-          </p>
-        </div>
-      </p-card>
+            <hr>
 
-      <!-- Live Status Updates Card -->
-      <p-card class="mb-4">
-        <ng-template pTemplate="header">
-          <div class="card-header-custom">
-            <h5 class="mb-0">
-              <i class="pi pi-clock me-2"></i>
-              Live status updates
-            </h5>
-          </div>
-        </ng-template>
-
-        <!-- Status Progress -->
-        <div class="row align-items-center mb-4">
-          <div class="col-2">
-            <div class="status-icon">
-              <i class="pi pi-clock"></i>
-            </div>
-          </div>
-          <div class="col-10">
-            <div class="progress-container">
-              <div class="d-flex align-items-center justify-content-between position-relative">
-
-                <!-- Step 1: My Number -->
-                <div class="progress-step text-center">
-                  <div class="step-circle" [class]="getStepClass(1)">
-                    {{ statusData.myNumber }}
-                  </div>
-                  <small class="step-label">My Number</small>
+            <!-- Live Status Updates -->
+            <div class="container mt-4">
+                <!-- Live Status Updates -->
+                <h6 class="fw-bold status-text">Live status updates</h6>
+                <div class="status-container">
+                    <img src="./Assest/img/patient 2.png" alt="Doctor Illustration" class="illustration">
+                    <div class="w-100">
+                        <div class="status-bar">
+                            <div class="circle">15</div>
+                            <div class="circle">2</div>
+                            <div class="circle">12</div>
+                        </div>
+                        <div class="status-labels">
+                            <span class="w-33">My Number</span>
+                            <span class="w-33">Attend in Clinic</span>
+                            <span class="w-33">Current Number</span>
+                        </div>
+                    </div>
                 </div>
+            </div>
 
-                <!-- Progress Line 1 -->
-                <div class="progress-line flex-grow-1" [class]="getProgressLineClass(1)"></div>
+            <!-- Estimated Waiting Time -->
+            <h6 class="fw-bold text-start mt-4">Live Estimated Waiting Time</h6>
+            <div class="progress-bar-container mt-2">
+                <div class="progress-bar-fill"></div>
+            </div>
+            <p class="mt-1 text-end">2 hours</p>
 
-                <!-- Step 2: Attend in Clinic -->
-                <div class="progress-step text-center">
-                  <div class="step-circle" [class]="getStepClass(2)">
-                    {{ statusData.attendInClinic }}
-                  </div>
-                  <small class="step-label">Attend in clinic</small>
+            <!-- Live Queue -->
+            <h6 class="fw-bold text-start mt-4">Live QUEUE:</h6>
+
+            <div class="queue-card">
+                <div class="d-flex align-items-center">
+                    <img src="./Assest/img/patient 2.png" alt="User" width="40">
+                    <p class="mb-0 ms-2 fw-bold">Anonymous</p>
                 </div>
+                <span>In Consultation</span>
+                <span class="fw-bold">12</span>
+            </div>
 
-                <!-- Progress Line 2 -->
-                <div class="progress-line flex-grow-1" [class]="getProgressLineClass(2)"></div>
-
-                <!-- Step 3: Current Number -->
-                <div class="progress-step text-center">
-                  <div class="step-circle" [class]="getStepClass(3)">
-                    {{ statusData.currentNumber }}
-                  </div>
-                  <small class="step-label">Current Number</small>
+            <div class="queue-card">
+                <div class="d-flex align-items-center">
+                    <img src="./Assest/img/patient 2.png" alt="User" width="40">
+                    <p class="mb-0 ms-2 fw-bold">Anonymous</p>
                 </div>
-              </div>
+                <span>Waiting In Clinic</span>
+                <span class="fw-bold">13</span>
             </div>
-          </div>
+
+            <div class="queue-card">
+                <div class="d-flex align-items-center">
+                    <img src="./Assest/img/patient 2.png" alt="User" width="40">
+                    <p class="mb-0 ms-2 fw-bold">Anonymous</p>
+                </div>
+                <span>Waiting</span>
+                <span class="fw-bold">14</span>
+            </div>
+
+            <div class="queue-card">
+                <div class="d-flex align-items-center">
+                    <img src="./Assest/img/patient 2.png" alt="User" width="40">
+                    <p class="mb-0 ms-2 fw-bold">Amir Nasser (Me)</p>
+                </div>
+                <span>Waiting</span>
+                <span class="fw-bold">15</span>
+            </div>
+
+            <div class="queue-card done">
+                <div class="d-flex align-items-center">
+                    <img src="./Assest/img/patient 2.png" alt="User" width="40">
+                    <p class="mb-0 ms-2 fw-bold">Anonymous</p>
+                </div>
+                <span>Done</span>
+                <span class="fw-bold">11</span>
+            </div>
         </div>
-
-        <p-divider></p-divider>
-
-        <!-- Estimated Waiting Time -->
-        <div class="waiting-time-section">
-          <h6 class="mb-3">
-            <i class="pi pi-hourglass me-2"></i>
-            Live Estimated Waiting Time
-          </h6>
-          <div class="d-flex align-items-center">
-            <div class="flex-grow-1 me-3">
-              <p-progressBar
-                [value]="waitingProgress"
-                [showValue]="false"
-                styleClass="custom-progress">
-              </p-progressBar>
-            </div>
-            <p-tag
-              [value]="estimatedTime"
-              severity="info"
-              class="time-badge">
-            </p-tag>
-          </div>
-        </div>
-      </p-card>
-
-      <!-- Live Queue Card -->
-      <p-card>
-        <ng-template pTemplate="header">
-          <div class="card-header-custom">
-            <h5 class="mb-0">
-              <i class="pi pi-users me-2"></i>
-              Live QUEUE:
-            </h5>
-          </div>
-        </ng-template>
-
-        <!-- Queue List -->
-        <div class="queue-list">
-          <div
-            *ngFor="let item of queueItems; trackBy: trackByFn"
-            class="queue-item d-flex align-items-center p-3 mb-2"
-            [class.queue-completed]="item.status === 'Done'"
-            [class.queue-current]="item.status === 'In Consultation'"
-            [class.queue-me]="!item.isAnonymous">
-
-            <!-- Avatar -->
-            <div class="me-3">
-              <p-avatar
-                *ngIf="item.isAnonymous"
-                icon="pi pi-user"
-                shape="circle"
-                size="normal"
-                styleClass="queue-avatar">
-              </p-avatar>
-              <p-avatar
-                *ngIf="!item.isAnonymous"
-                icon="pi pi-clock"
-                shape="circle"
-                size="normal"
-                styleClass="queue-avatar-special">
-              </p-avatar>
-            </div>
-
-            <!-- Queue Info -->
-            <div class="flex-grow-1">
-              <div class="queue-name fw-medium">{{ item.name }}</div>
-              <div class="queue-status">
-                <p-tag
-                  [value]="item.status"
-                  [severity]="item.statusSeverity"
-                  class="status-tag">
-                </p-tag>
-              </div>
-            </div>
-
-            <!-- Queue Number -->
-            <div class="queue-number">
-              <p-badge
-                [value]="item.number.toString()"
-                [severity]="item.status === 'Done' ? 'success' : 'info'"
-                size="large">
-              </p-badge>
-            </div>
-          </div>
-        </div>
-      </p-card>
-
     </div>
-  </div>
-</div>
+</body>

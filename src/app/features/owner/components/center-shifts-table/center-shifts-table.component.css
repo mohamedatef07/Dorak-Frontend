@@ -23,6 +23,9 @@
   background-color: #db3545 !important;
   color: #edf1f2 !important;
 }
+.isStarted{
+  background-color: #fd7e14 !important;
+}
 ::ng-deep .p-confirmdialog {
   background-color: white !important;
   padding: 1rem !important;

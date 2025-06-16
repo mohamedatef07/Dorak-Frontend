@@ -93,7 +93,6 @@
 // //     });
 // //   }
 
-
 // //   get shifts(): FormArray {
 // //     return this.scheduleForm.get('Shifts') as FormArray;
 // //   }
@@ -174,7 +173,6 @@
 // //     this.router.navigate(['/provider-management']);
 // //   }
 // // }
-
 
 // import { Component, OnInit } from '@angular/core';
 // import { ActivatedRoute, Router } from '@angular/router';
@@ -404,7 +402,14 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
+import {
+  FormsModule,
+  ReactiveFormsModule,
+  FormBuilder,
+  FormGroup,
+  FormArray,
+  Validators,
+} from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -416,8 +421,9 @@ import { ApiResponse } from '../../types/ApiResponse';
 import { IProviderViewModel } from '../../types/IProviderViewModel';
 import { IProviderAssignmentViewModel } from '../../types/IProviderAssignmentViewModel';
 import { IShiftViewModel } from '../../types/IShiftViewModel';
-import { AssignmentType } from '../../types/Enums/AssignmentType';
-import { ShiftType } from '../../types/Enums/ShiftType';
+import { AssignmentType } from '../../Enums/AssignmentType.enum';
+import { ShiftType } from '../../Enums/ShiftType.enum';
+
 
 @Component({
   selector: 'app-manually-schedule',
@@ -433,8 +439,8 @@ import { ShiftType } from '../../types/Enums/ShiftType';
     MatInputModule,
     MatSelectModule,
     MatDatepickerModule,
-    MatNativeDateModule
-  ]
+    MatNativeDateModule,
+  ],
 })
 export class ManuallyScheduleComponent implements OnInit {
   provider: IProviderViewModel | null = null;
@@ -458,7 +464,7 @@ export class ManuallyScheduleComponent implements OnInit {
     private cdr: ChangeDetectorRef
   ) {
     this.scheduleForm = this.fb.group({
-      Shifts: this.fb.array([])
+      Shifts: this.fb.array([]),
     });
 
     this.viewDate.setHours(0, 0, 0, 0);
@@ -488,7 +494,8 @@ export class ManuallyScheduleComponent implements OnInit {
           this.provider = response.Data;
           console.log('Provider details loaded:', this.provider);
         } else {
-          this.errorMessage = response.Message || 'Failed to load provider details.';
+          this.errorMessage =
+            response.Message || 'Failed to load provider details.';
         }
         this.cdr.detectChanges();
       },
@@ -497,7 +504,7 @@ export class ManuallyScheduleComponent implements OnInit {
         this.errorMessage = 'An error occurred while loading provider details.';
         console.error('API error:', err);
         this.cdr.detectChanges();
-      }
+      },
     });
   }
 
@@ -506,43 +513,59 @@ export class ManuallyScheduleComponent implements OnInit {
     // Clear error message to ensure the page renders even if there are no assignments
     this.errorMessage = '';
 
-    this.apiService.getProviderAssignments(providerId, this.centerId).subscribe({
-      next: (response: ApiResponse<any[]>) => {
-        this.isLoading = false;
-        console.log('API response for assignments:', response);
-        if (response.Status === 200 && response.Data && response.Data.length > 0) {
-          this.assignments = response.Data.map(item => {
-            const startDate = new Date(item.startDate);
-            const endDate = new Date(item.endDate);
-            startDate.setHours(0, 0, 0, 0);
-            endDate.setHours(0, 0, 0, 0);
-            console.log('Parsed assignment range:', { startDate, endDate });
-            return { startDate, endDate };
-          }).filter(range => !isNaN(range.startDate.getTime()) && !isNaN(range.endDate.getTime()));
-          console.log('Assignments array after mapping:', this.assignments);
-        } else {
-          // No assignments found or empty data, treat as a normal case
-          this.assignments = [];
-          console.log('No assignments found, assignments set to:', this.assignments);
-        }
-        this.updateCalendar();
-        this.cdr.detectChanges();
-      },
-      error: (err) => {
-        this.isLoading = false;
-        // Only set an error message for unexpected errors (e.g., network issues, server errors)
-        if (err.status !== 404) {
-          this.errorMessage = 'An error occurred while loading assignments.';
-          console.error('Assignment load error:', err);
-        } else {
-          // 404 means no assignments, which is a valid case
-          this.assignments = [];
-          console.log('No assignments found (404), assignments set to:', this.assignments);
-        }
-        this.updateCalendar();
-        this.cdr.detectChanges();
-      }
-    });
+    this.apiService
+      .getProviderAssignments(providerId, this.centerId)
+      .subscribe({
+        next: (response: ApiResponse<any[]>) => {
+          this.isLoading = false;
+          console.log('API response for assignments:', response);
+          if (
+            response.Status === 200 &&
+            response.Data &&
+            response.Data.length > 0
+          ) {
+            this.assignments = response.Data.map((item) => {
+              const startDate = new Date(item.startDate);
+              const endDate = new Date(item.endDate);
+              startDate.setHours(0, 0, 0, 0);
+              endDate.setHours(0, 0, 0, 0);
+              console.log('Parsed assignment range:', { startDate, endDate });
+              return { startDate, endDate };
+            }).filter(
+              (range) =>
+                !isNaN(range.startDate.getTime()) &&
+                !isNaN(range.endDate.getTime())
+            );
+            console.log('Assignments array after mapping:', this.assignments);
+          } else {
+            // No assignments found or empty data, treat as a normal case
+            this.assignments = [];
+            console.log(
+              'No assignments found, assignments set to:',
+              this.assignments
+            );
+          }
+          this.updateCalendar();
+          this.cdr.detectChanges();
+        },
+        error: (err) => {
+          this.isLoading = false;
+          // Only set an error message for unexpected errors (e.g., network issues, server errors)
+          if (err.status !== 404) {
+            this.errorMessage = 'An error occurred while loading assignments.';
+            console.error('Assignment load error:', err);
+          } else {
+            // 404 means no assignments, which is a valid case
+            this.assignments = [];
+            console.log(
+              'No assignments found (404), assignments set to:',
+              this.assignments
+            );
+          }
+          this.updateCalendar();
+          this.cdr.detectChanges();
+        },
+      });
   }
 
   private updateCalendar(): void {
@@ -564,12 +587,16 @@ export class ManuallyScheduleComponent implements OnInit {
     for (let day = 1; day <= daysInMonth; day++) {
       const currentDate = new Date(year, month, day);
       currentDate.setHours(0, 0, 0, 0);
-      const hasAssignment = this.assignments.some(assignment => {
+      const hasAssignment = this.assignments.some((assignment) => {
         const start = new Date(assignment.startDate);
         const end = new Date(assignment.endDate);
         start.setHours(0, 0, 0, 0);
         end.setHours(0, 0, 0, 0);
-        console.log(`Checking day ${currentDate.toISOString().split('T')[0]} against ${start.toISOString().split('T')[0]} to ${end.toISOString().split('T')[0]}`);
+        console.log(
+          `Checking day ${currentDate.toISOString().split('T')[0]} against ${
+            start.toISOString().split('T')[0]
+          } to ${end.toISOString().split('T')[0]}`
+        );
         return currentDate >= start && currentDate <= end;
       });
       this.daysInMonth.push({ date: currentDate, hasAssignment });
@@ -589,7 +616,7 @@ export class ManuallyScheduleComponent implements OnInit {
       Date: [this.dateOptions[0] || null, Validators.required],
       StartTime: ['', Validators.required],
       EndTime: ['', Validators.required],
-      MaxPatientsPerDay: [null, [Validators.min(1)]]
+      MaxPatientsPerDay: [null, [Validators.min(1)]],
     });
     this.shifts.push(shiftGroup);
   }
@@ -658,14 +685,16 @@ export class ManuallyScheduleComponent implements OnInit {
       StartDate: this.formatDateToString(this.selectedStartDate) || null,
       EndDate: this.formatDateToString(this.selectedEndDate) || null,
       AssignmentType: AssignmentType.Visiting,
-      Shifts: formValue.Shifts.map((shift: any): IShiftViewModel => ({
-        ShiftType: ShiftType.None,
-        ShiftDate: this.formatDateToString(shift.Date),
-        StartTime: this.formatTimeToString(shift.StartTime),
-        EndTime: this.formatTimeToString(shift.EndTime),
-        MaxPatientsPerDay: shift.MaxPatientsPerDay,
-        OperatorId: 'user1-operator'
-      }))
+      Shifts: formValue.Shifts.map(
+        (shift: any): IShiftViewModel => ({
+          ShiftType: ShiftType.none,
+          ShiftDate: this.formatDateToString(shift.Date),
+          StartTime: this.formatTimeToString(shift.StartTime),
+          EndTime: this.formatTimeToString(shift.EndTime),
+          MaxPatientsPerDay: shift.MaxPatientsPerDay,
+          OperatorId: 'user1-operator',
+        })
+      ),
     };
 
     console.log('Sending payload to API:', JSON.stringify(model, null, 2));
@@ -678,7 +707,8 @@ export class ManuallyScheduleComponent implements OnInit {
       next: (response: ApiResponse<string>) => {
         this.isLoading = false;
         if (response.Status === 200) {
-          this.successMessage = response.Data || 'Provider scheduled successfully!';
+          this.successMessage =
+            response.Data || 'Provider scheduled successfully!';
           this.scheduleForm.reset();
           this.shifts.clear();
           this.selectedStartDate = null;
@@ -687,14 +717,18 @@ export class ManuallyScheduleComponent implements OnInit {
           this.loadAssignments(this.provider!.ProviderId);
           this.addShift();
         } else {
-          this.errorMessage = response.Message || 'Failed to schedule provider. Status: ' + response.Status;
+          this.errorMessage =
+            response.Message ||
+            'Failed to schedule provider. Status: ' + response.Status;
         }
       },
       error: (err) => {
         this.isLoading = false;
-        this.errorMessage = `An error occurred while scheduling the provider. Status: ${err.status || 'Unknown'} - ${err.message || err.error?.message || 'No additional details'}`;
+        this.errorMessage = `An error occurred while scheduling the provider. Status: ${
+          err.status || 'Unknown'
+        } - ${err.message || err.error?.message || 'No additional details'}`;
         console.error('API error:', err);
-      }
+      },
     });
   }
 
@@ -724,26 +758,39 @@ export class ManuallyScheduleComponent implements OnInit {
   }
 
   nextMonth(): void {
-    this.viewDate = new Date(this.viewDate.getFullYear(), this.viewDate.getMonth() + 1, 1);
+    this.viewDate = new Date(
+      this.viewDate.getFullYear(),
+      this.viewDate.getMonth() + 1,
+      1
+    );
     this.loadAssignments(this.route.snapshot.paramMap.get('id') || '');
   }
 
   prevMonth(): void {
-    this.viewDate = new Date(this.viewDate.getFullYear(), this.viewDate.getMonth() - 1, 1);
+    this.viewDate = new Date(
+      this.viewDate.getFullYear(),
+      this.viewDate.getMonth() - 1,
+      1
+    );
     this.loadAssignments(this.route.snapshot.paramMap.get('id') || '');
   }
 
   getMonthName(): string {
-    return this.viewDate.toLocaleString('default', { month: 'long', year: 'numeric' });
+    return this.viewDate.toLocaleString('default', {
+      month: 'long',
+      year: 'numeric',
+    });
   }
 
   isToday(date: Date | null): boolean {
     if (!date) return false;
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    return date.getFullYear() === today.getFullYear() &&
-           date.getMonth() === today.getMonth() &&
-           date.getDate() === today.getDate();
+    return (
+      date.getFullYear() === today.getFullYear() &&
+      date.getMonth() === today.getMonth() &&
+      date.getDate() === today.getDate()
+    );
   }
 
   isSelectedStartDate(date: Date | null): boolean {
@@ -760,15 +807,23 @@ export class ManuallyScheduleComponent implements OnInit {
     if (!date || !this.selectedStartDate || !this.selectedEndDate) return false;
     const currentDate = new Date(date);
     currentDate.setHours(0, 0, 0, 0);
-    return currentDate > this.selectedStartDate && currentDate < this.selectedEndDate;
+    return (
+      currentDate > this.selectedStartDate && currentDate < this.selectedEndDate
+    );
   }
 
   ManuallySchedule(): void {
-    this.router.navigate(['/manually-schedule', this.route.snapshot.paramMap.get('id')]);
+    this.router.navigate([
+      '/manually-schedule',
+      this.route.snapshot.paramMap.get('id'),
+    ]);
   }
 
   WeeklySchedule(): void {
-    this.router.navigate(['/weekly-schedule', this.route.snapshot.paramMap.get('id')]);
+    this.router.navigate([
+      '/weekly-schedule',
+      this.route.snapshot.paramMap.get('id'),
+    ]);
   }
 
   goBack(): void {
