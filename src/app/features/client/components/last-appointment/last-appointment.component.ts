@@ -34,7 +34,9 @@ export class LastAppointmentComponent implements OnInit {
     this.clientServices.getLastAppointment(this.userid).subscribe({
             next: (res) => {
               this.lastAppointments = res.Data;
-              console.log(this.lastAppointments);
+            let appoinmentid=this.lastAppointments.appointmentId
+            console.log(res.Data)
+            console.log(appoinmentid)
 
             },
             error: (err) => {

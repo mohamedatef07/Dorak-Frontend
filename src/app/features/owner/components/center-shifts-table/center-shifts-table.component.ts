@@ -106,14 +106,4 @@ export class CenterShiftsTableComponent {
   shiftDetails(shiftId: number) {
     this.route.navigate(['shift-appointments']);
   }
-  formatDate(date: Date): Date {
-    if (!date) return new Date();
-    const year = date.getFullYear();
-    const month = date.getMonth();
-    const day = date.getDate();
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
-    const seconds = date.getSeconds();
-    return new Date(year, month, day, hours, minutes, seconds);
-  }
 }
