@@ -12,7 +12,7 @@ import { CenterProviderProfileComponent } from './components/center-provider-pro
 import { ScheduleOptionsComponent } from './components/schedule-options/schedule-options.component';
 import { ManuallyScheduleComponent } from './components/manually-schedule/manually-schedule.component';
 import { WeeklyScheduleComponent } from './components/weekly-schedule/weekly-schedule.component';
-import { ProviderLiveQueueComponent } from './components/provider-live-queue/provider-live-queue.component';
+import { ProviderLiveQueueComponent } from './features/owner/components/provider-live-queue/provider-live-queue.component';
 
 import { DeleteProviderComponent } from './components/delete-provider/delete-provider.component';
 import { ProviderScheduleComponent } from './components/provider-schedule/provider-schedule.component';
@@ -49,6 +49,7 @@ import { LandingPageLayoutComponent } from './features/landingpage/components/la
 import { CheckoutComponent } from './features/client/components/checkout/checkout.component';
 import { CenterShiftsComponent } from './features/owner/components/center-shifts/center-shifts.component';
 import { ChangePasswordComponent } from './features/client/components/Change-Password/Change-Password.component';
+import { CenterShiftsTableComponent } from './features/owner/components/center-shifts-table/center-shifts-table.component';
 
 
 
@@ -111,6 +112,48 @@ export const routes: Routes = [
       },
     ],
   },
+  {
+    path: 'owner',
+    component: OwnerLayoutComponent,
+    children: [
+      {
+        path: 'center-shifts-table',
+        component: CenterShiftsTableComponent,
+        title: 'Center Shifts Table',
+      },
+
+      {
+        path: 'provider-live-queue/:shiftId',
+          component: ProviderLiveQueueComponent,
+          title: 'Provider Live Queue'
+
+      },
+      {
+
+        path: 'manage-operators',
+        component: ManageOperatorsComponent,
+        title: 'Manage Operators',
+        // children: [
+
+        // ]
+      },
+      {
+        path: 'add-operator',
+        component: AddOperatorComponent,
+        title: 'Add Operator'
+      },
+      {
+        path: 'create-appointment',
+        component: CreateAppointmentComponent,
+        title: 'Create Appointment'
+      }
+    ]
+  },
+  // {
+  //   path: 'provider',
+  //   component: ProviderLayoutComponent,
+  //   children: [{ path: '' }, { path: '' }, { path: '' }],
+  // },
   {
     path: 'client',
     component: ClientLayoutComponent,
@@ -209,11 +252,6 @@ export const routes: Routes = [
     path: 'search-provider',
     component: SearchProviderComponent,
     title: 'Search Provider',
-  },
-  {
-    path: 'provider-profile/:id',
-    component: ProviderProfilesComponent,
-    title: 'Provider Profile',
   },
   {
     path: 'center-provider-profile/:id',
