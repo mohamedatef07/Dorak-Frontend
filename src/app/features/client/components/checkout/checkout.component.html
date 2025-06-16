@@ -9,24 +9,33 @@
                         <h5 class="section-title">Payment Methods</h5>
 
                         <div class="payment-option">
-                            <input type="radio" id="credit-card" name="payment" value="credit-card" checked>
+                            <input type="radio" id="credit-card" name="payment" value="credit" checked
+                             [(ngModel)]="selectedPaymentMethod" 
+                            (change)="onPaymentMethodChange('credit')" 
+                            [checked]="selectedPaymentMethod === 'credit'">
                             <label for="credit-card">Credit Card</label>
                             <div class="payment-icon visa-icon">VISA</div>
                         </div>
 
                         <div class="payment-option">
-                            <input type="radio" id="my-wallet" name="payment" value="my-wallet">
+                            <input type="radio" id="my-wallet" name="payment" value="my-wallet"
+                            [(ngModel)]="selectedPaymentMethod" 
+                            (change)="onPaymentMethodChange('wallet')" 
+                            [checked]="selectedPaymentMethod === 'wallet'">
                             <label for="my-wallet">My Wallet</label>
                             <div class="payment-icon mastercard-icon">MC</div>
                         </div>
 
                         <div class="payment-option">
-                            <input type="radio" id="easy-pay" name="payment" value="easy-pay">
+                            <input type="radio" id="easy-pay" name="payment" value="easy-pay"
+                            [(ngModel)]="selectedPaymentMethod" 
+                            (change)="onPaymentMethodChange('easypay')" 
+                            [checked]="selectedPaymentMethod === 'easypay'">
                             <label for="easy-pay">Easy Pay</label>
                             <div class="payment-icon paypal-icon">PP</div>
                         </div>
 
-                        <button class="btn continue-btn">Continue</button>
+                        <button class="btn continue-btn" (click)="clientcheckout()">Continue</button>
                     </div>
                 </div>
             </div>
@@ -45,12 +54,12 @@
 
                             <div class="info-row">
                                 <span class="info-label">Consultation Fees</span>
-                                <span class="info-value">$500.00</span>
+                                <span class="info-value">{{checkoutRequest.Amount}}</span>
                             </div>
 
                             <div class="info-row">
                                 <span class="info-label">Total</span>
-                                <span class="info-value">$500.00</span>
+                                <span class="info-value">{{checkoutRequest.Amount}}</span>
                             </div>
                         </div>
                     </div>

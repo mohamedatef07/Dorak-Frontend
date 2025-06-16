@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IDoctorsCard } from '../../../../types/IDoctorsCard';
+import { IDoctorsCard } from '../../../../types/IdoctorsCard';
 import { LandingPageService } from '../../services/landingPage.service';
 import { Router } from '@angular/router';
 import { NgFor } from '@angular/common';

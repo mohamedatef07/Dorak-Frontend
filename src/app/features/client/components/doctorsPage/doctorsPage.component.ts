@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ClientService } from '../../services/client.service';
-import { IDoctorsCard } from '../../../../types/IDoctorsCard';
+import { IDoctorsCard } from '../../../../types/IdoctorsCard';
 import { Router } from '@angular/router';
 import { IDoctorFilter } from '../../..//..//types/IDoctorFilter';
 

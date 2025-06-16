@@ -1,4 +1,5 @@
-import { CheckoutRequest } from './../models/CheckoutRequest';
+import { IDoctorsCard } from './../../../types/IdoctorsCard';
+import { ICheckoutRequest } from '../models/ICheckoutRequest';
 import { ApiResponse } from './../../../types/ApiResponse';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
@@ -16,7 +17,7 @@ import { IClientProfile } from '../models/IClientProfile';
 import { IAppointment } from '../models/IAppointment';
 import { IClientProfileAppointment } from '../models/IClientProfileAppointment';
 import { IClientWalletProfile } from '../models/IClientWalletProfile';
-import { IDoctorsCard } from '../../../types/IDoctorsCard';
+
 import { IDoctorFilter } from '../../../types/IDoctorFilter';
 import { IClientLiveQueue } from '../models/IClientLiveQueue';
 
@@ -26,7 +27,7 @@ import { IClientLiveQueue } from '../models/IClientLiveQueue';
 export class ClientService {
   httpClient = inject(HttpClient);
   authServices = inject(AuthService);
-  id = 'b12d8a90-7f0f-4a3d-8775-80ddd7491bd8';
+  id = '0dad21ac-6842-430b-af98-78f9d12923d1';
 
   constructor() {}
 
@@ -90,8 +91,8 @@ searchDoctorsByFilter(filter: IDoctorFilter) {
   }
   makeAppointment(
     reservedAppointment: IMakeAppointment
-  ): Observable<IMakeAppointment> {
-    return this.httpClient.post<IMakeAppointment>(
+  ): Observable<ApiResponse<ICheckoutRequest>> {
+    return this.httpClient.post<ApiResponse<ICheckoutRequest>>(
       `${environment.apiUrl}/api/client/reserve-appointment`,
       reservedAppointment
     );
@@ -124,8 +125,8 @@ searchDoctorsByFilter(filter: IDoctorFilter) {
 
   }
 
-  Checkout(request:CheckoutRequest):Observable<CheckoutRequest >{
-    return this.httpClient.post<CheckoutRequest>
+  Checkout(request:ICheckoutRequest):Observable<ICheckoutRequest >{
+    return this.httpClient.post<ICheckoutRequest>
     (`${environment.apiUrl}/api/client/Checkout`,request);
   }
 
