@@ -24,13 +24,63 @@
   margin-left: 10px;
 }
 
-.banner-placeholder {
-  height: 100px;
-  background-color: #f0f0f0;
-  border-radius: 8px;
-  margin-bottom: 20px;
+.settings-btn {
+  background-color: white !important;
+  padding: 7px 13px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
+.settings-btn > * {
+  color: #000;
+  font-size: 25px;
+}
+
+.add-btn {
+  background-color: white !important;
+  padding: 7px 13px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.add-btn > * {
+  color: #000;
+  font-size: 25px;
+}
+
+/* Statistics Container */
+.stats-container {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  padding: 10px;
+  background-color: #e9ecef;
+  border-radius: 8px;
+}
+
+.stat-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: default;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 120px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.stat-button:hover {
+  background-color: #0056b3;
+}
+
+/* Queue List */
 .queue-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
