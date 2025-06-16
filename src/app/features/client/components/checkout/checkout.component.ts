@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ClientService } from '../../services/client.service';
-import { CheckoutRequest } from '../../models/CheckoutRequest';
+import { CheckoutRequest } from '../../models/ICheckoutRequest';
 
 
 @Component({
