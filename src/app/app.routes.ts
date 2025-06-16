@@ -194,7 +194,7 @@ export const routes: Routes = [
         title: 'Client Wallet',
       },
       {
-        path: 'doctors-page',
+        path: 'doctor',
         component: DoctorsPageComponent,
       },
       {
