@@ -27,7 +27,7 @@ import { IClientLiveQueue } from '../models/IClientLiveQueue';
 export class ClientService {
   httpClient = inject(HttpClient);
   authServices = inject(AuthService);
-  id = 'b12d8a90-7f0f-4a3d-8775-80ddd7491bd8';
+  id = '0dad21ac-6842-430b-af98-78f9d12923d1';
 
   constructor() {}
 
@@ -91,8 +91,8 @@ searchDoctorsByFilter(filter: IDoctorFilter) {
   }
   makeAppointment(
     reservedAppointment: IMakeAppointment
-  ): Observable<ApiResponse<Array<ICheckoutRequest>>> {
-    return this.httpClient.post<ApiResponse<Array<ICheckoutRequest>>>(
+  ): Observable<ApiResponse<ICheckoutRequest>> {
+    return this.httpClient.post<ApiResponse<ICheckoutRequest>>(
       `${environment.apiUrl}/api/client/reserve-appointment`,
       reservedAppointment
     );

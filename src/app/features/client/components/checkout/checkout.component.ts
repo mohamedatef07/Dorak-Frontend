@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ClientService } from '../../services/client.service';
-import { CheckoutRequest } from '../../models/ICheckoutRequest';
+import { ICheckoutRequest } from '../../models/ICheckoutRequest';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -10,8 +11,15 @@ import { CheckoutRequest } from '../../models/ICheckoutRequest';
 })
 export class CheckoutComponent implements OnInit {
 
-  constructor(private _clientservice:ClientService) { }
-  checkinformation:CheckoutRequest= {} as CheckoutRequest
+  checkoutRequest: ICheckoutRequest = {
+    AppointmentId: 0,
+    ClientId: '',
+    StripeToken: '',
+    Amount: 0
+  };
+
+  constructor(private _clientservice:ClientService,private route: ActivatedRoute) { }
+  checkinformation:ICheckoutRequest= {} as ICheckoutRequest
 
   paymentMethods = [
     { label: 'Credit Card', value: 'credit' },
@@ -31,6 +39,11 @@ export class CheckoutComponent implements OnInit {
   }
 
   ngOnInit() {
+    const state = history.state;
+    if (state && state.checkoutRequest) {
+      this.checkoutRequest = state.checkoutRequest;
+    }
+    console.log('Checkout Request:', this.checkoutRequest);
   }
 
 }

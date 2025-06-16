@@ -14,6 +14,8 @@ import { IMakeAppointment } from '../../models/IMakeAppointment';
 import { AuthService } from '../../../../services/auth.service';
 import { MessageService } from 'primeng/api';
 import { TimeStringToDatePipe } from '../../../../pipes/TimeStringToDate.pipe';
+import { ICheckoutRequest } from '../../models/ICheckoutRequest';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-booking',
   templateUrl: './booking.component.html',
@@ -29,10 +31,16 @@ import { TimeStringToDatePipe } from '../../../../pipes/TimeStringToDate.pipe';
   ],
 })
 export class BookingComponent implements OnInit {
+  route = inject(Router);
   clientServices = inject(ClientService);
   authServices = inject(AuthService);
   messageServices = inject(MessageService);
-
+  checkoutRequest: ICheckoutRequest = {
+    AppointmentId: 0,
+    ClientId: '',
+    StripeToken: '',
+    Amount: 0,
+  };
   centerServices: Array<IDoctorCenterServices> = [];
   services: Array<IDoctorService> = [];
   originalBookings: Array<IDoctorBookingInfo> = [];
@@ -114,6 +122,7 @@ export class BookingComponent implements OnInit {
     };
     this.clientServices.makeAppointment(reservedAppointment).subscribe({
       next: (res) => {
+        this.checkoutRequest = res.Data;
         this.messageServices.add({
           severity: 'success',
           summary: 'Success',
@@ -122,6 +131,9 @@ export class BookingComponent implements OnInit {
         });
         this.selectedCenterId = 0;
         this.selectedServiceId = 0;
+        this.route.navigate(['/client/checkout'], {
+          state: { checkoutRequest: this.checkoutRequest }
+        });
       },
       error: (err) => {
         this.messageServices.add({
