@@ -25,7 +25,7 @@ import { IDoctorFilter } from '../../../types/IDoctorFilter';
 export class ClientService {
   httpClient = inject(HttpClient);
   authServices = inject(AuthService);
-  id = '2293a1da-9c6c-4239-bde5-433abf0039f4';
+  id = 'b12d8a90-7f0f-4a3d-8775-80ddd7491bd8';
 
   constructor() {}
 
