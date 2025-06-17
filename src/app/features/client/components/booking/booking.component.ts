@@ -15,7 +15,10 @@ import { AuthService } from '../../../../services/auth.service';
 import { MessageService } from 'primeng/api';
 import { TimeStringToDatePipe } from '../../../../pipes/TimeStringToDate.pipe';
 import { ICheckoutRequest } from '../../models/ICheckoutRequest';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+  import { Input } from '@angular/core';
+
+
 @Component({
   selector: 'app-booking',
   templateUrl: './booking.component.html',
@@ -32,15 +35,18 @@ import { Router } from '@angular/router';
 })
 export class BookingComponent implements OnInit {
   route = inject(Router);
+  routeParam = inject(ActivatedRoute);
   clientServices = inject(ClientService);
   authServices = inject(AuthService);
   messageServices = inject(MessageService);
+
   checkoutRequest: ICheckoutRequest = {
     AppointmentId: 0,
     ClientId: '',
     StripeToken: '',
     Amount: 0,
   };
+
   centerServices: Array<IDoctorCenterServices> = [];
   services: Array<IDoctorService> = [];
   originalBookings: Array<IDoctorBookingInfo> = [];
@@ -53,47 +59,52 @@ export class BookingComponent implements OnInit {
   userId!: string;
   EndDate!: Date;
 
-  ngOnInit() {
-    this.userId = this.authServices.getUserId();
-    this.clientServices.getDoctorBookingInfo().subscribe({
-      next: (res) => {
-        this.originalBookings = [...res.Data];
-        this.tempBookings = this.originalBookings;
-      },
-      error: (err) => {
-        this.messageServices.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'The server is experiencing an issue, Please try again soon.',
-          life: 4000,
-        });
-      },
-    });
+@Input() providerId!: string;
 
-    this.clientServices.getDoctorCenterServices().subscribe({
-      next: (res) => {
-        this.centerServices = [...res.Data];
-      },
-      error: (err) => {
-        this.messageServices.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'The server is experiencing an issue, Please try again soon.',
-          life: 4000,
-        });
-      },
-    });
-  }
+getTotalAppointments(): number {
+  return this.originalBookings.length;
+}
+ ngOnInit() {
+  this.userId = this.authServices.getUserId();
+
+  this.clientServices.getDoctorBookingInfo(this.providerId).subscribe({
+    next: (res) => {
+      this.originalBookings = [...res.Data];
+      this.tempBookings = this.originalBookings;
+    },
+    error: (err) => {
+      this.messageServices.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'The server is experiencing an issue, Please try again soon.',
+        life: 4000,
+      });
+    },
+  });
+
+  this.clientServices.getDoctorCenterServices(this.providerId).subscribe({
+    next: (res) => {
+      this.centerServices = [...res.Data];
+    },
+    error: (err) => {
+      this.messageServices.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'The server is experiencing an issue, Please try again soon.',
+        life: 4000,
+      });
+    },
+  });
+}
+
+
   showCenterServicesAndBookings() {
     this.originalBookings = this.tempBookings;
     const center = this.centerServices.find(
       (cs) => cs.CenterId == this.selectedCenterId
     );
-    if (center && center.Services) {
-      this.services = [...center.Services];
-    } else {
-      this.services = [];
-    }
+    this.services = center?.Services ?? [];
+
     const filteredBookings = this.originalBookings.filter(
       (booking) => booking.CenterId == this.selectedCenterId
     );
@@ -112,7 +123,7 @@ export class BookingComponent implements OnInit {
       return;
     }
     const reservedAppointment: IMakeAppointment = {
-      ProviderId: this.clientServices.id,
+      ProviderId: this.providerId,
       AppointmentDate: appDate,
       Fees: this.price,
       UserId: this.userId,
@@ -120,15 +131,10 @@ export class BookingComponent implements OnInit {
       ServiceId: this.selectedServiceId,
       CenterId: this.selectedCenterId,
     };
+
     this.clientServices.makeAppointment(reservedAppointment).subscribe({
       next: (res) => {
         this.checkoutRequest = res.Data;
-        this.messageServices.add({
-          severity: 'success',
-          summary: 'Success',
-          detail: 'Your appointment has been successfully reserved.',
-          life: 4000,
-        });
         this.selectedCenterId = 0;
         this.selectedServiceId = 0;
         this.route.navigate(['/client/checkout'], {
@@ -153,6 +159,7 @@ export class BookingComponent implements OnInit {
     this.price = service?.Price;
     this.duration = service?.Duration;
   }
+
   openMap() {
     if (this.selectedCenterId) {
       const center = this.centerServices.find(

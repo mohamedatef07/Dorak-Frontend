@@ -13,10 +13,8 @@ import { ScheduleOptionsComponent } from './components/schedule-options/schedule
 import { ManuallyScheduleComponent } from './components/manually-schedule/manually-schedule.component';
 import { WeeklyScheduleComponent } from './components/weekly-schedule/weekly-schedule.component';
 import { ProviderLiveQueueComponent } from './features/owner/components/provider-live-queue/provider-live-queue.component';
-
 import { DeleteProviderComponent } from './components/delete-provider/delete-provider.component';
 import { ProviderScheduleComponent } from './components/provider-schedule/provider-schedule.component';
-
 import { ProviderLayoutComponent } from './features/provider/components/provider-layout/provider-layout.component';
 import { OwnerLayoutComponent } from './features/owner/components/owner-layout/owner-layout.component';
 import { ClientLayoutComponent } from './features/client/components/client-layout/client-layout.component';
@@ -27,10 +25,7 @@ import { PatientQueueComponent } from './features/provider/components/patient-qu
 import { ReportsComponent } from './features/provider/components/reports/reports.component';
 import { DashboardComponent } from './features/provider/components/dashboard/dashboard.component';
 import { ReviewComponent } from './features/landingpage/components/review/review.component';
-// import { CertificationsComponent } from './features/landingpage/components/certifications/certifications.component';
 import { DoctorsPageComponent } from './features/client/components/doctorsPage/doctorsPage.component';
-// import { LandingPageRegisterComponent } from './features/landingpage/components/landingpageRegister4'
-import { DoctorsLandingPageComponent } from './features/landingpage/components/doctors-landingPage/doctors-landingPage.component';
 import { ProviderProfileComponent } from './features/provider/components/provider-profile/provider-profile.component';
 import { ManageOperatorsComponent } from './features/owner/components/ManageOperators/ManageOperators.component';
 import { AddOperatorComponent } from './features/owner/components/AddOperator/AddOperator.component';
@@ -149,11 +144,6 @@ export const routes: Routes = [
       }
     ]
   },
-  // {
-  //   path: 'provider',
-  //   component: ProviderLayoutComponent,
-  //   children: [{ path: '' }, { path: '' }, { path: '' }],
-  // },
   {
     path: 'client',
     component: ClientLayoutComponent,
@@ -218,7 +208,7 @@ export const routes: Routes = [
     path: 'home',
     component: LandingPageLayoutComponent,
     children: [
-      { path: 'doctors', component: DoctorsLandingPageComponent },
+      // { path: 'doctors', component: DoctorsLandingPageComponent },
       { path: 'review', component: ReviewComponent },
       // { path: 'certification', component: CertificationsComponent },
       // { path: 'register', component: LandingPageRegisterComponent },

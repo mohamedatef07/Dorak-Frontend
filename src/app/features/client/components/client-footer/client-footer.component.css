@@ -1,4 +1,4 @@
-.clientfooter {
+.client-footer {
   margin-top: 20px;
   right: 0;
   bottom: 0;
@@ -7,9 +7,9 @@
   background-color: white;
 
 }
-.clientfooter .container .copyright {
+.client-footer .container .copyright {
   color: var(--text-color-Light);
 }
-.clientfooter .container div ul li a {
+.client-footer .container div ul li a {
   color: var(--text-color-Light);
 }
