@@ -29,8 +29,6 @@ export class DoctorMainInfoComponent implements OnInit {
   };
 
   ngOnInit() {
-    console.log('MainInfoComponent received ID:', this.providerId); // debug
-
     this.clientServices.getMainInfo(this.providerId).subscribe({
       next: (res) => {
         this.mainInfo = {

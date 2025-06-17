@@ -22,7 +22,6 @@ export class DoctorDetailsComponent implements OnInit {
         let doctorId = p.get('id');
         if (doctorId) {
           this.doctorId = doctorId;
-
           this._clientService.getDoctorsById(this.doctorId).subscribe({
             next: (res) => {
               console.log(res.Data);
