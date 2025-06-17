@@ -27,7 +27,7 @@ import { IClientLiveQueue } from '../models/IClientLiveQueue';
 export class ClientService {
   httpClient = inject(HttpClient);
   authServices = inject(AuthService);
-  id = '0dad21ac-6842-430b-af98-78f9d12923d1';
+  id = '2293a1da-9c6c-4239-bde5-433abf0039f4';
 
   constructor() {}
 

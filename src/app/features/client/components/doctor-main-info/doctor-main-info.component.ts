@@ -31,7 +31,6 @@ export class DoctorMainInfoComponent implements OnInit {
         this.mainInfo.Specialization = res.Data.Specialization;
         this.mainInfo.Rate = res.Data.Rate;
         this.mainInfo.Bio = res.Data.Bio;
-        console.log(res)
       },
       error: (err) => {
         this.messageServices.add({
