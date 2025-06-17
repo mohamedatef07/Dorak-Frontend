@@ -209,7 +209,7 @@ export const routes: Routes = [
     path: 'home',
     component: LandingPageLayoutComponent,
     children: [
-      { path: 'doctors', component: DoctorsLandingPageComponent },
+      // { path: 'doctors', component: DoctorsLandingPageComponent },
       { path: 'review', component: ReviewComponent },
       // { path: 'certification', component: CertificationsComponent },
       // { path: 'register', component: LandingPageRegisterComponent },

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HeroComponent } from '../hero/hero.component';
 import { ReviewComponent } from '../review/review.component';
 import { NavClientComponent } from '../nav-client/nav-client.component';
-import { DoctorsLandingPageComponent } from '../doctors-landingPage/doctors-landingPage.component';
+// import { DoctorsLandingPageComponent } from '../doctors-landingPage/doctors-landingPage.component';
 import { LandibgPageFooterComponent } from '../landibgPage-Footer/landibgPage-Footer.component';
 import { LandingPageCertificationsComponent } from "../landingPage-Certifications/landingPage-Certifications.component";
 import { LandingPageRegisterComponent } from '../landingPage-register/landingPage-register.component';
@@ -18,7 +18,7 @@ import { LandingPageRegisterComponent } from '../landingPage-register/landingPag
     ReviewComponent,
     LandibgPageFooterComponent,
     NavClientComponent,
-    DoctorsLandingPageComponent,
+    // DoctorsLandingPageComponent,
     LandingPageRegisterComponent,
     LandingPageCertificationsComponent
 ],

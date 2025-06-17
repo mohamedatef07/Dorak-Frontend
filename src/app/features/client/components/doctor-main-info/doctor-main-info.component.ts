@@ -1,19 +1,24 @@
-import { Component, inject, NgModule, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { ClientService } from '../../services/client.service';
 import { IDoctorMainInfo } from '../../models/IDoctorMainInfo';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RatingModule } from 'primeng/rating';
 import { MessageService } from 'primeng/api';
+import { CommonModule } from '@angular/common';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-doctor-main-info',
+  standalone: true,
   templateUrl: './doctor-main-info.component.html',
   styleUrls: ['./doctor-main-info.component.css'],
-  imports: [ReactiveFormsModule, FormsModule, RatingModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, RatingModule],
 })
 export class DoctorMainInfoComponent implements OnInit {
   clientServices = inject(ClientService);
   messageServices = inject(MessageService);
+
+  @Input() providerId!: string;
 
   mainInfo: IDoctorMainInfo = {
     FullName: '',
@@ -24,13 +29,17 @@ export class DoctorMainInfoComponent implements OnInit {
   };
 
   ngOnInit() {
-    this.clientServices.getMainInfo().subscribe({
+    console.log('MainInfoComponent received ID:', this.providerId); // debug
+
+    this.clientServices.getMainInfo(this.providerId).subscribe({
       next: (res) => {
-        this.mainInfo.FullName = res.Data.FullName;
-        this.mainInfo.Image = '/images/avatar.png';
-        this.mainInfo.Specialization = res.Data.Specialization;
-        this.mainInfo.Rate = res.Data.Rate;
-        this.mainInfo.Bio = res.Data.Bio;
+        this.mainInfo = {
+          FullName: res.Data.FullName,
+         Image :environment.apiUrl+res.Data.Image,
+          Specialization: res.Data.Specialization,
+          Rate: res.Data.Rate,
+          Bio: res.Data.Bio
+        };
       },
       error: (err) => {
         this.messageServices.add({
