@@ -3,6 +3,7 @@ import { DoctorMainInfoComponent } from '../doctor-main-info/doctor-main-info.co
 import { DoctorReviewsComponent } from '../doctor-reviews/doctor-reviews.component';
 import { BookingComponent } from '../booking/booking.component';
 import { ActivatedRoute } from '@angular/router';
+import { ClientService } from '../../services/client.service';
 
 
 @Component({
@@ -12,17 +13,28 @@ import { ActivatedRoute } from '@angular/router';
   imports: [DoctorMainInfoComponent, DoctorReviewsComponent, BookingComponent]
 })
 export class DoctorDetailsComponent implements OnInit {
-    doctorId!: string;
+  doctorId!: string;
 
-  constructor(private route: ActivatedRoute) {
-  }
-
+  constructor(private route: ActivatedRoute, private _clientService: ClientService) {}
 
   ngOnInit() {
-        this.route.paramMap.subscribe(params => {
-      this.doctorId = params.get('id')!;
-      console.log(this.doctorId)
-    });
+    this.route.paramMap.subscribe({
+      next: (p) => {
+        let doctorid = p.get('id');
+        if (doctorid) {
+          this.doctorId = doctorid;
 
+          this._clientService.getDoctorsById(this.doctorId).subscribe({
+            next: (res) => {
+              console.log(res.Data);
+            },
+            error: (err) => {
+              console.log(err);
+            }
+          });
+        }
+      }
+    });
   }
 }
+
