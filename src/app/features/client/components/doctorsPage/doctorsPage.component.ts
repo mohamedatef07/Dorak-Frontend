@@ -3,9 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ClientService } from '../../services/client.service';
-import { IDoctorsCard } from '../../../../types/IdoctorsCard';
 import { Router } from '@angular/router';
 import { IDoctorFilter } from '../../..//..//types/IDoctorFilter';
+import { IDoctorcard } from '../../models/idoctorcard';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-doctorsPage',
@@ -18,10 +19,6 @@ import { IDoctorFilter } from '../../..//..//types/IDoctorFilter';
   ]
 })
 export class DoctorsPageComponent implements OnInit {
-
-    constructor(private _clientService: ClientService , private router: Router) {}
-
-
   searchText: string = '';
   specialty: string = '';
   city: string = '';
@@ -56,19 +53,33 @@ export class DoctorsPageComponent implements OnInit {
   AvailableDate: undefined
 };
 
-  doctors: IDoctorsCard[] = [];
-  filteredDoctors: IDoctorsCard[] = [];
+
+  doctors: IDoctorcard[] = [];
+  filteredDoctors: IDoctorcard[] = [];
+
+  constructor(private cardDoctorService: ClientService , private router: Router) {}
 
 
+goToDetails(Id: number | undefined): void {
+  if (!Id) {
+    console.error("Invalid doctor ID");
+    return;
+  }
+  this.router.navigate(['client/doctor-details', Id]);
+}
 
   ngOnInit(): void {
     this.getAllDoctors();
   }
 
   getAllDoctors(): void {
-    this._clientService.getAllDoctorsCards().subscribe({
+    this.cardDoctorService.getAllDoctorsCards().subscribe({
       next: (res) => {
         this.doctors = res.Data;
+        console.log(res.Data);
+this.doctors.forEach((doctor) => {
+  doctor.Image = environment.apiUrl + doctor.Image;
+});
         this.filteredDoctors = [...this.doctors];
       },
       error: (err) => {
@@ -147,7 +158,7 @@ for (const key in rawBody) {
 }
 
 
-  this._clientService.searchDoctorsByFilter(body).subscribe({
+  this.cardDoctorService.searchDoctorsByFilter(body).subscribe({
     next: (res) => {
       this.filteredDoctors = res.Data;
     },
@@ -157,7 +168,7 @@ for (const key in rawBody) {
 
 
 searchDoctors(): void {
-  this._clientService.getAllDoctorsCards().subscribe({
+  this.cardDoctorService.getAllDoctorsCards().subscribe({
     next: (res) => {
       this.doctors = res.Data;
       const keyword = this.searchText.trim().toLowerCase();

@@ -30,7 +30,7 @@ import { ReviewComponent } from './features/landingpage/components/review/review
 // import { CertificationsComponent } from './features/landingpage/components/certifications/certifications.component';
 import { DoctorsPageComponent } from './features/client/components/doctorsPage/doctorsPage.component';
 // import { LandingPageRegisterComponent } from './features/landingpage/components/landingpageRegister4'
-import { DoctorsLandingPageComponent } from './features/landingpage/components/doctors-landingPage/doctors-landingPage.component';
+// import { DoctorsLandingPageComponent } from './features/landingpage/components/doctors-landingPage/doctors-landingPage.component';
 import { ProviderProfileComponent } from './features/provider/components/provider-profile/provider-profile.component';
 import { ManageOperatorsComponent } from './features/owner/components/ManageOperators/ManageOperators.component';
 import { AddOperatorComponent } from './features/owner/components/AddOperator/AddOperator.component';
@@ -218,7 +218,7 @@ export const routes: Routes = [
     path: 'home',
     component: LandingPageLayoutComponent,
     children: [
-      { path: 'doctors', component: DoctorsLandingPageComponent },
+      // { path: 'doctors', component: DoctorsLandingPageComponent },
       { path: 'review', component: ReviewComponent },
       // { path: 'certification', component: CertificationsComponent },
       // { path: 'register', component: LandingPageRegisterComponent },
