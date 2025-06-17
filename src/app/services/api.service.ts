@@ -143,7 +143,7 @@ export class ApiService {
     pageSize: number = 16
   ): Observable<ApiResponse<IPaginationViewModel<IProviderLiveQueueViewModel>>> {
     return this.httpClient.get<ApiResponse<IPaginationViewModel<IProviderLiveQueueViewModel>>>(
-      `${environment.apiUrl}/api/provider/GetProviderLiveQueues?providerId=${providerId}&centerId=${centerId}&shiftId=${shiftId}&pageNumber=${pageNumber}&pageSize=${pageSize}`
+      `${environment.apiUrl}/api/operator/GetProviderLiveQueues?providerId=${providerId}&centerId=${centerId}&shiftId=${shiftId}&pageNumber=${pageNumber}&pageSize=${pageSize}`
     ).pipe(
       map((response: ApiResponse<IPaginationViewModel<IProviderLiveQueueViewModel>>) => response),
       catchError((error) => {
@@ -154,7 +154,7 @@ export class ApiService {
   }
 
   updateLiveQueueStatus(model: IUpdateQueueStatusViewModel): Observable<ApiResponse<string>> {
-    const url = `${environment.apiUrl}/api/provider/UpdateLiveQueueStatus`;
+    const url = `${environment.apiUrl}/api/operator/UpdateLiveQueueStatus`;
     return this.httpClient.post<ApiResponse<string>>(url, model).pipe(
       map((response: ApiResponse<string>) => response),
       catchError((error) => {

@@ -416,13 +416,13 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import { ApiService } from '../../services/api.service';
-import { ApiResponse } from '../../types/ApiResponse';
-import { IProviderViewModel } from '../../types/IProviderViewModel';
-import { IProviderAssignmentViewModel } from '../../types/IProviderAssignmentViewModel';
-import { IShiftViewModel } from '../../types/IShiftViewModel';
-import { AssignmentType } from '../../Enums/AssignmentType.enum';
-import { ShiftType } from '../../Enums/ShiftType.enum';
+import { ApiService } from '../../../../services/api.service';
+import { ApiResponse } from '../../../../types/ApiResponse';
+import { IProviderViewModel } from '../../../../types/IProviderViewModel';
+import { IProviderAssignmentViewModel } from '../../../../types/IProviderAssignmentViewModel';
+import { IShiftViewModel } from '../../../../types/IShiftViewModel';
+import { AssignmentType } from '../../../../Enums/AssignmentType.enum';
+import { ShiftType } from '../../../../Enums/ShiftType.enum';
 
 
 @Component({

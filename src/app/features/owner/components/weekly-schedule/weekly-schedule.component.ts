@@ -659,13 +659,13 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { ApiService } from '../../services/api.service';
-import { ApiResponse } from '../../types/ApiResponse';
-import { IProviderViewModel } from '../../types/IProviderViewModel';
-import { IWeeklyProviderAssignmentViewModel } from '../../types/IWeeklyProviderAssignmentViewModel';
-import { IShiftViewModel } from '../../types/IShiftViewModel';
-import { AssignmentType } from '../../Enums/AssignmentType.enum';
-import { ShiftType } from '../../Enums/ShiftType.enum';
+import { ApiService } from '../../../../services/api.service';
+import { ApiResponse } from '../../../../types/ApiResponse';
+import { IProviderViewModel } from '../../../../types/IProviderViewModel';
+import { IWeeklyProviderAssignmentViewModel } from '../../../../types/IWeeklyProviderAssignmentViewModel';
+import { IShiftViewModel } from '../../../../types/IShiftViewModel';
+import { AssignmentType } from '../../../../Enums/AssignmentType.enum';
+import { ShiftType } from '../../../../Enums/ShiftType.enum';
 @Component({
   selector: 'app-weekly-schedule',
   templateUrl: './weekly-schedule.component.html',
