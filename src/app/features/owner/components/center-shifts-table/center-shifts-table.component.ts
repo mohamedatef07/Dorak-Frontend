@@ -103,7 +103,11 @@ export class CenterShiftsTableComponent {
       },
     });
   }
-  shiftDetails(shiftId: number) {
-    this.route.navigate(['shift-appointments']);
+  shiftDetails(shiftId: number, shiftStatus: ShiftType) {
+    if (shiftStatus === ShiftType.OnGoing) {
+      this.route.navigate(['owner/provider-live-queue', shiftId]);
+    } else if (shiftStatus === ShiftType.Completed) {
+      this.route.navigate(['owner/shift-details', shiftId]);
+    }
   }
 }

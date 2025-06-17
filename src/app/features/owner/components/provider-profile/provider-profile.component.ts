@@ -3,9 +3,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { IProviderViewModel } from '../../types/IProviderViewModel';
-import { ApiService } from '../../services/api.service';
-import { ApiResponse } from '../../types/ApiResponse';
+import { IProviderViewModel } from '../../../../types/IProviderViewModel';
+import { ApiService } from '../../../../services/api.service';
+import { ApiResponse } from '../../../../types/ApiResponse';
 
 @Component({
   selector: 'app-provider-profile',
