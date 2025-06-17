@@ -26,7 +26,6 @@ import { ReportsComponent } from './features/provider/components/reports/reports
 import { DashboardComponent } from './features/provider/components/dashboard/dashboard.component';
 import { ReviewComponent } from './features/landingpage/components/review/review.component';
 import { DoctorsPageComponent } from './features/client/components/doctorsPage/doctorsPage.component';
-import { DoctorsLandingPageComponent } from './features/landingpage/components/doctors-landingPage/doctors-landingPage.component';
 import { ProviderProfileComponent } from './features/provider/components/provider-profile/provider-profile.component';
 import { ManageOperatorsComponent } from './features/owner/components/ManageOperators/ManageOperators.component';
 import { AddOperatorComponent } from './features/owner/components/AddOperator/AddOperator.component';

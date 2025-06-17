@@ -14,15 +14,14 @@ import { ClientService } from '../../services/client.service';
 })
 export class DoctorDetailsComponent implements OnInit {
   doctorId!: string;
-
   constructor(private route: ActivatedRoute, private _clientService: ClientService) {}
 
   ngOnInit() {
     this.route.paramMap.subscribe({
       next: (p) => {
-        let doctorid = p.get('id');
-        if (doctorid) {
-          this.doctorId = doctorid;
+        let doctorId = p.get('id');
+        if (doctorId) {
+          this.doctorId = doctorId;
 
           this._clientService.getDoctorsById(this.doctorId).subscribe({
             next: (res) => {
