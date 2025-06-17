@@ -1,3 +1,4 @@
+import { ActivatedRoute, Routes } from '@angular/router';
 import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { interval, Subscription } from 'rxjs';
@@ -12,6 +13,8 @@ import { DividerModule } from 'primeng/divider';
 import { ClientService } from '../../services/client.service';
 import { UpdateQueueStatusSRService } from '../../../../services/signalR Services/updateQueueStatusSR.service';
 import { IClientLiveQueue } from '../../models/IClientLiveQueue';
+import { AuthService } from '../../../../services/auth.service';
+import { IClientInfoForLiveQueue } from '../../models/IClientInfoForLiveQueue';
 
 interface QueueItem {
   id: number;
@@ -38,9 +41,13 @@ interface QueueItem {
 export class ClientLiveQueueComponent implements OnInit {
 
   ClientService = inject(ClientService);
+  cAuthService = inject(AuthService);
   srService = inject(UpdateQueueStatusSRService);
+  route = inject(ActivatedRoute);
   LiveQueues :Array<IClientLiveQueue> = [];
-  AppointmentId:number = 2;
+  appoinmentid!:number;
+  userid:string='';
+  clientInfo!: IClientInfoForLiveQueue;
  private subscription?: Subscription;
 
   doctorInfo = {
@@ -107,8 +114,22 @@ export class ClientLiveQueueComponent implements OnInit {
     this.subscription = interval(5000).subscribe(() => {
       this.simulateProgress();
     });
+    this.route.paramMap.subscribe(params => {
+      this.appoinmentid = Number(params.get('appointmentId')); // 'id' is the parameter name from the route
+    });
+    this.userid= this.cAuthService.getUserId();
+    this.ClientService.ClientInfoforLiveQueue(this.userid).subscribe({
+      next: (res) => {
+        this.clientInfo = res.Data;
+        console.log('Client Info:', this.clientInfo);
+      }
+      ,
+      error: (err) => {
+        console.error('Error fetching doctor info:', err);
+      }
+    });
 
-    this.ClientService.ClientLiveQueue(this.AppointmentId).subscribe({
+    this.ClientService.ClientLiveQueue(this.appoinmentid).subscribe({
       next: (res) => {
         this.LiveQueues = res.Data;
         console.log('Live Queue Data:', this.LiveQueues);

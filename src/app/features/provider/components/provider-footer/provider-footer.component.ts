@@ -9,7 +9,7 @@ import { RouterLink } from '@angular/router';
   imports :[DatePipe,RouterLink]
 })
 export class ProviderFooterComponent implements OnInit {
-  dateNow = new Date()
+  currentDate = new Date()
 
   constructor() { }
 

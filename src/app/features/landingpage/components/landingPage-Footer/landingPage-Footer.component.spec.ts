@@ -2,20 +2,21 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
-import { LandingPageRegisterComponent } from './landingPageRegister.component';
 
-describe('LandingpageRegisterComponent', () => {
-  let component: LandingPageRegisterComponent;
-  let fixture: ComponentFixture<LandingPageRegisterComponent>;
+import { LandingPageFooterComponent } from './landingPage-Footer.component';
+
+describe('LandingPageFooterComponent', () => {
+  let component: LandingPageFooterComponent;
+  let fixture: ComponentFixture<LandingPageFooterComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [LandingPageRegisterComponent],
+      declarations: [LandingPageFooterComponent],
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LandingPageRegisterComponent);
+    fixture = TestBed.createComponent(LandingPageFooterComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

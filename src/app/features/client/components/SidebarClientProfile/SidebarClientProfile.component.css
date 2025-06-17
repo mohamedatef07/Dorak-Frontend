@@ -4,3 +4,6 @@
   background-color: var(--button-bg-color-Light);
   border-radius: var(--border-radius);
 }
+.card{
+  border: none !important;
+}

@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { HeroComponent } from '../hero/hero.component';
 import { ReviewComponent } from '../review/review.component';
-import { LandingPageRegisterComponent } from '../landingPageRegister/landingPageRegister.component';
 import { NavClientComponent } from '../nav-client/nav-client.component';
-import { DoctorsLandingPageComponent } from '../doctors-landingPage/doctors-landingPage.component';
-import { CertificationsComponent } from '../certifications/certifications.component';
-import { LandingPageFooterComponent } from '../landingPageFooter/landingPageFooter.component';
+import { LandingPageFooterComponent } from '../landingPage-Footer/landingPage-Footer.component';
+import { LandingPageCertificationsComponent } from '../landingPage-Certifications/landingPage-Certifications.component';
+import { LandingPageRegisterComponent } from '../landingPage-register/landingPage-register.component';
+
 @Component({
   selector: 'app-landingPage-layout',
   templateUrl: './landingPage-layout.component.html',
@@ -14,11 +14,10 @@ import { LandingPageFooterComponent } from '../landingPageFooter/landingPageFoot
     HeroComponent,
     NavClientComponent,
     ReviewComponent,
-    LandingPageRegisterComponent,
-    CertificationsComponent,
     LandingPageFooterComponent,
     NavClientComponent,
-    DoctorsLandingPageComponent,
+    LandingPageRegisterComponent,
+    LandingPageCertificationsComponent,
   ],
 })
 export class LandingPageLayoutComponent implements OnInit {

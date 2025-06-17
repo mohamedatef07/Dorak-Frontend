@@ -2,7 +2,6 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ApiResponse } from '../../../types/ApiResponse';
-import { IDoctorsCard } from '../../../types/IDoctorsCard';
 import { environment } from '../../../../environments/environment';
 
 @Injectable({
