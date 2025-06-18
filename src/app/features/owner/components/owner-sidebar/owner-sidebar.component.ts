@@ -7,7 +7,7 @@ import { PanelMenuModule } from 'primeng/panelmenu';
   selector: 'app-owner-sidebar',
   templateUrl: './owner-sidebar.component.html',
   styleUrls: ['./owner-sidebar.component.css'],
-  imports: [RouterLink, RouterModule,CommonModule],
+  imports: [RouterLink, RouterModule,CommonModule,PanelMenuModule],
 })
 export class OwnerSidebarComponent implements OnInit {
   currentDate: string = '';

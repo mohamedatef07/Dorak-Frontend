@@ -16,9 +16,7 @@ export class AuthService {
   httpClient = inject(HttpClient);
   private currentCenterId: number = 1 // Default value, can be changed later through jwt token
 
-  getCenterId(): number {
-    return this.currentCenterId;
-  }
+
 
   setCenterId(centerId: number): void {
     this.currentCenterId = centerId;
