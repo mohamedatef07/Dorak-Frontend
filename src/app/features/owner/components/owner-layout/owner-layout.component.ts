@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+
 import { OwnerSidebarComponent } from '../owner-sidebar/owner-sidebar.component';
 import { OwnerNavbarComponent } from '../owner-navbar/owner-navbar.component';
 import { OwnerFooterComponent } from "../owner-footer/owner-footer.component";
@@ -9,7 +10,6 @@ import { OwnerFooterComponent } from "../owner-footer/owner-footer.component";
   imports: [
     RouterOutlet,
     OwnerNavbarComponent,
-    OwnerLayoutComponent,
     OwnerSidebarComponent,
     OwnerFooterComponent
 ],
