@@ -687,7 +687,7 @@ export class ManuallyScheduleComponent implements OnInit {
       AssignmentType: AssignmentType.Visiting,
       Shifts: formValue.Shifts.map(
         (shift: any): IShiftViewModel => ({
-          ShiftType: ShiftType.none,
+          ShiftType: ShiftType.None,
           ShiftDate: this.formatDateToString(shift.Date),
           StartTime: this.formatTimeToString(shift.StartTime),
           EndTime: this.formatTimeToString(shift.EndTime),

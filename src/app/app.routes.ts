@@ -156,15 +156,12 @@ export const routes: Routes = [
         path: 'provider-live-queue/:shiftId',
         component: ProviderLiveQueueComponent,
         title: 'Provider Live Queue'
-
       },
       {
-
         path: 'manage-operators',
         component: ManageOperatorsComponent,
         title: 'Manage Operators',
         // children: [
-
         // ]
       },
       {
@@ -250,7 +247,6 @@ export const routes: Routes = [
     ],
     title: 'Home',
   },
-
   { path: 'login', component: LoginComponent, title: 'Login' },
   { path: 'register', component: RegisterComponent, title: 'Register' },
   {
@@ -263,7 +259,5 @@ export const routes: Routes = [
     component: UnauthorizedComponent,
     title: 'Unauthorized',
   },
-
-
   { path: '**', component: NotFoundComponent, title: 'Not Found' },
 ];

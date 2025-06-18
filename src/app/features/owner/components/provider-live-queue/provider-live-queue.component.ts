@@ -102,7 +102,7 @@ export class ProviderLiveQueueComponent implements OnInit {
               CurrentQueuePosition: item.CurrentQueuePosition,
               AvailableStatuses: (item.AvailableStatuses || [])
                 .filter(
-                  (status: number) => status !== QueueAppointmentStatus.none
+                  (status: number) => status !== QueueAppointmentStatus.None
                 )
                 .map((status: number) => this.mapStatus(status)),
             }));
@@ -139,12 +139,12 @@ export class ProviderLiveQueueComponent implements OnInit {
 
   private mapClientType(value: number | string): ClientType {
     const numValue = typeof value === 'string' ? parseInt(value, 10) : value;
-    return (numValue as ClientType) ?? ClientType.none;
+    return (numValue as ClientType) ?? ClientType.None;
   }
 
   private mapStatus(value: number | string): QueueAppointmentStatus {
     const numValue = typeof value === 'string' ? parseInt(value, 10) : value;
-    return (numValue as QueueAppointmentStatus) ?? QueueAppointmentStatus.none;
+    return (numValue as QueueAppointmentStatus) ?? QueueAppointmentStatus.None;
   }
 
   updateQueueStatus(
@@ -161,7 +161,7 @@ export class ProviderLiveQueueComponent implements OnInit {
 
     const newStatus = this.stringToStatus(newStatusStr);
 
-    if (newStatus === QueueAppointmentStatus.none) {
+    if (newStatus === QueueAppointmentStatus.None) {
       console.error('Invalid status selected:', newStatusStr);
       return;
     }
@@ -201,7 +201,7 @@ export class ProviderLiveQueueComponent implements OnInit {
     const numValue = parseInt(statusStr, 10);
     if (!isNaN(numValue)) {
       return (
-        (numValue as QueueAppointmentStatus) ?? QueueAppointmentStatus.none
+        (numValue as QueueAppointmentStatus) ?? QueueAppointmentStatus.None
       );
     }
     const statusKey = Object.keys(QueueAppointmentStatus)
@@ -210,7 +210,7 @@ export class ProviderLiveQueueComponent implements OnInit {
     return (
       QueueAppointmentStatus[
         statusKey as keyof typeof QueueAppointmentStatus
-      ] ?? QueueAppointmentStatus.none
+      ] ?? QueueAppointmentStatus.None
     );
   }
 
