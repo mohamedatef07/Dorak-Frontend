@@ -1,11 +1,10 @@
-
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ClientService } from '../../services/client.service';
+import { IDoctorcard } from '../../models/idoctorcard';
 import { Router } from '@angular/router';
 import { IDoctorFilter } from '../../..//..//types/IDoctorFilter';
-import { IDoctorcard } from '../../models/idoctorcard';
 import { environment } from '../../../../../environments/environment';
 
 @Component({
@@ -76,11 +75,10 @@ goToDetails(Id: number | undefined): void {
     this.cardDoctorService.getAllDoctorsCards().subscribe({
       next: (res) => {
         this.doctors = res.Data;
-        console.log(res.Data);
-this.doctors.forEach((doctor) => {
-  doctor.Image = environment.apiUrl + doctor.Image;
-});
         this.filteredDoctors = [...this.doctors];
+        this.doctors.forEach((doctor) => {
+        doctor.Image = environment.apiUrl + doctor.Image;
+});
       },
       error: (err) => {
         console.error('Error loading doctors:', err);

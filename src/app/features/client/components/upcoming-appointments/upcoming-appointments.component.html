@@ -22,22 +22,14 @@
     </div>
   </div>
 
-  <div class="text-md-end text-center">
-    <div class="fw-bold mb-1">
 
-    </div>
-    <!-- <button
-      pButton
-      icon="pi pi-pencil"
-      class="p-button-sm p-button-rounded p-button-text me-2"
-      (click)=""
-    ></button>
-    <button
-      pButton
-      icon="pi pi-trash"
-      class="p-button-sm p-button-rounded p-button-danger p-button-text"
-      (click)=""
-    ></button> -->
+  <div class="text-md-end text-center">
+    <button type="button" class="btn btn-outline-primary"
+     [routerLink]="['/client/appointment', appointment.AppointmentId]"
+>AppoinmentDetails</button>
   </div>
-</div>
+
+
+
+  </div>
 }

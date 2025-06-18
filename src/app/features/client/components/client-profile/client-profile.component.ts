@@ -8,10 +8,18 @@ import { ClientAppointmentsComponent } from "../ClientAppointments/ClientAppoint
 import { ClientService } from '../../services/client.service';
 import { IClientProfile } from '../../models/IClientProfile';
 import { environment } from '../../../../../environments/environment';
+import { FormsModule, NgModel } from '@angular/forms';
+import { RatingModule } from 'primeng/rating';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-client-profile',
-  imports: [CommonModule, ButtonModule, CardModule, AvatarModule, ClientAppointmentsComponent],
+  imports: [CommonModule, ButtonModule, CardModule, AvatarModule, ClientAppointmentsComponent, CommonModule,
+      AvatarModule,
+      RatingModule,
+      FormsModule,
+      RouterLink
+   ],
   templateUrl: './client-profile.component.html',
   styleUrl: './client-profile.component.css'
 })
@@ -29,7 +37,7 @@ client: IClientProfile = {
 };
 
 userid: string = '';
-lastAppointments: any;
+appointment: any;
 
 constructor() {}
 
@@ -49,10 +57,10 @@ ngOnInit() {
 
   this.clientServices.getLastAppointment(this.userid).subscribe({
     next: (res) => {
-      this.lastAppointments = res.Data;
-      let appoinmentid = this.lastAppointments.appointmentId;
+      this.appointment = res.Data;
+      let ProviderId = this.appointment.ProviderId;
       console.log(res.Data);
-      console.log(appoinmentid);
+      console.log(ProviderId);
     },
     error: (err) => {
       console.error('Error while fetching Last appointment', err);

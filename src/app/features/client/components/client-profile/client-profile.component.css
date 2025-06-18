@@ -3,3 +3,6 @@
   height: clamp(60px, 8vw, 100px);
 }
 
+.bg-lightblue {
+  background-color: #d7effb;
+}

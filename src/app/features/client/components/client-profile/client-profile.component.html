@@ -12,8 +12,46 @@
     </div>
   </div>
 
-  <h6 class="fw-bold mb-3">My Appointments:</h6>
 
+
+<h6 class="fw-bold mb-3">Last Appointment:</h6>
+<div
+  class="appointment-card p-3 mb-3 rounded d-flex flex-column flex-md-row align-items-center justify-content-between bg-lightblue"
+  *ngIf="appointment"
+>
+  <div class="d-flex align-items-center mb-3 mb-md-0">
+    <p-avatar
+      image="https://www.w3schools.com/howto/img_avatar.png"
+      shape="circle"
+      class="me-3 avatar"
+    >
+    </p-avatar>
+    <div>
+      <div class="fw-bold">{{ appointment.ProviderName }}</div>
+      <p-rating
+        class="review-star pt-2 pb-2"
+        [(ngModel)]="appointment.Rate"
+        [readonly]="true"
+      ></p-rating>
+      <div>{{ appointment.Specialization }}</div>
+      <div>{{ appointment.AppointmentDate }}</div>
+    </div>
+  </div>
+
+
+  <div class="text-md-end text-center">
+    <button type="button" class="btn btn-outline-primary"
+     [routerLink]="['/client/appointment', appointment.appointmentId]"
+>AppoinmentDetails</button>
+
+
+
+  </div>
+</div>
+
+
+
+    <h6 class="fw-bold mb-3 gap-3">My Appointments:</h6>
   <app-ClientAppointments
     [appointments]="this.client.Appointments"
   ></app-ClientAppointments>

@@ -1,3 +1,4 @@
+
 <div
   class="appointment-card p-3 mb-3 rounded"
   [ngClass]="'bg-lightblue'"
@@ -14,49 +15,49 @@
   <div class="d-flex flex-column flex-md-row align-items-start justify-content-between">
     <div class="flex-grow-1">
       <div class="text-center text-md-start mb-3">
-        <div class="fw-bold NameHeader">{{ lastAppointments.ProviderName }}</div>
+        <div class="fw-bold NameHeader">{{ appointment.ProviderName }}</div>
       <label class="fw-bold pt-4">Rate:</label>
       <p-rating
         class="review-star pt-2 pb-4 ps-3"
-        [(ngModel)]="lastAppointments.Rate"
+        [(ngModel)]="appointment.Rate"
         [readonly]="true"
       />
 
       <div class="d-flex gap-3 py-4">
         <label class="fw-bold"> Specialization:</label>
-        <span>{{ lastAppointments.Specialization }}</span>
+        <span>{{ appointment.Specialization }}</span>
       </div>
       <div class="d-flex gap-3 py-4">
         <label class="fw-bold"> Appointment Date:</label>
-        <span>{{ lastAppointments.AppointmentDate }}</span>
+        <span>{{ appointment.AppointmentDate }}</span>
       </div>
       <div class="d-flex gap-3 py-4">
         <label class="fw-bold"> Appointment Status:</label>
         <span>{{
-          lastAppointments.AppointmentStatus | AppointmentStatusEnumValue
+          appointment.AppointmentStatus | AppointmentStatusEnumValue
         }}</span>
       </div>
 
       <div class="d-flex gap-3 py-4">
         <label class="fw-bold"> Client Type : </label>
-        <span>{{ lastAppointments.clientType | ClientTypeEnumValue }}</span>
+        <span>{{ appointment.clientType | ClientTypeEnumValue }}</span>
       </div>
 
       <div class="d-flex gap-3 py-4">
         <label class="fw-bold"> Estimated Time : </label>
-        <span>{{ lastAppointments.EstimatedTime }}</span>
+        <span>{{ appointment.EstimatedTime }}</span>
       </div>
     </div>
   </div>
 
   <div class="text-md-end text-center">
-    Fees : <span class="fw-bold">{{ lastAppointments.Fees }}</span>
+    Fees : <span class="fw-bold">{{ appointment.Fees }}</span>
   </div>
 
 </div>
 <div class="d-flex justify-content-center gap-3 mt-4">
 
-  <a [routerLink]="['/client/client-profile']" class="btn btn-info btn-cust"  >Back</a>
-  <a [routerLink]="['/client/client-live-queue', lastAppointments.appointmentId]"  class="btn btn-info btn-cust"  >Go to Live Queue</a>
+   <a [routerLink]="['/client/client-profile']" class="btn btn-info btn-cust"  >Back</a>
+  <a [routerLink]="['/client/client-live-queue', appointment.appointmentId]"  class="btn btn-info btn-cust"  >Go to Live Queue</a>
 
 </div>

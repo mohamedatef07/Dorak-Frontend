@@ -124,6 +124,14 @@ searchDoctorsByFilter(filter: IDoctorFilter) {
     (`${environment.apiUrl}/api/client/last-appointment/${userId}`);
 
   }
+getAppointmentById(appointmentId: number): Observable<ApiResponse<IAppointment>> {
+  return this.httpClient.get<ApiResponse<IAppointment>>(
+    `${environment.apiUrl}/api/client/appointment/${appointmentId}`
+  );
+}
+
+
+
 
   Checkout(request:ICheckoutRequest):Observable<ICheckoutRequest >{
     return this.httpClient.post<ICheckoutRequest>
@@ -156,5 +164,5 @@ searchDoctorsByFilter(filter: IDoctorFilter) {
       `${environment.apiUrl}/api/client/profile-for-livequeue/${userId}`
     );
   }
-
 }
+
