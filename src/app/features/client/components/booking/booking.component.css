@@ -17,6 +17,9 @@
 .shift-time {
   background-color: var(--bg-color-Light);
 }
+.duration-indicator {
+  font-size: 0.8rem;
+}
 ::ng-deep .p-button {
   background-color: #2a6f97 !important;
   padding: 6px !important;
@@ -39,4 +42,3 @@
 ::ng-deep .p-select-option:hover {
   color: #2a6f97 !important;
 }
-

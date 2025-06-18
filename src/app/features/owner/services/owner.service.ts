@@ -59,7 +59,7 @@ export class OwnerService {
       `${environment.apiUrl}/api/shift/get-all-center-shifts/?centerId=${centerId}`
     );
   }
-  
+
   startShift(shiftId: number): Observable<ApiResponse<null>> {
     return this.httpClient.get<ApiResponse<null>>(
       `${environment.apiUrl}/api/operator/start-shift/?shiftId=${shiftId}&operatorId=${this.operatorId}`
@@ -78,7 +78,7 @@ export class OwnerService {
     centerId: number
   ): Observable<ApiResponse<any>>{
     return this.httpClient.get<ApiResponse<any>>(
-      `${environment.apiUrl}/api/Shift/GetAllCenterShiftsAndServices?centerId=${centerId}`
+      `${environment.apiUrl}/api/Shift/get-all-centerShifts-and-services?centerId=${centerId}`
     );
   }
 
