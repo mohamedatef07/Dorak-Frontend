@@ -16,8 +16,8 @@
     </div>
   </div>
 
-  <div class="filteration d-flex space-between gap-3">
-    <h6>Filter by:</h6>
+  <div class="filteration d-flex space-between align-items-center gap-3">
+    <p class="m-0 dt">Filter by:</p>
 
     <div>
       <label>Appointment Date</label>
@@ -39,7 +39,7 @@
         <option *ngFor="let Provider of ProviderName" [value]="Provider">{{ Provider }}</option>
       </select>
     </div>
-    <button type="button" (click)="clearFilters()">Clear Filters</button>
+    <button type="button" class="view-doc-profile" (click)="clearFilters()">Clear Filters</button>
   </div>
 
   <div class="doctors-table my-3">
@@ -63,7 +63,7 @@
           <td>{{ record.StartTime}}</td>
           <td>{{ record.EndTime}}</td>
           <td>{{ record.Services[0].BasePrice}}</td>
-          <td><button type="button" class="view-doc-profile" (click)="bookNow(record)">Book Now</button></td>
+          <td><button type="button" class="view-doc-profile" data-bs-toggle="modal" data-bs-target="#confirmationModal" (click)="bookNow(record)">Book Now</button></td>
         </tr>
       </tbody>
     </table>
@@ -93,3 +93,23 @@
     </button>
   </div>
 </div>
+
+
+<div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirm Appointment</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to confirm this appointment?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="cancelBooking()">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="HandleSubmitForm()">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>
+
