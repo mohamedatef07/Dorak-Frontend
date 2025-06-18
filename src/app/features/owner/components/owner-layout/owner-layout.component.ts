@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { FooterComponent } from '../footer/footer.component';
-import { SidebarComponent } from '../sidebar/sidebar.component';
+import { SidebarComponent } from '../sidebar/owner-sidebar.component';
 
 @Component({
   selector: 'app-owner-layout',

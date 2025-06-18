@@ -5,8 +5,8 @@ import { PanelMenuModule } from 'primeng/panelmenu';
 
 @Component({
   selector: 'app-sidebar',
-  templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.css'],
+  templateUrl: './owner-sidebar.component.html',
+  styleUrls: ['./owner-sidebar.component.css'],
   imports: [RouterLink, RouterModule,CommonModule,PanelMenuModule],
 })
 export class SidebarComponent implements OnInit {
