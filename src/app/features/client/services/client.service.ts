@@ -19,7 +19,7 @@ import { IClientWalletProfile } from '../models/IClientWalletProfile';
 import { IDoctorFilter } from '../../../types/IDoctorFilter';
 import { IClientLiveQueue } from '../models/IClientLiveQueue';
 import { IClientInfoForLiveQueue } from '../models/IClientInfoForLiveQueue';
-import { IDoctorcard } from '../models/idoctorcard';
+import { IDoctorcard } from '../models/iDoctorcard';
 
 @Injectable({
   providedIn: 'root',

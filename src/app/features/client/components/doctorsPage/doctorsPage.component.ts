@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { ClientService } from '../../services/client.service';
 import { Router } from '@angular/router';
 import { IDoctorFilter } from '../../..//..//types/IDoctorFilter';
-import { IDoctorcard } from '../../models/idoctorcard';
+import { IDoctorcard } from '../../models/iDoctorcard';
 import { environment } from '../../../../../environments/environment';
 
 @Component({
