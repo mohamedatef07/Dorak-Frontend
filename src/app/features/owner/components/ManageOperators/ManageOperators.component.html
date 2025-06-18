@@ -41,7 +41,8 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let operator of operators">
+      <tr *ngFor="let operator of operators; let i = index">
+        <td>{{ i + 1 }}</td>
         <td>{{ operator.OperatorId }}</td>
         <td>{{ operator.FirstName + ' ' + operator.LastName }}</td>
         <td><button class="view-doc-profile" (click)="DeleteOperator(operator.OperatorId)">Delete</button></td>

@@ -3,8 +3,10 @@ import { ApiResponse } from '../../../types/ApiResponse';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
-import { IOperator } from '../../../types/IOperator';
-import { ICreateAppointment } from '../../../types/ICreateAppointment';
+import { IOperator } from '../models/IOperator';
+import { ICreateAppointment } from '../models/ICreateAppointment';
+import { IShiftsTable } from '../models/IShiftsTable';
+
 import { ICenterShifts } from '../models/ICenterShifts';
 import { AuthService } from '../../../services/auth.service';
 
@@ -43,11 +45,13 @@ export class OwnerService {
   reserveAppointment(
     appointmentData: ICreateAppointment
   ): Observable<ApiResponse<any>> {
+    console.log("appointmentData From Owner Service: ",appointmentData);
     return this.httpClient.post<ApiResponse<any>>(
       `${environment.apiUrl}/api/Operator/reserve-appointment`,
       appointmentData
     );
   }
+
   getAllCenterShifts(
     centerId: number
   ): Observable<ApiResponse<Array<ICenterShifts>>> {
@@ -55,6 +59,7 @@ export class OwnerService {
       `${environment.apiUrl}/api/shift/get-all-center-shifts/?centerId=${centerId}`
     );
   }
+  
   startShift(shiftId: number): Observable<ApiResponse<null>> {
     return this.httpClient.get<ApiResponse<null>>(
       `${environment.apiUrl}/api/operator/start-shift/?shiftId=${shiftId}&operatorId=${this.operatorId}`
@@ -68,4 +73,13 @@ export class OwnerService {
       `${environment.apiUrl}/api/operator/cancel-shift/?shiftId=${shiftId}&centerId=${centerId}`
     );
   }
+
+  getShiftsDetailsforbooking(
+    centerId: number
+  ): Observable<ApiResponse<any>>{
+    return this.httpClient.get<ApiResponse<any>>(
+      `${environment.apiUrl}/api/Shift/GetAllCenterShiftsAndServices?centerId=${centerId}`
+    );
+  }
+
 }
