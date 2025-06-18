@@ -16,32 +16,48 @@ import { environment } from '../../../../../environments/environment';
   styleUrl: './client-profile.component.css'
 })
 export class ClientProfileComponent {
-    clientServices = inject(ClientService);
-    cAuthServices = inject(AuthService);
+   clientServices = inject(ClientService);
+cAuthServices = inject(AuthService);
 
-    client:IClientProfile={
-      Appointments: [],
-      ID: '',
-      Name: '',
-      Image: '',
-      Phone: '',
-      Email: ''
-    };
-    userid:string= '';
-    constructor() {}
-    ngOnInit(){
-       this.userid= this.cAuthServices.getUserId();
-      this.clientServices.getClientProfileAndAppointments(this.userid).subscribe({
-        next: (res) => {
-          this.client = res.Data;
-          console.log(res.Data.Image);
-          this.client.Image = environment.apiUrl+res.Data.Image;
-        },
-        error: (err) => {
-          console.error('Error while fetching client profile:', err);
-        },
-      });
+client: IClientProfile = {
+  Appointments: [],
+  ID: '',
+  Name: '',
+  Image: '',
+  Phone: '',
+  Email: ''
+};
 
-    }
+userid: string = '';
+lastAppointments: any;
+
+constructor() {}
+
+ngOnInit() {
+  this.userid = this.cAuthServices.getUserId();
+
+  this.clientServices.getClientProfileAndAppointments(this.userid).subscribe({
+    next: (res) => {
+      this.client = res.Data;
+      console.log(res.Data.Image);
+      this.client.Image = environment.apiUrl + res.Data.Image;
+    },
+    error: (err) => {
+      console.error('Error while fetching client profile:', err);
+    },
+  });
+
+  this.clientServices.getLastAppointment(this.userid).subscribe({
+    next: (res) => {
+      this.lastAppointments = res.Data;
+      let appoinmentid = this.lastAppointments.appointmentId;
+      console.log(res.Data);
+      console.log(appoinmentid);
+    },
+    error: (err) => {
+      console.error('Error while fetching Last appointment', err);
+    },
+  });
+}
 
 }

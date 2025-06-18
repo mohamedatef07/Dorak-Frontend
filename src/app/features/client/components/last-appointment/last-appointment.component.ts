@@ -30,19 +30,7 @@ export class LastAppointmentComponent implements OnInit {
   constructor() { }
     userid:string= '';
   ngOnInit() {
-    this.userid= this.cAuthServices.getUserId();
-    this.clientServices.getLastAppointment(this.userid).subscribe({
-            next: (res) => {
-              this.lastAppointments = res.Data;
-            let appoinmentid=this.lastAppointments.appointmentId
-            console.log(res.Data)
-            console.log(appoinmentid)
-
-            },
-            error: (err) => {
-              console.error('Error while fetching Last appointment', err);
-            },
-          });
+   
 
   }
 
