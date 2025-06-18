@@ -208,11 +208,11 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule, MatTable } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableDataSource } from '@angular/material/table';
-import { ApiService } from '../../services/api.service';
-import { IPaginationViewModel } from '../../types/IPaginationViewModel';
-import { IProviderViewModel } from '../../types/IProviderViewModel';
-import { ApiResponse } from '../../types/ApiResponse';
-import { AuthService } from '../../services/auth.service'; // Add this import
+import { ApiService } from '../../../../services/api.service';
+import { IPaginationViewModel } from '../../../../types/IPaginationViewModel';
+import { IProviderViewModel } from '../../../../types/IProviderViewModel';
+import { ApiResponse } from '../../../../types/ApiResponse';
+import { AuthService } from '../../../../services/auth.service'; // Add this import
 
 @Component({
   selector: 'app-search-provider',

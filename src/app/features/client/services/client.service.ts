@@ -18,6 +18,7 @@ import { IClientProfileAppointment } from '../models/IClientProfileAppointment';
 import { IClientWalletProfile } from '../models/IClientWalletProfile';
 import { IDoctorFilter } from '../../../types/IDoctorFilter';
 import { IClientLiveQueue } from '../models/IClientLiveQueue';
+import { IClientInfoForLiveQueue } from '../models/IClientInfoForLiveQueue';
 import { IDoctorcard } from '../models/idoctorcard';
 
 @Injectable({
@@ -146,6 +147,13 @@ searchDoctorsByFilter(filter: IDoctorFilter) {
   ClientLiveQueue(appointmentId:number): Observable<ApiResponse<Array<IClientLiveQueue>>> {
     return this.httpClient.get<ApiResponse<Array<IClientLiveQueue>>>(
       `${environment.apiUrl}/api/client/queue/by-appointment/${appointmentId}`
+    );
+  }
+
+
+  ClientInfoforLiveQueue(userId:string): Observable<ApiResponse<IClientInfoForLiveQueue>> {
+    return this.httpClient.get<ApiResponse<IClientInfoForLiveQueue>>(
+      `${environment.apiUrl}/api/client/profile-for-livequeue/${userId}`
     );
   }
 

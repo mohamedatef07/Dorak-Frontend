@@ -67,7 +67,6 @@ getTotalAppointments(): number {
  ngOnInit() {
   this.userId = this.authServices.getUserId();
 
-
   this.clientServices.getDoctorBookingInfo(this.providerId).subscribe({
     next: (res) => {
       this.originalBookings = [...res.Data];
@@ -123,7 +122,6 @@ getTotalAppointments(): number {
       });
       return;
     }
-
     const reservedAppointment: IMakeAppointment = {
       ProviderId: this.providerId,
       AppointmentDate: appDate,
@@ -137,12 +135,6 @@ getTotalAppointments(): number {
     this.clientServices.makeAppointment(reservedAppointment).subscribe({
       next: (res) => {
         this.checkoutRequest = res.Data;
-        this.messageServices.add({
-          severity: 'success',
-          summary: 'Success',
-          detail: 'Your appointment has been successfully reserved.',
-          life: 4000,
-        });
         this.selectedCenterId = 0;
         this.selectedServiceId = 0;
         this.route.navigate(['/client/checkout'], {

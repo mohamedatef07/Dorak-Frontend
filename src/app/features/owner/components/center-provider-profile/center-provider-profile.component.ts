@@ -3,9 +3,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { IProviderViewModel } from '../../types/IProviderViewModel';
-import { ApiService } from '../../services/api.service';
-import { ApiResponse } from '../../types/ApiResponse';
+import { IProviderViewModel } from '../../../../types/IProviderViewModel';
+import { ApiService } from '../../../../services/api.service';
+import { ApiResponse } from '../../../../types/ApiResponse';
 
 @Component({
   selector: 'app-center-provider-profile',
@@ -38,7 +38,7 @@ export class CenterProviderProfileComponent implements OnInit {
       this.loadAssignments(providerId);
     } else {
       this.errorMessage = 'Provider ID not found.';
-      this.updateCalendar(); // Populate calendar even if providerId is invalid
+      this.updateCalendar();
     }
   }
 
@@ -79,13 +79,11 @@ export class CenterProviderProfileComponent implements OnInit {
         if (response.Status === 200 && response.Data) {
           this.assignments = response.Data.map(item => {
             const startDate = new Date(item.startDate);
-            const endDate = new Date(item.endDate);
-            // Reset time to midnight to avoid time component issues
-            startDate.setHours(0, 0, 0, 0);
+            const endDate = new Date(item.endDate);            startDate.setHours(0, 0, 0, 0);
             endDate.setHours(0, 0, 0, 0);
             console.log('Parsed assignment range:', { startDate, endDate });
             return { startDate, endDate };
-          }).filter(range => !isNaN(range.startDate.getTime()) && !isNaN(range.endDate.getTime())); // Filter out invalid dates
+          }).filter(range => !isNaN(range.startDate.getTime()) && !isNaN(range.endDate.getTime()));
           console.log('Assignments array after mapping:', this.assignments);
         } else {
           this.errorMessage = response.Message || 'No assignments found.';
@@ -110,24 +108,16 @@ export class CenterProviderProfileComponent implements OnInit {
     const year = this.viewDate.getFullYear();
     const month = this.viewDate.getMonth();
 
-    const firstDayOfMonth = new Date(year, month, 1);
-    const startingDay = firstDayOfMonth.getDay(); // 0 (Sunday) to 6 (Saturday)
+    const firstDayOfMonth = new Date(year, month, 1);    const startingDay = firstDayOfMonth.getDay();
     const daysInMonth = new Date(year, month + 1, 0).getDate();
 
     this.daysInMonth = [];
-    console.log('Starting day:', startingDay, 'Days in month:', daysInMonth);
-
-    // Add padding days (set to null to avoid rendering)
-    for (let i = 0; i < startingDay; i++) {
+    console.log('Starting day:', startingDay, 'Days in month:', daysInMonth);    for (let i = 0; i < startingDay; i++) {
       this.daysInMonth.push({ date: null, hasAssignment: false });
       console.log('Added padding day at index:', i);
-    }
-
-    // Add actual days of the month
-    for (let day = 1; day <= daysInMonth; day++) {
+    }    for (let day = 1; day <= daysInMonth; day++) {
       const currentDate = new Date(year, month, day);
-      currentDate.setHours(0, 0, 0, 0); // Reset time to midnight for consistent comparison
-      // Check if the current date falls within any assignment range
+      currentDate.setHours(0, 0, 0, 0);
       const hasAssignment = this.assignments.some(assignment => {
         const start = new Date(assignment.startDate);
         const end = new Date(assignment.endDate);
@@ -164,7 +154,7 @@ export class CenterProviderProfileComponent implements OnInit {
   isToday(date: Date | null): boolean {
     if (!date) return false;
     const today = new Date();
-    today.setHours(0, 0, 0, 0); // Reset time for consistent comparison
+    today.setHours(0, 0, 0, 0);
     return date.getFullYear() === today.getFullYear() &&
            date.getMonth() === today.getMonth() &&
            date.getDate() === today.getDate();

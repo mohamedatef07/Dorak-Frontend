@@ -226,10 +226,10 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableDataSource } from '@angular/material/table';
-import { ApiService } from '../../services/api.service';
-import { IPaginationViewModel } from '../../types/IPaginationViewModel';
-import { IProviderViewModel } from '../../types/IProviderViewModel';
-import { ApiResponse } from '../../types/ApiResponse';
+import { ApiService } from '../../../../services/api.service';
+import { IPaginationViewModel } from '../../../../types/IPaginationViewModel';
+import { IProviderViewModel } from '../../../../types/IProviderViewModel';
+import { ApiResponse } from '../../../../types/ApiResponse';
 
 @Component({
   selector: 'app-provider-schedule',

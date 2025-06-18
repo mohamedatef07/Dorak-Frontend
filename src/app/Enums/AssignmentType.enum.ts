@@ -1,4 +1,4 @@
 export enum AssignmentType {
-  Permanent,
-  Visiting,
+  Permanent = 1,
+  Visiting = 2,
 }

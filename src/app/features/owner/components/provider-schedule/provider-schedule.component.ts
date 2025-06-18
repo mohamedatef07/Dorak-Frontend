@@ -9,10 +9,10 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableDataSource } from '@angular/material/table';
-import { ApiService } from '../../services/api.service';
-import { IPaginationViewModel } from '../../types/IPaginationViewModel';
-import { IProviderViewModel } from '../../types/IProviderViewModel';
-import { ApiResponse } from '../../types/ApiResponse';
+import { ApiService } from '../../../../services/api.service';
+import { IPaginationViewModel } from '../../../../types/IPaginationViewModel';
+import { IProviderViewModel } from '../../../../types/IProviderViewModel';
+import { ApiResponse } from '../../../../types/ApiResponse';
 
 @Component({
   selector: 'app-provider-schedule',
@@ -47,7 +47,7 @@ export class ProviderScheduleComponent implements OnInit, AfterViewInit {
 
   errorMessage: string = '';
   isLoading: boolean = false;
-  centerId: number = 1; // Consider making this dynamic if center context varies
+  centerId: number = 1;
 
   constructor(private apiService: ApiService, private router: Router, private cdr: ChangeDetectorRef) {}
 
@@ -65,7 +65,7 @@ export class ProviderScheduleComponent implements OnInit, AfterViewInit {
     this.dataSource.data = [];
     this.providers = [];
 
-    
+
     this.fetchAllPages(1);
   }
 
@@ -208,7 +208,7 @@ export class ProviderScheduleComponent implements OnInit, AfterViewInit {
 
   navigateToScheduleOptions(providerId: string | undefined): void {
     if (providerId) {
-      this.router.navigate(['/schedule-options', providerId]);
+      this.router.navigate(['/manually-schedule', providerId]);
     } else {
       this.errorMessage = 'Provider ID is missing. Cannot navigate to schedule options.';
     }

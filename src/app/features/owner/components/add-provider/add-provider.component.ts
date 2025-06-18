@@ -8,11 +8,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ApiService } from '../../services/api.service';
-import { IRegistrationViewModel } from '../../types/IRegistrationViewModel';
+import { ApiService } from '../../../../services/api.service';
+import { IRegistrationViewModel } from '../../../../types/IRegistrationViewModel';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ProviderType } from '../../Enums/ProviderType.enum';
+import { ProviderType } from '../../../../Enums/ProviderType.enum';
 
 @Component({
   selector: 'app-add-provider',
@@ -196,7 +196,7 @@ export class AddProviderComponent implements OnInit {
             providerId
           );
           this.router
-            .navigate(['/schedule-options', providerId])
+            .navigate(['/manually-schedule', providerId])
             .then((success) => {
               console.log('Navigation successful:', success);
               if (!success) {
