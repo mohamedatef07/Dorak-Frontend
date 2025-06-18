@@ -59,7 +59,7 @@
     <p-carousel
       class="pcar"
       [value]="originalBookings"
-      [numVisible]="1"
+      [numVisible]="2"
       [numScroll]="1"
     >
       <ng-template let-appointment #item>
@@ -70,13 +70,13 @@
             </div>
           </div>
           <div
-            class="font-medium main-text-Color text-center shift-time pt-4 pb-4 ps-3 pe-3"
+            class="d-flex flex-column justify-content-between gap-2 font-medium main-text-Color text-center shift-time pt-4 pb-4 ps-3 pe-3"
           >
-            <div class="start-time d-flex justify-content-between">
-              <span>From:</span> {{ appointment?.StartTime | TimeStringToDate | date : "h:mm a" }}
+            <div class="start-time d-flex flex-column justify-content-between">
+              <span class="duration-indicator">From</span> {{ appointment?.StartTime | TimeStringToDate | date : "h:mm a" }}
             </div>
-            <div class="end-time d-flex justify-content-between">
-              <span>To:</span>
+            <div class="end-time d-flex flex-column justify-content-between">
+              <span class="duration-indicator">To</span>
               {{ appointment?.EndTime | TimeStringToDate | date : "h:mm a" }}
             </div>
           </div>

@@ -62,11 +62,7 @@ changePassword(data: FormData): Observable<{ message: string; status: number; da
     'http://localhost:5139/api/Account/change-password',
     data
   );
-
-
-
 }
-
 }
 
 

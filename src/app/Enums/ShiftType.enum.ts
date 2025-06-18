@@ -1,5 +1,5 @@
 export enum ShiftType {
-  none,
+  None,
   NotStarted,
   OnGoing,
   Completed,

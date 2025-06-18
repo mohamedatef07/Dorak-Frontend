@@ -1024,7 +1024,7 @@ export class WeeklyScheduleComponent implements OnInit {
         const shift = formShifts[j];
         for (let k = 0; k < shiftDates.length; k++) {
           shifts.push({
-            ShiftType: ShiftType.none,
+            ShiftType: ShiftType.None,
             ShiftDate: shiftDates[k],
             StartTime: this.formatTimeToString(shift.StartTime) || '',
             EndTime: this.formatTimeToString(shift.EndTime) || '',
