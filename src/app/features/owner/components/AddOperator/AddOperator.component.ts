@@ -2,9 +2,9 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { ApiResponse } from '../../../../types/ApiResponse';
-import { IAddOperator } from '../../../../types/IAddOperator';
 import { OwnerService } from '../../services/owner.service';
 import { CommonModule } from '@angular/common';
+import { IAddOperator } from '../../models/IAddOperator';
 
 @Component({
   selector: 'app-add-operator',
