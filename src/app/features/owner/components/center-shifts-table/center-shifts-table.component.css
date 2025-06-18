@@ -1,0 +1,60 @@
+.center-shifts .table {
+  border-radius: 2rem !important;
+}
+.center-shifts .table thead tr,
+.center-shifts .table tbody tr {
+  text-align: center;
+}
+.center-shifts .table thead tr th {
+  padding: 1rem 0;
+  background-color: var(--main-bg-color-Light);
+  color: var(--side-bar-text-color-Light);
+}
+.center-shifts .table tbody tr td {
+  padding: 1rem 0;
+  color: var(--text-color-Light);
+  background-color: #f9f9fb;
+}
+.start-btn {
+  background-color: #28a645 !important;
+  color: #edf1f2 !important;
+}
+.cancel-btn {
+  background-color: #db3545 !important;
+  color: #edf1f2 !important;
+}
+.isStarted{
+  background-color: #fd7e14 !important;
+}
+::ng-deep .p-confirmdialog {
+  background-color: white !important;
+  padding: 1rem !important;
+  border-radius: var(--border-radius) !important;
+}
+::ng-deep .p-confirmdialog-content {
+  display: flex !important;
+}
+
+::ng-deep .p-confirmdialog .p-dialog-footer {
+  display: flex !important;
+  justify-content: space-around !important;
+}
+::ng-deep .p-dialog-footer .p-button-label {
+  border: 2px solid #ededed !important;
+  padding: 0.4rem !important;
+  border-radius: var(--border-radius) !important;
+  font-size: 1.2rem !important;
+}
+::ng-deep .p-confirmdialog .p-confirmdialog-message {
+  font-size: 1.2rem !important;
+  margin-left: 1rem !important;
+  margin-bottom: 1.5rem !important;
+}
+::ng-deep .p-confirmdialog .pi-exclamation-triangle {
+  font-size: 1.3rem !important;
+  margin-bottom: 1.5rem !important;
+}
+::ng-deep .p-confirmdialog .p-icon {
+  width: 1.3rem !important;
+  height: 1.3rem !important;
+}

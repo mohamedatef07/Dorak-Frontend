@@ -1,0 +1,24 @@
+.search {
+  width: 90%;
+}
+.search .search-container {
+  width: 100%;
+  background-color: white;
+  border: 1px solid var(--button-bg-color-Light);
+  border-radius: var(--border-radius);
+}
+.search .search-container input {
+  width: 100%;
+  font-size: 1.25rem;
+  border: none;
+  padding: 0.5rem;
+}
+.search .search-container input::placeholder {
+  color: #a0aec0;
+}
+.search .search-btn {
+  background-color: white;
+  color: var(--text-color-Light);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--button-bg-color-Light);
+}

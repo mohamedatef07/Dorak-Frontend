@@ -1,12 +1,12 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-provider-sidebar',
   templateUrl: './provider-sidebar.component.html',
   styleUrls: ['./provider-sidebar.component.css'],
-  imports: [DatePipe,RouterLink],
+  imports: [DatePipe,RouterLink,RouterLinkActive],
 })
 export class ProviderSidebarComponent implements OnInit {
   dateNow = new Date();

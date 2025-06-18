@@ -1,0 +1,54 @@
+<div class="container">
+  <!-- Header -->
+  <div class="header">
+    <h2 class="provider-name">{{ providerName }}</h2>
+    <div class="header-actions">
+      <button class="settings-btn" aria-label="Settings">
+        <i class="bi bi-gear-fill"></i>
+      </button>
+      <button class="add-btn" aria-label="Add Patient">
+        <i class="bi bi-person-plus-fill"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Statistics Section -->
+  <div class="stats-container" role="region" aria-label="Queue Statistics">
+    <button class="stat-button">Total: {{ stats.total }}</button>
+    <button class="stat-button">Normal: {{ stats.normal }}</button>
+    <button class="stat-button">Consultation: {{ stats.consultation }}</button>
+    <button class="stat-button">Urgent: {{ stats.urgent }}</button>
+    <button class="stat-button">Exist: {{ stats.exist }}</button>
+    <button class="stat-button">Done: {{ stats.done }}</button>
+  </div>
+
+  <!-- Live Queue List -->
+  <div class="queue-list" role="list">
+    <div *ngFor="let queue of liveQueues; let i = index" class="queue-card" role="listitem">
+      <div class="queue-number">{{ queue.CurrentQueuePosition }}</div>
+      <div class="queue-details">
+        <div class="client-name">{{ queue.ClientFullName }}</div>
+        <div class="client-info">
+          <span>Patient Type: {{ getClientTypeString(queue.ClientType) }}</span><br />
+          <span>Estimated Time: {{ formatTime(queue.EstimatedTime) }}</span>
+          <span *ngIf="queue.ArrivalTime">Arrival Time: {{ formatTime(queue.ArrivalTime) }}</span>
+        </div>
+      </div>
+      <div class="queue-status">
+        <span [ngClass]="getStatusClass(queue.Status)" aria-live="polite">{{ getStatusString(queue.Status) }}</span>
+        <select
+          (change)="updateQueueStatus(queue, $event)"
+          [attr.aria-label]="'Select status for ' + queue.ClientFullName"
+        >
+          <option
+            *ngFor="let status of queue.AvailableStatuses"
+            [value]="getStatusString(status)"
+            [selected]="getStatusString(status) === getStatusString(queue.Status)"
+          >
+            {{ getStatusString(status) }}
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>

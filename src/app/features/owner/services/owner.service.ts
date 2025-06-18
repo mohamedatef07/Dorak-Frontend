@@ -7,25 +7,29 @@ import { IOperator } from '../models/IOperator';
 import { ICreateAppointment } from '../models/ICreateAppointment';
 import { IShiftsTable } from '../models/IShiftsTable';
 
+import { ICenterShifts } from '../models/ICenterShifts';
+import { AuthService } from '../../../services/auth.service';
+
 @Injectable({
   providedIn: 'root',
 })
 export class OwnerService {
-  private httpClient = inject(HttpClient);
+  authServices = inject(AuthService);
+  httpClient = inject(HttpClient);
+  // operatorId = this.authServices.getUserId();
+  operatorId = 'user1-operator';
 
-  constructor() { }
+  constructor() {}
 
   getOperatorsByCenterId(
     centerId: number
   ): Observable<ApiResponse<IOperator[]>> {
     return this.httpClient.get<ApiResponse<IOperator[]>>(
-      `${environment.apiUrl}/api/center/OperatorstoCenter?centerId=${centerId}`
+      `${environment.apiUrl}/api/center/operators-to-center?centerId=${centerId}`
     );
   }
 
-  addOperatorByCenterId(
-    operatorData: FormData
-  ): Observable<ApiResponse<any>> {
+  addOperatorByCenterId(operatorData: FormData): Observable<ApiResponse<any>> {
     return this.httpClient.post<ApiResponse<any>>(
       `${environment.apiUrl}/api/account/Register`,
       operatorData
@@ -34,7 +38,7 @@ export class OwnerService {
 
   deleteOperatorById(operatorId: string): Observable<ApiResponse<any>> {
     return this.httpClient.delete<ApiResponse<any>>(
-      `${environment.apiUrl}/api/Operator/Delete?operatorid=${operatorId}`
+      `${environment.apiUrl}/api/Operator/delete-operator?operatorId=${operatorId}`
     );
   }
 
@@ -45,7 +49,29 @@ export class OwnerService {
     return this.httpClient.post<ApiResponse<any>>(
       `${environment.apiUrl}/api/Operator/reserve-appointment`,
       appointmentData
-    )
+    );
+  }
+
+  getAllCenterShifts(
+    centerId: number
+  ): Observable<ApiResponse<Array<ICenterShifts>>> {
+    return this.httpClient.get<ApiResponse<Array<ICenterShifts>>>(
+      `${environment.apiUrl}/api/shift/get-all-center-shifts/?centerId=${centerId}`
+    );
+  }
+  
+  startShift(shiftId: number): Observable<ApiResponse<null>> {
+    return this.httpClient.get<ApiResponse<null>>(
+      `${environment.apiUrl}/api/operator/start-shift/?shiftId=${shiftId}&operatorId=${this.operatorId}`
+    );
+  }
+  cancelShift(
+    shiftId: number,
+    centerId: number
+  ): Observable<ApiResponse<null>> {
+    return this.httpClient.get<ApiResponse<null>>(
+      `${environment.apiUrl}/api/operator/cancel-shift/?shiftId=${shiftId}&centerId=${centerId}`
+    );
   }
 
   getShiftsDetailsforbooking(
@@ -55,4 +81,5 @@ export class OwnerService {
       `${environment.apiUrl}/api/Shift/GetAllCenterShiftsAndServices?centerId=${centerId}`
     );
   }
+
 }

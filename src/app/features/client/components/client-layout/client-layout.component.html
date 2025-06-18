@@ -1,5 +1,16 @@
-<!-- <app-navbar></app-navbar> -->
+<app-nav-bar></app-nav-bar>
 <div class="container">
-  <router-outlet></router-outlet>
+  <div class="container-fluid p-3 py-5">
+    <div class="d-flex gap-4 justify-content-between">
+      <!-- Sidebar -->
+      <div class="col-4 col-md-3 mb-3">
+        <app-SidebarClientProfile></app-SidebarClientProfile>
+      </div>
+      <!-- Main Content -->
+      <div class="col-8 col-md-9">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
 </div>
-<!-- <app-footer></app-footer> -->
+<app-client-footer></app-client-footer>

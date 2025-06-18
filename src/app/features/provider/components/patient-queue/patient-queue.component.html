@@ -1,3 +1,24 @@
-<p>
-  patient-queue works!
-</p>
+<main>
+  <div class="container d-flex flex-column gap-3 pt-4 pb-4 pe-0 ps-0 m-0">
+    <section
+      class="search-filter d-flex justify-content-between flex-column gap-5"
+    >
+      <div class="search-heading-container d-flex justify-content-between">
+        <p class="fw-bold m-0">Patients Queue</p>
+        <app-patient-queue-search
+          (searchChanged)="onSearchInputChange($event)"
+          class="patient-queue-search"
+        ></app-patient-queue-search>
+      </div>
+      <app-patient-queue-filter
+        (filterPatientTypeChanged)="onFilterPatientTypeChanged($event)"
+        (filterPatientStatusChanged)="onFilterPatientStatusChanged($event)"
+      ></app-patient-queue-filter>
+    </section>
+    <app-patient-queue-table
+      [searchText]="globalSearchValue"
+      [patientStatus]="filterPatientStatusValue"
+      [patientType]="filterPatientTypeValue"
+    ></app-patient-queue-table>
+  </div>
+</main>

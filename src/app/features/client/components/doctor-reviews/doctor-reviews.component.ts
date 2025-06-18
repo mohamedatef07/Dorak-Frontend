@@ -6,6 +6,8 @@ import { IDoctorReviews } from '../../models/IDoctorReviews';
 import { CarouselModule } from 'primeng/carousel';
 import { CommonModule } from '@angular/common';
 import { MessageService } from 'primeng/api';
+  import { Input } from '@angular/core';
+
 
 @Component({
   selector: 'app-doctor-reviews',
@@ -25,8 +27,10 @@ export class DoctorReviewsComponent implements OnInit {
 
   reviews: Array<IDoctorReviews> = [];
   constructor() {}
+
+@Input() providerId!: string;
   ngOnInit() {
-    this.clientServices.getDoctorReviews().subscribe({
+    this.clientServices.getDoctorReviews(this.providerId).subscribe({
       next: (res) => {
         this.reviews = [...res.Data];
       },

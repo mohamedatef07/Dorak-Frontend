@@ -1,0 +1,156 @@
+.container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.header h2 {
+  font-size: 24px;
+  color: #333;
+}
+
+.header-actions button {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: #666;
+  margin-left: 10px;
+}
+
+.settings-btn {
+  background-color: white !important;
+  padding: 7px 13px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.settings-btn > * {
+  color: #000;
+  font-size: 25px;
+}
+
+.add-btn {
+  background-color: white !important;
+  padding: 7px 13px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.add-btn > * {
+  color: #000;
+  font-size: 25px;
+}
+
+/* Statistics Container */
+.stats-container {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  padding: 10px;
+  background-color: #e9ecef;
+  border-radius: 8px;
+}
+
+.stat-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: default;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 120px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.stat-button:hover {
+  background-color: #0056b3;
+}
+
+/* Queue List */
+.queue-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.queue-card {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.queue-number {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  margin-right: 15px;
+}
+
+.queue-details {
+  flex: 1;
+}
+
+.client-name {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}
+
+.client-info {
+  font-size: 14px;
+  color: #666;
+}
+
+.queue-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.queue-status span {
+  padding: 5px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.queue-status .InProgress {
+  background-color: #ffcccb;
+  color: #d32f2f;
+}
+
+.queue-status .Waiting {
+  background-color: #e6e6fa;
+  color: #6a5acd;
+}
+
+.queue-status .NotChecked {
+  background-color: #d3d3d3;
+  color: #555;
+}
+
+.queue-status select {
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  cursor: pointer;
+}

@@ -1,0 +1,61 @@
+<section class="center-shifts">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col" class="provider-name">Provider Name</th>
+        <th scope="col" class="shift-date">Shift Date</th>
+        <th scope="col" class="start-time">Start Time</th>
+        <th scope="col" class="end-time">End Time</th>
+        <th scope="col" class="start">Start Shift</th>
+        <th scope="col" class="cancel">Cancel Shift</th>
+        <th scope="col" class="details">Shift Details</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for(shift of centerShifts; track $index){
+      <tr>
+        <td class="provider-name">{{ shift.ProviderName }}</td>
+        <td class="shift-date">{{ shift.ShiftDate | date : "MMM d, y" }}</td>
+        <td class="start-time">
+          {{ shift.StartTime.toString() | TimeStringToDate | date : "h:mm a" }}
+        </td>
+        <td class="end-time">
+          {{ shift.EndTime.toString() | TimeStringToDate | date : "h:mm a" }}
+        </td>
+        <td class="start">
+          <button
+            type="button"
+            class="btn start-btn"
+            (click)="startShift(shift)"
+            [disabled]="shift.ShiftType === ShiftType.OnGoing"
+            [ngClass]="{ isStarted: shift.ShiftType === ShiftType.OnGoing }"
+          >
+            @if(shift.ShiftType === ShiftType.OnGoing){On Going}@else{Start}
+          </button>
+        </td>
+        <td class="cancel">
+          <p-button
+            class="btn cancel-btn"
+            (click)="cancelShift(shift.ShiftId, $event)"
+            label="Cancel"
+            severity="danger"
+          />
+        </td>
+        <td class="details">
+          <button
+            type="button"
+            class="btn"
+            (click)="shiftDetails(shift.ShiftId, shift.ShiftType)"
+          >
+            Details
+          </button>
+        </td>
+      </tr>
+      }@empty {
+      <tr>
+        <td colspan="7" class="text-center py-4 text-muted">No Shifts Found</td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</section>

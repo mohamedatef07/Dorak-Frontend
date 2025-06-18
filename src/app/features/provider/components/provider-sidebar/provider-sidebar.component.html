@@ -1,8 +1,8 @@
     <aside class="side-bar d-flex flex-column justify-content-between m-0 p-0">
       <a class="navbar-brand fw-bold mt-1 align-self-center" href="#">Dorak</a>
       <ul class="d-block flex-grow-1 gap-5 m-0 p-0 ms-4 mt-4">
-        <li class="mb-2">
-          <a [routerLink]="['/provider/dashboard']" routerLinkActive="active-link" class="sidebar-link">
+        <li class="mb-2 sidebar-item" [routerLinkActive]="['active-link']">
+          <a [routerLink]="['/provider/dashboard']" class="sidebar-link">
             <div class="dahboard-icon">
               <svg
                 width="30"
@@ -20,8 +20,8 @@
             Dashboard
           </a>
         </li>
-        <li class="mb-2">
-          <a [routerLink]="['/provider/patient-queue']" routerLinkActive="active-link" class="sidebar-link">
+        <li class="mb-2 sidebar-item" [routerLinkActive]="['active-link']">
+          <a [routerLink]="['/provider/patient-queue']" class="sidebar-link">
             <div class="patient-queue-icon">
               <svg
                 width="30"
@@ -39,8 +39,8 @@
             Patient Queue
           </a>
         </li>
-        <li class="mb-2">
-          <a [routerLink]="['/provider/schedule']" routerLinkActive="active-link" class="sidebar-link">
+        <li class="mb-2 sidebar-item" [routerLinkActive]="['active-link']">
+          <a [routerLink]="['/provider/schedule']" class="sidebar-link">
             <div class="schedule-icon">
               <svg
                 width="30"
@@ -58,8 +58,8 @@
             Schedule</a
           >
         </li>
-        <li class="mb-2">
-          <a [routerLink]="['/provider/reports']" routerLinkActive="active-link" class="sidebar-link">
+        <li class="mb-2 sidebar-item" [routerLinkActive]="['active-link']">
+          <a [routerLink]="['/provider/reports']" class="sidebar-link">
             <div class="reports-icon">
               <svg
                 width="30"

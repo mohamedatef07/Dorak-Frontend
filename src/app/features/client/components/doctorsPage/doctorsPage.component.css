@@ -1,0 +1,157 @@
+.search-container {
+  background-color: white;
+  border-radius: var(--border-radius);
+  display: flex;
+  align-items: start;
+  justify-content: start;
+  flex-wrap: nowrap;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  margin: 2rem auto;
+  padding: 7px;
+  width: 70%;
+}
+
+.input-group {
+
+  padding-top: 10px;
+  padding-bottom: 10px;
+  width: 100%;
+
+}
+
+.specialty-dropdown,
+.city-dropdown {
+  background-color: var(--bg-color-Light);
+  border: none;
+  color: var(--text-color-Light);
+  font-weight: 500;
+  border-radius: var(--border-radius) 0 0 var(--border-radius);
+  padding: 0.75rem 1.25rem;
+   margin: 0; /* تأكدي مفيش margin داخلي */
+}
+
+.city-dropdown {
+  border-radius: 0;
+  border-left: 1px solid #d1d8e0;
+}
+
+.search-input {
+  border: none;
+  background-color: var(--bg-color-Light);
+  padding: 0.75rem 1.25rem;
+  border-radius: 0;
+}
+
+.search-button {
+  background-color: var(--button-bg-color-Light);
+  color: white;
+  border: none;
+  border-radius: 0 var(--border-radius) var(--border-radius) 0;
+  padding: 0.75rem 1.5rem;
+  transition: var(--transition);
+}
+
+.search-button:hover {
+  background-color: var(--text-color-Light);
+  color: white;
+}
+
+/* Filter panel */
+
+.filter-panel {
+  background-color: var(--button-bg-color-Light);
+  color: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.filter-panel label,
+.filter-panel h5,
+.filter-panel .form-check-label {
+  color: white !important;
+}
+
+.filter-panel .form-check-input:checked::before {
+  color: #bde7ff;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.filter-panel .form-check-input:checked + .form-check-label {
+  font-weight: bold;
+}
+
+
+.filter-panel button{
+  background-color: rgb(85, 135, 205);
+  width: 90%;
+}
+
+/* Doctor cards */
+.content-title {
+  color: var(--text-color-Light);
+  font-weight: 600;
+}
+
+.doctor-card {
+  background-color: white;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  height: 100%;
+  transition: var(--transition);
+  border: none;
+}
+
+.doctor-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.doctor-name {
+  color: var(--button-bg-color-Light);
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 0.25rem;
+}
+
+.doctor-specialty {
+  color: var(--text-color-Light);
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.feature {
+  font-size: 0.85rem;
+  color: var(--text-color-Light);
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.feature-icon {
+  color: var(--alert-text);
+  margin-right: 0.5rem;
+  font-size: 0.8rem;
+}
+
+.book-button {
+  background-color: var(--button-bg-color-Light);
+  color: white;
+  border: none;
+  width: 100%;
+  padding: 0.75rem 0;
+  font-size: 0.9rem;
+  border-radius: var(--border-radius);
+  text-align: center;
+  transition: var(--transition);
+  margin-top: 1rem;
+}
+
+.book-button:hover {
+  background-color: var(--text-color-Light);
+  color: white;
+}
