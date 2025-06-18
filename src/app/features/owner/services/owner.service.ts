@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { IOperator } from '../models/IOperator';
 import { ICreateAppointment } from '../models/ICreateAppointment';
+import { IShiftsTable } from '../models/IShiftsTable';
 
 @Injectable({
   providedIn: 'root',
@@ -40,9 +41,18 @@ export class OwnerService {
   reserveAppointment(
     appointmentData: ICreateAppointment
   ): Observable<ApiResponse<any>> {
+    console.log("appointmentData From Owner Service: ",appointmentData);
     return this.httpClient.post<ApiResponse<any>>(
       `${environment.apiUrl}/api/Operator/reserve-appointment`,
       appointmentData
     )
+  }
+
+  getShiftsDetailsforbooking(
+    centerId: number
+  ): Observable<ApiResponse<any>>{
+    return this.httpClient.get<ApiResponse<any>>(
+      `${environment.apiUrl}/api/Shift/GetAllCenterShiftsAndServices?centerId=${centerId}`
+    );
   }
 }

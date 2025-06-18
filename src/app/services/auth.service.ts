@@ -35,6 +35,14 @@ export class AuthService {
     const payload = JSON.parse(atob(tokenParts[1]));
     return payload["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"];
   }
+  getCenterId() {
+    const token = this.getAuthToken();
+    const tokenParts = token?.split('.');
+    if (tokenParts?.length !== 3) return null;
+    const payload = JSON.parse(atob(tokenParts[1]));
+    // console.log(payload);
+    return payload["CenterId"];
+  }
   register(
     registerData: IClientRegisterRequest
   ): Observable<ApiResponse<null>> {
@@ -44,8 +52,8 @@ export class AuthService {
     );
   }
   Operatorregister(
-    OperatorData:IAddOperator
-  ): Observable<ApiResponse<null>>{
+    OperatorData: IAddOperator
+  ): Observable<ApiResponse<null>> {
     return this.httpClient.post<ApiResponse<null>>(
       `${environment.apiUrl}/api/account/Register`,
       OperatorData

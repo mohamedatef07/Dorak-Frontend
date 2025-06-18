@@ -1,10 +1,5 @@
-<form [formGroup]="CreateAppointmentForm" (ngSubmit)="HandleSubmitForm()">
+<form [formGroup]="CreateAppointmentForm">
   <div class="ClientInfo d-flex space-between gap-3 my-3">
-    <div>
-      <label>Contact Info</label>
-      <input type="text" formControlName="ContactInfo" />
-    </div>
-
     <div>
       <label>First Name</label>
       <input type="text" formControlName="FirstName" />
@@ -14,6 +9,11 @@
       <label>Last Name</label>
       <input type="text" formControlName="LastName" />
     </div>
+
+    <div>
+      <label>Contact Info</label>
+      <input type="text" formControlName="ContactInfo" />
+    </div>
   </div>
 
   <div class="filteration d-flex space-between gap-3">
@@ -21,35 +21,75 @@
 
     <div>
       <label>Appointment Date</label>
-      <input type="date" formControlName="AppointmentDate" />
+      <input type="date" formControlName="AppointmentDate" (change)="filterRecords()" />
     </div>
+
     <div>
       <label>Service</label>
-      <select formControlName="ServiceId">
+      <select formControlName="ServiceId" (change)="filterRecords()">
         <option value="">Select Service</option>
-        <!-- <option *ngFor="let service of services" [value]="service.id">{{ service.name }}</option> -->
+        <option *ngFor="let Service of Services" [value]="Service.ServiceId">{{ Service.ServiceName }}</option>
       </select>
     </div>
+
+    <div>
+      <label>Provider</label>
+      <select formControlName="ProviderId">
+        <option value="">Select Provider</option>
+        <option *ngFor="let Provider of ProviderName" [value]="Provider">{{ Provider }}</option>
+      </select>
+    </div>
+    <button type="button" (click)="clearFilters()">Clear Filters</button>
   </div>
 
   <div class="doctors-table my-3">
-  <table>
-    <thead>
-      <tr>
-        <th>No.</th>
-        <th>NAME</th>
-        <th></th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let record of Records; let i = index">
-        <td>{{ i + 1 }}</td>
-        <td>{{ operator.OperatorId }}</td>
-        <td>{{ operator.FirstName + ' ' + operator.LastName }}</td>
-        <td><button class="view-doc-profile" (click)="DeleteOperator(operator.OperatorId)">Delete</button></td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+    <table>
+      <thead>
+        <tr>
+          <th>No.</th>
+          <th>Provider Name</th>
+          <th>Shift Date</th>
+          <th>Start Time</th>
+          <th>End Time</th>
+          <th>Fees</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let record of paginatedRecords; let i = index">
+          <td>{{ (currentPage - 1) * pageSize + i + 1 }}</td>
+          <td>{{ record.ProviderName}}</td>
+          <td>{{ record.ShiftDate}}</td>
+          <td>{{ record.StartTime}}</td>
+          <td>{{ record.EndTime}}</td>
+          <td>{{ record.Services[0].BasePrice}}</td>
+          <td><button type="button" class="view-doc-profile" (click)="bookNow(record)">Book Now</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </form>
+
+<div class="pagination-container ms-5 my-3">
+  <div class="showing-text">
+    Showing {{ (currentPage - 1) * pageSize + 1 }} - {{ getPaginationEndIndex() }}
+    of {{ filteredRecords.length }}
+  </div>
+  <div class="pagination-buttons d-flex">
+    <button class="pagination-btn" (click)="goToPreviousPage()" [disabled]="currentPage === 1">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left"
+        viewBox="0 0 16 16">
+        <path fill-rule="evenodd"
+          d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
+      </svg>
+    </button>
+
+    <button class="pagination-btn" (click)="goToNextPage()" [disabled]="currentPage === totalPages">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right"
+        viewBox="0 0 16 16">
+        <path fill-rule="evenodd"
+          d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+      </svg>
+    </button>
+  </div>
+</div>
