@@ -1,24 +1,30 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { OwnerService } from '../../services/owner.service';
 import { ApiResponse } from '../../../../types/ApiResponse';
 import { ICreateAppointment } from '../../models/ICreateAppointment';
 import { IShiftsTable } from '../../models/IShiftsTable';
 import { IShiftServices } from '../../models/IShiftServices';
 import { AuthService } from '../../../../services/auth.service';
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-CreateAppointment',
   templateUrl: './CreateAppointment.component.html',
   styleUrls: ['./CreateAppointment.component.css'],
   imports: [ReactiveFormsModule, CommonModule],
-  standalone: true
+  standalone: true,
 })
 export class CreateAppointmentComponent implements OnInit {
   private ownerService = inject(OwnerService);
-  private AuthService = inject(AuthService)
-  OperatorId: string = "";
+  private AuthService = inject(AuthService);
+  OperatorId: string = '';
   CenterId: number = 0;
   selectedShiftRecord: IShiftsTable | null = null;
   Records: IShiftsTable[] = [];
@@ -60,10 +66,13 @@ export class CreateAppointmentComponent implements OnInit {
         console.log(this.Records);
         console.log(this.filteredRecords);
         this.updatePaginatedRecords();
-        this.Services = Array.from(new Map(this.Records
-          .flatMap(record => record.Services)
-          .map(service => [service.ServiceId, service])
-        ).values()
+        this.Services = Array.from(
+          new Map(
+            this.Records.flatMap((record) => record.Services).map((service) => [
+              service.ServiceId,
+              service,
+            ])
+          ).values()
         );
         this.storeUniqueProviderNames();
       },
@@ -75,7 +84,7 @@ export class CreateAppointmentComponent implements OnInit {
 
   storeUniqueProviderNames() {
     this.ProviderName = Array.from(
-      new Set(this.Records.map(record => record.ProviderName))
+      new Set(this.Records.map((record) => record.ProviderName))
     );
   }
 
@@ -86,30 +95,35 @@ export class CreateAppointmentComponent implements OnInit {
 
     console.log(date);
     console.log(serviceId);
-    this.filteredRecords = this.Records.reduce((filtered: IShiftsTable[], record: IShiftsTable) => {
-      const matchesDate = !date || record.ShiftDate === date;
-      const matchesProvider = !providerId || record.ProviderId == providerId;
+    this.filteredRecords = this.Records.reduce(
+      (filtered: IShiftsTable[], record: IShiftsTable) => {
+        const matchesDate = !date || record.ShiftDate === date;
+        const matchesProvider = !providerId || record.ProviderId == providerId;
 
-      if (!serviceId) {
-        if (matchesDate && matchesProvider) {
-          filtered.push({ ...record });
+        if (!serviceId) {
+          if (matchesDate && matchesProvider) {
+            filtered.push({ ...record });
+          }
+        } else {
+          const matchedService = record.Services.find(
+            (service) => service.ServiceId == serviceId
+          );
+          if (matchedService && matchesDate && matchesProvider) {
+            filtered.push({
+              ...record,
+              Services: [matchedService],
+            });
+          }
         }
-      } else {
-        const matchedService = record.Services.find(service => service.ServiceId == serviceId);
-        if (matchedService && matchesDate && matchesProvider) {
-          filtered.push({
-            ...record,
-            Services: [matchedService]
-          });
-        }
-      }
 
-      console.log("this is filterd data:", this.filteredRecords);
-      console.log("this is pagi data:", this.paginatedRecords);
-      console.log("this is filtered", filtered);
-      return filtered;
-    }, []);
-    this.updatePaginatedRecords()
+        console.log('this is filterd data:', this.filteredRecords);
+        console.log('this is pagi data:', this.paginatedRecords);
+        console.log('this is filtered', filtered);
+        return filtered;
+      },
+      []
+    );
+    this.updatePaginatedRecords();
   }
 
   clearFilters() {
@@ -118,23 +132,46 @@ export class CreateAppointmentComponent implements OnInit {
       ServiceId: '',
       ProviderId: '',
       Fees: '',
-      ShiftId: ''
+      ShiftId: '',
     });
     this.filteredRecords = [...this.Records];
-    this.updatePaginatedRecords()
-
+    this.updatePaginatedRecords();
   }
 
   updateFees() {
     const serviceId = this.CreateAppointmentForm.get('ServiceId')?.value;
-    const selectedService = this.Services.find(service => service.ServiceId == serviceId);
+    const selectedService = this.Services.find(
+      (service) => service.ServiceId == serviceId
+    );
     const fees = selectedService ? selectedService.BasePrice : '';
     this.CreateAppointmentForm.patchValue({ Fees: fees });
   }
 
   bookNow(record: IShiftsTable) {
     this.selectedShiftRecord = record;
+    const modalElement = document.getElementById('confirmationModal');
+    if (modalElement) {
+      const bootstrapModal = new bootstrap.Modal(modalElement);
+      bootstrapModal.show();
+    }
+  }
+
+  closeModalFallback() {
+    document.body.classList.remove('modal-open');
+    const backdrops = document.getElementsByClassName('modal-backdrop');
+    while (backdrops.length > 0) {
+      backdrops[0].parentNode?.removeChild(backdrops[0]);
+    }
+  }
+
+  confirmBooking() {
     this.HandleSubmitForm();
+
+    const modalEl = document.getElementById('confirmationModal'); // not bookingModal
+    if (modalEl) {
+      const modal = bootstrap.Modal.getInstance(modalEl);
+      modal.hide();
+    }
   }
 
   HandleSubmitForm() {
@@ -166,28 +203,43 @@ export class CreateAppointmentComponent implements OnInit {
       ShiftId: this.selectedShiftRecord.ShiftId,
       ServiceId: this.selectedShiftRecord.Services[0].ServiceId,
       Fees: this.selectedShiftRecord.Services[0].BasePrice,
-      AdditionalFees: raw.AdditionalFees
+      AdditionalFees: raw.AdditionalFees,
     };
 
-    console.log("appointmentData: ",appointmentData);
+    console.log('appointmentData: ', appointmentData);
 
     this.isSubmitting = true;
     this.ownerService.reserveAppointment(appointmentData).subscribe({
       next: (response: ApiResponse<ICreateAppointment>) => {
         this.isSubmitting = false;
-        this.successMessage = response.Message || 'Appointment reserved successfully!';
+        this.successMessage =
+          response.Message || 'Appointment reserved successfully!';
         console.log(response.Data);
         console.log(response.Message);
+
+        const modalElement = document.getElementById('confirmationModal');
+        if (modalElement) {
+          const modal = bootstrap.Modal.getInstance(modalElement);
+          modal?.hide();
+        }
+
+        setTimeout(() => {
+          document.body.classList.remove('modal-open');
+
+          const backdrops = document.getElementsByClassName('modal-backdrop');
+          while (backdrops.length > 0) {
+            backdrops[0].parentNode?.removeChild(backdrops[0]);
+          }
+        }, 500); // Delay slightly to let Bootstrap animation finish
       },
       error: (error) => {
         this.isSubmitting = false;
         this.errorMessage = error.message || 'Error during reservation.';
         console.error('Error:', error);
         console.log(error.message);
-      }
+      },
     });
   }
-
 
   updatePaginatedRecords() {
     const startIndex = (this.currentPage - 1) * this.pageSize;
@@ -214,7 +266,28 @@ export class CreateAppointmentComponent implements OnInit {
   }
 
   getPaginationEndIndex(): number {
-    return Math.min(this.currentPage * this.pageSize, this.filteredRecords.length);
+    return Math.min(
+      this.currentPage * this.pageSize,
+      this.filteredRecords.length
+    );
+  }
+
+  cancelBooking() {
+    const modalElement = document.getElementById('confirmationModal');
+    if (modalElement) {
+      const modal = bootstrap.Modal.getInstance(modalElement);
+      modal?.hide();
+    }
+
+    setTimeout(() => {
+      document.body.classList.remove('modal-open');
+
+      const backdrops = document.getElementsByClassName('modal-backdrop');
+      while (backdrops.length > 0) {
+        backdrops[0].parentNode?.removeChild(backdrops[0]);
+      }
+    }, 500);
   }
 
 }
+
