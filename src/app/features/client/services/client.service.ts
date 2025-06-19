@@ -20,7 +20,7 @@ import { IDoctorFilter } from '../../../types/IDoctorFilter';
 import { IClientLiveQueue } from '../models/IClientLiveQueue';
 import { IClientInfoForLiveQueue } from '../models/IClientInfoForLiveQueue';
 import { IClientUpdate } from '../models/IClientUpdate';
-import { IDoctorcard } from '../models/idoctorcard';
+import { IDoctorCard } from '../models/IDoctorCard';
 
 @Injectable({
   providedIn: 'root',
@@ -31,61 +31,75 @@ export class ClientService {
 
   constructor() {}
 
-  getAllDoctorsCards(): Observable<ApiResponse<IDoctorcard[]>> {
-    return this.httpClient.get<ApiResponse<IDoctorcard[]>>(
-      `${environment.apiUrl}/API/Client/cards`);
+  getAllDoctorsCards(): Observable<ApiResponse<Array<IDoctorCard>>> {
+    return this.httpClient.get<ApiResponse<Array<IDoctorCard>>>(
+      `${environment.apiUrl}/API/Client/cards`
+    );
   }
 
-  getDoctorsById(id:string|null):Observable<ApiResponse<any>>{
+  getDoctorsById(id: string | null): Observable<ApiResponse<any>> {
     return this.httpClient.get<ApiResponse<any>>(
-      `${environment.apiUrl}/api/Provider/GetProviderById/${id}`);
+      `${environment.apiUrl}/api/Provider/GetProviderById/${id}`
+    );
   }
-searchDoctors(searchText: string = '', city: string = '', specialization: string = ''): Observable<ApiResponse<IDoctorcard[]>> {
-  const params = new HttpParams()
-    .set('searchText', searchText)
-    .set('city', city)
-    .set('specialization', specialization);
-  return this.httpClient.get<ApiResponse<IDoctorcard[]>>(
-    'http://localhost:5139/api/Client/search', { params }
-  );
-}
+  searchDoctors(
+    searchText: string = '',
+    city: string = '',
+    specialization: string = ''
+  ): Observable<ApiResponse<Array<IDoctorCard>>> {
+    const params = new HttpParams()
+      .set('searchText', searchText)
+      .set('city', city)
+      .set('specialization', specialization);
+    return this.httpClient.get<ApiResponse<Array<IDoctorCard>>>(
+      'http://localhost:5139/api/Client/search',
+      { params }
+    );
+  }
+  searchDoctorsByFilter(filter: IDoctorFilter) {
+    return this.httpClient.post<ApiResponse<Array<IDoctorCard>>>(
+      'http://localhost:5139/api/Client/filter',
+      filter
+    );
+  }
 
-searchDoctorsByFilter(filter: IDoctorFilter) {
-  return this.httpClient.post<ApiResponse<IDoctorcard[]>>(
-    'http://localhost:5139/api/Client/filter',
-    filter
-  );
-}
+  getMainInfo(providerId: string): Observable<ApiResponse<IDoctorMainInfo>> {
+    return this.httpClient.get<ApiResponse<IDoctorMainInfo>>(
+      `${environment.apiUrl}/api/client/main-info?providerId=${providerId}`
+    );
+  }
 
- getMainInfo(providerId: string): Observable<ApiResponse<IDoctorMainInfo>> {
-  return this.httpClient.get<ApiResponse<IDoctorMainInfo>>(
-    `${environment.apiUrl}/api/client/main-info?providerId=${providerId}`
-  );
-}
-
-  getBookingInfo(providerId: string): Observable<ApiResponse<IDoctorBookingInfo>> {
+  getBookingInfo(
+    providerId: string
+  ): Observable<ApiResponse<IDoctorBookingInfo>> {
     return this.httpClient.get<ApiResponse<IDoctorBookingInfo>>(
       `${environment.apiUrl}/api/client/booking-info?providerId=${providerId}`
     );
   }
-  getCenterServices(providerId: string): Observable<ApiResponse<ICenterServices>> {
+  getCenterServices(
+    providerId: string
+  ): Observable<ApiResponse<ICenterServices>> {
     return this.httpClient.get<ApiResponse<ICenterServices>>(
       `${environment.apiUrl}/api/client/provider-center-services?providerId=${providerId}`
     );
   }
-  getDoctorReviews(providerId: string): Observable<ApiResponse<Array<IDoctorReviews>>> {
+  getDoctorReviews(
+    providerId: string
+  ): Observable<ApiResponse<Array<IDoctorReviews>>> {
     return this.httpClient.get<ApiResponse<Array<IDoctorReviews>>>(
       `${environment.apiUrl}/api/client/provider-reviews?providerId=${providerId}`
     );
   }
-  getDoctorCenterServices(providerId: string): Observable<
-    ApiResponse<Array<IDoctorCenterServices>>
-  > {
+  getDoctorCenterServices(
+    providerId: string
+  ): Observable<ApiResponse<Array<IDoctorCenterServices>>> {
     return this.httpClient.get<ApiResponse<Array<IDoctorCenterServices>>>(
       `${environment.apiUrl}/api/client/provider-center-services?providerId=${providerId}`
     );
   }
-  getDoctorBookingInfo(providerId: string): Observable<ApiResponse<Array<IDoctorBookingInfo>>> {
+  getDoctorBookingInfo(
+    providerId: string
+  ): Observable<ApiResponse<Array<IDoctorBookingInfo>>> {
     return this.httpClient.get<ApiResponse<Array<IDoctorBookingInfo>>>(
       `${environment.apiUrl}/api/client/booking-info?providerId=${providerId}`
     );
@@ -108,17 +122,20 @@ searchDoctorsByFilter(filter: IDoctorFilter) {
     );
   }
 
-  getClientProfileAndAppointments(userId: string): Observable<ApiResponse<IClientProfile>> {
-    return this.httpClient.get<ApiResponse<IClientProfile>>
-
-    (`${environment.apiUrl}/api/client/profile-all-appointment/${userId}`);
+  getClientProfileAndAppointments(
+    userId: string
+  ): Observable<ApiResponse<IClientProfile>> {
+    return this.httpClient.get<ApiResponse<IClientProfile>>(
+      `${environment.apiUrl}/api/client/profile-all-appointment/${userId}`
+    );
   }
 
-
-  getUpcomingAppointments(userId:string): Observable<ApiResponse<IClientProfileAppointment[]>> {
-    return this.httpClient.get<ApiResponse<IClientProfileAppointment[]>>
-    (`${environment.apiUrl}/api/client/upcoming-appointments/${userId}`);
-
+  getUpcomingAppointments(
+    userId: string
+  ): Observable<ApiResponse<IClientProfileAppointment[]>> {
+    return this.httpClient.get<ApiResponse<IClientProfileAppointment[]>>(
+      `${environment.apiUrl}/api/client/upcoming-appointments/${userId}`
+    );
   }
   getLastAppointment(userId:string): Observable<ApiResponse<IAppointment>> {
     return this.httpClient.get<ApiResponse<IAppointment>>
@@ -144,35 +161,43 @@ updateProfile(data: FormData): Observable<{ message: string; status: number; dat
   );
 }
 
-  Checkout(request:ICheckoutRequest):Observable<ICheckoutRequest >{
-    return this.httpClient.post<ICheckoutRequest>
-    (`${environment.apiUrl}/api/client/Checkout`,request);
+  Checkout(request: ICheckoutRequest): Observable<ICheckoutRequest> {
+    return this.httpClient.post<ICheckoutRequest>(
+      `${environment.apiUrl}/api/client/Checkout`,
+      request
+    );
   }
 
-  changePassword(data: FormData): Observable<{ message: string; status: number; data: any }> {
-  return this.httpClient.put<{ message: string; status: number; data: any }>(
-    'http://localhost:5139/api/Account/change-password',
-    data
-  );
-}
+  changePassword(
+    data: FormData
+  ): Observable<{ message: string; status: number; data: any }> {
+    return this.httpClient.put<{ message: string; status: number; data: any }>(
+      `${environment.apiUrl}/api/Account/change-password`,
+      data
+    );
+  }
 
-  ClientWalletAndProfile(userId: string): Observable<ApiResponse<IClientWalletProfile>> {
+  ClientWalletAndProfile(
+    userId: string
+  ): Observable<ApiResponse<IClientWalletProfile>> {
     return this.httpClient.get<ApiResponse<IClientWalletProfile>>(
       `${environment.apiUrl}/api/client/client-wallet/${userId}`
     );
-
   }
 
-  ClientLiveQueue(appointmentId:number): Observable<ApiResponse<Array<IClientLiveQueue>>> {
+  ClientLiveQueue(
+    appointmentId: number
+  ): Observable<ApiResponse<Array<IClientLiveQueue>>> {
     return this.httpClient.get<ApiResponse<Array<IClientLiveQueue>>>(
       `${environment.apiUrl}/api/client/queue/by-appointment/${appointmentId}`
     );
   }
 
-
-  ClientInfoforLiveQueue(userId:string): Observable<ApiResponse<IClientInfoForLiveQueue>> {
+  ClientInfoForLiveQueue(
+    userId: string
+  ): Observable<ApiResponse<IClientInfoForLiveQueue>> {
     return this.httpClient.get<ApiResponse<IClientInfoForLiveQueue>>(
-      `${environment.apiUrl}/api/client/profile-for-livequeue/${userId}`
+      `${environment.apiUrl}/api/client/profile-for-live-queue/${userId}`
     );
   }
 }

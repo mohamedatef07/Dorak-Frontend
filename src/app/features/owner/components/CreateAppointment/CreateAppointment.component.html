@@ -1,103 +1,115 @@
-<form [formGroup]="CreateAppointmentForm" (ngSubmit)="HandleSubmitForm()">
-  <div>
-    <label>Appointment Date</label>
-    <input type="date" formControlName="AppointmentDate" />
+<form [formGroup]="CreateAppointmentForm">
+  <div class="ClientInfo d-flex space-between gap-3 my-3">
+    <div>
+      <label>First Name</label>
+      <input type="text" formControlName="FirstName" />
+    </div>
+
+    <div>
+      <label>Last Name</label>
+      <input type="text" formControlName="LastName" />
+    </div>
+
+    <div>
+      <label>Contact Info</label>
+      <input type="text" formControlName="ContactInfo" />
+    </div>
   </div>
 
-<div>
-  <label>Appointment Status</label>
-  <select formControlName="AppointmentStatus">
-    <option value="">Select Status</option>
-    <option value="1">Confirmed</option>
-    <option value="2">Pending</option>
-    <option value="3">Cancelled</option>
-  </select>
-</div>
+  <div class="filteration d-flex space-between align-items-center gap-3">
+    <p class="m-0 dt">Filter by:</p>
 
-<div>
-  <label>Appointment Type</label>
-  <select formControlName="AppointmentType">
-    <option value="">Select Type</option>
-    <option value="1">Urgent</option>
-    <option value="2">Normal</option>
-  </select>
-</div>
+    <div>
+      <label>Appointment Date</label>
+      <input type="date" formControlName="AppointmentDate" (change)="filterRecords()" />
+    </div>
 
-<div>
-  <label>Client Type</label>
-  <select formControlName="clientType">
-    <option value="">Select Client Type</option>
-    <option value="1">Normal</option>
-    <option value="2">Urgent</option>
-    <option value="3">Consultation</option>
-  </select>
-</div>
+    <div>
+      <label>Service</label>
+      <select formControlName="ServiceId" (change)="filterRecords()">
+        <option value="">Select Service</option>
+        <option *ngFor="let Service of Services" [value]="Service.ServiceId">{{ Service.ServiceName }}</option>
+      </select>
+    </div>
 
-  <div>
-    <label>Fees</label>
-    <input type="number" formControlName="Fees" />
+    <div>
+      <label>Provider</label>
+      <select formControlName="ProviderId">
+        <option value="">Select Provider</option>
+        <option *ngFor="let Provider of ProviderName" [value]="Provider">{{ Provider }}</option>
+      </select>
+    </div>
+    <button type="button" class="view-doc-profile" (click)="clearFilters()">Clear Filters</button>
   </div>
 
-  <div>
-    <label>Additional Fees</label>
-    <input type="number" formControlName="AdditionalFees" />
+  <div class="doctors-table my-3">
+    <table>
+      <thead>
+        <tr>
+          <th>No.</th>
+          <th>Provider Name</th>
+          <th>Shift Date</th>
+          <th>Start Time</th>
+          <th>End Time</th>
+          <th>Fees</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let record of paginatedRecords; let i = index">
+          <td>{{ (currentPage - 1) * pageSize + i + 1 }}</td>
+          <td>{{ record.ProviderName}}</td>
+          <td>{{ record.ShiftDate}}</td>
+          <td>{{ record.StartTime}}</td>
+          <td>{{ record.EndTime}}</td>
+          <td>{{ record.Services[0].BasePrice}}</td>
+          <td><button type="button" class="view-doc-profile" data-bs-toggle="modal" data-bs-target="#confirmationModal" (click)="bookNow(record)">Book Now</button></td>
+        </tr>
+      </tbody>
+    </table>
   </div>
-
-  <div>
-    <label>Operator</label>
-    <select formControlName="OperatorId">
-      <option value="">Select Operator</option>
-      <!-- Replace with dynamic options -->
-      <!-- <option *ngFor="let op of operators" [value]="op.id">{{ op.name }}</option> -->
-    </select>
-  </div>
-
-  <div>
-    <label>Provider</label>
-    <select formControlName="ProviderId">
-      <option value="">Select Provider</option>
-      <!-- <option *ngFor="let pr of providers" [value]="pr.id">{{ pr.name }}</option> -->
-    </select>
-  </div>
-
-  <div>
-    <label>Center</label>
-    <select formControlName="CenterId">
-      <option value="">Select Center</option>
-      <!-- <option *ngFor="let center of centers" [value]="center.id">{{ center.name }}</option> -->
-    </select>
-  </div>
-
-  <div>
-    <label>Service</label>
-    <select formControlName="ServiceId">
-      <option value="">Select Service</option>
-      <!-- <option *ngFor="let service of services" [value]="service.id">{{ service.name }}</option> -->
-    </select>
-  </div>
-
-  <div>
-    <label>Shift</label>
-    <select formControlName="ShiftId">
-      <option value="">Select Shift</option>
-      <!-- <option *ngFor="let shift of shifts" [value]="shift.id">{{ shift.name }}</option> -->
-    </select>
-  </div>
-
-  <div>
-    <label>Contact Info</label>
-    <input type="text" formControlName="ContactInfo" />
-  </div>
-
-  <div>
-    <label>First Name</label>
-    <input type="text" formControlName="FirstName" />
-  </div>
-
-  <div>
-    <label>Last Name</label>
-    <input type="text" formControlName="LastName" />
-  </div>
-
-  <button type="submit" [disabled]="CreateAppointmentForm.invalid">Submit</button>
 </form>
+
+<div class="pagination-container ms-5 my-3">
+  <div class="showing-text">
+    Showing {{ (currentPage - 1) * pageSize + 1 }} - {{ getPaginationEndIndex() }}
+    of {{ filteredRecords.length }}
+  </div>
+  <div class="pagination-buttons d-flex">
+    <button class="pagination-btn" (click)="goToPreviousPage()" [disabled]="currentPage === 1">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left"
+        viewBox="0 0 16 16">
+        <path fill-rule="evenodd"
+          d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
+      </svg>
+    </button>
+
+    <button class="pagination-btn" (click)="goToNextPage()" [disabled]="currentPage === totalPages">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right"
+        viewBox="0 0 16 16">
+        <path fill-rule="evenodd"
+          d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+      </svg>
+    </button>
+  </div>
+</div>
+
+
+<div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirm Appointment</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to confirm this appointment?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="cancelBooking()">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="HandleSubmitForm()">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>
+

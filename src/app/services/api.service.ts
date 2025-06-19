@@ -46,12 +46,12 @@ export class ApiService {
 
   addProviderAndAssignIt(user: IRegistrationViewModel): Observable<string> {
     const genderMap: { [key: string]: GenderType } = {
-      'none': GenderType.none,
+      'none': GenderType.None,
       'Male': GenderType.Male,
       'Female': GenderType.Female
     };
 
-    const genderValue = user.Gender ? genderMap[user.Gender] ?? GenderType.none : GenderType.none;
+    const genderValue = user.Gender ? genderMap[user.Gender] ?? GenderType.None : GenderType.None;
 
     const defaultBirthDate = new Date().toISOString().split('T')[0];
     let birthDateStr: string;

@@ -1,5 +1,5 @@
 export enum QueueAppointmentStatus {
-  none,
+  None,
   NotChecked,
   Waiting,
   InProgress,
