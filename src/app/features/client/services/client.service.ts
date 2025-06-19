@@ -19,6 +19,7 @@ import { IClientWalletProfile } from '../models/IClientWalletProfile';
 import { IDoctorFilter } from '../../../types/IDoctorFilter';
 import { IClientLiveQueue } from '../models/IClientLiveQueue';
 import { IClientInfoForLiveQueue } from '../models/IClientInfoForLiveQueue';
+import { IClientUpdate } from '../models/IClientUpdate';
 import { IDoctorCard } from '../models/IDoctorCard';
 
 @Injectable({
@@ -136,11 +137,29 @@ export class ClientService {
       `${environment.apiUrl}/api/client/upcoming-appointments/${userId}`
     );
   }
-  getLastAppointment(userId: string): Observable<ApiResponse<IAppointment>> {
-    return this.httpClient.get<ApiResponse<IAppointment>>(
-      `${environment.apiUrl}/api/client/last-appointment/${userId}`
-    );
+  getLastAppointment(userId:string): Observable<ApiResponse<IAppointment>> {
+    return this.httpClient.get<ApiResponse<IAppointment>>
+    (`${environment.apiUrl}/api/client/last-appointment/${userId}`);
+
   }
+getAppointmentById(appointmentId: number): Observable<ApiResponse<IAppointment>> {
+  return this.httpClient.get<ApiResponse<IAppointment>>(
+    `${environment.apiUrl}/api/client/appointment/${appointmentId}`
+  );
+}
+
+getClientProfile(): Observable<ApiResponse<IClientUpdate>> {
+  return this.httpClient.get<ApiResponse<IClientUpdate>>(
+    `${environment.apiUrl}/api/client/ClientProfile`
+  );
+}
+
+updateProfile(data: FormData): Observable<{ message: string; status: number; data: any }> {
+  return this.httpClient.put<{ message: string; status: number; data: any }>(
+    `${environment.apiUrl}/api/client/UpdateProfile`,
+    data
+  );
+}
 
   Checkout(request: ICheckoutRequest): Observable<ICheckoutRequest> {
     return this.httpClient.post<ICheckoutRequest>(
@@ -182,3 +201,4 @@ export class ClientService {
     );
   }
 }
+
