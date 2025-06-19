@@ -118,7 +118,7 @@ export class ClientLiveQueueComponent implements OnInit {
       this.appoinmentid = Number(params.get('appointmentId')); // 'id' is the parameter name from the route
     });
     this.userid= this.cAuthService.getUserId();
-    this.ClientService.ClientInfoforLiveQueue(this.userid).subscribe({
+    this.ClientService.ClientInfoForLiveQueue(this.userid).subscribe({
       next: (res) => {
         this.clientInfo = res.Data;
         console.log('Client Info:', this.clientInfo);

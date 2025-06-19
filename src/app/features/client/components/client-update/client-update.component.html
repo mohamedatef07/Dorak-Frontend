@@ -1,0 +1,80 @@
+<body>
+  <div class="form-container">
+    <div class="form-header">
+      <h2 class="form-title">Personal Informations</h2>
+
+      <div class="profile-section">
+        <img [src]="imagePreview" alt="Profile Picture" class="profile-image" />
+        <div class="profile-info">
+          <div class="profile-actions">
+            <button class="btn btn-upload" (click)="fileInput.click()">Upload New Picture</button>
+            <input #fileInput type="file" hidden accept="image/*" (change)="onImageChange($event)" />
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-body">
+      <form [formGroup]="personalForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <div>
+            <h6>FirstName</h6>
+            <input type="text" class="form-control" formControlName="FirstName" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div>
+            <h6>LastName</h6>
+            <input type="text" class="form-control" formControlName="LastName" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div>
+            <h6>Email</h6>
+            <input type="text" class="form-control" formControlName="Email" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div>
+            <h6>PhoneNumber</h6>
+            <input type="text" class="form-control" formControlName="PhoneNumber" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div>
+            <h6>Country</h6>
+            <input type="text" class="form-control" formControlName="Country" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div>
+            <h6>City</h6>
+            <input type="text" class="form-control" formControlName="City" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div>
+            <h6>Governmaent</h6>
+            <input type="text" class="form-control" formControlName="Governmaent" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div>
+            <h6>Street</h6>
+            <input type="text" class="form-control" formControlName="Street" />
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-update" (click)="onSubmit()" >Update</button>
+      </form>
+    </div>
+  </div>
+</body>
