@@ -1,48 +1,62 @@
-import { AuthService } from './../../../../services/auth.service';
-import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
-import { AvatarModule } from 'primeng/avatar';
-import { ClientAppointmentsComponent } from "../ClientAppointments/ClientAppointments.component";
+import { Component, inject, OnInit } from '@angular/core';
+import { environment } from '../../../../../environments/environment';
+import { IClientUpdate } from '../../models/IClientUpdate';
 import { ClientService } from '../../services/client.service';
 import { IClientProfile } from '../../models/IClientProfile';
-import { environment } from '../../../../../environments/environment';
-import { FormsModule, NgModel } from '@angular/forms';
-import { RatingModule } from 'primeng/rating';
+import { AvatarModule } from 'primeng/avatar';
+import { AuthService } from '../../../../services/auth.service';
 import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-client-profile',
-  imports: [CommonModule, ButtonModule, CardModule, AvatarModule, ClientAppointmentsComponent, CommonModule,
-      AvatarModule,
-      RatingModule,
-      FormsModule,
-      RouterLink
-   ],
-  templateUrl: './client-profile.component.html',
-  styleUrl: './client-profile.component.css'
+  selector: 'app-Client-Profile2',
+  imports:[AvatarModule,RouterLink],
+  templateUrl: './Client-Profile.component.html',
+  styleUrls: ['./Client-Profile.component.css']
 })
-export class ClientProfileComponent {
-   clientServices = inject(ClientService);
+export class ClientProfileComponent implements OnInit {
 cAuthServices = inject(AuthService);
 
 client: IClientProfile = {
-  Appointments: [],
+Appointments: [],
   ID: '',
   Name: '',
   Image: '',
   Phone: '',
-  Email: ''
-};
+  Email: '',
 
+
+}
 userid: string = '';
-appointment: any;
 
-constructor() {}
+ profile: IClientUpdate | null = null;
+fullImagePath: string = '';
+   clientServices = inject(ClientService);
 
-ngOnInit() {
+
+   constructor(private _clientService:ClientService) { }
+
+ getclientProfile(): void {
+   this._clientService.getClientProfile().subscribe({
+     next: (res) => {
+       this.profile = res.Data;
+             console.log(res.Data)
+
+       if (this.profile?.Image) {
+         this.fullImagePath = `${environment.apiUrl}${this.profile.Image}`;
+             console.log( this.fullImagePath)
+
+       }
+     },
+     error: (err) => console.error('Error loading profile:', err)
+   });
+ }
+
+
+   ngOnInit() :void{
+ this.getclientProfile();
   this.userid = this.cAuthServices.getUserId();
+
+   this.userid = this.cAuthServices.getUserId();
 
   this.clientServices.getClientProfileAndAppointments(this.userid).subscribe({
     next: (res) => {
@@ -54,18 +68,8 @@ ngOnInit() {
       console.error('Error while fetching client profile:', err);
     },
   });
+   }
 
-  this.clientServices.getLastAppointment(this.userid).subscribe({
-    next: (res) => {
-      this.appointment = res.Data;
-      let ProviderId = this.appointment.ProviderId;
-      console.log(res.Data);
-      console.log(ProviderId);
-    },
-    error: (err) => {
-      console.error('Error while fetching Last appointment', err);
-    },
-  });
-}
 
 }
+

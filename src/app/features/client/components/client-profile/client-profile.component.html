@@ -1,8 +1,9 @@
-<!-- Main content -->
+<section>
+<div class="profile-container">
+        <h1 class="page-title">My Profile</h1>
 
-<div class="card p-4 shadow-sm">
-  <!-- Profile Section -->
-  <div class="d-flex flex-column flex-md-row align-items-center mb-4 gap-3">
+        <!-- Profile Header -->
+       <div class="d-flex flex-column flex-md-row align-items-center mb-4 gap-3">
     <p-avatar image="{{ client.Image }}" shape="circle" class="avatar">
     </p-avatar>
     <div class="text-center text-md-start">
@@ -11,48 +12,73 @@
       <p class="mb-0">Email Address: {{ client.Email }}</p>
     </div>
   </div>
+  <div class="w-100 mb-3" style="text-align: end;">
+  <a [routerLink]="['/client/client-edit-profile']"  class="btn btn-info btn-cust">Edit Profile</a>
 
+  </div>
 
+        <!-- Personal Information -->
+        <div class="card profile-card">
+            <div class="section-header">
+                <h3 class="section-title">Personal information</h3>
+            </div>
+            <div class="section-content">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="info-row">
+                            <div class="info-label">First Name</div>
+                            <div class="info-value">{{profile?.FirstName}}</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Email address</div>
+                            <div class="info-value">{{client.Email}}</div>
+                        </div>
 
-<h6 class="fw-bold mb-3">Last Appointment:</h6>
-<div
-  class="appointment-card p-3 mb-3 rounded d-flex flex-column flex-md-row align-items-center justify-content-between bg-lightblue"
-  *ngIf="appointment"
->
-  <div class="d-flex align-items-center mb-3 mb-md-0">
-    <p-avatar
-      image="https://www.w3schools.com/howto/img_avatar.png"
-      shape="circle"
-      class="me-3 avatar"
-    >
-    </p-avatar>
-    <div>
-      <div class="fw-bold">{{ appointment.ProviderName }}</div>
-      <p-rating
-        class="review-star pt-2 pb-2"
-        [(ngModel)]="appointment.Rate"
-        [readonly]="true"
-      ></p-rating>
-      <div>{{ appointment.Specialization }}</div>
-      <div>{{ appointment.AppointmentDate }}</div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-row">
+                            <div class="info-label">Last Name</div>
+                            <div class="info-value">{{profile?.LastName}}</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Phone</div>
+                            <div class="info-value">{{profile?.Phone}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Address Information -->
+        <div class="card profile-card">
+            <div class="section-header">
+                <h3 class="section-title">Address</h3>
+            </div>
+            <div class="section-content">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="info-row">
+                            <div class="info-label">Country</div>
+                            <div class="info-value">{{profile?.Country}}</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Governorate</div>
+                            <div class="info-value">{{profile?.Governorate}}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-row">
+                            <div class="info-label">City</div>
+                            <div class="info-value">{{profile?.City}}
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Street</div>
+                            <div class="info-value">{{profile?.Street}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-
-
-  <div class="text-md-end text-center">
-    <button type="button" class="btn btn-outline-primary"
-     [routerLink]="['/client/appointment', appointment.appointmentId]"
->AppoinmentDetails</button>
-
-
-
-  </div>
 </div>
-
-
-
-    <h6 class="fw-bold mb-3 gap-3">My Appointments:</h6>
-  <app-ClientAppointments
-    [appointments]="this.client.Appointments"
-  ></app-ClientAppointments>
-</div>
+</section>

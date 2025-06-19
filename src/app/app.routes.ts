@@ -45,6 +45,7 @@ import { CenterShiftsComponent } from './features/owner/components/center-shifts
 import { ChangePasswordComponent } from './features/client/components/Change-Password/Change-Password.component';
 import { CenterShiftsTableComponent } from './features/owner/components/center-shifts-table/center-shifts-table.component';
 import { appointmentDetails } from './features/client/components/appointment-details/appointment-details';
+import { ClientUpdateComponent } from './features/client/components/client-update/client-update.component';
 
 
 
@@ -188,6 +189,8 @@ export const routes: Routes = [
         component: DoctorDetailsComponent,
         title: 'Doctor Details',
       },
+
+
       {
         path: 'client-profile',
         component: ClientProfileComponent,
@@ -195,7 +198,7 @@ export const routes: Routes = [
       },
       {
         path: 'client-edit-profile',
-        component: EditProfileComponent,
+        component: ClientUpdateComponent,
         title: 'Edit Client Profile',
       },
       {

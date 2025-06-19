@@ -8,5 +8,6 @@ export interface IClientProfile {
   Phone:string
   Email:string
 
+
   Appointments: Array<IClientProfileAppointment>
 }

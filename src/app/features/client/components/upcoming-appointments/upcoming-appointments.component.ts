@@ -46,7 +46,21 @@ export class UpcomingAppointmentsComponent implements OnInit {
             error: (err) => {
               console.error('Error while fetching upcomming appointment', err);
             },
+
+
           })
+
+    this.clientServices.getLastAppointment(this.userid).subscribe({
+    next: (res) => {
+      this.appointment = res.Data;
+      let ProviderId = this.appointment.ProviderId;
+      console.log(res.Data);
+      console.log(ProviderId);
+    },
+    error: (err) => {
+      console.error('Error while fetching Last appointment', err);
+    },
+  });
 
      const param = this.route.snapshot.paramMap.get('appointmentId');
   if (param) {
@@ -56,6 +70,7 @@ export class UpcomingAppointmentsComponent implements OnInit {
   next: (res) => {
     console.log('Response from API:', res);
     this.appointment = res.Data;
+    
   },
   error: (err) => {
     console.error(err);
