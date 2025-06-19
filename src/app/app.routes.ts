@@ -12,9 +12,7 @@ import { CenterProviderProfileComponent } from './features/owner/components/cent
 import { ManuallyScheduleComponent } from './features/owner/components/manually-schedule/manually-schedule.component';
 import { WeeklyScheduleComponent } from './features/owner/components/weekly-schedule/weekly-schedule.component';
 import { ProviderLiveQueueComponent } from './features/owner/components/provider-live-queue/provider-live-queue.component';
-
 import { ProviderScheduleComponent } from './features/owner/components/provider-schedule/provider-schedule.component';
-
 import { ProviderLayoutComponent } from './features/provider/components/provider-layout/provider-layout.component';
 import { OwnerLayoutComponent } from './features/owner/components/owner-layout/owner-layout.component';
 import { ClientLayoutComponent } from './features/client/components/client-layout/client-layout.component';
@@ -45,8 +43,7 @@ import { CheckoutComponent } from './features/client/components/checkout/checkou
 import { CenterShiftsComponent } from './features/owner/components/center-shifts/center-shifts.component';
 import { ChangePasswordComponent } from './features/client/components/Change-Password/Change-Password.component';
 import { CenterShiftsTableComponent } from './features/owner/components/center-shifts-table/center-shifts-table.component';
-
-
+import { SystemPreferencesSettingsComponent } from './features/provider/components/system-preferences-settings/system-preferences-settings.component';
 
 export const routes: Routes = [
   {
@@ -81,7 +78,7 @@ export const routes: Routes = [
     children: [
       { path: 'dashboard', component: DashboardComponent, title: 'Dashboard' },
       {
-        path: 'provider-profile',
+        path: 'profile',
         component: ProviderProfileComponent,
         title: 'profile',
       },
@@ -93,16 +90,30 @@ export const routes: Routes = [
       { path: 'schedule', component: ScheduleComponent, title: 'Schedule' },
       { path: 'reports', component: ReportsComponent, title: 'Reports' },
       {
-        path: 'profile-setting',
+        path: 'settings',
         component: ProviderSettingComponent,
         children: [
-          { path: '', redirectTo: 'personal-setting', pathMatch: 'full' },
-          { path: 'personal-setting', component: PersonalSettingComponent },
+          { path: '', redirectTo: 'personal-settings', pathMatch: 'full' },
           {
-            path: 'professional-setting',
-            component: ProfessionalInformationComponent,
+            path: 'personal-settings',
+            component: PersonalSettingComponent,
+            title: 'Personal Settings',
           },
-          { path: 'security-setting', component: SecurityProfileComponent },
+          {
+            path: 'professional-settings',
+            component: ProfessionalInformationComponent,
+            title: 'Professional Settings',
+          },
+          {
+            path: 'security-settings',
+            component: SecurityProfileComponent,
+            title: 'Security Settings',
+          },
+          {
+            path: 'system-preferences-settings',
+            component: SystemPreferencesSettingsComponent,
+            title: 'System Preferences Settings',
+          },
         ],
       },
     ],
@@ -155,26 +166,24 @@ export const routes: Routes = [
       {
         path: 'provider-live-queue/:shiftId',
         component: ProviderLiveQueueComponent,
-        title: 'Provider Live Queue'
+        title: 'Provider Live Queue',
       },
       {
         path: 'manage-operators',
         component: ManageOperatorsComponent,
         title: 'Manage Operators',
-        // children: [
-        // ]
       },
       {
         path: 'add-operator',
         component: AddOperatorComponent,
-        title: 'Add Operator'
+        title: 'Add Operator',
       },
       {
         path: 'create-appointment',
         component: CreateAppointmentComponent,
-        title: 'Create Appointment'
-      }
-    ]
+        title: 'Create Appointment',
+      },
+    ],
   },
   {
     path: 'client',
@@ -225,8 +234,8 @@ export const routes: Routes = [
       },
       {
         path: 'change-password',
-        component: ChangePasswordComponent
-      }
+        component: ChangePasswordComponent,
+      },
     ],
   },
 

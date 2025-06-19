@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import * as signalR from '@microsoft/signalr';
 import { Subject } from 'rxjs';
 import { IClientLiveQueue } from '../../features/client/models/IClientLiveQueue';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +23,7 @@ export class UpdateQueueStatusSRService {
 
   private startConnection() {
     this.hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl('http://localhost:5139/queueHub')
+      .withUrl(`${environment.apiUrl}/queueHub`)
       .withAutomaticReconnect()
       .build();
 
@@ -80,7 +81,7 @@ export class UpdateQueueStatusSRService {
 
  private stopConnection() {
     return this.hubConnection?.stop();
-    
+
   }
   ngOnDestroy(): void {
     this.stopConnection();
