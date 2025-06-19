@@ -14,7 +14,6 @@ export class ProviderNavbarComponent {
   authServices = inject(AuthService);
   messageServices = inject(MessageService);
   router = inject(Router);
-  imgUrl = '/images/avatar.png';
   isDropDownOpen = false;
   toggleDropDown(event: MouseEvent) {
     event.stopPropagation();
