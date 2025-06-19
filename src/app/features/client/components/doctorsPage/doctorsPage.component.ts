@@ -83,6 +83,10 @@ export class DoctorsPageComponent implements OnInit {
           doctor.Image = environment.apiUrl + doctor.Image;
         });
         this.filteredDoctors = [...this.doctors];
+        this.doctors.forEach((doctor) => {
+        doctor.Image = environment.apiUrl + doctor.Image;
+}
+);
       },
       error: (err) => {
         console.error('Error loading doctors:', err);

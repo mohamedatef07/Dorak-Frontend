@@ -1,9 +1,13 @@
 <form [formGroup]="CreateAppointmentForm">
   <div class="ClientInfo d-flex space-between gap-3 my-3">
-    <div>
+    <!-- <div>
       <label>First Name</label>
       <input type="text" formControlName="FirstName" />
-    </div>
+    </div> -->
+    <p-floatLabel>
+      <input id="firstName" pInputText formControlName="FirstName" />
+      <label for="firstName">First Name</label>
+    </p-floatLabel>
 
     <div>
       <label>Last Name</label>
@@ -63,7 +67,8 @@
           <td>{{ record.StartTime}}</td>
           <td>{{ record.EndTime}}</td>
           <td>{{ record.Services[0].BasePrice}}</td>
-          <td><button type="button" class="view-doc-profile" data-bs-toggle="modal" data-bs-target="#confirmationModal" (click)="bookNow(record)">Book Now</button></td>
+          <td><button type="button" class="view-doc-profile" data-bs-toggle="modal" data-bs-target="#confirmationModal"
+              (click)="bookNow(record)">Book Now</button></td>
         </tr>
       </tbody>
     </table>
@@ -112,4 +117,3 @@
     </div>
   </div>
 </div>
-
