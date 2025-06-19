@@ -6,11 +6,23 @@ import { authInterceptor } from './interceptors/authInterceptor';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { providePrimeNG } from 'primeng/config';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import Aura from '@primeng/themes/aura'; // Or your chosen theme
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    provideHttpClient(withInterceptors([authInterceptor])), provideAnimations(),MessageService,ConfirmationService
+    provideHttpClient(withInterceptors([authInterceptor])), provideAnimations(),MessageService,ConfirmationService,
+    provideAnimationsAsync(),
+    providePrimeNG({
+      theme: {
+        preset: Aura, 
+        options: {
+          darkModeSelector: 'none' 
+        }
+      },
+      ripple: true 
+    }),
   ],
 };

@@ -13,12 +13,14 @@ import { IShiftsTable } from '../../models/IShiftsTable';
 import { IShiftServices } from '../../models/IShiftServices';
 import { AuthService } from '../../../../services/auth.service';
 declare var bootstrap: any;
+import { InputTextModule } from 'primeng/inputtext';
+import { FloatLabelModule } from 'primeng/floatlabel';
 
 @Component({
   selector: 'app-CreateAppointment',
   templateUrl: './CreateAppointment.component.html',
   styleUrls: ['./CreateAppointment.component.css'],
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule,InputTextModule,FloatLabelModule],
   standalone: true,
 })
 export class CreateAppointmentComponent implements OnInit {
