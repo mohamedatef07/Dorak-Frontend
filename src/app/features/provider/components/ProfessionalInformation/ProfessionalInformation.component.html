@@ -1,43 +1,57 @@
-  <body>
-          <form [formGroup]="personalForm">
-
-    <!-- Main -->
-    <main>
-
-        <div class="settings-container">
-          <div class="tab-content">
-
-            <!-- Professional Information Tab -->
-            <div class="tab-pane fade show active" id="professional-tab">
-              <h2 class="section-title">Professional Information Settings</h2>
-              <div class="settings-card">
-                <div class="mb-3">
-                  <label for="Specialization" class="form-label" >Specialization</label>
-               <input type="text" class="form-control" formControlName="Specialization" />
-                </div>
-                <div class="mb-3">
-                  <label for="ExperienceYears" class="form-label">Experience</label>
-               <input type="text" class="form-control" formControlName="ExperienceYears" />
-                </div>
-                <div class="mb-3">
-                  <label for="LicenseNumber" class="form-label">Medical License Number</label >
-               <input type="text" class="form-control" formControlName="LicenseNumber" />
-                </div>
-                <div class="mb-3">
-                  <label for="Bio" class="form-label">About</label>
-                  <textarea class="form-control" formControlName="Bio"></textarea>
-                </div>
-              </div>
+<form [formGroup]="personalForm">
+  <div class="container d-flex flex-column gap-3 pt-4 pb-4 pe-0 ps-0 m-0">
+    <div class="settings-container">
+      <div class="tab-content">
+        <div class="tab-pane fade show active" id="professional-tab">
+          <h2 class="section-title">Professional Information Settings</h2>
+          <div class="settings-card">
+            <div class="mb-3">
+              <label for="Specialization" class="form-label"
+                >Specialization</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                formControlName="Specialization"
+              />
             </div>
-              <div class="setting-btns d-flex gap-5 pt-4">
-         <button  type="button" class="btn Save-btn mt-3" (click)="onSubmit()"> Save </button>
-         <button  type="button" class="btn Cancel-btn mt-3"(click)="onCancel()" > Cancel  </button>
+            <div class="mb-3">
+              <label for="ExperienceYears" class="form-label">Experience</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="ExperienceYears"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="LicenseNumber" class="form-label"
+                >Medical License Number</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                formControlName="LicenseNumber"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="Bio" class="form-label">About</label>
+              <textarea class="form-control" formControlName="Bio"></textarea>
+            </div>
           </div>
-          </div>
-             <div *ngIf="successMessage" class="alert alert-success">
-  {{ successMessage }}
-             </div>
         </div>
-        </main>
-          </form>
-  </body>
+        <div class="setting-btns d-flex gap-5 pt-4">
+          <button type="button" class="btn Save-btn mt-3" (click)="onSubmit()">
+            Save
+          </button>
+          <button
+            type="button"
+            class="btn Cancel-btn mt-3"
+            (click)="onCancel()"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

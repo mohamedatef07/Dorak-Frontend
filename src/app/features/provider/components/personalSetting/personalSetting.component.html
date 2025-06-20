@@ -1,66 +1,88 @@
-  <body>
-      <form [formGroup]="personalForm">
-
-    <!-- Main -->
-
-    <main>
-
-          <div class="tab-content">
-            <!-- Personal Settings Tab -->
-            <div class="tab-pane fade show active" id="personal-tab">
-              <h2 class="section-title">Personal settings</h2>
-              <div class="settings-card">
-                <div class="row">
-                  <div
-                    class="col-md-3 text-center d-flex flex-column justify-content-center align-items-center p-4"
-                  >
-                   <div class="profile-image-container mb-3">
-                    <img *ngIf="imagePreview" [src]="imagePreview" alt="Profile Image" />
-
-
-
-                  </div>
-                  <button type="button" class="btn upload-btn mt-2" (click)="fileInput.click()">Upload</button>
-                  <input #fileInput type="file" hidden accept="image/*" (change)="onImageChange($event)" />
-                  </div>
-                  <div class="col-md-9">
-                    <div class="mb-3">
-                  <label for="FirstName" class="form-label">FirstName</label>
-                       <input type="text" class="form-control" formControlName="FirstName" />
-                    </div>
-                      <div class="mb-3">
-                  <label for="LastName" class="form-label">LastName</label>
-                       <input type="text" class="form-control" formControlName="LastName" />
-                    </div>
-
-                    <div class="mb-3">
-                  <label for="email" class="form-label">Email</label>
-                  <input type="email" class="form-control" formControlName="email" />
-                    </div>
-                    <div class="mb-3">
-                  <label for="phone" class="form-label">Phone</label>
-                  <input type="tel" class="form-control" formControlName="phone" />
-                    </div>
-
-                    <div class="mb-3">
-                  <label for="dob" class="form-label">Date of Birth</label>
-                  <input type="date" class="form-control" formControlName="birthDate" />
-                    </div>
-                  </div>
-                </div>
+<form [formGroup]="personalForm">
+  <div class="container d-flex flex-column gap-3 pt-4 pb-4 pe-0 ps-0 m-0">
+    <div class="tab-content">
+      <div class="tab-pane fade show active" id="personal-tab">
+        <h2 class="section-title">Personal settings</h2>
+        <div class="settings-card">
+          <div class="row">
+            <div
+              class="col-md-3 text-center d-flex flex-column justify-content-center align-items-center p-4"
+            >
+              <div class="profile-image-container mb-3">
+                <img
+                  *ngIf="imagePreview"
+                  [src]="imagePreview"
+                  alt="Profile Image"
+                />
+              </div>
+              <button
+                type="button"
+                class="btn upload-btn mt-2"
+                (click)="fileInput.click()"
+              >
+                Upload
+              </button>
+              <input
+                #fileInput
+                type="file"
+                hidden
+                accept="image/*"
+                (change)="onImageChange($event)"
+              />
+            </div>
+            <div class="col-md-9">
+              <div class="mb-3">
+                <label for="FirstName" class="form-label">First Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="FirstName"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="LastName" class="form-label">Last Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="LastName"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  formControlName="email"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="phone" class="form-label">Phone</label>
+                <input
+                  type="tel"
+                  class="form-control"
+                  formControlName="phone"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="dob" class="form-label">Date of Birth</label>
+                <input
+                  type="date"
+                  class="form-control"
+                  formControlName="birthDate"
+                />
               </div>
             </div>
-
-
           </div>
-          <div class="setting-btns d-flex gap-5 pt-4">
-         <button  type="button" class="btn Save-btn mt-3" (click)="onSubmit()"> Save </button>
-
-         <button  type="button" class="btn Cancel-btn mt-3"(click)="onCancel()" > Cancel  </button>
-          </div>
-          <div *ngIf="successMessage" class="alert alert-success">
-  {{ successMessage }}
-</div>
-    </main>
-   </form>
-  </body>
+        </div>
+      </div>
+    </div>
+    <div class="setting-btns d-flex gap-5 pt-4">
+      <button type="button" class="btn Save-btn mt-3" (click)="onSubmit()">
+        Save
+      </button>
+      <button type="button" class="btn Cancel-btn mt-3" (click)="onCancel()">
+        Cancel
+      </button>
+    </div>
+  </div>
+</form>
