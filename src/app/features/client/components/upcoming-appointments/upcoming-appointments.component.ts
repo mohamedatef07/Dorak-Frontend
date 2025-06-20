@@ -9,7 +9,7 @@ import { IClientProfileAppointment } from '../../models/IClientProfileAppointmen
 import { IAppointment } from '../../models/IAppointment';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { routes } from '../../../../app.routes';
-import { IDoctorcard } from '../../models/idoctorcard';
+import { IDoctorCard } from '../../models/IDoctorCard';
 
 
 @Component({
@@ -24,7 +24,7 @@ import { IDoctorcard } from '../../models/idoctorcard';
 })
 export class UpcomingAppointmentsComponent implements OnInit {
 
-  doctors: IDoctorcard[] = [];
+  doctors: IDoctorCard[] = [];
    Appointments:IClientProfileAppointment[]= [];
    clientServices = inject(ClientService);
     cAuthServices = inject(AuthService);
@@ -70,7 +70,7 @@ export class UpcomingAppointmentsComponent implements OnInit {
   next: (res) => {
     console.log('Response from API:', res);
     this.appointment = res.Data;
-    
+
   },
   error: (err) => {
     console.error(err);

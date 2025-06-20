@@ -48,7 +48,7 @@ export class UpdateQueueStatusSRService {
         }
       );
       this.hubConnection.on(
-        'UpdateLiveQueue',
+        'QueueUpdated',
         (lres: Array<IClientLiveQueue>) => {
           console.log('Live Queue Updated:', lres);
           this.LiveQueueListSubject.next(lres);
@@ -80,7 +80,7 @@ export class UpdateQueueStatusSRService {
 
  private stopConnection() {
     return this.hubConnection?.stop();
-    
+
   }
   ngOnDestroy(): void {
     this.stopConnection();
