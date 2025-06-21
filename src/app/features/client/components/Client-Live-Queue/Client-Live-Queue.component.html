@@ -12,11 +12,11 @@
       <div class="container mt-4">
         <h6 class="fw-bold status-text">Live status updates</h6>
         <div class="status-container">
-          <img src="./Assest/img/patient 2.png" alt="Doctor Illustration" class="illustration" />
+          <img [src]="clientInfo.Image" alt="Doctor Illustration" class="illustration" />
           <div class="w-100">
             <div class="status-bar">
              <div class="circle">{{ clientInfo?.Name }}
-              
+
              </div>
              <div *ngFor="let item of LiveQueues">
              <div [ngClass]="item.IsCurrentClient ? 'current-client-style' : ''">
@@ -43,21 +43,23 @@
       </div>
       <p class="mt-1 text-end">{{ estimatedTime }}</p>
 
-      <!-- Live Queue -->
-      <h6 class="fw-bold text-start mt-4">Live QUEUE:</h6>
+     <h6 class="fw-bold text-start mt-4">Live QUEUE:</h6>
 
-    <div *ngFor="let item of LiveQueues; trackBy: trackByFn"
+<div *ngFor="let item of LiveQueues; trackBy: trackByFn"
      class="queue-card"
-     [class.done]="getStatusText(item.CurrentQueuePosition) === ' Done'">
+     [class.done]="item.Status === QueueAppointmentStatus.Completed"
+     [class.waiting]="item.Status === QueueAppointmentStatus.Waiting"
+     [class.in-progress]="item.Status === QueueAppointmentStatus.InProgress"
+     [class.not-checked]="item.Status === QueueAppointmentStatus.NotChecked">
 
-  <div class="d-flex align-items-center">
-    <img src="./Assest/img/patient 2.png" alt="User" width="40" />
+  <!-- <div class="d-flex align-items-center">
+    <img [src]="getFullImagePath(clientInfo.Image)" alt="User" width="40" />
     <p class="mb-0 ms-2 fw-bold">
       {{ item.IsCurrentClient ? clientInfo.Name : 'Anonymous' }}
     </p>
-  </div>
+  </div> -->
 
-  <span>{{ getStatusText(item.CurrentQueuePosition) }}</span>
+  <span>{{ getStatusText(item.Status) }}</span>
   <span class="fw-bold">{{ item.CurrentQueuePosition }}</span>
 </div>
 

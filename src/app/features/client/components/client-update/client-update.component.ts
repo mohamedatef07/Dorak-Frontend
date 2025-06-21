@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ClientService } from '../../services/client.service';
 import { environment } from '../../../../../environments/environment';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-client-update',
@@ -14,12 +15,13 @@ import { CommonModule } from '@angular/common';
 export class ClientUpdateComponent implements OnInit {
   personalForm!: FormGroup;
   imagePreview: string | null = null;
-  currentImageName: string = ''; // اسم الصورة القديمة
+  currentImageName: string = '';
   successMessage: string | null = null;
 
   constructor(
     private fb: FormBuilder,
-    private _clientService: ClientService
+    private _clientService: ClientService,
+     private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -28,7 +30,7 @@ export class ClientUpdateComponent implements OnInit {
   }
 
   initializeForm(): void {
-    this.personalForm = this.fb.group({
+  this.personalForm = this.fb.group({
   FirstName: ['', Validators.required],
   LastName: ['', Validators.required],
   Email: ['', [Validators.required, Validators.email]],
@@ -67,7 +69,7 @@ export class ClientUpdateComponent implements OnInit {
         this.currentImageName = data.Image || '';
         this.imagePreview = environment.apiUrl + data.Image;
 
-        this.personalForm.patchValue({
+      this.personalForm.patchValue({
       FirstName: data.FirstName,
       LastName: data.LastName,
       Email: data.Email,
@@ -85,43 +87,50 @@ export class ClientUpdateComponent implements OnInit {
     });
   }
 
-  onSubmit(): void {
-    if (this.personalForm.valid) {
-      const formData = new FormData();
+ onSubmit(): void {
+  if (this.personalForm.valid) {
+    const formData = new FormData();
 
-     formData.append('FirstName', this.personalForm.value.FirstName);
-formData.append('LastName', this.personalForm.value.LastName);
-formData.append('Email', this.personalForm.value.Email);
-formData.append('Phone', this.personalForm.value.PhoneNumber);
-formData.append('BirthDate', this.personalForm.value.BirthDate);
-formData.append('Street', this.personalForm.value.Street);
-formData.append('City', this.personalForm.value.City);
-formData.append('Governorate', this.personalForm.value.Governorate);  // ✅ صح
-formData.append('Country', this.personalForm.value.Country);
+    formData.append('FirstName', this.personalForm.value.FirstName);
+    formData.append('LastName', this.personalForm.value.LastName);
+    formData.append('Email', this.personalForm.value.Email);
+    formData.append('Phone', this.personalForm.value.PhoneNumber);
+    formData.append('BirthDate', this.personalForm.value.BirthDate);
+    formData.append('Street', this.personalForm.value.Street);
+    formData.append('City', this.personalForm.value.City);
+    formData.append('Governorate', this.personalForm.value.Governorate);
+    formData.append('Country', this.personalForm.value.Country);
 
-const image = this.personalForm.value.image;
-if (image instanceof File) {
-  formData.append('Image', image);
-}else if (this.currentImageName) {
-        formData.append('Image', this.currentImageName);
-      }
-
-
-
-      this._clientService.updateProfile(formData).subscribe({
-        next: (res) => {
-          console.log('Profile updated successfully!', res);
-          this.successMessage = 'Profile updated successfully!';
-          setTimeout(() => {
-            this.successMessage = null;
-          }, 3000);
-        },
-        error: (err) => {
-          console.error('Update failed:', err);
-        }
-      });
+    const image = this.personalForm.value.image;
+    if (image instanceof File) {
+      formData.append('Image', image);
+    } else if (this.currentImageName) {
+      formData.append('Image', this.currentImageName);
     }
+
+    this._clientService.updateProfile(formData).subscribe({
+      next: (res) => {
+        console.log('Profile updated successfully!', res);
+        this.successMessage = 'Profile updated successfully!';
+
+        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+  this.router.navigate(['/client/client-profile']);
+});
+
+        this.loadClientProfile();
+
+        setTimeout(() => {
+          this.successMessage = null;
+        }, 3000);
+      },
+      error: (err) => {
+        console.error('Update failed:', err);
+      }
+    });
   }
+}
+
+
 
 
 }
