@@ -7,6 +7,8 @@ import { IClientLiveQueue } from '../../models/IClientLiveQueue';
 import { AuthService } from '../../../../services/auth.service';
 import { IClientInfoForLiveQueue } from '../../models/IClientInfoForLiveQueue';
 import { CommonModule } from '@angular/common';
+import { QueueAppointmentStatus } from '../../../../Enums/QueueAppointmentStatus.enum';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-Client-Live-Queue',
@@ -23,9 +25,13 @@ export class ClientLiveQueueComponent implements OnInit, OnDestroy {
   LiveQueues: IClientLiveQueue[] = [];
   appoinmentid!: number;
   userid: string = '';
+  fullImagePath: string = '';
+
   clientInfo!: IClientInfoForLiveQueue;
 
   private subscription?: Subscription;
+  QueueAppointmentStatus = QueueAppointmentStatus;
+
 
   currentStep = 1;
   waitingProgress = 0;
@@ -52,6 +58,12 @@ export class ClientLiveQueueComponent implements OnInit, OnDestroy {
         this.clientInfo = res.Data;
         console.log('Client Info:', this.clientInfo);
         this.updateProgress();
+        if (this.clientInfo?.Image) {
+         this.fullImagePath = `${environment.apiUrl}${this.clientInfo.Image}`;
+         console.log( this.fullImagePath)
+         console.log( environment.apiUrl)
+
+               }
       },
       error: (err) => {
         console.error('Error fetching client info:', err);
@@ -78,14 +90,24 @@ export class ClientLiveQueueComponent implements OnInit, OnDestroy {
     this.subscription?.unsubscribe();
   }
 
-  getStatusText(position: number): string {
-    const current = this.getCurrentNumber();
-    if (position < current) return 'Done';
-    if (position === current) return 'In Consultation';
-    if (position === current + 1) return 'Waiting In Clinic';
-    return 'Waiting';
+ getStatusText(status: QueueAppointmentStatus): string {
+  switch (status) {
+    case QueueAppointmentStatus.NotChecked:
+      return ' Not Checked';
+    case QueueAppointmentStatus.Waiting:
+      return ' Waiting';
+    case QueueAppointmentStatus.InProgress:
+      return 'In Consultation';
+    case QueueAppointmentStatus.Completed:
+      return 'Done';
+    default:
+      return '';
   }
+}
 
+  getFullImagePath(imageUrl:string):string{
+    return  `${environment.apiUrl}${imageUrl}`
+  }
   public getCurrentNumber(): number {
     const current = this.LiveQueues.find(q => q.Status === 1);
     return current?.CurrentQueuePosition || 0;

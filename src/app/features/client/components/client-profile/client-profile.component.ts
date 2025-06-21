@@ -23,16 +23,17 @@ Appointments: [],
   Image: '',
   Phone: '',
   Email: '',
-
-
-
+  Street:'',
+  City:'',
+  Governorate:'',
+  Country:'',
 
 }
 userid: string = '';
 
  profile: IClientUpdate | null = null;
 fullImagePath: string = '';
-   clientServices = inject(ClientService);
+clientServices = inject(ClientService);
 
 
    constructor(private _clientService:ClientService) { }

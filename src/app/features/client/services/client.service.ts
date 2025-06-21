@@ -4,7 +4,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import { IDoctorMainInfo } from '../models/IDoctorMainInfo';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { IMakeAppointment } from '../models/IMakeAppointment';
 import { IDoctorBookingInfo } from '../models/IDoctorBookingInfo';
@@ -21,6 +21,7 @@ import { IClientLiveQueue } from '../models/IClientLiveQueue';
 import { IClientInfoForLiveQueue } from '../models/IClientInfoForLiveQueue';
 import { IClientUpdate } from '../models/IClientUpdate';
 import { IDoctorCard } from '../models/IDoctorCard';
+
 
 @Injectable({
   providedIn: 'root',
@@ -160,6 +161,7 @@ updateProfile(data: FormData): Observable<{ message: string; status: number; dat
     data
   );
 }
+
 
   Checkout(request: ICheckoutRequest): Observable<ICheckoutRequest> {
     return this.httpClient.post<ICheckoutRequest>(
