@@ -155,7 +155,7 @@ getClientProfile(): Observable<ApiResponse<IClientUpdate>> {
 }
 
 updateProfile(data: FormData): Observable<{ message: string; status: number; data: any }> {
-  return this.httpClient.put<{ message: string; status: number; data: any }>(
+  return this.httpClient.post<{ message: string; status: number; data: any }>(
     `${environment.apiUrl}/api/client/UpdateProfile`,
     data
   );

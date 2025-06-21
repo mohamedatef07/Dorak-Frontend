@@ -70,6 +70,7 @@ export class UpcomingAppointmentsComponent implements OnInit {
     console.log('Response from API:', res);
     this.appointment = res.Data;
 
+
   },
   error: (err) => {
     console.error(err);
