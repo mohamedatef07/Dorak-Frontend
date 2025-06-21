@@ -23,7 +23,6 @@ import { IDoctorCard } from '../../models/IDoctorCard';
   styleUrls: ['./upcoming-appointments.component.css']
 })
 export class UpcomingAppointmentsComponent implements OnInit {
-
   doctors: IDoctorCard[] = [];
    Appointments:IClientProfileAppointment[]= [];
    clientServices = inject(ClientService);
@@ -70,6 +69,7 @@ export class UpcomingAppointmentsComponent implements OnInit {
   next: (res) => {
     console.log('Response from API:', res);
     this.appointment = res.Data;
+
 
   },
   error: (err) => {

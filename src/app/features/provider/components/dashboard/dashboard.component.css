@@ -1,0 +1,51 @@
+main .container .general-statistics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+main .container .general-statistics div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  width: calc(100% / 3 - 1rem);
+  border-radius: var(--border-radius);
+}
+main .container .general-statistics div .statistic-info {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  flex: 1;
+  gap: 2rem;
+}
+main .container .general-statistics div .statistic-info span {
+  color: var(--text-color-Light);
+  font-size: 1.25rem;
+}
+main .container .general-statistics .total-appointments .statistic-icon,
+main .container .general-statistics .patients-in-queue .statistic-icon,
+main .container .general-statistics .average-estimated-time .statistic-icon,
+main .container .general-statistics .total-urgent-cases .statistic-icon,
+main .container .general-statistics .patients-treated-tody .statistic-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 5rem;
+  width: 5rem;
+  border-radius: 50%;
+}
+main .container .general-statistics .total-appointments .statistic-icon {
+  background-color: #2ecc71;
+}
+main .container .general-statistics .patients-in-queue .statistic-icon {
+  background-color: #4880ff;
+}
+main .container .general-statistics .total-urgent-cases .statistic-icon {
+  background-color: #e74c3c;
+}
+main .container .general-statistics .patients-treated-tody .statistic-icon {
+  background-color: #2a6f97;
+}
+main .container .general-statistics .average-estimated-time .statistic-icon {
+  background-color: #f39c12;
+}

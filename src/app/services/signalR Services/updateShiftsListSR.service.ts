@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import * as signalR from '@microsoft/signalr';
 import { ICenterShifts } from '../../features/owner/models/ICenterShifts';
 import { Subject } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +18,7 @@ export class UpdateShiftsListSRService {
   }
   private startConnection() {
     this.hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl('http://localhost:5139/shiftListHub')
+      .withUrl(`${environment.apiUrl}/shiftListHub`)
       .withAutomaticReconnect()
       .build();
     this.hubConnection
