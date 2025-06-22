@@ -63,8 +63,8 @@
 }
 /* General */
 body {
-  font-family: Poppins-regular;
-  background-color: var(--bg-color-Light);
+  font-family: Poppins-regular !important;
+  background-color: var(--bg-color-Light) !important;
 }
 .container {
   max-width: 95%;
@@ -78,21 +78,27 @@ button {
   cursor: pointer;
 }
 input,
-select {
-  outline: none;
-  font-family: Poppins-regular;
-  color: var(--text-color-Light);
+select,
+textarea {
+  outline: none !important;
+  font-family: Poppins-regular !important;
+  color: var(--text-color-Light) !important;
 }
 ul {
   list-style: none;
 }
 a {
-  text-decoration: none;
+  text-decoration: none ;
   color: black;
 }
+.form-label {
+  color: var(--text-color-Light) !important;
+  font-weight: bold !important;
+  font-size: 1.1rem !important;
+}
 .form-check-input:checked {
-  background-color: var(--main-bg-color-Light);
-  border-color: var(--main-bg-color-Light);
+  background-color: var(--main-bg-color-Light) !important;
+  border-color: var(--main-bg-color-Light) !important;
 }
 .btn {
   background-color: var(--button-bg-color-Light) !important;
