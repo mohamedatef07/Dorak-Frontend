@@ -3,6 +3,7 @@ import * as signalR from '@microsoft/signalr';
 import { ICenterShifts } from '../../features/owner/models/ICenterShifts';
 import { Subject } from 'rxjs';
 import { environment } from '../../../environments/environment';
+import { AuthService } from '../auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,13 +13,21 @@ export class UpdateShiftsListSRService {
   private shiftListSubject = new Subject<Array<ICenterShifts>>();
   public updatedShiftsList = this.shiftListSubject.asObservable();
 
-  constructor() {
+  constructor(private authService: AuthService) {
     this.startConnection();
     this.registerOnServerEvents();
   }
   private startConnection() {
+    const token = this.authService.getAuthToken();
+
+    if (!token) {
+      console.warn('❗ No auth token found. SignalR connection aborted.');
+      return;
+    }
     this.hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl(`${environment.apiUrl}/shiftListHub`)
+      .withUrl(`${environment.apiUrl}/shiftListHub`, {
+        accessTokenFactory: () => token,
+      })
       .withAutomaticReconnect()
       .build();
     this.hubConnection
