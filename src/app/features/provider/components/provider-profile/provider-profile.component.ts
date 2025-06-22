@@ -4,12 +4,14 @@ import {IProviderProfile} from '../../../../types/IProviderProfile'
 import { ProviderService } from '../../services/provider.service';
 import { GenderType } from '../../../../Enums/GenderType.enum';
 import { environment } from '../../../../../environments/environment';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-provider-profile',
   standalone: true,
   templateUrl: './provider-profile.component.html',
-  styleUrls: ['./provider-profile.component.css']
+  styleUrls: ['./provider-profile.component.css'],
+  imports: [DatePipe]
 })
 export class ProviderProfileComponent implements OnInit {
 profile: IProviderProfile | null = null;
