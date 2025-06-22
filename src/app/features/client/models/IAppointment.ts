@@ -24,4 +24,5 @@ export interface IAppointment {
   ProviderName:string;
   Rate: number;
   Specialization: string|null;
+  IsLive:boolean;
 }
