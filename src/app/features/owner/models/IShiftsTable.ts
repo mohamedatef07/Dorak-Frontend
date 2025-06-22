@@ -10,3 +10,5 @@ export interface IShiftsTable {
   ServiceId: number;
   Services: IShiftServices[];
 }
+
+export type { IShiftServices };

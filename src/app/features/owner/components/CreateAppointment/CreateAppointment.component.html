@@ -1,3 +1,4 @@
+<p-toast></p-toast>
 <form [formGroup]="CreateAppointmentForm">
   <div class="ClientInfo d-flex space-between gap-3 mt-4 mb-3">
     <p-floatlabel variant="on">
@@ -28,7 +29,6 @@
     </div>
 
     <div class="card flex align-items-center gap-2">
-      <label for="serviceInput" class="fw-bold mb-2">Service</label>
       <p-autoComplete inputId="serviceInput" formControlName="ServiceId" [dropdown]="true"
         [suggestions]="filteredServices" field="ServiceName" (completeMethod)="searchServices($event)"
         [forceSelection]="true" [(ngModel)]="selectedService" (onSelect)="onServiceSelect($event)"
@@ -41,15 +41,17 @@
       </p-autoComplete>
     </div>
 
-    <div>
-      <label>Provider</label>
-      <select formControlName="ProviderId" (change)="filterRecords()">
-        <option [ngValue]="null">Select Provider</option>
-        <option *ngFor="let Provider of ProviderName" [value]="Provider">
-          {{ Provider }}
-        </option>
-      </select>
+    <div class="card flex align-items-center gap-2">
+      <p-autoComplete inputId="providerInput" formControlName="ProviderId" [dropdown]="true"
+        [suggestions]="filteredProviders" (completeMethod)="searchProviders($event)"
+        [forceSelection]="true" (onSelect)="onProviderSelect($event)" (onClear)="onClearProvider()"
+        placeholder="Select Provider" styleClass="w-100">
+        <ng-template let-provider pTemplate="item">
+          <div>{{ provider }}</div>
+        </ng-template>
+      </p-autoComplete>
     </div>
+
     <button type="button" class="view-doc-profile" (click)="clearFilters()">
       Clear Filters
     </button>
@@ -77,8 +79,7 @@
           <td>{{ record.EndTime }}</td>
           <td>{{ record.Services[0].BasePrice }}</td>
           <td>
-            <button type="button" class="view-doc-profile" data-bs-toggle="modal" data-bs-target="#confirmationModal"
-              (click)="bookNow(record)">
+            <button type="button" class="view-doc-profile" (click)="bookNow(record)">
               Book Now
             </button>
           </td>
