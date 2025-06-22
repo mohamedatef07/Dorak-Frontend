@@ -12,18 +12,35 @@ import { ICreateAppointment } from '../../models/ICreateAppointment';
 import { IShiftsTable } from '../../models/IShiftsTable';
 import { IShiftServices } from '../../models/IShiftServices';
 import { AuthService } from '../../../../services/auth.service';
-declare var bootstrap: any;
+import { AutoCompleteModule, AutoCompleteSelectEvent } from 'primeng/autocomplete';
 import { InputTextModule } from 'primeng/inputtext';
 import { FloatLabelModule } from 'primeng/floatlabel';
+import { DatePickerModule } from 'primeng/datepicker';
+import { FormsModule } from '@angular/forms';
+import { FluidModule } from 'primeng/fluid';
+
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-CreateAppointment',
   templateUrl: './CreateAppointment.component.html',
   styleUrls: ['./CreateAppointment.component.css'],
-  imports: [ReactiveFormsModule, CommonModule,InputTextModule,FloatLabelModule],
+  imports: [
+    ReactiveFormsModule,
+    CommonModule,
+    InputTextModule,
+    FloatLabelModule,
+    DatePickerModule,
+    FormsModule,
+    FluidModule,
+    AutoCompleteModule,
+  ],
   standalone: true,
 })
 export class CreateAppointmentComponent implements OnInit {
+  date1: Date | undefined;
+  date2: Date | undefined;
+  date3: Date | undefined;
   private ownerService = inject(OwnerService);
   private AuthService = inject(AuthService);
   OperatorId: string = '';
@@ -33,6 +50,8 @@ export class CreateAppointmentComponent implements OnInit {
   filteredRecords: IShiftsTable[] = [];
   Services: IShiftServices[] = [];
   ProviderName: string[] = [];
+  selectedService: IShiftServices | null = null;
+  filteredServices: IShiftServices[] = [];
   centerId = 1;
   CreateAppointmentForm: FormGroup;
   errorMessage: string | null = null;
@@ -41,6 +60,7 @@ export class CreateAppointmentComponent implements OnInit {
   currentPage = 1;
   pageSize = 9;
   paginatedRecords: IShiftsTable[] = [];
+  today: Date = new Date();
 
   constructor() {
     this.CreateAppointmentForm = new FormGroup({
@@ -49,10 +69,10 @@ export class CreateAppointmentComponent implements OnInit {
       ContactInfo: new FormControl('', Validators.required),
       AdditionalFees: new FormControl(0),
 
-      //For Filtering not for Creation
-      AppointmentDate: new FormControl(''),
-      ServiceId: new FormControl(''),
-      ProviderId: new FormControl(''),
+      AppointmentDate: new FormControl(null),
+      ServiceId: new FormControl(null),
+      ProviderId: new FormControl(null),
+      Fees: new FormControl(0),
     });
   }
 
@@ -77,6 +97,14 @@ export class CreateAppointmentComponent implements OnInit {
           ).values()
         );
         this.storeUniqueProviderNames();
+
+        const initialServiceId = this.CreateAppointmentForm.get('ServiceId')?.value;
+        if (initialServiceId) {
+          this.selectedService = this.Services.find(s => s.ServiceId === initialServiceId) || null;
+          this.updateFees();
+        }
+
+        this.CreateAppointmentForm.get('ProviderId')?.valueChanges.subscribe(() => this.filterRecords());
       },
       error: (err: any) => {
         console.error('Error while fetching operators:', err);
@@ -90,17 +118,28 @@ export class CreateAppointmentComponent implements OnInit {
     );
   }
 
+  formatDateToYMD(date: Date | null): string | null {
+    if (!date) return null;
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
   filterRecords() {
-    const date = this.CreateAppointmentForm.get('AppointmentDate')?.value;
+    const calendarDate: Date | null = this.CreateAppointmentForm.get('AppointmentDate')?.value;
+    const formattedDate = this.formatDateToYMD(calendarDate);
     const serviceId = this.CreateAppointmentForm.get('ServiceId')?.value;
     const providerId = this.CreateAppointmentForm.get('ProviderId')?.value;
 
-    console.log(date);
-    console.log(serviceId);
+    console.log("Filter Date:", formattedDate);
+    console.log("serviceId:", serviceId);
+    console.log("providerId:", providerId);
+
     this.filteredRecords = this.Records.reduce(
       (filtered: IShiftsTable[], record: IShiftsTable) => {
-        const matchesDate = !date || record.ShiftDate === date;
-        const matchesProvider = !providerId || record.ProviderId == providerId;
+        const matchesDate = !formattedDate || record.ShiftDate === formattedDate;
+        const matchesProvider = !providerId || record.ProviderName === providerId;
 
         if (!serviceId) {
           if (matchesDate && matchesProvider) {
@@ -117,10 +156,6 @@ export class CreateAppointmentComponent implements OnInit {
             });
           }
         }
-
-        console.log('this is filterd data:', this.filteredRecords);
-        console.log('this is pagi data:', this.paginatedRecords);
-        console.log('this is filtered', filtered);
         return filtered;
       },
       []
@@ -130,23 +165,44 @@ export class CreateAppointmentComponent implements OnInit {
 
   clearFilters() {
     this.CreateAppointmentForm.patchValue({
-      AppointmentDate: '',
-      ServiceId: '',
-      ProviderId: '',
-      Fees: '',
-      ShiftId: '',
+      AppointmentDate: null,
+      ServiceId: null,
+      ProviderId: null,
+      Fees: 0,
     });
+    this.selectedService = null;
     this.filteredRecords = [...this.Records];
     this.updatePaginatedRecords();
   }
 
-  updateFees() {
-    const serviceId = this.CreateAppointmentForm.get('ServiceId')?.value;
-    const selectedService = this.Services.find(
-      (service) => service.ServiceId == serviceId
+  searchServices(event: any) {
+    let query = event.query;
+    this.filteredServices = this.Services.filter(service =>
+      service.ServiceName.toLowerCase().includes(query.toLowerCase())
     );
-    const fees = selectedService ? selectedService.BasePrice : '';
+  }
+
+  onServiceSelect(event: AutoCompleteSelectEvent) {
+    const selected = event.value as IShiftServices;
+    this.selectedService = selected;
+    this.CreateAppointmentForm.get('ServiceId')?.setValue(selected.ServiceId);
+    this.updateFees();
+    this.filterRecords();
+    console.log('Service selected:', selected);
+  }
+
+  onClearService() {
+    this.selectedService = null;
+    this.CreateAppointmentForm.get('ServiceId')?.setValue(null);
+    this.updateFees();
+    this.filterRecords();
+    console.log('Service cleared');
+  }
+
+  updateFees() {
+    const fees = this.selectedService ? this.selectedService.BasePrice : 0;
     this.CreateAppointmentForm.patchValue({ Fees: fees });
+    console.log('Updated Fees:', fees);
   }
 
   bookNow(record: IShiftsTable) {
@@ -169,10 +225,17 @@ export class CreateAppointmentComponent implements OnInit {
   confirmBooking() {
     this.HandleSubmitForm();
 
-    const modalEl = document.getElementById('confirmationModal'); // not bookingModal
+    const modalEl = document.getElementById('confirmationModal');
     if (modalEl) {
       const modal = bootstrap.Modal.getInstance(modalEl);
-      modal.hide();
+      if (modal) {
+        modal.hide();
+      } else {
+        modalEl.classList.remove('show');
+        modalEl.setAttribute('aria-hidden', 'true');
+        modalEl.style.display = 'none';
+        this.closeModalFallback();
+      }
     }
   }
 
@@ -186,6 +249,12 @@ export class CreateAppointmentComponent implements OnInit {
 
     if (this.CreateAppointmentForm.invalid) {
       this.CreateAppointmentForm.markAllAsTouched();
+      this.errorMessage = 'Please fill in all required fields.';
+      return;
+    }
+
+    if (!this.selectedService) {
+      this.errorMessage = 'Please select a service.';
       return;
     }
 
@@ -203,14 +272,17 @@ export class CreateAppointmentComponent implements OnInit {
       ProviderId: this.selectedShiftRecord.ProviderId,
       CenterId: this.CenterId,
       ShiftId: this.selectedShiftRecord.ShiftId,
-      ServiceId: this.selectedShiftRecord.Services[0].ServiceId,
-      Fees: this.selectedShiftRecord.Services[0].BasePrice,
+      ServiceId: this.selectedService.ServiceId,
+      Fees: this.selectedService.BasePrice,
       AdditionalFees: raw.AdditionalFees,
     };
 
     console.log('appointmentData: ', appointmentData);
 
     this.isSubmitting = true;
+    this.errorMessage = null;
+    this.successMessage = null;
+
     this.ownerService.reserveAppointment(appointmentData).subscribe({
       next: (response: ApiResponse<ICreateAppointment>) => {
         this.isSubmitting = false;
@@ -225,18 +297,33 @@ export class CreateAppointmentComponent implements OnInit {
           modal?.hide();
         }
 
+        this.CreateAppointmentForm.reset({
+          FirstName: '',
+          LastName: '',
+          ContactInfo: '',
+          AdditionalFees: 0,
+          AppointmentDate: null,
+          ServiceId: null,
+          ProviderId: null,
+          Fees: 0,
+        });
+        this.selectedService = null;
+        this.selectedShiftRecord = null;
+        this.filteredRecords = [...this.Records];
+        this.updatePaginatedRecords();
+
         setTimeout(() => {
           document.body.classList.remove('modal-open');
-
           const backdrops = document.getElementsByClassName('modal-backdrop');
           while (backdrops.length > 0) {
             backdrops[0].parentNode?.removeChild(backdrops[0]);
           }
-        }, 500); // Delay slightly to let Bootstrap animation finish
+          this.successMessage = null;
+        }, 500);
       },
       error: (error) => {
         this.isSubmitting = false;
-        this.errorMessage = error.message || 'Error during reservation.';
+        this.errorMessage = error.error?.Message || error.message || 'Error during reservation.';
         console.error('Error:', error);
         console.log(error.message);
       },
@@ -288,8 +375,7 @@ export class CreateAppointmentComponent implements OnInit {
       while (backdrops.length > 0) {
         backdrops[0].parentNode?.removeChild(backdrops[0]);
       }
-    }, 500);
+    }, 100);
+    this.errorMessage = null;
   }
-
 }
-

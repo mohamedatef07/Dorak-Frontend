@@ -143,3 +143,8 @@ input, select{
     border-radius: 10px;
     border: 1px transparent;
 }
+
+p-floatlabel label{
+    font-size: 1rem;
+    color: var(--button-bg-color-Light);
+}
