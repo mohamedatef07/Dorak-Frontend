@@ -71,58 +71,6 @@ export const routes: Routes = [
         component: CreateAppointmentComponent,
         title: 'Create Appointment',
       },
-    ],
-  },
-  {
-    path: 'provider',
-    component: ProviderLayoutComponent,
-    children: [
-      { path: 'dashboard', component: DashboardComponent, title: 'Dashboard' },
-      {
-        path: 'profile',
-        component: ProviderProfileComponent,
-        title: 'profile',
-      },
-      {
-        path: 'patient-queue',
-        component: PatientQueueComponent,
-        title: 'Patient Queue',
-      },
-      { path: 'schedule', component: ScheduleComponent, title: 'Schedule' },
-      { path: 'reports', component: ReportsComponent, title: 'Reports' },
-      {
-        path: 'settings',
-        component: ProviderSettingComponent,
-        children: [
-          { path: '', redirectTo: 'personal-settings', pathMatch: 'full' },
-          {
-            path: 'personal-settings',
-            component: PersonalSettingComponent,
-            title: 'Personal Settings',
-          },
-          {
-            path: 'professional-settings',
-            component: ProfessionalInformationComponent,
-            title: 'Professional Settings',
-          },
-          {
-            path: 'security-settings',
-            component: SecurityProfileComponent,
-            title: 'Security Settings',
-          },
-          {
-            path: 'system-preferences-settings',
-            component: SystemPreferencesSettingsComponent,
-            title: 'System Preferences Settings',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    path: 'owner',
-    component: OwnerLayoutComponent,
-    children: [
       {
         path: 'provider-management',
         component: ProviderManagementComponent,
@@ -187,6 +135,52 @@ export const routes: Routes = [
     ],
   },
   {
+    path: 'provider',
+    component: ProviderLayoutComponent,
+    children: [
+      { path: 'dashboard', component: DashboardComponent, title: 'Dashboard' },
+      {
+        path: 'profile',
+        component: ProviderProfileComponent,
+        title: 'Profile',
+      },
+      {
+        path: 'patient-queue',
+        component: PatientQueueComponent,
+        title: 'Patient Queue',
+      },
+      { path: 'schedule', component: ScheduleComponent, title: 'Schedule' },
+      { path: 'reports', component: ReportsComponent, title: 'Reports' },
+      {
+        path: 'settings',
+        component: ProviderSettingComponent,
+        children: [
+          { path: '', redirectTo: 'personal-settings', pathMatch: 'full' },
+          {
+            path: 'personal-settings',
+            component: PersonalSettingComponent,
+            title: 'Personal Settings',
+          },
+          {
+            path: 'professional-settings',
+            component: ProfessionalInformationComponent,
+            title: 'Professional Settings',
+          },
+          {
+            path: 'security-settings',
+            component: SecurityProfileComponent,
+            title: 'Security Settings',
+          },
+          {
+            path: 'system-preferences-settings',
+            component: SystemPreferencesSettingsComponent,
+            title: 'System Preferences Settings',
+          },
+        ],
+      },
+    ],
+  },
+  {
     path: 'client',
     component: ClientLayoutComponent,
     children: [
@@ -195,7 +189,6 @@ export const routes: Routes = [
         component: DoctorDetailsComponent,
         title: 'Doctor Details',
       },
-
 
       {
         path: 'client-profile',
@@ -212,15 +205,13 @@ export const routes: Routes = [
         component: UpcomingAppointmentsComponent,
         title: 'Client Upcoming Appointments',
       },
-    {
+      {
         path: 'appointment/:appointmentId',
         loadComponent: () =>
-          import('./features/client/components/appointment-details/appointment-details')
-            .then(m => m.appointmentDetails)
+          import(
+            './features/client/components/appointment-details/appointment-details'
+          ).then((m) => m.appointmentDetails),
       },
-
-
-
       {
         path: 'client-live-queue/:appointmentId',
         component: ClientLiveQueueComponent,

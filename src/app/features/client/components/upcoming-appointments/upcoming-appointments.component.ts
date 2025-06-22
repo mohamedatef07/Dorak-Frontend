@@ -23,6 +23,7 @@ import { IDoctorCard } from '../../models/IDoctorCard';
   styleUrls: ['./upcoming-appointments.component.css']
 })
 export class UpcomingAppointmentsComponent implements OnInit {
+
   doctors: IDoctorCard[] = [];
    Appointments:IClientProfileAppointment[]= [];
    clientServices = inject(ClientService);
