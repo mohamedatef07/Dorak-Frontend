@@ -17,3 +17,9 @@
 .dropdown-item:not(:last-child) {
   border-bottom: 1px solid #2a6f96;
 }
+.profile-img {
+  border-radius: 50%;
+}
+.profile-img a img {
+  width: 100%;
+}

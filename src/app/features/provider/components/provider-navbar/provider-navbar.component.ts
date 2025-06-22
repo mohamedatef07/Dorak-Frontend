@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { ProviderService } from '../../services/provider.service';
 import { INotification } from '../../models/INotification';
 import { NotificationsSRService } from '../../../../services/signalR Services/notificationsSR.service';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-provider-navbar',
@@ -23,6 +24,7 @@ export class ProviderNavbarComponent {
   notifications!: Array<INotification>;
   isDropDownOpen = false;
   isNotificationsDropDownOpen = false;
+  UserImage!: string;
 
   toggleDropDown(event: MouseEvent) {
     event.stopPropagation();
@@ -64,6 +66,7 @@ export class ProviderNavbarComponent {
     });
   }
   ngOnInit() {
+    this.UserImage = `${environment.apiUrl}${this.authServices.getUserImage()}`;
     this.providerServices.getNotifications().subscribe({
       next: (res) => {
         this.notifications = [...res.Data];
@@ -80,7 +83,6 @@ export class ProviderNavbarComponent {
     this.srService.notificationsList.subscribe({
       next: (updatedNotifications) => {
         this.notifications = [...updatedNotifications];
-        console.log(updatedNotifications);
       },
       error: (err) => {
         this.messageServices.add({
@@ -93,8 +95,6 @@ export class ProviderNavbarComponent {
     });
     this.srService.notification.subscribe({
       next: (notification) => {
-        console.log(notification);
-
         this.messageServices.add({
           severity: 'info',
           summary: 'New Notification',

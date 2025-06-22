@@ -14,9 +14,7 @@ import { IAddOperator } from '../features/owner/models/IAddOperator';
 export class AuthService {
   cookie = inject(CookieService);
   httpClient = inject(HttpClient);
-  private currentCenterId: number = 1 // Default value, can be changed later through jwt token
-
-
+  private currentCenterId: number = 1; // Default value, can be changed later through jwt token
 
   setCenterId(centerId: number): void {
     this.currentCenterId = centerId;
@@ -40,15 +38,23 @@ export class AuthService {
     const tokenParts = token?.split('.');
     if (tokenParts?.length !== 3) return null;
     const payload = JSON.parse(atob(tokenParts[1]));
-    return payload["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"];
+    return payload[
+      'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'
+    ];
+  }
+  getUserImage() {
+    const token = this.getAuthToken();
+    const tokenParts = token?.split('.');
+    if (tokenParts?.length !== 3) return null;
+    const payload = JSON.parse(atob(tokenParts[1]));
+    return payload['Image'];
   }
   getCenterId() {
     const token = this.getAuthToken();
     const tokenParts = token?.split('.');
     if (tokenParts?.length !== 3) return null;
     const payload = JSON.parse(atob(tokenParts[1]));
-    // console.log(payload);
-    return payload["CenterId"];
+    return payload['CenterId'];
   }
   register(
     registerData: IClientRegisterRequest
@@ -58,9 +64,7 @@ export class AuthService {
       registerData
     );
   }
-  Operatorregister(
-    OperatorData: IAddOperator
-  ): Observable<ApiResponse<null>> {
+  OperatorRegister(OperatorData: IAddOperator): Observable<ApiResponse<null>> {
     return this.httpClient.post<ApiResponse<null>>(
       `${environment.apiUrl}/api/account/Register`,
       OperatorData
