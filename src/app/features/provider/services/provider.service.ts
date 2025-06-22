@@ -9,6 +9,7 @@ import { IShiftDetails } from '../models/IShiftDetails';
 import { IQueueEntries } from '../models/IQueueEntries';
 import { IProviderProfile } from '../../../types/IProviderProfile';
 import { IGeneralStatistics } from '../models/IGeneralStatistics';
+import { INotification } from '../models/INotification';
 
 @Injectable({
   providedIn: 'root',
@@ -72,6 +73,11 @@ export class ProviderService {
   getGeneralStatistics(): Observable<ApiResponse<IGeneralStatistics>> {
     return this.httpClient.get<ApiResponse<IGeneralStatistics>>(
       `${environment.apiUrl}/api/provider/general-statistics`
+    );
+  }
+    getNotifications(): Observable<ApiResponse<Array<INotification>>> {
+    return this.httpClient.get<ApiResponse<Array<INotification>>>(
+      `${environment.apiUrl}/api/provider/notifications`
     );
   }
 }
