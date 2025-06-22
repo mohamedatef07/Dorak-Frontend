@@ -21,9 +21,9 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ProviderLiveQueueComponent implements OnInit {
   liveQueues: IProviderLiveQueueViewModel[] = [];
-  providerId: string = '8942c804-1498-4dfb-8efd-550e6d3989ed';
+  providerId: string = '0dad21ac-6842-430b-af98-78f9d12923d1';
   centerId: number = 1;
-  shiftId: number = 1;
+  shiftId: number = 2;
   pageNumber: number = 1;
   pageSize: number = 16;
   totalItems: number = 0;

@@ -49,7 +49,7 @@ export class UpdateQueueStatusSRService {
         }
       );
       this.hubConnection.on(
-        'UpdateLiveQueue',
+        'QueueUpdated',
         (lres: Array<IClientLiveQueue>) => {
           console.log('Live Queue Updated:', lres);
           this.LiveQueueListSubject.next(lres);

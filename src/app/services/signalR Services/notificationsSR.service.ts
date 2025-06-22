@@ -3,6 +3,7 @@ import { INotification } from '../../features/provider/models/INotification';
 import { Subject } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import * as signalR from '@microsoft/signalr';
+import { AuthService } from '../auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -14,13 +15,18 @@ export class NotificationsSRService {
   private notificationSubject = new Subject<INotification>();
   public notification = this.notificationSubject.asObservable();
 
-  constructor() {
+  constructor(private authService: AuthService) {
     this.startConnection();
     this.registerOnServerEvents();
   }
   private startConnection() {
+    const token = this.authService.getAuthToken();
+    if (!token) {
+      console.warn('❗ No auth token found. SignalR connection aborted.');
+      return;
+    }
     this.hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl(`${environment.apiUrl}/notificationHub`)
+      .withUrl(`${environment.apiUrl}/notificationHub`,{accessTokenFactory: () => token,})
       .withAutomaticReconnect()
       .build();
     this.hubConnection
