@@ -1,3 +1,4 @@
+
 <div class="container">
   <!-- Search bar with dropdowns -->
   <div class="search-container">
@@ -122,9 +123,10 @@
       <p class="text-muted mb-4"><small>{{ filteredDoctors.length }} doctors</small></p>
 
       <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
-        <div class="col" *ngFor="let doc of filteredDoctors">
+        <div class="col" *ngFor="let doc of doctors">
           <div class="doctor-card">
   <img [src]="doc.Image" alt="{{ doc.FullName }}" style="width: 150px; height: 150px;" />
+
 
             <div class="card-body">
               <div class="doctor-name">{{ doc.FullName }}</div>

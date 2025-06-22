@@ -1,3 +1,204 @@
-<p>
-  dashboard works!
-</p>
+<main>
+  <div class="container py-4 px-0 m-0">
+    <p class="fw-bold m-0 pb-4">Dashboard</p>
+    <section class="general-statistics pb-4">
+      <div class="total-appointments p-3">
+        <div class="statistic-info fw-semibold">
+          <span class="info-name">Total Appointments</span>
+          <span class="info-value">{{
+            generalStatistics?.TotalAppointments
+          }}</span>
+        </div>
+        <div class="statistic-icon fw-semibold">
+          <svg
+            width="29"
+            height="31"
+            viewBox="0 0 29 31"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M24 6H5C3.34315 6 2 7.34315 2 9V26C2 27.6569 3.34315 29 5 29H24C25.6569 29 27 27.6569 27 26V9C27 7.34315 25.6569 6 24 6Z"
+              stroke="#ECF0F1"
+              stroke-width="2.5"
+            />
+            <path
+              d="M2 12H27"
+              stroke="#ECF0F1"
+              stroke-width="2.5"
+              stroke-linecap="round"
+            />
+            <path
+              d="M9 2V6"
+              stroke="#ECF0F1"
+              stroke-width="2.5"
+              stroke-linecap="round"
+            />
+            <path
+              d="M20 2V6"
+              stroke="#ECF0F1"
+              stroke-width="2.5"
+              stroke-linecap="round"
+            />
+            <path
+              d="M14.5 17V23M11 20H18"
+              stroke="#ECF0F1"
+              stroke-width="2.5"
+              stroke-linecap="round"
+            />
+          </svg>
+        </div>
+      </div>
+      <div class="total-urgent-cases p-3">
+        <div class="statistic-info fw-semibold">
+          <span class="info-name">Total Urgent Cases</span>
+          <span class="info-value">{{
+            generalStatistics?.TotalUrgentCases
+          }}</span>
+        </div>
+        <div class="statistic-icon fw-semibold">
+          <svg
+            width="34"
+            height="34"
+            viewBox="0 0 34 34"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M17 32C25.2843 32 32 25.2843 32 17C32 8.71573 25.2843 2 17 2C8.71573 2 2 8.71573 2 17C2 25.2843 8.71573 32 17 32Z"
+              stroke="#ECF0F1"
+              stroke-width="2.5"
+            />
+            <path
+              d="M7.5 18.1103H11.4781L13.4672 16.0473L16.4508 19.1418L19.4344 14.5L22.418 18.1103H26.3961"
+              stroke="#ECF0F1"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </div>
+      </div>
+      <div class="patients-in-queue p-3">
+        <div class="statistic-info fw-semibold">
+          <span class="info-name">Patients in Queue</span>
+          <span class="info-value">{{
+            generalStatistics?.PatientsInQueue
+          }}</span>
+        </div>
+        <div class="statistic-icon fw-semibold">
+          <svg
+            width="24"
+            height="27"
+            viewBox="0 0 24 27"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M9 12C11.7614 12 14 9.7614 14 7C14 4.23858 11.7614 2 9 2C6.23858 2 4 4.23858 4 7C4 9.7614 6.23858 12 9 12Z"
+              stroke="#ECF0F1"
+              stroke-width="2.5"
+            />
+            <path
+              d="M2 25C3 19 6.5 15 9 15C11.5 15 15 19 16 25"
+              stroke="#ECF0F1"
+              stroke-width="2.5"
+              stroke-linecap="round"
+            />
+            <path
+              d="M16 15H22M19 12V18"
+              stroke="#ECF0F1"
+              stroke-width="2.5"
+              stroke-linecap="round"
+            />
+          </svg>
+        </div>
+      </div>
+      <div class="patients-treated-tody p-3">
+        <div class="statistic-info fw-semibold">
+          <span class="info-name">Patients Treated Today</span>
+          <span class="info-value">{{
+            generalStatistics?.PatientsTreatedToday
+          }}</span>
+        </div>
+        <div class="statistic-icon fw-semibold">
+          <svg
+            width="52"
+            height="27"
+            viewBox="0 0 52 27"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M9 12C11.7614 12 14 9.7614 14 7C14 4.23858 11.7614 2 9 2C6.23858 2 4 4.23858 4 7C4 9.7614 6.23858 12 9 12Z"
+              stroke="#ECF0F1"
+              stroke-width="2.5"
+            />
+            <path
+              d="M2 25C3 19 6.5 15 9 15C11.5 15 15 19 16 25"
+              stroke="#ECF0F1"
+              stroke-width="2.5"
+              stroke-linecap="round"
+            />
+            <path
+              d="M16 15H22M19 12V18"
+              stroke="#ECF0F1"
+              stroke-width="2.5"
+              stroke-linecap="round"
+            />
+            <path
+              d="M37 12C39.7614 12 42 9.7614 42 7C42 4.23858 39.7614 2 37 2C34.2386 2 32 4.23858 32 7C32 9.7614 34.2386 12 37 12Z"
+              stroke="#ECF0F1"
+              stroke-width="2.5"
+            />
+            <path
+              d="M30 25C31 19 34.5 15 37 15C39.5 15 43 19 44 25"
+              stroke="#ECF0F1"
+              stroke-width="2.5"
+              stroke-linecap="round"
+            />
+            <path
+              d="M44 15H50M47 12V18"
+              stroke="#ECF0F1"
+              stroke-width="2.5"
+              stroke-linecap="round"
+            />
+          </svg>
+        </div>
+      </div>
+      <div class="average-estimated-time p-3">
+        <div class="statistic-info fw-semibold">
+          <span class="info-name">Average Estimated Time</span>
+          <span class="info-value">{{generalStatistics?.AverageEstimatedTime}} Min</span>
+        </div>
+        <div class="statistic-icon fw-semibold">
+          <svg
+            width="33"
+            height="33"
+            viewBox="0 0 33 33"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M16.5 31.5C24.7843 31.5 31.5 24.7843 31.5 16.5C31.5 8.21573 24.7843 1.5 16.5 1.5C8.21573 1.5 1.5 8.21573 1.5 16.5C1.5 24.7843 8.21573 31.5 16.5 31.5Z"
+              stroke="#ECF0F1"
+              stroke-width="2.5"
+            />
+            <path
+              d="M16.5 9C16.5 9 16.5 13.8758 16.5 17"
+              stroke="#ECF0F1"
+              stroke-width="2.5"
+              stroke-linecap="round"
+            />
+            <path
+              d="M16.5 16.5L22 21"
+              stroke="#ECF0F1"
+              stroke-width="2.5"
+              stroke-linecap="round"
+            />
+          </svg>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>

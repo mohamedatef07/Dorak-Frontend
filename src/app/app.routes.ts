@@ -12,9 +12,7 @@ import { CenterProviderProfileComponent } from './features/owner/components/cent
 import { ManuallyScheduleComponent } from './features/owner/components/manually-schedule/manually-schedule.component';
 import { WeeklyScheduleComponent } from './features/owner/components/weekly-schedule/weekly-schedule.component';
 import { ProviderLiveQueueComponent } from './features/owner/components/provider-live-queue/provider-live-queue.component';
-
 import { ProviderScheduleComponent } from './features/owner/components/provider-schedule/provider-schedule.component';
-
 import { ProviderLayoutComponent } from './features/provider/components/provider-layout/provider-layout.component';
 import { OwnerLayoutComponent } from './features/owner/components/owner-layout/owner-layout.component';
 import { ClientLayoutComponent } from './features/client/components/client-layout/client-layout.component';
@@ -32,7 +30,6 @@ import { AddOperatorComponent } from './features/owner/components/AddOperator/Ad
 import { CreateAppointmentComponent } from './features/owner/components/CreateAppointment/CreateAppointment.component';
 import { EditProfileComponent } from './features/client/components/edit-profile/edit-profile.component';
 import { UpcomingAppointmentsComponent } from './features/client/components/upcoming-appointments/upcoming-appointments.component';
-import { LastAppointmentComponent } from './features/client/components/last-appointment/last-appointment.component';
 import { ClientLiveQueueComponent } from './features/client/components/Client-Live-Queue/Client-Live-Queue.component';
 import { ClientWalletComponent } from './features/client/components/ClientWallet/ClientWallet.component';
 import { ProviderSidebarComponent } from './features/provider/components/provider-sidebar/provider-sidebar.component';
@@ -45,8 +42,9 @@ import { CheckoutComponent } from './features/client/components/checkout/checkou
 import { CenterShiftsComponent } from './features/owner/components/center-shifts/center-shifts.component';
 import { ChangePasswordComponent } from './features/client/components/Change-Password/Change-Password.component';
 import { CenterShiftsTableComponent } from './features/owner/components/center-shifts-table/center-shifts-table.component';
-
-
+import { appointmentDetails } from './features/client/components/appointment-details/appointment-details';
+import { ClientUpdateComponent } from './features/client/components/client-update/client-update.component';
+import { SystemPreferencesSettingsComponent } from './features/provider/components/system-preferences-settings/system-preferences-settings.component';
 
 export const routes: Routes = [
   {
@@ -81,7 +79,7 @@ export const routes: Routes = [
     children: [
       { path: 'dashboard', component: DashboardComponent, title: 'Dashboard' },
       {
-        path: 'provider-profile',
+        path: 'profile',
         component: ProviderProfileComponent,
         title: 'profile',
       },
@@ -93,16 +91,30 @@ export const routes: Routes = [
       { path: 'schedule', component: ScheduleComponent, title: 'Schedule' },
       { path: 'reports', component: ReportsComponent, title: 'Reports' },
       {
-        path: 'profile-setting',
+        path: 'settings',
         component: ProviderSettingComponent,
         children: [
-          { path: '', redirectTo: 'personal-setting', pathMatch: 'full' },
-          { path: 'personal-setting', component: PersonalSettingComponent },
+          { path: '', redirectTo: 'personal-settings', pathMatch: 'full' },
           {
-            path: 'professional-setting',
-            component: ProfessionalInformationComponent,
+            path: 'personal-settings',
+            component: PersonalSettingComponent,
+            title: 'Personal Settings',
           },
-          { path: 'security-setting', component: SecurityProfileComponent },
+          {
+            path: 'professional-settings',
+            component: ProfessionalInformationComponent,
+            title: 'Professional Settings',
+          },
+          {
+            path: 'security-settings',
+            component: SecurityProfileComponent,
+            title: 'Security Settings',
+          },
+          {
+            path: 'system-preferences-settings',
+            component: SystemPreferencesSettingsComponent,
+            title: 'System Preferences Settings',
+          },
         ],
       },
     ],
@@ -155,26 +167,24 @@ export const routes: Routes = [
       {
         path: 'provider-live-queue/:shiftId',
         component: ProviderLiveQueueComponent,
-        title: 'Provider Live Queue'
+        title: 'Provider Live Queue',
       },
       {
         path: 'manage-operators',
         component: ManageOperatorsComponent,
         title: 'Manage Operators',
-        // children: [
-        // ]
       },
       {
         path: 'add-operator',
         component: AddOperatorComponent,
-        title: 'Add Operator'
+        title: 'Add Operator',
       },
       {
         path: 'create-appointment',
         component: CreateAppointmentComponent,
-        title: 'Create Appointment'
-      }
-    ]
+        title: 'Create Appointment',
+      },
+    ],
   },
   {
     path: 'client',
@@ -185,6 +195,8 @@ export const routes: Routes = [
         component: DoctorDetailsComponent,
         title: 'Doctor Details',
       },
+
+
       {
         path: 'client-profile',
         component: ClientProfileComponent,
@@ -192,7 +204,7 @@ export const routes: Routes = [
       },
       {
         path: 'client-edit-profile',
-        component: EditProfileComponent,
+        component: ClientUpdateComponent,
         title: 'Edit Client Profile',
       },
       {
@@ -200,11 +212,15 @@ export const routes: Routes = [
         component: UpcomingAppointmentsComponent,
         title: 'Client Upcoming Appointments',
       },
-      {
-        path: 'last-appointment',
-        component: LastAppointmentComponent,
-        title: 'Last Appointment',
+    {
+        path: 'appointment/:appointmentId',
+        loadComponent: () =>
+          import('./features/client/components/appointment-details/appointment-details')
+            .then(m => m.appointmentDetails)
       },
+
+
+
       {
         path: 'client-live-queue/:appointmentId',
         component: ClientLiveQueueComponent,
@@ -225,8 +241,8 @@ export const routes: Routes = [
       },
       {
         path: 'change-password',
-        component: ChangePasswordComponent
-      }
+        component: ChangePasswordComponent,
+      },
     ],
   },
 
