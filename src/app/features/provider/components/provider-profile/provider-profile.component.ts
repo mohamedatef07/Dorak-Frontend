@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProviderSidebarComponent } from '../provider-sidebar/provider-sidebar.component';
-import {IProviderProfile} from '../../../../types/IProviderProfile'
+import { IProviderProfile } from '../../../../types/IProviderProfile';
 import { ProviderService } from '../../services/provider.service';
 import { GenderType } from '../../../../Enums/GenderType.enum';
 import { environment } from '../../../../../environments/environment';
@@ -11,36 +11,29 @@ import { DatePipe } from '@angular/common';
   standalone: true,
   templateUrl: './provider-profile.component.html',
   styleUrls: ['./provider-profile.component.css'],
-  imports: [DatePipe]
+  imports: [DatePipe],
 })
 export class ProviderProfileComponent implements OnInit {
-profile: IProviderProfile | null = null;
-genderEnum = GenderType;
+  profile: IProviderProfile | null = null;
+  genderEnum = GenderType;
   fullImagePath: string = '';
 
-  constructor(private ProviderPrpfileService:ProviderService) { }
+  constructor(private ProviderProfileService: ProviderService) {}
 
-getProviderProfile(): void {
-  this.ProviderPrpfileService.getProviderProfile().subscribe({
-    next: (res) => {
-      this.profile = res.Data;
-            console.log(res.Data)
+  getProviderProfile(): void {
+    this.ProviderProfileService.getProviderProfile().subscribe({
+      next: (res) => {
+        this.profile = res.Data;
 
-      if (this.profile?.Image) {
-        this.fullImagePath = `${environment.apiUrl}${this.profile.Image}`;
-            console.log( this.fullImagePath)
-
-      }
-    },
-    error: (err) => console.error('Error loading profile:', err)
-  });
-}
-
-
-
-
-  ngOnInit() :void{
-this.getProviderProfile();
+        if (this.profile?.Image) {
+          this.fullImagePath = `${environment.apiUrl}${this.profile.Image}`;
+        }
+      },
+      error: (err) => console.error('Error loading profile:', err),
+    });
   }
 
+  ngOnInit(): void {
+    this.getProviderProfile();
+  }
 }

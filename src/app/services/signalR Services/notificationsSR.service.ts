@@ -22,7 +22,7 @@ export class NotificationsSRService {
   private startConnection() {
     const token = this.authService.getAuthToken();
     if (!token) {
-      console.warn('❗ No auth token found. SignalR connection aborted.');
+      console.warn('No auth token found. SignalR connection aborted.');
       return;
     }
     this.hubConnection = new signalR.HubConnectionBuilder()

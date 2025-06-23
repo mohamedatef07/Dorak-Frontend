@@ -45,6 +45,7 @@ import { CenterShiftsTableComponent } from './features/owner/components/center-s
 import { appointmentDetails } from './features/client/components/appointment-details/appointment-details';
 import { ClientUpdateComponent } from './features/client/components/client-update/client-update.component';
 import { SystemPreferencesSettingsComponent } from './features/provider/components/system-preferences-settings/system-preferences-settings.component';
+import { NotificationsComponent } from './components/notifications/notifications.component';
 
 export const routes: Routes = [
   {
@@ -177,6 +178,11 @@ export const routes: Routes = [
             title: 'System Preferences Settings',
           },
         ],
+      },
+      {
+        path: 'notifications',
+        component: NotificationsComponent,
+        title: 'Notifications',
       },
     ],
   },

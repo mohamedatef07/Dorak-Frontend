@@ -14,6 +14,18 @@
   word-wrap: break-word;
   overflow-wrap: break-word;
 }
-.dropdown-item:not(:last-child) {
+.nav
+  .container
+  .dropdown
+  #notifications-dropdown-list
+  .dropdown-item:not(:last-child) {
   border-bottom: 1px solid #2a6f96;
+}
+.nav .container .profile-notifications .profile-img {
+  width: 3rem;
+  height: 3rem;
+}
+.nav .container .profile-notifications .profile-img a img {
+  width: 100%;
+  border-radius: 50%;
 }
