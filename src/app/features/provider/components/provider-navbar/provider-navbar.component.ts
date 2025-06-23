@@ -71,18 +71,11 @@ export class ProviderNavbarComponent {
       next: (res) => {
         this.notifications = [...res.Data];
       },
-      error: (err) => {
-        this.messageServices.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'The server is experiencing an issue, Please try again soon.',
-          life: 4000,
-        });
-      },
     });
     this.srService.notificationsList.subscribe({
       next: (updatedNotifications) => {
         this.notifications = [...updatedNotifications];
+        console.log(updatedNotifications);
       },
       error: (err) => {
         this.messageServices.add({
@@ -95,6 +88,7 @@ export class ProviderNavbarComponent {
     });
     this.srService.notification.subscribe({
       next: (notification) => {
+        console.log(notification);
         this.messageServices.add({
           severity: 'info',
           summary: 'New Notification',
