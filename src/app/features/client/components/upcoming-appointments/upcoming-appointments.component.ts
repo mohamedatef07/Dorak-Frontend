@@ -44,6 +44,10 @@ export class UpcomingAppointmentsComponent implements OnInit {
     this.clientServices.getUpcomingAppointments(this.userid).subscribe({
             next: (res) => {
               this.Appointments = res.Data;
+                 if (this.appointment.ProviderImage) {
+                 this.fullImagePath = `${environment.apiUrl}${this.appointment.ProviderImage}`;
+                 console.log( this.fullImagePath)
+                 }
 
             },
             error: (err) => {
@@ -58,6 +62,11 @@ export class UpcomingAppointmentsComponent implements OnInit {
       this.appointment = res.Data;
       let ProviderId = this.appointment.ProviderId;
       console.log(res.Data);
+        if (this.appointment.ProviderImage) {
+             this.fullImagePath = `${environment.apiUrl}${this.appointment.ProviderImage}`;
+                 console.log( this.fullImagePath)
+     }
+
       console.log(ProviderId);
     },
     error: (err) => {
@@ -65,7 +74,7 @@ export class UpcomingAppointmentsComponent implements OnInit {
     },
   });
 
-     const param = this.route.snapshot.paramMap.get('appointmentId');
+  const param = this.route.snapshot.paramMap.get('appointmentId');
   if (param) {
     this.appointmentId = +param;
 

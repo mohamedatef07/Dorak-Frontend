@@ -33,7 +33,7 @@ export class appointmentDetails implements OnInit {
 
   appointmentId!: number;
   appointment!: IAppointment;
-fullImagePath: string = '';
+  fullImagePath: string = '';
 
   ngOnInit(): void {
 
@@ -52,7 +52,7 @@ const param = this.route.snapshot.paramMap.get('appointmentId');
      }
    },
 
- 
+
   error: (err) => {
     console.error(err);
   }
