@@ -416,3 +416,9 @@ main .container > p {
 .footer .container div ul li a {
   color: var(--text-color-Light);
 }
+
+:host ::ng-deep .p-panelmenu .p-menuitem-icon {
+  color: red;
+  font-size: 1.2em;
+  margin-right: 0.5rem;
+}

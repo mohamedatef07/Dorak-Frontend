@@ -14,7 +14,7 @@ import { IAddOperator } from '../features/owner/models/IAddOperator';
 export class AuthService {
   cookie = inject(CookieService);
   httpClient = inject(HttpClient);
-  private currentCenterId: number = 1; // Default value, can be changed later through jwt token
+  private currentCenterId: number = 1; 
 
   setCenterId(centerId: number): void {
     this.currentCenterId = centerId;
@@ -55,14 +55,6 @@ export class AuthService {
     if (tokenParts?.length !== 3) return null;
     const payload = JSON.parse(atob(tokenParts[1]));
     return payload['CenterId'];
-  }
-  getUserImage(){
-    const token = this.getAuthToken();
-    const tokenParts = token?.split('.');
-    if (tokenParts?.length !== 3) return null;
-    const payload = JSON.parse(atob(tokenParts[1]));
-    // console.log(payload);
-    return payload["Image"];
   }
   register(
     registerData: IClientRegisterRequest
