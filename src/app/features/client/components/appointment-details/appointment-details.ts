@@ -11,6 +11,7 @@ import { ClientTypeEnumValuePipe } from '../../../../pipes/ClientTypeEnumValue.p
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ApiResponse } from '../../../../types/ApiResponse';
 import { __param } from 'tslib';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-appointment-details',
@@ -32,6 +33,7 @@ export class appointmentDetails implements OnInit {
 
   appointmentId!: number;
   appointment!: IAppointment;
+  fullImagePath: string = '';
 
   ngOnInit(): void {
 
@@ -43,7 +45,14 @@ const param = this.route.snapshot.paramMap.get('appointmentId');
   next: (res) => {
     console.log('Response from API:', res);
     this.appointment = res.Data;
-  },
+
+     if (this.appointment.ProviderImage) {
+             this.fullImagePath = `${environment.apiUrl}${this.appointment.ProviderImage}`;
+                 console.log( this.fullImagePath)
+     }
+   },
+
+
   error: (err) => {
     console.error(err);
   }
