@@ -10,6 +10,7 @@ import { IAppointment } from '../../models/IAppointment';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { routes } from '../../../../app.routes';
 import { IDoctorCard } from '../../models/IDoctorCard';
+import { environment } from '../../../../../environments/environment';
 
 
 @Component({
@@ -30,6 +31,8 @@ export class UpcomingAppointmentsComponent implements OnInit {
     cAuthServices = inject(AuthService);
   constructor() { }
     userid:string= '';
+    fullImagePath: string = '';
+
       private clientService = inject(ClientService);
       private route = inject(ActivatedRoute);
 
@@ -41,6 +44,10 @@ export class UpcomingAppointmentsComponent implements OnInit {
     this.clientServices.getUpcomingAppointments(this.userid).subscribe({
             next: (res) => {
               this.Appointments = res.Data;
+                 if (this.appointment.ProviderImage) {
+                 this.fullImagePath = `${environment.apiUrl}${this.appointment.ProviderImage}`;
+                 console.log( this.fullImagePath)
+                 }
 
             },
             error: (err) => {
@@ -55,6 +62,11 @@ export class UpcomingAppointmentsComponent implements OnInit {
       this.appointment = res.Data;
       let ProviderId = this.appointment.ProviderId;
       console.log(res.Data);
+        if (this.appointment.ProviderImage) {
+             this.fullImagePath = `${environment.apiUrl}${this.appointment.ProviderImage}`;
+                 console.log( this.fullImagePath)
+     }
+
       console.log(ProviderId);
     },
     error: (err) => {
@@ -62,7 +74,7 @@ export class UpcomingAppointmentsComponent implements OnInit {
     },
   });
 
-     const param = this.route.snapshot.paramMap.get('appointmentId');
+  const param = this.route.snapshot.paramMap.get('appointmentId');
   if (param) {
     this.appointmentId = +param;
 
