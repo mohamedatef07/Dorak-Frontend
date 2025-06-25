@@ -10,6 +10,7 @@ import { IAppointment } from '../../models/IAppointment';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { routes } from '../../../../app.routes';
 import { IDoctorCard } from '../../models/IDoctorCard';
+import { environment } from '../../../../../environments/environment';
 
 
 @Component({
@@ -30,6 +31,8 @@ export class UpcomingAppointmentsComponent implements OnInit {
     cAuthServices = inject(AuthService);
   constructor() { }
     userid:string= '';
+    fullImagePath: string = '';
+
       private clientService = inject(ClientService);
       private route = inject(ActivatedRoute);
 

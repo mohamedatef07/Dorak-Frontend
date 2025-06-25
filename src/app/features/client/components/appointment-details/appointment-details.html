@@ -3,14 +3,10 @@
   class="appointment-card p-3 mb-3 rounded"
   [ngClass]="'bg-lightblue'"
 >
-  <div class="d-flex justify-content-center mb-4">
-    <p-avatar
-      image="https://www.w3schools.com/howto/img_avatar.png"
-      shape="circle"
-      class="avatar"
-      [style]="{'width': '100px', 'height': '100px'}"
-    >
-    </p-avatar>
+  <div class="d-flex justify-content-center mb-4"> 
+    <img [src]="fullImagePath" alt="Provider Image" width="100px" height= "100px" shape="circle"
+      class="avatar"*ngIf="fullImagePath" />
+
   </div>
   <div class="d-flex flex-column flex-md-row align-items-start justify-content-between">
     <div class="flex-grow-1">
