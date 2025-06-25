@@ -5,7 +5,7 @@
 >
   <div class="d-flex align-items-center mb-3 mb-md-0">
 
-          <img *ngIf="fullImagePath" [src]="fullImagePath" alt="Doctor Image" class="avatar"/>
+          <img *ngIf="fullImagePath" [src]="fullImagePath" alt="Doctor Image" class="shape" class="avatar"/>
 
 
 
@@ -41,7 +41,8 @@
   [ngClass]="i % 2 === 0 ? 'bg-lightblue' : 'bg-darkblue text-white'"
 >
   <div class="d-flex align-items-center mb-3 mb-md-0">
-     <img *ngIf="fullImagePath" [src]="fullImagePath" alt="Doctor Image" class="avatar"/>
+              <img *ngIf="fullImagePath" [src]="fullImagePath" alt="Doctor Image" class="shape" class="avatar"/>
+
     <div>
       <div class="fw-bold">{{ appointment.ProviderName }}</div>
       <p-rating
