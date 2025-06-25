@@ -1,0 +1,24 @@
+<main>
+  <div class="container d-flex flex-column gap-3 py-4 px-0 m-0">
+    <p class="fw-bold m-0">Notifications</p>
+    <div
+      class="notifications-list bg-white main-padding main-radius d-flex flex-column gap-2 main-text-Color"
+    >
+      @for(notification of notifications; track $index){
+      <div
+        class="notification-item d-flex flex-column gap-2 p-3 border rounded"
+      >
+        <div class="notification-header d-flex justify-content-between">
+          <span class="notification-title fw-bold">{{
+            notification.Title
+          }}</span>
+          <span class="notification-date text-muted">
+            {{ notification.CreatedAt | date : "MMMM d, y" }}
+          </span>
+        </div>
+        <p class="notification-message m-0">{{ notification.Message }}</p>
+      </div>
+      }
+    </div>
+  </div>
+</main>
