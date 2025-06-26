@@ -52,18 +52,19 @@
      [class.in-progress]="item.Status === QueueAppointmentStatus.InProgress"
      [class.not-checked]="item.Status === QueueAppointmentStatus.NotChecked">
    
-  <!-- <div class="d-flex align-items-center">
-    <img [src]="getFullImagePath(clientInfo.Image)" alt="User" width="40" />
-    <p class="mb-0 ms-2 fw-bold">
+  <div class="d-flex align-items-center">
+<img [src]="item.IsCurrentClient ? fullImagePath : 'assets/images/default-user.png'"
+     alt="User"
+     height="50"
+  />
+    <p class="mb-0 ms-5 fw-bold">
       {{ item.IsCurrentClient ? clientInfo.Name : 'Anonymous' }}
     </p>
-  </div> -->
+  </div>
 
   <span>{{ getStatusText(item.Status) }}</span>
   <span class="fw-bold">{{ item.CurrentQueuePosition }}</span>
 </div>
-
-
     </div>
   </div>
 </body>

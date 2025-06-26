@@ -1,8 +1,21 @@
-.arrow-down::after {
-  content: '▼';
-  margin-left: 0.15rem;
+@import "primeicons/primeicons.css";
+
+:host ::ng-deep .pi-desktop:before,
+:host ::ng-deep .pi-users:before,
+:host ::ng-deep .pi-calendar:before,
+:host ::ng-deep .pi-cog:before,
+:host ::ng-deep .pi-chart-bar:before
+{
+  color: var(--bg-dark); 
+  font-size: 20px;
+  margin: 0 10px;
 }
-.arrow-right::after {
-  content: '▶';
-  margin-left: 0.15rem;
+
+:host ::ng-deep .p-panelmenu-panel{
+  font-size: 1rem;
+  border-radius: 15px 0 0 15px;
+  margin-bottom: 10px;
+  
 }
+
+

@@ -125,7 +125,8 @@
       <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
         <div class="col" *ngFor="let doc of doctors">
           <div class="doctor-card">
-  <img [src]="doc.Image" alt="{{ doc.FullName }}" style="width: 150px; height: 150px;" />
+          <img *ngIf="fullImagePath" [src]="fullImagePath" alt="Doctor Image" class="img-thumbnail" />
+
 
 
             <div class="card-body">

@@ -18,6 +18,8 @@ export class DoctorsPageComponent implements OnInit {
   searchText: string = '';
   specialty: string = '';
   city: string = '';
+  fullImagePath: string = '';
+
 
   specialties: string[] = [
     'Cardiology',
@@ -79,14 +81,18 @@ export class DoctorsPageComponent implements OnInit {
       next: (res) => {
         this.doctors = res.Data;
         console.log(res.Data);
-        this.doctors.forEach((doctor) => {
-          doctor.Image = environment.apiUrl + doctor.Image;
-        });
-        this.filteredDoctors = [...this.doctors];
-        this.doctors.forEach((doctor) => {
-        doctor.Image = environment.apiUrl + doctor.Image;
+        // this.doctors.forEach((doctor) => {
+        //   doctor.Image = environment.apiUrl + doctor.Image;
+        // });
+
+      if ( this.doctors[0].Image) {
+       this.fullImagePath = `${environment.apiUrl}${this.doctors[0].Image}`;
+      console.log(this.fullImagePath);
 }
-);
+
+
+        this.filteredDoctors = [...this.doctors];
+
       },
       error: (err) => {
         console.error('Error loading doctors:', err);

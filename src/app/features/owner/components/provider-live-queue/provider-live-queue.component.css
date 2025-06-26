@@ -1,6 +1,7 @@
 .container {
   padding: 20px;
   font-family: Arial, sans-serif;
+  position: relative;
 }
 
 .header {
@@ -16,11 +17,9 @@
 }
 
 .header-actions button {
-  background: none;
   border: none;
   font-size: 18px;
   cursor: pointer;
-  color: #666;
   margin-left: 10px;
 }
 
@@ -48,6 +47,61 @@
 .add-btn > * {
   color: #000;
   font-size: 25px;
+}
+
+.end-shift-btn {
+  background-color: #dc3545;
+  color: white;
+  padding: 7px 13px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  display: inline-block;
+}
+
+.end-shift-btn:hover {
+  background-color: #c82333;
+}
+
+.custom-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup-content {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  min-width: 300px;
+  border-left: 5px solid #007bff;
+}
+
+.popup-content p {
+  margin: 0;
+  font-size: 18px;
+  color: #333;
+  padding: 10px;
+}
+
+.popup-content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background: linear-gradient(to right, #dc3545, #007bff);
 }
 
 /* Statistics Container */
@@ -153,4 +207,23 @@
   border-radius: 5px;
   border: 1px solid #ddd;
   cursor: pointer;
+}
+
+/* Additional Fees Input Styling */
+.additional-fees-input {
+  margin-left: 10px;
+}
+
+.additional-fees-input label {
+  font-size: 14px;
+  color: #333;
+  margin-right: 5px;
+}
+
+.additional-fees-input input {
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  width: 100px;
 }

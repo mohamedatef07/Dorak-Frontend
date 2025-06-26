@@ -14,7 +14,7 @@ import { IAddOperator } from '../features/owner/models/IAddOperator';
 export class AuthService {
   cookie = inject(CookieService);
   httpClient = inject(HttpClient);
-  private currentCenterId: number = 1; // Default value, can be changed later through jwt token
+  private currentCenterId: number = 1; 
 
   setCenterId(centerId: number): void {
     this.currentCenterId = centerId;

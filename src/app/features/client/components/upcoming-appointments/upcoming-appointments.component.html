@@ -4,9 +4,10 @@
   *ngIf="appointment"
 >
   <div class="d-flex align-items-center mb-3 mb-md-0">
-   <!-- <div *ngFor="let doctor of doctors">
-  <img [src]="doctor.Image" shape="circle" class="avatar" />
-</div> -->
+
+          <img *ngIf="fullImagePath" [src]="fullImagePath" alt="Doctor Image" class="shape" class="avatar"/>
+
+
 
     <div>
       <div class="fw-bold">{{ appointment.ProviderName }}</div>
@@ -40,12 +41,8 @@
   [ngClass]="i % 2 === 0 ? 'bg-lightblue' : 'bg-darkblue text-white'"
 >
   <div class="d-flex align-items-center mb-3 mb-md-0">
-    <p-avatar
-      image="https://www.w3schools.com/howto/img_avatar.png"
-      shape="circle"
-      class="me-3 avatar"
-    >
-    </p-avatar>
+              <img *ngIf="fullImagePath" [src]="fullImagePath" alt="Doctor Image" class="shape" class="avatar"/>
+
     <div>
       <div class="fw-bold">{{ appointment.ProviderName }}</div>
       <p-rating
