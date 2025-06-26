@@ -7,6 +7,7 @@ import { ProviderService } from '../../services/provider.service';
 import { INotification } from '../../models/INotification';
 import { NotificationsSRService } from '../../../../services/signalR Services/notificationsSR.service';
 import { environment } from '../../../../../environments/environment';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-provider-navbar',
@@ -20,6 +21,8 @@ export class ProviderNavbarComponent {
   messageServices = inject(MessageService);
   srService = inject(NotificationsSRService);
   router = inject(Router);
+
+  private notificationsListSubscription!: Subscription;
 
   notifications!: Array<INotification>;
   isDropDownOpen = false;
@@ -72,20 +75,21 @@ export class ProviderNavbarComponent {
         this.notifications = [...res.Data];
       },
     });
-    this.srService.notificationsList.subscribe({
-      next: (updatedNotifications) => {
-        this.notifications = [...updatedNotifications];
-        console.log(updatedNotifications);
-      },
-      error: (err) => {
-        this.messageServices.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'The server is experiencing an issue, Please try again soon.',
-          life: 4000,
-        });
-      },
-    });
+    this.notificationsListSubscription =
+      this.srService.notificationsList.subscribe({
+        next: (updatedNotifications) => {
+          this.notifications = [...updatedNotifications];
+        },
+        error: (err) => {
+          this.messageServices.add({
+            severity: 'error',
+            summary: 'Error',
+            detail:
+              'The server is experiencing an issue, Please try again soon.',
+            life: 4000,
+          });
+        },
+      });
     this.srService.notification.subscribe({
       next: (notification) => {
         console.log(notification);
@@ -105,5 +109,8 @@ export class ProviderNavbarComponent {
         });
       },
     });
+  }
+  ngOnDestroy(): void {
+    this.notificationsListSubscription.unsubscribe();
   }
 }
