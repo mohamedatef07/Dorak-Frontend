@@ -1,6 +1,7 @@
 import { UpdateQueueStatusSRService } from '../../../../services/signalR Services/updateQueueStatusSR.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms'; // Added for ngModel
 import { ApiService } from '../../../../services/api.service';
 import { ApiResponse } from '../../../../types/ApiResponse';
 import { IProviderLiveQueueViewModel } from '../../../../types/IProviderLiveQueueViewModel';
@@ -10,12 +11,14 @@ import { ClientType } from '../../../../../app/Enums/ClientType.enum';
 import { QueueAppointmentStatus } from '../../../../../app/Enums/QueueAppointmentStatus.enum';
 import { IProviderViewModel } from '../../../../types/IProviderViewModel';
 import * as signalR from '@microsoft/signalr';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { IOperatorViewModel } from '../../../../types/IOperatorViewModel';
 
 @Component({
   selector: 'app-provider-live-queue',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule], // Added FormsModule
   templateUrl: './provider-live-queue.component.html',
   styleUrls: ['./provider-live-queue.component.css'],
 })
@@ -36,11 +39,17 @@ export class ProviderLiveQueueComponent implements OnInit {
     exist: 0,
     done: 0,
   };
+  showPopup: boolean = false;
+  additionalFees: { [key: number]: number } = {}; // Store fees per LiveQueueId as number
+  QueueAppointmentStatus = QueueAppointmentStatus; // Expose enum for template
+
+  @ViewChild('successPopup') successPopup!: ElementRef;
 
   constructor(
     private apiService: ApiService,
     private signalRService: UpdateQueueStatusSRService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -72,6 +81,7 @@ export class ProviderLiveQueueComponent implements OnInit {
   }
 
   loadLiveQueues(): void {
+    this.liveQueues = [];
     this.apiService
       .getProviderLiveQueues(
         this.providerId,
@@ -90,9 +100,9 @@ export class ProviderLiveQueueComponent implements OnInit {
             const normalizedData = Array.isArray(response.Data.Data)
               ? { $values: response.Data.Data }
               : response.Data.Data || { $values: [] };
-
+            console.log('Normalized Data:', normalizedData);
             this.liveQueues = normalizedData.$values.map((item) => ({
-              LiveQueueId: item.LiveQueueId,
+              LiveQueueId: Number(item.LiveQueueId), // Ensure it's a number
               ClientFullName: item.ClientFullName,
               ClientType: this.mapClientType(item.ClientType),
               EstimatedTime: item.EstimatedTime,
@@ -160,15 +170,17 @@ export class ProviderLiveQueueComponent implements OnInit {
     }
 
     const newStatus = this.stringToStatus(newStatusStr);
+    let additionalFeesValue: number | undefined = this.additionalFees[liveQueue.LiveQueueId];
 
-    if (newStatus === QueueAppointmentStatus.none) {
-      console.error('Invalid status selected:', newStatusStr);
-      return;
+    if (newStatus === QueueAppointmentStatus.Completed && !additionalFeesValue) {
+      console.error('Additional Fees must be set when status was InProgress.');
+      return; // Prevent status change if no fee is set
     }
 
     const updateModel: IUpdateQueueStatusViewModel = {
       LiveQueueId: liveQueue.LiveQueueId,
       SelectedStatus: this.getStatusString(newStatus),
+      AdditionalFees: additionalFeesValue,
     };
 
     console.log('Update Request Payload:', updateModel);
@@ -176,11 +188,12 @@ export class ProviderLiveQueueComponent implements OnInit {
     this.apiService.updateLiveQueueStatus(updateModel).subscribe({
       next: (response: ApiResponse<string>) => {
         if (response.Status === 200) {
-          // Update local status
           liveQueue.Status = newStatus;
-          // Set ArrivalTime when status is Waiting
           if (newStatus === QueueAppointmentStatus.Waiting) {
-            liveQueue.ArrivalTime = new Date().toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' }); // e.g., "14:30"
+            liveQueue.ArrivalTime = new Date().toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });
+          } else if (newStatus === QueueAppointmentStatus.Completed) {
+            this.loadLiveQueues();
+            console.log(this.liveQueues);
           }
           this.calculateStats();
           console.log('Queue status updated:', response.Data);
@@ -193,6 +206,32 @@ export class ProviderLiveQueueComponent implements OnInit {
           'Error updating queue status:',
           error.error?.message || error.message || error
         );
+      },
+    });
+  }
+
+  endShift(): void {
+    const operatorId = 'user1-operator';
+    this.apiService.endShift(this.shiftId, operatorId).subscribe({
+      next: (response: ApiResponse<IOperatorViewModel>) => {
+        if (response.Status === 200) {
+          console.log('Shift ended successfully:', response.Message);
+          if (response.Data) {
+            console.log('Operator data:', response.Data);
+          }
+          this.showPopup = true;
+          setTimeout(() => {
+            this.showPopup = false;
+            this.liveQueues = [];
+            this.calculateStats();
+            this.router.navigate(['/owner/center-shifts-table']);
+          }, 3000);
+        } else {
+          console.error('Failed to end shift:', response.Message);
+        }
+      },
+      error: (error) => {
+        console.error('Error ending shift:', error.error?.message || error.message || error);
       },
     });
   }
