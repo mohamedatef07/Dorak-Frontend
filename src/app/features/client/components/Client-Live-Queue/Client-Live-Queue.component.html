@@ -1,88 +1,71 @@
 <body>
-    <div class="container mt-4">
-        <div class="container-card">
-            <!-- Doctor Profile -->
-            <img src="./Assest/img/doctor Profile.png" alt="Doctor" class="profile-image">
-            <h5 class="fw-bold mt-2">Mohamed Ahmed</h5>
-            <p class="text-muted">Specialization: Cardiologist</p>
+  <div class="container mt-4">
+    <div class="container-card">
+      <!-- Doctor Profile -->
+      <img src="./Assest/img/doctor Profile.png" alt="Doctor" class="profile-image" />
+      <h5 class="fw-bold mt-2">Mohamed Ahmed</h5>
+      <p class="text-muted">Specialization: Cardiologist</p>
 
-            <hr>
+      <hr />
 
-            <!-- Live Status Updates -->
-            <div class="container mt-4">
-                <!-- Live Status Updates -->
-                <h6 class="fw-bold status-text">Live status updates</h6>
-                <div class="status-container">
-                    <img src="./Assest/img/patient 2.png" alt="Doctor Illustration" class="illustration">
-                    <div class="w-100">
-                        <div class="status-bar">
-                            <div class="circle">15</div>
-                            <div class="circle">2</div>
-                            <div class="circle">12</div>
-                        </div>
-                        <div class="status-labels">
-                            <span class="w-33">My Number</span>
-                            <span class="w-33">Attend in Clinic</span>
-                            <span class="w-33">Current Number</span>
-                        </div>
-                    </div>
-                </div>
+      <!-- Live Status Updates -->
+      <div class="container mt-4">
+        <h6 class="fw-bold status-text">Live status updates</h6>
+        <div class="status-container">
+          <img [src]="clientInfo.Image" alt="Doctor Illustration" class="illustration" />
+          <div class="w-100">
+            <div class="status-bar">
+             <div class="circle">{{ clientInfo?.Name }}
+
+             </div>
+             <div *ngFor="let item of LiveQueues">
+             <div [ngClass]="item.IsCurrentClient ? 'current-client-style' : ''">
+             <div *ngIf="item.IsCurrentClient">
             </div>
-
-            <!-- Estimated Waiting Time -->
-            <h6 class="fw-bold text-start mt-4">Live Estimated Waiting Time</h6>
-            <div class="progress-bar-container mt-2">
-                <div class="progress-bar-fill"></div>
             </div>
-            <p class="mt-1 text-end">2 hours</p>
+             </div>
+            <div class="circle">{{ getCurrentNumber() }}</div>
 
-            <!-- Live Queue -->
-            <h6 class="fw-bold text-start mt-4">Live QUEUE:</h6>
-
-            <div class="queue-card">
-                <div class="d-flex align-items-center">
-                    <img src="./Assest/img/patient 2.png" alt="User" width="40">
-                    <p class="mb-0 ms-2 fw-bold">Anonymous</p>
-                </div>
-                <span>In Consultation</span>
-                <span class="fw-bold">12</span>
             </div>
-
-            <div class="queue-card">
-                <div class="d-flex align-items-center">
-                    <img src="./Assest/img/patient 2.png" alt="User" width="40">
-                    <p class="mb-0 ms-2 fw-bold">Anonymous</p>
-                </div>
-                <span>Waiting In Clinic</span>
-                <span class="fw-bold">13</span>
+            <div class="status-labels">
+              <span class="w-33">My Number</span>
+              <span class="w-33">Attend in Clinic</span>
+              <span class="w-33">Current Number</span>
             </div>
-
-            <div class="queue-card">
-                <div class="d-flex align-items-center">
-                    <img src="./Assest/img/patient 2.png" alt="User" width="40">
-                    <p class="mb-0 ms-2 fw-bold">Anonymous</p>
-                </div>
-                <span>Waiting</span>
-                <span class="fw-bold">14</span>
-            </div>
-
-            <div class="queue-card">
-                <div class="d-flex align-items-center">
-                    <img src="./Assest/img/patient 2.png" alt="User" width="40">
-                    <p class="mb-0 ms-2 fw-bold">Amir Nasser (Me)</p>
-                </div>
-                <span>Waiting</span>
-                <span class="fw-bold">15</span>
-            </div>
-
-            <div class="queue-card done">
-                <div class="d-flex align-items-center">
-                    <img src="./Assest/img/patient 2.png" alt="User" width="40">
-                    <p class="mb-0 ms-2 fw-bold">Anonymous</p>
-                </div>
-                <span>Done</span>
-                <span class="fw-bold">11</span>
-            </div>
+          </div>
         </div>
+      </div>
+
+      <!-- Estimated Waiting Time -->
+      <h6 class="fw-bold text-start mt-4">Live Estimated Waiting Time</h6>
+      <div class="progress-bar-container mt-2">
+        <div class="progress-bar-fill" [style.width.%]="waitingProgress"></div>
+      </div>
+      <p class="mt-1 text-end">{{ estimatedTime }}</p>
+
+     <h6 class="fw-bold text-start mt-4">Live QUEUE:</h6>
+
+<div *ngFor="let item of LiveQueues; trackBy: trackByFn"
+     class="queue-card"
+     [class.done]="item.Status === QueueAppointmentStatus.Completed"
+     [class.waiting]="item.Status === QueueAppointmentStatus.Waiting"
+     [class.in-progress]="item.Status === QueueAppointmentStatus.InProgress"
+     [class.not-checked]="item.Status === QueueAppointmentStatus.NotChecked">
+   
+  <div class="d-flex align-items-center">
+<img [src]="item.IsCurrentClient ? fullImagePath : 'assets/images/default-user.png'"
+     alt="User"
+     height="50"
+  />
+    <p class="mb-0 ms-5 fw-bold">
+      {{ item.IsCurrentClient ? clientInfo.Name : 'Anonymous' }}
+    </p>
+  </div>
+
+  <span>{{ getStatusText(item.Status) }}</span>
+  <span class="fw-bold">{{ item.CurrentQueuePosition }}</span>
+</div>
     </div>
+  </div>
 </body>
+

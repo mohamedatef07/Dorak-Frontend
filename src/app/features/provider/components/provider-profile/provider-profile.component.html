@@ -1,75 +1,75 @@
-  <body>
-    <main>
-      <div class="container d-flex flex-column gap-3 pt-4 pb-4 pe-0 ps-0">
-        <p class="fw-bold m-0">Profile</p>
-        <!-- General Information -->
-        <section class="general-info d-flex align-content-center p-4">
-          <div class="doctor-img d-flex">
+<main>
+  <div class="container d-flex flex-column gap-3 py-4 px-0 m-0">
+    <p class="fw-bold m-0">Profile</p>
+    <!-- General Information -->
+    <section class="general-info">
+      <p class="fw-bold m-0">General Information</p>
+      <div
+        class="info-container p-4 d-flex align-items-center justify-content-center"
+      >
+        <div class="profile-image me-4">
           <img [src]="fullImagePath" alt="Profile Image" />
-
-
-
+        </div>
+        <div class="info flex-grow-1 d-flex flex-column ps-4 gap-3">
+          <div class="doctor-name d-flex align-items-center gap-5">
+            <span class="info-label">FullName</span>
+            <span class="full-name">{{ profile?.FullName }}</span>
           </div>
-          <div class="info flex-grow-1 d-flex flex-column ms-5 gap-3">
-            <div class="doctor-name d-flex align-items-center gap-5">
-              <span>FullName</span>
-              <span class="full-name">{{ profile?.FullName }}</span>
-            </div>
-            <div class="doctor-email d-flex align-items-center gap-5">
-              <span>Email</span>
-              <span class="email">{{profile?.Email}}</span>
-            </div>
-            <div class="doctor-phone d-flex align-items-center gap-5">
-             <span>Phone</span>
-              <span class="phone">{{profile?.Phone}}</span>
-            </div>
-            <div class="doctor-gender d-flex align-items-center gap-5">
-               <span>Gender</span>
-              <span class="gender">{{profile?.Gender === genderEnum.Male
-      ? 'Male'
-      : profile?.Gender === genderEnum.Female
-        ? 'Female'
-        : 'Not specified'}}</span>
-            </div>
-            <div class="doctor-birthDate d-flex align-items-center gap-5">
-            <span>BirthDate</span>
-              <span class="birthDate">{{profile?.BirthDate}}</span>
-            </div>
+          <div class="doctor-email d-flex align-items-center gap-5">
+            <span class="info-label">Email</span>
+            <span class="email">{{ profile?.Email }}</span>
           </div>
-        </section>
-        <!-- Professional Information -->
-        <section class="professional-information">
-          <p class="fw-bold m-0">Professional Information</p>
-          <div class="info-container p-4">
-            <div class="info d-flex flex-column gap-3">
-              <div
-                class="doctor-specialization d-flex align-items-center gap-5">
-                 <span>Specialization</span>
-                <span class="specialization">{{profile?.Specialization}}</span>
-              </div>
-              <div class="doctor-experience d-flex align-items-center gap-5">
-                <span>Experience</span>
-                <span class="experience">{{profile?.Experience}}</span>
-              </div>
-
-              <div
-                class="medical-license-number d-flex align-items-center gap-5">
-                <span>MedicalLicenseNumber</span>
-                <span class="license-number">{{profile?.MedicalLicenseNumber}}</span>
-              </div>
-
-            </div>
+          <div class="doctor-phone d-flex align-items-center gap-5">
+            <span class="info-label">Phone</span>
+            <span class="phone">{{ profile?.Phone }}</span>
           </div>
-        </section>
-        <!-- Bio -->
-        <section class="bio">
-          <p class="fw-bold m-0">Bio</p>
-          <div class="info-container p-4">
-            <div class="info">{{profile?.About}}</div>
+          <div class="doctor-gender d-flex align-items-center gap-5">
+            <span class="info-label">Gender</span>
+            <span class="gender">{{
+              profile?.Gender === genderEnum.Male
+                ? "Male"
+                : profile?.Gender === genderEnum.Female
+                ? "Female"
+                : "Not specified"
+            }}</span>
           </div>
-        </section>
+          <div class="doctor-birthDate d-flex align-items-center gap-5">
+            <span class="info-label">BirthDate</span>
+            <span class="birthDate">{{
+              profile?.BirthDate | date : "d-M-yyyy"
+            }}</span>
+          </div>
+        </div>
       </div>
-    </main>
-
-
-  </body>
+    </section>
+    <!-- Professional Information -->
+    <section class="professional-information">
+      <p class="fw-bold m-0">Professional Information</p>
+      <div class="info-container p-4">
+        <div class="info d-flex flex-grow-1 flex-column gap-3">
+          <div class="doctor-specialization d-flex align-items-center gap-5">
+            <span class="professional-info-label">Specialization</span>
+            <span class="specialization">{{ profile?.Specialization }}</span>
+          </div>
+          <div class="doctor-experience d-flex align-items-center gap-5">
+            <span class="professional-info-label">Experience</span>
+            <span class="experience">{{ profile?.Experience }}</span>
+          </div>
+          <div class="medical-license-number d-flex align-items-center gap-5">
+            <span class="professional-info-label">Medical License Number</span>
+            <span class="license-number">{{
+              profile?.MedicalLicenseNumber
+            }}</span>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Bio -->
+    <section class="bio">
+      <p class="fw-bold m-0">Bio</p>
+      <div class="info-container p-4">
+        <div class="info">{{ profile?.About }}</div>
+      </div>
+    </section>
+  </div>
+</main>

@@ -1,18 +1,59 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { RouterLink, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
+import { PanelMenuModule } from 'primeng/panelmenu';
+import { MenuItem } from 'primeng/api';
+import { PanelMenu } from 'primeng/panelmenu';
 
 @Component({
   selector: 'app-owner-sidebar',
   templateUrl: './owner-sidebar.component.html',
   styleUrls: ['./owner-sidebar.component.css'],
-  imports: [RouterLink, RouterModule,CommonModule],
+  imports: [RouterModule, CommonModule, PanelMenuModule],
 })
 export class OwnerSidebarComponent implements OnInit {
   currentDate: string = '';
   currentTime: string = '';
   isSubmenuOpen = false;
   isOperatorSubmenuOpen = false;
+  items: MenuItem[] = [
+    {
+      label: 'Dashboard',
+      icon: 'pi pi-desktop',
+      routerLink: '/owner/dashboard'
+    },
+    {
+      label: 'Manage Doctors',
+      icon: 'pi pi-users',
+      routerLink: '/provider/patient-queue'
+    },
+    {
+      label: 'Manage Queues',
+      icon: 'pi pi-calendar',
+      routerLink: '/provider/schedule'
+    },
+    {
+      label: 'Manage Operators',
+      icon: 'pi pi-cog',
+      routerLink: 'manage-operators',
+      items: [
+        {
+          label: 'Add Operator',
+          icon: 'pi pi-user-plus',
+          routerLink: 'add-operator',
+
+
+        }
+      ]
+
+    },
+    {
+      label: 'Analytics',
+      icon: 'pi pi-chart-bar',
+      routerLink: '/provider/reports'
+    }
+  ];
+
 
   constructor() { }
   ngOnInit(): void {
@@ -20,6 +61,7 @@ export class OwnerSidebarComponent implements OnInit {
     setInterval(() => {
       this.updateDateTime();
     }, 1000);
+
   }
 
   toggleSubmenu() {

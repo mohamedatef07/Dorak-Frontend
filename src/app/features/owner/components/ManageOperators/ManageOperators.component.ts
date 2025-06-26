@@ -1,6 +1,6 @@
 import { Component, inject, Inject, OnInit } from '@angular/core';
 import { OwnerService } from '../../services/owner.service';
-import { IOperator } from '../../../../types/IOperator';
+import { IOperator } from '../../models/IOperator';
 import { CommonModule } from '@angular/common';
 import { ApiResponse } from '../../../../types/ApiResponse';
 

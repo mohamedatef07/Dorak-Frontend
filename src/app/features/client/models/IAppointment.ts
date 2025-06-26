@@ -13,6 +13,7 @@ export interface IAppointment {
   ExactTime: Date;
   EndTime: Date;
   IsChecked: boolean;
+  ProviderImage:string;
   OperatorId: string|null;
   LiveQueueId: number|null; // CHANGED
   ProviderId: string|null;
@@ -24,4 +25,5 @@ export interface IAppointment {
   ProviderName:string;
   Rate: number;
   Specialization: string|null;
+  IsLive:boolean;
 }

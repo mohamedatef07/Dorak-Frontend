@@ -8,6 +8,8 @@ import { Observable } from 'rxjs';
 import { IShiftDetails } from '../models/IShiftDetails';
 import { IQueueEntries } from '../models/IQueueEntries';
 import { IProviderProfile } from '../../../types/IProviderProfile';
+import { IGeneralStatistics } from '../models/IGeneralStatistics';
+import { INotification } from '../models/INotification';
 
 @Injectable({
   providedIn: 'root',
@@ -36,37 +38,46 @@ export class ProviderService {
       `${environment.apiUrl}/api/provider/queue-entries?providerId=${this.providerId}`
     );
   }
-getProviderProfile(): Observable<ApiResponse<IProviderProfile>> {
-  return this.httpClient.get<ApiResponse<IProviderProfile>>(
-    `${environment.apiUrl}/api/Provider/ProviderProfile`
-  );
+  getProviderProfile(): Observable<ApiResponse<IProviderProfile>> {
+    return this.httpClient.get<ApiResponse<IProviderProfile>>(
+      `${environment.apiUrl}/api/Provider/provider-profile`
+    );
+  }
+
+  updateProfile(
+    data: FormData
+  ): Observable<{ message: string; status: number; data: any }> {
+    return this.httpClient.put<{ message: string; status: number; data: any }>(
+      `${environment.apiUrl}/api/Provider/update-profile`,
+      data
+    );
+  }
+
+  updateProfileInformation(
+    data: FormData
+  ): Observable<{ message: string; status: number; data: any }> {
+    return this.httpClient.put<{ message: string; status: number; data: any }>(
+      `${environment.apiUrl}/api/Provider/update-professional-info`,
+      data
+    );
+  }
+
+  changePassword(
+    data: FormData
+  ): Observable<{ message: string; status: number; data: any }> {
+    return this.httpClient.put<{ message: string; status: number; data: any }>(
+      `${environment.apiUrl}/api/Account/change-password`,
+      data
+    );
+  }
+  getGeneralStatistics(): Observable<ApiResponse<IGeneralStatistics>> {
+    return this.httpClient.get<ApiResponse<IGeneralStatistics>>(
+      `${environment.apiUrl}/api/provider/general-statistics`
+    );
+  }
+    getNotifications(): Observable<ApiResponse<Array<INotification>>> {
+    return this.httpClient.get<ApiResponse<Array<INotification>>>(
+      `${environment.apiUrl}/api/provider/notifications`
+    );
+  }
 }
-
-updateProfile(data: FormData): Observable<{ message: string; status: number; data: any }> {
-  return this.httpClient.put<{ message: string; status: number; data: any }>(
-    'http://localhost:5139/api/Provider/UpdateProfile',
-    data
-  );
-}
-
-updateProfileinformation(data: FormData): Observable<{ message: string; status: number; data: any }> {
-  return this.httpClient.put<{ message: string; status: number; data: any }>(
-    'http://localhost:5139/api/Provider/update-professional-info',
-    data
-  );
-
-}
-
-changePassword(data: FormData): Observable<{ message: string; status: number; data: any }> {
-  return this.httpClient.put<{ message: string; status: number; data: any }>(
-    'http://localhost:5139/api/Account/change-password',
-    data
-  );
-
-
-
-}
-
-}
-
-

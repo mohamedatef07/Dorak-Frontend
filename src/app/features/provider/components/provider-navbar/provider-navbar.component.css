@@ -1,3 +1,31 @@
 #dropdown-list li .dropdown-item:last-child {
   cursor: pointer;
 }
+.nav .container .dropdown #notifications-dropdown-list {
+  position: absolute;
+  top: 130%;
+  right: 0;
+  border-radius: var(--border-radius);
+  background-color: white;
+  width: 28.1rem;
+}
+.nav .container .dropdown #notifications-dropdown-list li div div .message {
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+.nav
+  .container
+  .dropdown
+  #notifications-dropdown-list
+  .dropdown-item:not(:last-child) {
+  border-bottom: 1px solid #2a6f96;
+}
+.nav .container .profile-notifications .profile-img {
+  width: 3rem;
+  height: 3rem;
+}
+.nav .container .profile-notifications .profile-img a img {
+  width: 100%;
+  border-radius: 50%;
+}

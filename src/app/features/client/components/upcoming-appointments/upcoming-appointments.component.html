@@ -1,15 +1,48 @@
+<h6 class="fw-bold mb-3">Last Appointment:</h6>
+<div
+  class="appointment-card p-3 mb-3 rounded d-flex flex-column flex-md-row align-items-center justify-content-between bg-lightblue"
+  *ngIf="appointment"
+>
+  <div class="d-flex align-items-center mb-3 mb-md-0">
+
+          <img *ngIf="fullImagePath" [src]="fullImagePath" alt="Doctor Image" class="shape" class="avatar"/>
+
+
+
+    <div>
+      <div class="fw-bold">{{ appointment.ProviderName }}</div>
+      <p-rating
+        class="review-star pt-2 pb-2"
+        [(ngModel)]="appointment.Rate"
+        [readonly]="true"
+      ></p-rating>
+      <div>{{ appointment.Specialization }}</div>
+      <div>{{ appointment.AppointmentDate }}</div>
+    </div>
+  </div>
+
+
+  <div class="text-md-end text-center">
+    <button type="button" class="btn btn-outline-primary"
+     [routerLink]="['/client/appointment', appointment.appointmentId]"
+>AppoinmentDetails</button>
+
+
+
+  </div>
+</div>
+
+<h6 class="fw-bold mb-3">Upcoming Appointment:</h6>
+
 @for (appointment of Appointments; let i = $index; track $index) {
+
 <div
   class="appointment-card p-3 mb-3 rounded d-flex flex-column flex-md-row align-items-center justify-content-between"
   [ngClass]="i % 2 === 0 ? 'bg-lightblue' : 'bg-darkblue text-white'"
 >
   <div class="d-flex align-items-center mb-3 mb-md-0">
-    <p-avatar
-      image="https://www.w3schools.com/howto/img_avatar.png"
-      shape="circle"
-      class="me-3 avatar"
-    >
-    </p-avatar>
+              <img *ngIf="fullImagePath" [src]="fullImagePath" alt="Doctor Image" class="shape" class="avatar"/>
+
     <div>
       <div class="fw-bold">{{ appointment.ProviderName }}</div>
       <p-rating
@@ -22,22 +55,15 @@
     </div>
   </div>
 
-  <div class="text-md-end text-center">
-    <div class="fw-bold mb-1">
 
-    </div>
-    <!-- <button
-      pButton
-      icon="pi pi-pencil"
-      class="p-button-sm p-button-rounded p-button-text me-2"
-      (click)=""
-    ></button>
-    <button
-      pButton
-      icon="pi pi-trash"
-      class="p-button-sm p-button-rounded p-button-danger p-button-text"
-      (click)=""
-    ></button> -->
+  <div class="text-md-end text-center">
+    <button type="button" class="btn btn-outline-primary"
+     [routerLink]="['/client/appointment', appointment.AppointmentId]"
+>AppoinmentDetails</button>
   </div>
-</div>
+
+
+
+  </div>
 }
+

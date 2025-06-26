@@ -24,9 +24,9 @@ import { IOperatorViewModel } from '../../../../types/IOperatorViewModel';
 })
 export class ProviderLiveQueueComponent implements OnInit {
   liveQueues: IProviderLiveQueueViewModel[] = [];
-  providerId: string = '8942c804-1498-4dfb-8efd-550e6d3989ed';
+  providerId: string = '0dad21ac-6842-430b-af98-78f9d12923d1';
   centerId: number = 1;
-  shiftId: number = 1;
+  shiftId: number = 2;
   pageNumber: number = 1;
   pageSize: number = 16;
   totalItems: number = 0;
@@ -112,7 +112,7 @@ export class ProviderLiveQueueComponent implements OnInit {
               CurrentQueuePosition: item.CurrentQueuePosition,
               AvailableStatuses: (item.AvailableStatuses || [])
                 .filter(
-                  (status: number) => status !== QueueAppointmentStatus.none
+                  (status: number) => status !== QueueAppointmentStatus.None
                 )
                 .map((status: number) => this.mapStatus(status)),
             }));
@@ -149,12 +149,12 @@ export class ProviderLiveQueueComponent implements OnInit {
 
   private mapClientType(value: number | string): ClientType {
     const numValue = typeof value === 'string' ? parseInt(value, 10) : value;
-    return (numValue as ClientType) ?? ClientType.none;
+    return (numValue as ClientType) ?? ClientType.None;
   }
 
   private mapStatus(value: number | string): QueueAppointmentStatus {
     const numValue = typeof value === 'string' ? parseInt(value, 10) : value;
-    return (numValue as QueueAppointmentStatus) ?? QueueAppointmentStatus.none;
+    return (numValue as QueueAppointmentStatus) ?? QueueAppointmentStatus.None;
   }
 
   updateQueueStatus(
@@ -240,7 +240,7 @@ export class ProviderLiveQueueComponent implements OnInit {
     const numValue = parseInt(statusStr, 10);
     if (!isNaN(numValue)) {
       return (
-        (numValue as QueueAppointmentStatus) ?? QueueAppointmentStatus.none
+        (numValue as QueueAppointmentStatus) ?? QueueAppointmentStatus.None
       );
     }
     const statusKey = Object.keys(QueueAppointmentStatus)
@@ -249,7 +249,7 @@ export class ProviderLiveQueueComponent implements OnInit {
     return (
       QueueAppointmentStatus[
         statusKey as keyof typeof QueueAppointmentStatus
-      ] ?? QueueAppointmentStatus.none
+      ] ?? QueueAppointmentStatus.None
     );
   }
 
