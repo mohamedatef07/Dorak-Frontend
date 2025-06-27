@@ -1,6 +1,6 @@
 export interface INotification {
-  Title: string;
-  Message: string;
-  IsRead: boolean;
-  CreatedAt: Date;
+  title: string;
+  message: string;
+  isRead: boolean;
+  createdAt: Date;
 }

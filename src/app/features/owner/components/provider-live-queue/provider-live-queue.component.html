@@ -9,6 +9,9 @@
       <button class="add-btn" aria-label="Add Patient">
         <i class="bi bi-person-plus-fill"></i>
       </button>
+      <button class="end-shift-btn" (click)="endShift()" aria-label="End Shift">
+        End Shift
+      </button>
     </div>
   </div>
 
@@ -30,8 +33,21 @@
         <div class="client-name">{{ queue.ClientFullName }}</div>
         <div class="client-info">
           <span>Patient Type: {{ getClientTypeString(queue.ClientType) }}</span><br />
+          <span>PhoneNumber: {{ queue.PhoneNumber }}</span>
+          <br>
           <span>Estimated Time: {{ formatTime(queue.EstimatedTime) }}</span>
           <span *ngIf="queue.ArrivalTime">Arrival Time: {{ formatTime(queue.ArrivalTime) }}</span>
+           <div *ngIf="queue.Status === QueueAppointmentStatus.InProgress" class="additional-fees-input">
+          <label for="additionalFees_{{ queue.LiveQueueId }}">Additional Fees:</label>
+          <input
+            id="additionalFees_{{ queue.LiveQueueId }}"
+            type="number"
+            step="0.01"
+            placeholder="Enter fees"
+            [(ngModel)]="additionalFees[queue.LiveQueueId]"
+            required
+          />
+        </div>
         </div>
       </div>
       <div class="queue-status">
@@ -48,7 +64,15 @@
             {{ getStatusString(status) }}
           </option>
         </select>
+
       </div>
+    </div>
+  </div>
+
+  <!-- Custom Success Popup -->
+  <div *ngIf="showPopup" #successPopup class="custom-popup">
+    <div class="popup-content">
+      <p>Shift ended successfully!</p>
     </div>
   </div>
 </div>
