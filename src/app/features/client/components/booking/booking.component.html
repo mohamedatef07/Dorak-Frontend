@@ -27,11 +27,11 @@
       />
     </div>
     <div class="service-info d-flex flex-column justify-content-between">
-      <p class="fees main-text-Color fw-bold">
-        Fees: {{ price | currency : "EGP " : "symbol" : "1.2-2" }}
+      <p class="fees main-text-Color fw-bold d-flex gap-3">
+        Fees: <span>{{ price | currency : "EGP " : "symbol" : "1.2-2" }}</span>
       </p>
-      <p class="duration main-text-Color fw-bold">
-        Duration: {{ duration }} Min
+      <p class="duration main-text-Color fw-bold d-flex gap-3">
+        Duration: <span>{{ duration }} Min</span>
       </p>
     </div>
     <div

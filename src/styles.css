@@ -88,7 +88,7 @@ ul {
   list-style: none;
 }
 a {
-  text-decoration: none ;
+  text-decoration: none;
   color: black;
 }
 .form-label {
@@ -134,7 +134,7 @@ a {
 .p-rating-icon {
   color: #f1c40f !important;
 }
-.p-toast-message.p-toast-message-error {
+/* .p-toast-message.p-toast-message-error {
   background-color: #fcebeb !important;
   color: #de3333 !important;
   border: 1px solid #ef9a9a !important;
@@ -277,6 +277,7 @@ a {
 .p-toast-message.p-toast-message-info .p-toast-icon-close:hover {
   background-color: rgba(0, 0, 0, 0.05) !important;
 }
+*/
 
 /* Nav Bar */
 .nav {
@@ -418,7 +419,50 @@ main .container > p {
 }
 
 :host ::ng-deep .p-panelmenu .p-menuitem-icon {
-  color: red;
-  font-size: 1.2em;
-  margin-right: 0.5rem;
+  color: red !important;
+  font-size: 1.2em !important;
+  margin-right: 0.5rem !important;
+}
+.p-dialog {
+  display: flex !important;
+}
+.p-dialog-footer {
+  display: flex !important;
+  justify-content: space-evenly !important;
+}
+.p-dialog-header {
+  padding-bottom: 0 !important;
+  padding-top: 0 !important;
+}
+.p-select {
+  border: 2px solid #012a4a !important;
+  width: 100% !important;
+}
+.p-select:hover {
+  border: 2px solid #012a4a !important;
+}
+.p-select-label {
+  width: 100% !important;
+  color: #012a4a !important;
+}
+.p-select-dropdown {
+  border-start-end-radius: 0 !important;
+  border-start-start-radius: 0 !important;
+  border-end-end-radius: 0 !important;
+  border-end-start-radius: 0 !important;
+}
+.p-iconwrapper {
+  color: #012a4a !important;
+}
+.p-select-label.p-placeholder {
+  color: #012a4a !important;
+}
+.p-select-list-container {
+  padding: 0.5rem !important;
+  background-color: white !important;
+  color: #2a6f97 !important;
+}
+.p-select-option.p-select-option-selected {
+  background-color: #2a6f97 !important;
+  color: white !important;
 }

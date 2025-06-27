@@ -24,38 +24,6 @@
 ::ng-deep .p-button .p-icon {
   color: white !important;
 }
-::ng-deep .p-select {
-  border: 2px solid #012a4a !important;
-  width: 100% !important;
-}
-::ng-deep .p-select:hover {
-  border: 2px solid #012a4a !important;
-}
-::ng-deep .p-select-label {
-  width: 100% !important;
-  color: #012a4a !important;
-}
-::ng-deep .p-select-dropdown {
-  border-start-end-radius: 0 !important;
-  border-start-start-radius: 0 !important;
-  border-end-end-radius: 0 !important;
-  border-end-start-radius: 0 !important;
-}
-::ng-deep .p-iconwrapper {
-  color: #012a4a !important;
-}
-::ng-deep .p-select-label.p-placeholder {
-  color: #012a4a !important;
-}
-::ng-deep .p-select-list-container {
-  padding: 0.5rem !important;
-  background-color: white !important;
-  color: #2a6f97 !important;
-}
-::ng-deep .p-select-option.p-select-option-selected {
-  background-color: #2a6f97 !important;
-  color: white !important;
-}
 ::ng-deep .p-carousel-indicator-active .p-carousel-indicator-button {
   background-color: #2a6f97 !important;
 }
