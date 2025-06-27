@@ -6,13 +6,10 @@
   {{ errorMessage }}
 </div>
 
-<div *ngIf="provider && !isLoading && !errorMessage" class="profile-container">
-  <!-- Back Button -->
+<div *ngIf="provider && !isLoading" class="profile-container">
   <button mat-button class="back-button" (click)="goBack()">Back to Dashboard</button>
 
-  <!-- Profile Layout -->
   <div class="profile-layout">
-    <!-- Left Panel (Doctor Information) -->
     <div class="left-panel">
       <h2>Doctor Information</h2>
       <div class="profile-image">
@@ -27,7 +24,6 @@
       </div>
     </div>
 
-    <!-- Right Panel (Specialization and Calendar) -->
     <div class="right-panel">
       <div class="specialization-section">
         <h3>Specialization:</h3>
@@ -39,16 +35,15 @@
         <h3>Assignments Calendar</h3>
         <div class="calendar-controls">
           <button mat-button class="nav-button" (click)="prevMonth()">
-            &larr; <!-- Manual left arrow -->
+            ←
           </button>
           <span class="month-title">{{ getMonthName() }}</span>
           <button mat-button class="nav-button" (click)="nextMonth()">
-            &rarr; <!-- Manual right arrow -->
+            →
           </button>
         </div>
         <div class="calendar-wrapper">
           <div class="calendar">
-            <!-- Weekday Headers -->
             <div class="calendar-header">
               <div class="day-header">Sun</div>
               <div class="day-header">Mon</div>
@@ -58,15 +53,17 @@
               <div class="day-header">Fri</div>
               <div class="day-header">Sat</div>
             </div>
-            <!-- Calendar Days -->
             <div class="calendar-body">
               <div *ngFor="let day of daysInMonth" class="calendar-day" [ngClass]="{'today': isToday(day.date)}">
                 <ng-container *ngIf="day.date as validDate">
                   <span *ngIf="validDate.getMonth() === viewDate.getMonth()" class="day-number">
                     {{ validDate.getDate() }}
-                    <span *ngIf="day.hasAssignment" class="assignment-dot"></span>
+                    <span *ngIf="day.hasAssignment" class="assignment-dot"
+                          [title]="getShiftTooltip(day)">
+                    </span>
                   </span>
                 </ng-container>
+                <span *ngIf="!day.date" class="empty-day"></span>
               </div>
             </div>
           </div>
@@ -74,4 +71,3 @@
       </div>
     </div>
   </div>
-</div>

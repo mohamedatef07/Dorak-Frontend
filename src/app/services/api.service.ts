@@ -13,6 +13,7 @@ import { IProviderLiveQueueViewModel } from '../types/IProviderLiveQueueViewMode
 import { IUpdateQueueStatusViewModel } from '../types/IUpdateQueueStatusViewModel';
 import { GenderType } from '../Enums/GenderType.enum';
 import { IOperatorViewModel } from '../types/IOperatorViewModel';
+import { IShift } from '../types/IShift';
 
 @Injectable({
   providedIn: 'root'
@@ -41,7 +42,7 @@ export class ApiService {
     centerId: number
   ): Observable<ApiResponse<IPaginationViewModel<IProviderViewModel>>> {
     return this.httpClient.get<ApiResponse<IPaginationViewModel<IProviderViewModel>>>(
-      `${environment.apiUrl}/api/center/SearchProvider?searchText=${searchText}&pageNumber=${pageNumber}&pageSize=${pageSize}&sortBy=${sortBy}&specializationFilter=${specializationFilter}¢erId=${centerId}`
+      `${environment.apiUrl}/api/center/SearchProvider?searchText=${searchText}&pageNumber=${pageNumber}&pageSize=${pageSize}&sortBy=${sortBy}&specializationFilter=${specializationFilter}&centerId=${centerId}`
     );
   }
 
@@ -134,6 +135,26 @@ export class ApiService {
 
   getProviderAssignments(providerId: string, centerId: number): Observable<ApiResponse<any[]>> {
     return this.httpClient.get<ApiResponse<any[]>>(`${environment.apiUrl}/api/provider/${providerId}/assignments?centerId=${centerId}`);
+  }
+
+  getShifts(date: Date, centerId: number): Observable<ApiResponse<IShift[]>> {
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const dateOnly = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+    return this.httpClient.get<ApiResponse<IShift[]>>(`${environment.apiUrl}/api/shift/get-shifts?date=${dateOnly}&centerId=${centerId}`);
+  }
+
+  getAllProviderAssignments(providerId: string): Observable<ApiResponse<any[]>> {
+    return this.httpClient.get<ApiResponse<any[]>>(`${environment.apiUrl}/api/provider/${providerId}/all-assignments`);
+  }
+
+  getAllShifts(date: Date, providerId: string): Observable<ApiResponse<IShift[]>> {
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const dateOnly = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+    return this.httpClient.get<ApiResponse<IShift[]>>(`${environment.apiUrl}/api/shift/get-all-shifts?date=${dateOnly}&providerId=${providerId}`);
   }
 
   getProviderLiveQueues(
