@@ -2,7 +2,7 @@
   class="booking bg-white main-padding main-radius text-white d-flex flex-column gap-3"
 >
   <div class="info d-flex flex-column gap-3 pb-3">
-    <div class="center-list main-bg text-center p-2 main-radius side-fz">
+    <div class="center-list main-bg text-center main-radius">
       <p-select
         class="center-dropdown"
         [options]="centerServices"
@@ -14,7 +14,7 @@
         class="w-full md:w-56"
       />
     </div>
-    <div class="service-list p-2 main-bg main-radius text-center side-fz">
+    <div class="service-list main-bg main-radius text-center">
       <p-select
         class="service-dropdown"
         [options]="services"
@@ -27,15 +27,15 @@
       />
     </div>
     <div class="service-info d-flex flex-column justify-content-between">
-      <p class="fees main-text-Color side-fz fw-bold">
+      <p class="fees main-text-Color fw-bold">
         Fees: {{ price | currency : "EGP " : "symbol" : "1.2-2" }}
       </p>
-      <p class="duration main-text-Color side-fz fw-bold">
+      <p class="duration main-text-Color fw-bold">
         Duration: {{ duration }} Min
       </p>
     </div>
     <div
-      class="location d-flex justify-content-between align-items-center text-center side-fz"
+      class="location d-flex justify-content-between align-items-center text-center"
     >
       <div
         class="icon main-text-Color fw-bold d-flex align-items-center justify-content-center gap-4"
@@ -43,23 +43,17 @@
         <i class="fa-solid fa-location-dot fa-2x side-icon-color"></i>
         Location
       </div>
-      <button
-        type="button"
-        class="btn  text-white main-bg side-fz"
-        (click)="openMap()"
-      >
+      <button type="button" class="btn text-white main-bg" (click)="openMap()">
         On Maps
       </button>
     </div>
   </div>
   <div class="book">
-    <p class="main-text-Color text-center fw-bold side-fz">
-      Choose your appointment
-    </p>
+    <p class="main-text-Color text-center fw-bold">Choose your appointment</p>
     <p-carousel
       class="pcar"
       [value]="originalBookings"
-      [numVisible]="2"
+      [numVisible]="1"
       [numScroll]="1"
     >
       <ng-template let-appointment #item>
@@ -70,10 +64,11 @@
             </div>
           </div>
           <div
-            class="d-flex flex-column justify-content-between gap-2 font-medium main-text-Color text-center shift-time pt-4 pb-4 ps-3 pe-3"
+            class="d-flex justify-content-between gap-2 font-medium main-text-Color text-center shift-time pt-4 pb-4 ps-3 pe-3"
           >
             <div class="start-time d-flex flex-column justify-content-between">
-              <span class="duration-indicator">From</span> {{ appointment?.StartTime | TimeStringToDate | date : "h:mm a" }}
+              <span class="duration-indicator">From</span>
+              {{ appointment?.StartTime | TimeStringToDate | date : "h:mm a" }}
             </div>
             <div class="end-time d-flex flex-column justify-content-between">
               <span class="duration-indicator">To</span>
@@ -86,7 +81,6 @@
               type="button"
               class="book-btn text-white p-2 text-center"
               (click)="makeAppointment(appointment?.Date, appointment?.ShiftId)"
-
             >
               Book
             </button>
