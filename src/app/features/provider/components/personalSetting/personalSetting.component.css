@@ -20,12 +20,6 @@
   background-color: transparent !important;
   border-top: 4px solid var(--text-color-Light);
 }
-.section-title {
-  color: var(--text-color-Light);
-  font-size: 20px;
-  margin-bottom: 20px;
-  font-weight: bold;
-}
 .settings-card {
   background-color: #fff;
   border-radius: 8px;
@@ -84,10 +78,9 @@
 textarea.form-control {
   min-height: 100px;
 }
-main .container .setting-btns button {
+.container .setting-btns button {
   background-color: var(--button-bg-color-Light);
   color: white;
-  padding: var(--button-padding);
   border-radius: var(--border-radius);
 }
 .setting-link.active {
