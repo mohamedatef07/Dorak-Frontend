@@ -92,7 +92,7 @@ export class ProviderNavbarComponent {
         this.messageServices.add({
           severity: 'info',
           summary: 'New Notification',
-          detail: notification.Message,
+          detail: notification.message,
           life: 4000,
         });
       },

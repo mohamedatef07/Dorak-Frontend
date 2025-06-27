@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
 import { INotification } from '../../features/provider/models/INotification';
-import { Subject } from 'rxjs';
+import { catchError, Observable, Subject, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import * as signalR from '@microsoft/signalr';
 import { AuthService } from '../auth.service';
@@ -9,6 +10,7 @@ import { AuthService } from '../auth.service';
   providedIn: 'root',
 })
 export class NotificationsSRService {
+  httpClient = inject(HttpClient);
   private hubConnection: signalR.HubConnection | null = null;
   private notificationsListSubject = new Subject<Array<INotification>>();
   public notificationsList = this.notificationsListSubject.asObservable();
@@ -21,6 +23,7 @@ export class NotificationsSRService {
   }
   private startConnection() {
     const token = this.authService.getAuthToken();
+    console.log('token : ',token);
     if (!token) {
       console.warn('No auth token found. SignalR connection aborted.');
       return;
@@ -31,10 +34,21 @@ export class NotificationsSRService {
       .build();
     this.hubConnection
       .start()
-      .then(() => console.log('SignalR connection started'))
+      .then(() => {console.log('SignalR connection started')
+        debugger
+        const connectionId = this.hubConnection?.connectionId;
+        this.registerUserToNotificationHub(connectionId || '');
+        console.log('SignalR connection ID: ', connectionId);
+      })
       .catch((err) =>
         console.error('Error while starting SignalR connection: ', err)
       );
+    this.hubConnection.onreconnecting((error) => {
+      console.warn('SignalR reconnecting due to error: ', error);
+    });
+    this.hubConnection.onreconnected((connectionId) => {
+      console.log('SignalR reconnected with connection ID: ', connectionId);
+    });
   }
   private registerOnServerEvents() {
     if (this.hubConnection) {
@@ -67,6 +81,20 @@ export class NotificationsSRService {
   private stopConnection() {
     return this.hubConnection?.stop();
   }
+
+ registerUserToNotificationHub(ConnectionId: string): Observable<string> {
+    if (!ConnectionId) {
+      console.error('Invalid connectionId.');
+      return throwError(() => new Error('Invalid connectionId.'));
+    }
+
+    const url = `${environment.apiUrl}/api/Notification/RegisterUserToNotificationHub`;
+    return this.httpClient
+      .post<string>(url, { connectionId: ConnectionId })
+
+  }
+
+
   ngOnDestroy(): void {
     this.stopConnection();
     this.notificationsListSubject.complete();
