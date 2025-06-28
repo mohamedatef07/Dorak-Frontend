@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { ClientService } from '../../services/client.service';
 import { AuthService } from '../../../../services/auth.service';
 import { FormsModule } from '@angular/forms';
@@ -21,7 +21,9 @@ import { environment } from '../../../../../environments/environment';
     FormsModule,
   RouterLink],
   templateUrl: './upcoming-appointments.component.html',
-  styleUrls: ['./upcoming-appointments.component.css']
+  styleUrls: ['./upcoming-appointments.component.css'],
+   encapsulation: ViewEncapsulation.None 
+
 })
 export class UpcomingAppointmentsComponent implements OnInit {
 

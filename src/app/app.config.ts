@@ -15,14 +15,14 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(withInterceptors([authInterceptor])), provideAnimations(),MessageService,ConfirmationService,
     provideAnimationsAsync(),
-    // providePrimeNG({
-    //   theme: {
-    //     preset: Aura,
-    //     options: {
-    //       darkModeSelector: 'none'
-    //     }
-    //   },
-    //   ripple: true
-    // }),
+    providePrimeNG({
+      theme: {
+        preset: Aura,
+        options: {
+          darkModeSelector: 'none'
+        }
+      },
+      ripple: true
+    }),
   ],
 };
