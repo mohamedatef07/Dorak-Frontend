@@ -25,7 +25,7 @@ export class OwnerService {
     centerId: number
   ): Observable<ApiResponse<IOperator[]>> {
     return this.httpClient.get<ApiResponse<IOperator[]>>(
-      `${environment.apiUrl}/api/center/operators-to-center?centerId=${centerId}`
+      `${environment.apiUrl}/api/center/OperatorstoCenter?centerId=${centerId}`
     );
   }
 

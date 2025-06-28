@@ -9,6 +9,3 @@
 .personal-info {
   flex: 2;
 }
-::ng-deep .p-rating-icon {
-  width: 2rem !important;
-}

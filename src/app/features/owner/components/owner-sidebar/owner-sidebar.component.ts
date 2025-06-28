@@ -1,52 +1,69 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { RouterLink, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { PanelMenuModule } from 'primeng/panelmenu';
+import { MenuItem } from 'primeng/api';
+import { PanelMenu } from 'primeng/panelmenu';
 
 @Component({
   selector: 'app-owner-sidebar',
   templateUrl: './owner-sidebar.component.html',
   styleUrls: ['./owner-sidebar.component.css'],
-  imports: [RouterLink, RouterModule,CommonModule,PanelMenuModule],
+  imports: [RouterModule, CommonModule, PanelMenuModule],
 })
 export class OwnerSidebarComponent implements OnInit {
-  currentDate: string = '';
-  currentTime: string = '';
+  currentDate = new Date();
+  private intervalId: any;
+
   isSubmenuOpen = false;
   isOperatorSubmenuOpen = false;
-  items = [
-  {
-    label: 'Dashboard',
-    route: '/owner/dashboard',
-    icon: 'pi pi-user',
-  },
-  {
-    label: 'Manage Doctors',
-    route: '/provider/patient-queue',
-    icon: 'pi pi-user',
-  },
-  {
-    label: 'Manage Queues',
-    route: '/provider/schedule',
-    icon: 'pi pi-list',
-  },
-  {
-    label: 'Manage Operators',
-    route: '/provider/schedule',
-    icon: 'pi pi-gear',
-  },
-  {
-    label: 'Analytics',
-    route: '/provider/reports',
-    icon: 'pi pi-chart-line',
-  },
-];
-  constructor() { }
-  ngOnInit(): void {
-    this.updateDateTime();
-    setInterval(() => {
-      this.updateDateTime();
+  items: MenuItem[] = [
+    {
+      label: 'Dashboard',
+      icon: 'pi pi-desktop',
+      routerLink: '/owner/dashboard',
+    },
+    {
+      label: 'Manage Doctors',
+      icon: 'pi pi-users',
+      routerLink: '/provider/patient-queue',
+    },
+    {
+      label: 'Manage Queues',
+      icon: 'pi pi-calendar',
+      routerLink: '/provider/schedule',
+    },
+    {
+      label: 'Manage Operators',
+      icon: 'pi pi-cog',
+      routerLink: 'manage-operators',
+      items: [
+        {
+          label: 'Add Operator',
+          icon: 'pi pi-user-plus',
+          routerLink: 'add-operator',
+        },
+      ],
+    },
+    {
+      label: 'Analytics',
+      icon: 'pi pi-chart-bar',
+      routerLink: '/provider/reports',
+    },
+  ];
+
+  constructor() {}
+
+  ngOnInit() {
+    this.intervalId = setInterval(() => {
+      this.currentDate = new Date();
     }, 1000);
+  }
+
+  ngOnDestroy(): void {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
   }
 
   toggleSubmenu() {
@@ -55,15 +72,5 @@ export class OwnerSidebarComponent implements OnInit {
 
   toggleOperatorSubmenu() {
     this.isOperatorSubmenuOpen = !this.isOperatorSubmenuOpen;
-  }
-
-  updateDateTime() {
-    const now = new Date();
-    const day = String(now.getDate()).padStart(2, '0');
-    const month = String(now.getMonth() + 1).padStart(2, '0');
-    const year = now.getFullYear();
-
-    this.currentDate = `${day}/${month}/${year}`;
-    this.currentTime = now.toLocaleTimeString();
   }
 }

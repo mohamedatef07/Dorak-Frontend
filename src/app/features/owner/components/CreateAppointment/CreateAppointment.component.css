@@ -143,3 +143,18 @@ input, select{
     border-radius: 10px;
     border: 1px transparent;
 }
+
+p-floatlabel label{
+    font-size: 1rem;
+    color: var(--button-bg-color-Light);
+}
+
+:host ::ng-deep .p-toast {
+  z-index: 1000;
+}
+
+.invalid-feedback {
+  color: red;
+  font-size: 0.9em;
+  margin-top: 0.2em;
+}

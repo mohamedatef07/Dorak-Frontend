@@ -12,6 +12,7 @@ import { IWeeklyProviderAssignmentViewModel } from '../types/IWeeklyProviderAssi
 import { IProviderLiveQueueViewModel } from '../types/IProviderLiveQueueViewModel';
 import { IUpdateQueueStatusViewModel } from '../types/IUpdateQueueStatusViewModel';
 import { GenderType } from '../Enums/GenderType.enum';
+import { IOperatorViewModel } from '../types/IOperatorViewModel';
 
 @Injectable({
   providedIn: 'root'
@@ -135,7 +136,7 @@ export class ApiService {
     return this.httpClient.get<ApiResponse<any[]>>(`${environment.apiUrl}/api/provider/${providerId}/assignments?centerId=${centerId}`);
   }
 
- getProviderLiveQueues(
+  getProviderLiveQueues(
     providerId: string,
     centerId: number,
     shiftId: number,
@@ -159,6 +160,18 @@ export class ApiService {
       map((response: ApiResponse<string>) => response),
       catchError((error) => {
         console.error('API error in updateLiveQueueStatus:', error);
+        throw error;
+      })
+    );
+  }
+
+  endShift(shiftId: number, operatorId: string): Observable<ApiResponse<IOperatorViewModel>> {
+    return this.httpClient.get<ApiResponse<IOperatorViewModel>>(
+      `${environment.apiUrl}/api/operator/end-shift/?shiftId=${shiftId}&operatorId=${operatorId}`
+    ).pipe(
+      map((response: ApiResponse<IOperatorViewModel>) => response),
+      catchError((error) => {
+        console.error('API error in endShift:', error);
         throw error;
       })
     );

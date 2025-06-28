@@ -1,203 +1,3 @@
-// import { Component, OnInit, AfterViewInit, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
-// import { CommonModule } from '@angular/common';
-// import { FormsModule } from '@angular/forms';
-// import { Router, RouterLink, RouterModule } from '@angular/router';
-// import { MatFormFieldModule } from '@angular/material/form-field';
-// import { MatInputModule } from '@angular/material/input';
-// import { MatSelectModule } from '@angular/material/select';
-// import { MatTableModule, MatTable } from '@angular/material/table';
-// import { MatButtonModule } from '@angular/material/button';
-// import { MatTooltipModule } from '@angular/material/tooltip';
-// import { MatTableDataSource } from '@angular/material/table';
-// import { ApiService } from '../../services/api.service';
-// import { IPaginationViewModel } from '../../types/IPaginationViewModel';
-// import { IProviderViewModel } from '../../types/IProviderViewModel';
-// import { ApiResponse } from '../../types/ApiResponse';
-
-// @Component({
-//   selector: 'app-search-provider',
-//   templateUrl: './search-provider.component.html',
-//   styleUrls: ['./search-provider.component.css'],
-//   standalone: true,
-//   imports: [
-//     CommonModule,
-//     FormsModule,
-//     RouterModule,
-//     RouterLink,
-//     MatFormFieldModule,
-//     MatInputModule,
-//     MatSelectModule,
-//     MatTableModule,
-//     MatButtonModule,
-//     MatTooltipModule
-//   ]
-// })
-// export class SearchProviderComponent implements OnInit, AfterViewInit {
-//   displayedColumns: string[] = ['id', 'name', 'specialization'];
-//   dataSource = new MatTableDataSource<IProviderViewModel>([]);
-
-//   @ViewChild(MatTable) table: MatTable<IProviderViewModel> | undefined;
-//   @ViewChild('tableElement') tableElement: ElementRef | undefined;
-
-//   providers: IProviderViewModel[] = [];
-//   specializations: string[] = ['All', 'Cardiology', 'Pediatrics', 'Orthopedics'];
-
-//   totalItems: number = 0;
-//   pageSize: number = 9;
-//   pageIndex: number = 0;
-//   specializationFilter: string = '';
-//   searchText: string = '';
-
-//   errorMessage: string = '';
-//   isLoading: boolean = false;
-
-//   constructor(
-//     private apiService: ApiService,
-//     private router: Router,
-//     private cdr: ChangeDetectorRef
-//   ) {}
-
-//   ngOnInit(): void {
-//     this.loadProviders();
-//   }
-
-//   ngAfterViewInit(): void {
-//     console.log('ngAfterViewInit called at:', new Date().toISOString());
-//     this.cdr.detectChanges();
-//   }
-
-//   loadProviders(): void {
-//     this.isLoading = true;
-//     this.errorMessage = '';
-//     this.dataSource.data = []; // Clear data
-
-//     const pageNumber = this.pageIndex + 1;
-//     console.log('Sending API request with params:', {
-//       page: pageNumber,
-//       pageSize: this.pageSize,
-//       specializationFilter: this.specializationFilter,
-//       searchText: this.searchText
-//     });
-
-//     this.apiService.searchProviders(
-//       pageNumber,
-//       this.pageSize,
-//       '',
-//       this.specializationFilter,
-//       this.searchText
-//     ).subscribe({
-//       next: (response: ApiResponse<IPaginationViewModel<IProviderViewModel>>) => {
-//         this.isLoading = false;
-//         console.log('API response:', response);
-//         if (response.Status === 200 && response.Data?.Data) {
-//           // Handle both cases: Data as { $values: IProviderViewModel[] } or Data as IProviderViewModel[]
-//           const providerData = response.Data.Data.$values || (response.Data.Data as unknown as IProviderViewModel[]);
-//           this.providers = providerData.map(provider => ({
-//             AssignmentId: provider.AssignmentId ?? 0,
-//             ProviderId: provider.ProviderId ?? '',
-//             FirstName: provider.FirstName ?? 'Unknown',
-//             LastName: provider.LastName ?? '',
-//             Specialization: provider.Specialization ?? 'N/A',
-//             Bio: provider.Bio ?? '',
-//             ExperienceYears: provider.ExperienceYears ?? 0,
-//             LicenseNumber: provider.LicenseNumber ?? '',
-//             Gender: provider.Gender ?? 0,
-//             Street: provider.Street ?? '',
-//             City: provider.City ?? '',
-//             Governorate: provider.Governorate ?? '',
-//             Country: provider.Country ?? '',
-//             BirthDate: provider.BirthDate ?? '',
-//             Image: provider.Image ?? '',
-//             Availability: provider.Availability ?? '',
-//             EstimatedDuration: provider.EstimatedDuration ?? 0,
-//             AddDate: provider.AddDate ? this.formatDate(provider.AddDate) : 'N/A',
-//             Email: provider.Email ?? 'N/A',
-//             PhoneNumber: provider.PhoneNumber ?? 'N/A',
-//             Status: provider.Status ?? 0
-//           }));
-//           this.totalItems = response.Data.Total || 0;
-//           console.log('Total items from API:', this.totalItems);
-//           console.log('Mapped providers:', this.providers);
-//           this.dataSource.data = [...this.providers]; // Set data directly
-//           console.log('dataSource.data after update:', this.dataSource.data);
-//           console.log('Data source row count:', this.dataSource.data.length);
-//           this.cdr.detectChanges();
-//           setTimeout(() => {
-//             if (this.table) {
-//               console.log('Forcing table renderRows at:', new Date().toISOString());
-//               this.table.renderRows();
-//               if (this.tableElement && this.tableElement.nativeElement) {
-//                 const rows = this.tableElement.nativeElement.querySelectorAll('tr[mat-row]').length;
-//                 console.log('DOM row count after render:', rows);
-//               } else {
-//                 console.warn('Table element not found in DOM at:', new Date().toISOString());
-//               }
-//             } else {
-//               console.warn('Table reference not initialized at:', new Date().toISOString());
-//             }
-//           }, 0);
-//         } else {
-//           this.errorMessage = response.Message || 'Failed to load providers.';
-//           this.dataSource.data = [];
-//           this.cdr.detectChanges();
-//         }
-//       },
-//       error: (err) => {
-//         this.isLoading = false;
-//         this.errorMessage = 'An error occurred while loading providers. Please try again later. (Status: ' + (err.status || 'Unknown') + ')';
-//         console.error('API error:', err);
-//         this.dataSource.data = [];
-//         this.cdr.detectChanges();
-//       }
-//     });
-//   }
-
-//   formatDate(dateStr: string): string {
-//     const date = new Date(dateStr);
-//     return date.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' });
-//   }
-
-//   onSpecializationFilterChange(event: any): void {
-//     console.log('Specialization filter changed to:', event);
-//     this.specializationFilter = event === 'All' ? '' : event;
-//     this.pageIndex = 0;
-//     this.loadProviders();
-//   }
-
-//   previousPage(): void {
-//     if (this.pageIndex > 0) {
-//       this.pageIndex--;
-//       this.loadProviders();
-//     }
-//   }
-
-//   nextPage(): void {
-//     const maxPageIndex = Math.ceil(this.totalItems / this.pageSize) - 1;
-//     if (this.pageIndex < maxPageIndex) {
-//       this.pageIndex++;
-//       this.loadProviders();
-//     }
-//   }
-
-//   onSearch(): void {
-//     this.pageIndex = 0;
-//     this.loadProviders();
-//   }
-
-//   resetFilters(): void {
-//     this.specializationFilter = '';
-//     this.searchText = '';
-//     this.pageIndex = 0;
-//     this.loadProviders();
-//   }
-
-//   getDisplayRange(): string {
-//     const start = (this.pageIndex * this.pageSize) + 1;
-//     const end = Math.min((this.pageIndex + 1) * this.pageSize, this.totalItems);
-//     return `${start}-${end}`;
-//   }
-// }
-
 import { Component, OnInit, AfterViewInit, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -212,7 +12,8 @@ import { ApiService } from '../../../../services/api.service';
 import { IPaginationViewModel } from '../../../../types/IPaginationViewModel';
 import { IProviderViewModel } from '../../../../types/IProviderViewModel';
 import { ApiResponse } from '../../../../types/ApiResponse';
-import { AuthService } from '../../../../services/auth.service'; // Add this import
+import { AuthService } from '../../../../services/auth.service';
+
 
 @Component({
   selector: 'app-search-provider',
@@ -392,6 +193,11 @@ export class SearchProviderComponent implements OnInit, AfterViewInit {
     this.searchText = '';
     this.pageIndex = 0;
     this.loadProviders();
+  }
+
+  addProvider(): void
+  {
+    this.router.navigate(['owner/add-provider']);
   }
 
   getDisplayRange(): string {

@@ -7,7 +7,7 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { providePrimeNG } from 'primeng/config';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import Aura from '@primeng/themes/aura'; // Or your chosen theme
+import Aura from '@primeng/themes/aura'; 
 
 export const appConfig: ApplicationConfig = {
   providers: [

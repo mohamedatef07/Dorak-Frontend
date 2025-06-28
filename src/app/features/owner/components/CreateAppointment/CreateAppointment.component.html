@@ -1,49 +1,60 @@
+<p-toast></p-toast>
 <form [formGroup]="CreateAppointmentForm">
-  <div class="ClientInfo d-flex space-between gap-3 my-3">
-    <!-- <div>
-      <label>First Name</label>
-      <input type="text" formControlName="FirstName" />
-    </div> -->
-    <p-floatLabel>
-      <input id="firstName" pInputText formControlName="FirstName" />
-      <label for="firstName">First Name</label>
-    </p-floatLabel>
+  <div class="ClientInfo d-flex space-between gap-3 mt-4 mb-3">
+    <p-floatlabel variant="on">
+      <input pInputText id="firstName" formControlName="FirstName" autocomplete="off" />
+      <label for="firstName" class="ms-3">First Name</label>
+    </p-floatlabel>
 
-    <div>
-      <label>Last Name</label>
-      <input type="text" formControlName="LastName" />
-    </div>
+    <p-floatlabel variant="on">
+      <input pInputText id="lastName" formControlName="LastName" autocomplete="off" />
+      <label for="lastName" class="ms-3">Last Name</label>
+    </p-floatlabel>
 
-    <div>
-      <label>Contact Info</label>
-      <input type="text" formControlName="ContactInfo" />
-    </div>
+    <p-floatlabel variant="on">
+      <input pInputText id="contactInfo" formControlName="ContactInfo" autocomplete="off" />
+      <label for="contactInfo" class="ms-3">Contact Info</label>
+    </p-floatlabel>
   </div>
 
   <div class="filteration d-flex space-between align-items-center gap-3">
     <p class="m-0 dt">Filter by:</p>
 
-    <div>
-      <label>Appointment Date</label>
-      <input type="date" formControlName="AppointmentDate" (change)="filterRecords()" />
+    <div class="p-fluid card flex flex-wrap gap-4">
+      <div class="flex-auto">
+        <p-datepicker formControlName="AppointmentDate" inputId="appointmentDate" [iconDisplay]="'input'"
+          [showIcon]="true" dateFormat="yy-mm-dd" [minDate]="today" (onSelect)="filterRecords()"
+          (onClear)="filterRecords()"></p-datepicker>
+      </div>
     </div>
 
-    <div>
-      <label>Service</label>
-      <select formControlName="ServiceId" (change)="filterRecords()">
-        <option value="">Select Service</option>
-        <option *ngFor="let Service of Services" [value]="Service.ServiceId">{{ Service.ServiceName }}</option>
-      </select>
+    <div class="card flex align-items-center gap-2">
+      <p-autoComplete inputId="serviceInput" formControlName="ServiceId" [dropdown]="true"
+        [suggestions]="filteredServices" field="ServiceName" (completeMethod)="searchServices($event)"
+        [forceSelection]="true" [(ngModel)]="selectedService" (onSelect)="onServiceSelect($event)"
+        (onClear)="onClearService()" placeholder="Select Service" styleClass="w-100">
+        <ng-template let-service pTemplate="item">
+          <div>
+            {{ service.ServiceName }} ({{ service.BasePrice | currency:'USD':'symbol':'1.2-2' }})
+          </div>
+        </ng-template>
+      </p-autoComplete>
     </div>
 
-    <div>
-      <label>Provider</label>
-      <select formControlName="ProviderId">
-        <option value="">Select Provider</option>
-        <option *ngFor="let Provider of ProviderName" [value]="Provider">{{ Provider }}</option>
-      </select>
+    <div class="card flex align-items-center gap-2">
+      <p-autoComplete inputId="providerInput" formControlName="ProviderId" [dropdown]="true"
+        [suggestions]="filteredProviders" (completeMethod)="searchProviders($event)"
+        [forceSelection]="true" (onSelect)="onProviderSelect($event)" (onClear)="onClearProvider()"
+        placeholder="Select Provider" styleClass="w-100">
+        <ng-template let-provider pTemplate="item">
+          <div>{{ provider }}</div>
+        </ng-template>
+      </p-autoComplete>
     </div>
-    <button type="button" class="view-doc-profile" (click)="clearFilters()">Clear Filters</button>
+
+    <button type="button" class="view-doc-profile" (click)="clearFilters()">
+      Clear Filters
+    </button>
   </div>
 
   <div class="doctors-table my-3">
@@ -62,13 +73,16 @@
       <tbody>
         <tr *ngFor="let record of paginatedRecords; let i = index">
           <td>{{ (currentPage - 1) * pageSize + i + 1 }}</td>
-          <td>{{ record.ProviderName}}</td>
-          <td>{{ record.ShiftDate}}</td>
-          <td>{{ record.StartTime}}</td>
-          <td>{{ record.EndTime}}</td>
-          <td>{{ record.Services[0].BasePrice}}</td>
-          <td><button type="button" class="view-doc-profile" data-bs-toggle="modal" data-bs-target="#confirmationModal"
-              (click)="bookNow(record)">Book Now</button></td>
+          <td>{{ record.ProviderName }}</td>
+          <td>{{ record.ShiftDate }}</td>
+          <td>{{ record.StartTime }}</td>
+          <td>{{ record.EndTime }}</td>
+          <td>{{ record.Services[0].BasePrice }}</td>
+          <td>
+            <button type="button" class="view-doc-profile" (click)="bookNow(record)">
+              Book Now
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -77,8 +91,8 @@
 
 <div class="pagination-container ms-5 my-3">
   <div class="showing-text">
-    Showing {{ (currentPage - 1) * pageSize + 1 }} - {{ getPaginationEndIndex() }}
-    of {{ filteredRecords.length }}
+    Showing {{ (currentPage - 1) * pageSize + 1 }} -
+    {{ getPaginationEndIndex() }} of {{ filteredRecords.length }}
   </div>
   <div class="pagination-buttons d-flex">
     <button class="pagination-btn" (click)="goToPreviousPage()" [disabled]="currentPage === 1">
@@ -99,7 +113,6 @@
   </div>
 </div>
 
-
 <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -111,8 +124,12 @@
         Are you sure you want to confirm this appointment?
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="cancelBooking()">Cancel</button>
-        <button type="button" class="btn btn-primary" (click)="HandleSubmitForm()">Confirm</button>
+        <button type="button" class="btn btn-secondary" (click)="cancelBooking()">
+          Cancel
+        </button>
+        <button type="button" class="btn btn-primary" (click)="confirmBooking()">
+          Confirm
+        </button>
       </div>
     </div>
   </div>
