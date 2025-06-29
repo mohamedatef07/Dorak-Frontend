@@ -196,11 +196,15 @@ export const routes: Routes = [
     component: ClientLayoutComponent,
     children: [
       {
+        path: '',
+        redirectTo: 'client-profile',
+        pathMatch: 'full',
+      },
+      {
         path: 'doctor-details/:id',
         component: DoctorDetailsComponent,
         title: 'Doctor Details',
       },
-
       {
         path: 'client-profile',
         component: ClientProfileComponent,
