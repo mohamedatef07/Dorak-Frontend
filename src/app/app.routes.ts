@@ -234,8 +234,9 @@ export const routes: Routes = [
         title: 'Client Wallet',
       },
       {
-        path: 'doctor',
+        path: 'doctors',
         component: DoctorsPageComponent,
+        title: 'Doctors',
       },
       {
         path: 'checkout',

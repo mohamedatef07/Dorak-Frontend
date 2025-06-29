@@ -9,16 +9,16 @@
   </div>
 </div> -->
 
-<div class="col-lg-12 col-md-4 sidebar-container">
-  <div class="sidebar">
-    <div class="sidebar-header">
+<div class="col-lg-12 col-md-4 sidebar-container main-radius">
+  <div class="sidebar p-2 d-flex flex-column gap-2">
+    <div class="sidebar-header p-3 m-0">
       <div class="user-avatar">
         <img [src]="fullImagePath" alt="User" class="rounded-circle" />
       </div>
-      <small class="text-muted d-block mt-2">Patient Dashboard</small>
+      <p class="d-block mt-2">Patient Dashboard</p>
     </div>
 
-    <div class="sidebar-menu">
+    <div class="sidebar-menu p-0">
       <div class="sidebar-item">
         <a
           [routerLink]="['/client/client-profile']"
@@ -44,21 +44,18 @@
           <span>Upcoming Appointments</span>
         </a>
       </div>
-
       <div class="sidebar-item">
         <a
-          [routerLink]="['/client/doctor']"
+          [routerLink]="['/client/client-edit-profile']"
           [routerLinkActive]="['active-link']"
           class="sidebar-link"
         >
           <div class="sidebar-icon">
-            <i class="fas fa-history"></i>
+            <i class="fas fa-edit"></i>
           </div>
-          <span>Medical History</span>
+          <span>Edit Profile</span>
         </a>
       </div>
-
-
 
       <div class="sidebar-item">
         <a
