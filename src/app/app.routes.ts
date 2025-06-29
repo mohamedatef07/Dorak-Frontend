@@ -28,7 +28,6 @@ import { ProviderProfileComponent } from './features/provider/components/provide
 import { ManageOperatorsComponent } from './features/owner/components/ManageOperators/ManageOperators.component';
 import { AddOperatorComponent } from './features/owner/components/AddOperator/AddOperator.component';
 import { CreateAppointmentComponent } from './features/owner/components/CreateAppointment/CreateAppointment.component';
-import { EditProfileComponent } from './features/client/components/edit-profile/edit-profile.component';
 import { UpcomingAppointmentsComponent } from './features/client/components/upcoming-appointments/upcoming-appointments.component';
 import { ClientLiveQueueComponent } from './features/client/components/Client-Live-Queue/Client-Live-Queue.component';
 import { ClientWalletComponent } from './features/client/components/ClientWallet/ClientWallet.component';
@@ -46,6 +45,7 @@ import { appointmentDetails } from './features/client/components/appointment-det
 import { ClientUpdateComponent } from './features/client/components/client-update/client-update.component';
 import { SystemPreferencesSettingsComponent } from './features/provider/components/system-preferences-settings/system-preferences-settings.component';
 import { NotificationsComponent } from './components/notifications/notifications.component';
+import { ClientSettingsComponent } from './features/client/components/client-settings/client-settings.component';
 
 export const routes: Routes = [
   {
@@ -210,11 +210,7 @@ export const routes: Routes = [
         component: ClientProfileComponent,
         title: 'Client Profile',
       },
-      {
-        path: 'client-edit-profile',
-        component: ClientUpdateComponent,
-        title: 'Edit Client Profile',
-      },
+
       {
         path: 'client-upcoming-appointments',
         component: UpcomingAppointmentsComponent,
@@ -246,8 +242,22 @@ export const routes: Routes = [
         component: CheckoutComponent,
       },
       {
-        path: 'change-password',
-        component: ChangePasswordComponent,
+        path: 'settings',
+        component: ClientSettingsComponent,
+        children: [
+          { path: '', redirectTo: 'client-edit-profile', pathMatch: 'full' },
+          {
+            path: 'client-edit-profile',
+            component: ClientUpdateComponent,
+            title: 'Edit Client Profile',
+          },
+          {
+            path: 'change-password',
+            component: ChangePasswordComponent,
+            title: 'Change Password',
+          },
+
+        ],
       },
     ],
   },
