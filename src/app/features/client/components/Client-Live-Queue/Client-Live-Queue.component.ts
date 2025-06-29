@@ -13,8 +13,8 @@ import { environment } from '../../../../../environments/environment';
 @Component({
   selector: 'app-Client-Live-Queue',
   templateUrl: './Client-Live-Queue.component.html',
-  imports:[CommonModule],
-  styleUrls: ['./Client-Live-Queue.component.css']
+  imports: [CommonModule],
+  styleUrls: ['./Client-Live-Queue.component.css'],
 })
 export class ClientLiveQueueComponent implements OnInit, OnDestroy {
   ClientService = inject(ClientService);
@@ -24,6 +24,7 @@ export class ClientLiveQueueComponent implements OnInit, OnDestroy {
 
   LiveQueues: IClientLiveQueue[] = [];
   appoinmentid!: number;
+  shiftId!: number;
   userid: string = '';
   fullImagePath: string = '';
 
@@ -32,14 +33,14 @@ export class ClientLiveQueueComponent implements OnInit, OnDestroy {
   private subscription?: Subscription;
   QueueAppointmentStatus = QueueAppointmentStatus;
 
-
   currentStep = 1;
   waitingProgress = 0;
   estimatedTime = '';
 
   ngOnInit() {
-    this.route.paramMap.subscribe(params => {
+    this.route.paramMap.subscribe((params) => {
       this.appoinmentid = Number(params.get('appointmentId'));
+      this.shiftId = Number(params.get('shiftId'));
       this.ClientService.ClientLiveQueue(this.appoinmentid).subscribe({
         next: (res) => {
           this.LiveQueues = res.Data;
@@ -48,7 +49,7 @@ export class ClientLiveQueueComponent implements OnInit, OnDestroy {
         },
         error: (err) => {
           console.error('Error fetching live queue data:', err);
-        }
+        },
       });
     });
 
@@ -59,15 +60,18 @@ export class ClientLiveQueueComponent implements OnInit, OnDestroy {
         console.log('Client Info:', this.clientInfo);
         this.updateProgress();
         if (this.clientInfo?.Image) {
-         this.fullImagePath = `${environment.apiUrl}${this.clientInfo.Image}`;
-         console.log( this.fullImagePath)
-         console.log( environment.apiUrl)
+          this.fullImagePath = `${environment.apiUrl}${this.clientInfo.Image}`;
+          console.log(this.fullImagePath);
+          console.log(environment.apiUrl);
+        }
 
-               }
+        if (this.shiftId) {
+          this.srService.joinShiftGroup(this.shiftId);
+        }
       },
       error: (err) => {
         console.error('Error fetching client info:', err);
-      }
+      },
     });
 
     this.srService.updatedLiveQueuesList.subscribe({
@@ -78,7 +82,7 @@ export class ClientLiveQueueComponent implements OnInit, OnDestroy {
       },
       error: (err) => {
         console.error('Error updating live queue list:', err);
-      }
+      },
     });
 
     this.subscription = interval(5000).subscribe(() => {
@@ -88,78 +92,72 @@ export class ClientLiveQueueComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription?.unsubscribe();
+
+    if (this.shiftId) {
+      this.srService.leaveShiftGroup(this.shiftId);
+    }
   }
 
- getStatusText(status: QueueAppointmentStatus): string {
-  switch (status) {
-    case QueueAppointmentStatus.NotChecked:
-      return ' Not Checked';
-    case QueueAppointmentStatus.Waiting:
-      return ' Waiting';
-    case QueueAppointmentStatus.InProgress:
-      return 'In Consultation';
-    case QueueAppointmentStatus.Completed:
-      return 'Done';
-    default:
-      return '';
+  getStatusText(status: QueueAppointmentStatus): string {
+    switch (status) {
+      case QueueAppointmentStatus.NotChecked:
+        return ' Not Checked';
+      case QueueAppointmentStatus.Waiting:
+        return ' Waiting';
+      case QueueAppointmentStatus.InProgress:
+        return 'In Consultation';
+      case QueueAppointmentStatus.Completed:
+        return 'Done';
+      default:
+        return '';
+    }
   }
-}
 
-  getFullImagePath(imageUrl:string):string{
-    return  `${environment.apiUrl}${imageUrl}`
+  getFullImagePath(imageUrl: string): string {
+    return `${environment.apiUrl}${imageUrl}`;
   }
   public getCurrentNumber(): number {
-    const current = this.LiveQueues.find(q => q.Status === 1);
+    const current = this.LiveQueues.find((q) => q.Status === 1);
     return current?.CurrentQueuePosition || 0;
   }
 
-private updateProgress() {
-  if (this.LiveQueues.length === 0) return;
+  private updateProgress() {
+    if (this.LiveQueues.length === 0) return;
 
-  const me = this.LiveQueues.find(q => q.IsCurrentClient);
+    const me = this.LiveQueues.find((q) => q.IsCurrentClient);
 
-  if (!me) return;
+    if (!me) return;
 
-  const myNumber = me.CurrentQueuePosition;
-  const currentNumber = this.getCurrentNumber();
+    const myNumber = me.CurrentQueuePosition;
+    const currentNumber = this.getCurrentNumber();
 
-  const total = myNumber;
-  const current = currentNumber;
+    const total = myNumber;
+    const current = currentNumber;
 
-  this.waitingProgress = Math.min((current / total) * 100, 100);
+    this.waitingProgress = Math.min((current / total) * 100, 100);
 
-  if (current >= 2) this.currentStep = 2;
-  if (current >= myNumber) this.currentStep = 3;
+    if (current >= 2) this.currentStep = 2;
+    if (current >= myNumber) this.currentStep = 3;
 
-  const remainingPatients = myNumber - current;
-  const estimatedMinutes = remainingPatients * 15;
+    const remainingPatients = myNumber - current;
+    const estimatedMinutes = remainingPatients * 15;
 
-  if (estimatedMinutes <= 0) {
-    this.estimatedTime = 'Your turn!';
-  } else if (estimatedMinutes < 60) {
-    this.estimatedTime = `${estimatedMinutes} minutes`;
-  } else {
-    const hours = Math.floor(estimatedMinutes / 60);
-    const minutes = estimatedMinutes % 60;
-    this.estimatedTime = minutes > 0 ? `${hours}h ${minutes}m` : `${hours} hours`;
+    if (estimatedMinutes <= 0) {
+      this.estimatedTime = 'Your turn!';
+    } else if (estimatedMinutes < 60) {
+      this.estimatedTime = `${estimatedMinutes} minutes`;
+    } else {
+      const hours = Math.floor(estimatedMinutes / 60);
+      const minutes = estimatedMinutes % 60;
+      this.estimatedTime =
+        minutes > 0 ? `${hours}h ${minutes}m` : `${hours} hours`;
+    }
   }
-
-}
-
-
-
 
   trackByFn(index: number, item: IClientLiveQueue): number {
     return item.CurrentQueuePosition;
   }
 }
-
-
-
-
-
-
-
 
 //   ClientService = inject(ClientService);
 //   cAuthService = inject(AuthService);
@@ -337,4 +335,3 @@ private updateProgress() {
 //       }
 //     });
 //   }
-
