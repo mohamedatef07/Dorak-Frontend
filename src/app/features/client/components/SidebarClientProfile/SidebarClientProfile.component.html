@@ -1,5 +1,5 @@
 
-<div class="card  text-center">
+<!-- <div class="card  text-center">
   <div class="card-body d-grid gap-2 border-0">
     <a [routerLink]="['/client/client-profile']" [routerLinkActive]="['active-link']" class="p-button-sm w-100 mt-1 item-link py-3 main-text-Color" >My profile</a>
     <a [routerLink]="['/client/client-upcoming-appointments']" [routerLinkActive]="['active-link']" class="p-button-sm w-100 mt-1 item-link py-3 main-text-Color" >Upcoming Appointments</a>
@@ -8,5 +8,73 @@
     <a [routerLink]="['/client/client-wallet']" [routerLinkActive]="['active-link']" class="p-button-sm w-100 mt-1 item-link py-3 main-text-Color" >Wallet</a>
     <a [routerLink]="['/client/change-password']" [routerLinkActive]="['active-link']" class="p-button-sm w-100 mt-1 item-link py-3 main-text-Color" >Change Password</a>
   </div>
-</div>
+</div> -->
 
+            <div class="col-lg-12 col-md-4 sidebar-container">
+                <div class="sidebar">
+                    <div class="sidebar-header">
+                        <div class="user-avatar">
+                            <img src="https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop" alt="User" class="rounded-circle">
+                        </div>
+                        <h6 class="user-name mt-2 mb-0">Welcome Back!</h6>
+                        <small class="text-muted">Patient Dashboard</small>
+                    </div>
+
+                    <div class="sidebar-menu">
+                        <div class="sidebar-item">
+                            <a [routerLink]="['/client/client-profile']" [routerLinkActive]="['active-link']" class="sidebar-link">
+                                <div class="sidebar-icon">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <span>My Profile</span>
+                            </a>
+                        </div>
+
+                        <div class="sidebar-item ">
+                            <a  [routerLink]="['/client/client-upcoming-appointments']" [routerLinkActive]="['active-link']" class="sidebar-link">
+                                <div class="sidebar-icon">
+                                    <i class="fas fa-calendar-check"></i>
+                                </div>
+                                <span>Upcoming Appointments</span>
+                            </a>
+                        </div>
+
+                        <div class="sidebar-item">
+                             <a [routerLink]="['/client/doctor']" [routerLinkActive]="['active-link']"class="sidebar-link">
+                                <div class="sidebar-icon">
+                                    <i class="fas fa-history"></i>
+                                </div>
+                                <span>Medical History</span>
+                            </a>
+                        </div>
+
+                        <div class="sidebar-item">
+                            <a [routerLink]="['/client/client-edit-profile']" [routerLinkActive]="['active-link']" class="sidebar-link">
+                                <div class="sidebar-icon">
+                                    <i class="fas fa-edit"></i>
+                                </div>
+                                <span>Edit Profile</span>
+                            </a>
+                        </div>
+
+                        <div class="sidebar-item">
+                            <a [routerLink]="['/client/client-wallet']" [routerLinkActive]="['active-link']"class="sidebar-link">
+                                <div class="sidebar-icon">
+                                    <i class="fas fa-wallet"></i>
+                                </div>
+                                <span>Wallet</span>
+                                <span class="badge bg-success ms-auto">$250</span>
+                            </a>
+                        </div>
+
+                        <div class="sidebar-item">
+                            <a [routerLink]="['/client/change-password']" [routerLinkActive]="['active-link']"class="sidebar-link">
+                                <div class="sidebar-icon">
+                                    <i class="fas fa-lock"></i>
+                                </div>
+                                <span>Security</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>

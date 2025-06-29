@@ -9,13 +9,13 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   imports: [DatePipe,RouterLink,RouterLinkActive],
 })
 export class ProviderSidebarComponent implements OnInit {
-  dateNow = new Date();
+  currentDate = new Date();
   constructor() {}
   private intervalId: any;
 
   ngOnInit() {
     this.intervalId = setInterval(() => {
-      this.dateNow = new Date();
+      this.currentDate = new Date();
     }, 1000);
   }
   ngOnDestroy(): void {

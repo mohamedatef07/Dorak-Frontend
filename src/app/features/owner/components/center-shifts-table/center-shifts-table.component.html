@@ -34,12 +34,13 @@
           </button>
         </td>
         <td class="cancel">
-          <p-button
+          <button
+            type="button"
             class="btn cancel-btn"
             (click)="cancelShift(shift.ShiftId, $event)"
-            label="Cancel"
-            severity="danger"
-          />
+          >
+            Cancel
+          </button>
         </td>
         <td class="details">
           <button

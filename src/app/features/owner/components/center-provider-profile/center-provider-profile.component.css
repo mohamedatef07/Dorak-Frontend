@@ -149,7 +149,7 @@
   padding: 12px;
   text-align: center;
   min-height: 60px;
-  position: relative; /* Ensure positioning context for absolute children */
+  position: relative;
   transition: background-color 0.3s;
 }
 
@@ -174,19 +174,42 @@
 
 .assignment-dot {
   position: absolute;
-  bottom: -10px;
-  left: -30px;
-  width: 17px; /* Keep size at 16px */
-  height: 17px; /* Keep size at 16px */
-  background: linear-gradient(45deg, #ff6b6b, #ff3333); /* Softer red gradient */
-  border: 2px solid #ff9999; /* Thicker border for elegance */
+  bottom: -6px;
+  left: 5px;
+  width: 12px;
+  height: 12px;
+  background: linear-gradient(45deg, #ff6b6b, #ff3333);
+  border: 2px solid #ff9999;
   border-radius: 50%;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Enhanced shadow for depth */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   transition: transform 0.2s;
 }
 
 .assignment-dot:hover {
-  transform: scale(1.3); /* Slightly larger hover effect */
+  transform: scale(1.5);
+}
+
+
+.assignment-dot[title]:hover:after {
+  content: attr(title);
+  position: absolute;
+  background-color: #fff;
+  color: #333;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  white-space: pre-line;
+  z-index: 1 !important;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-100%);
+  font-size: .7rem;
+  min-width: 170px;
+  text-align: center;
+  -webkit-transform: translateX(-100%);
+  -moz-transform: translateX(-100%);
+  -ms-transform: translateX(-100%);
+  -o-transform: translateX(-100%);
 }
 
 .today .day-number {

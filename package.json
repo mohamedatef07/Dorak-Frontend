@@ -25,6 +25,7 @@
     "angular-calendar": "^0.31.1",
     "bootstrap": "^5.3.6",
     "bootstrap-icons": "^1.13.1",
+    "chart.js": "^4.5.0",
     "ngx-cookie-service": "^19.1.2",
     "primeicons": "^7.0.0",
     "primeng": "^19.1.3",

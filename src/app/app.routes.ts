@@ -90,6 +90,11 @@ export const routes: Routes = [
       {
         path: 'center-provider-profile/:id',
         component: CenterProviderProfileComponent,
+        title: 'Center Provider Profile',
+      },
+      {
+        path: 'provider-profile/:id',
+        component: ProviderProfilesComponent,
         title: 'Provider Profile',
       },
       {

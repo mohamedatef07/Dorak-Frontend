@@ -52,7 +52,13 @@
         <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
         <mat-cell *matCellDef="let row">
           {{ row.FirstName || 'Unknown' }} {{ row.LastName || '' }}
-          <a [routerLink]="['/provider-profile', row.ProviderId || '']" class="view-profile-link">View Profile</a>
+          <button
+            type="button"
+            class="btn"
+            (click)="viewProfile(row.ProviderId || '')"
+          >
+            View Profile
+          </button>
         </mat-cell>
       </ng-container>
 

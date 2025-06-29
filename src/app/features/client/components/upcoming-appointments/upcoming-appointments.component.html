@@ -1,4 +1,4 @@
-<h6 class="fw-bold mb-3">Last Appointment:</h6>
+<!-- <h6 class="fw-bold mb-3">Last Appointment:</h6>
 <div
   class="appointment-card p-3 mb-3 rounded d-flex flex-column flex-md-row align-items-center justify-content-between bg-lightblue"
   *ngIf="appointment"
@@ -66,4 +66,165 @@
 
   </div>
 }
+ -->
+
+
+ <div class="col-lg-12 col-md-8 main-content">
+                <div class="content-wrapper">
+                    <!-- Header Stats -->
+                    <div class="stats-row mb-4">
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <div class="stat-card stat-primary">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-calendar-plus"></i>
+                                    </div>
+                                    <div class="stat-content">
+                                        <h3>12</h3>
+                                        <p>Total Appointments</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="stat-card stat-secondary">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-clock"></i>
+                                    </div>
+                                    <div class="stat-content">
+                                        <h3>2</h3>
+                                        <p>Pending</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="stat-card stat-success">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                    <div class="stat-content">
+                                        <h3>10</h3>
+                                        <p>Completed</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Last Appointment Section -->
+                    <div class="appointment-section mb-4">
+                        <div class="section-header">
+                            <h4 class="section-title">
+                                <i class="fas fa-history me-2"></i>
+                                Last Appointment
+                            </h4>
+                            <span class="section-badge">Completed</span>
+                        </div>
+
+                        <div class="appointment-card last-appointment">
+                            <div class="appointment-status completed"></div>
+                            <div class="row align-items-center">
+                                <div class="col-md-8">
+                                    <div class="d-flex">
+                                        <div class="doctor-image-container">
+                                             <img *ngIf="fullImagePath" [src]="fullImagePath" alt="Doctor Image" alt="Dr. Ammar Hassan" class="doctor-image">
+                                            <div class="doctor-status online"></div>
+                                        </div>
+                                        <div class="doctor-info">
+                                            <h5 class="doctor-name">{{ appointment.ProviderName }}</h5>
+                                            <div class="doctor-specialty">
+                                                <i class="fas fa-stethoscope me-1"></i>
+                                               {{ appointment.Specialization }}
+                                            </div>
+                                            <div class="rating-container">
+                                                <div class="rating">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="far fa-star"></i>
+                                                </div>
+                                                <span class="rating-text">4.0 (125 reviews)</span>
+                                            </div>
+                                            <div class="appointment-details">
+                                                <div class="detail-item">
+                                                    <i class="fas fa-calendar me-1"></i>
+                                                    <span>{{ appointment.AppointmentDate }}</span>
+                                                </div>
+                                                <div class="detail-item">
+                                                    <i class="fas fa-clock me-1"></i>
+                                                    <span>10:30 AM</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 text-end">
+                                    <button class="btn btn-gradient-primary appointment-btn"  [routerLink]="['/client/appointment', appointment.appointmentId]">
+                                        <i class="fas fa-eye me-2"></i>
+                                        View Details
+                                    </button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Upcoming Appointment Section -->
+                     @for (appointment of Appointments; let i = $index; track $index){
+                    <div class="appointment-section">
+                        <div class="section-header">
+                            <h4 class="section-title">
+                                <i class="fas fa-calendar-alt me-2"></i>
+                                Upcoming Appointment
+                            </h4>
+                            <span class="section-badge upcoming">Next</span>
+                        </div>
+
+                        <div class="appointment-card upcoming-appointment">
+                            <div class="appointment-status upcoming"></div>
+                            <div class="row align-items-center">
+                                <div class="col-md-8">
+                                    <div class="d-flex">
+                                        <div class="doctor-image-container">
+                                       <img *ngIf="fullImagePath" [src]="fullImagePath" alt="Doctor Image" alt="Dr. Ammar Hassan" class="doctor-image">
+                                            <div class="doctor-status online"></div>
+                                        </div>
+                                        <div class="doctor-info">
+                                          {{ appointment.ProviderName }}
+                                            <div class="doctor-specialty">
+                                                <i class="fas fa-user-md me-1"></i>
+                                                {{ appointment.Specialization }}
+                                                </div>
+                                            <div class="rating-container">
+                                                <div class="rating">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                </div>
+                                                <span class="rating-text">5.0 (89 reviews)</span>
+                                            </div>
+                                            <div class="appointment-details">
+                                                <div class="detail-item">
+                                                    <i class="fas fa-calendar me-1"></i>
+                                                    <span>{{ appointment.AppointmentDate }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 text-end">
+                                    <button class="btn btn-gradient-secondary appointment-btn" [routerLink]="['/client/appointment', appointment.AppointmentId]">
+                                        <i class="fas fa-info-circle me-2"></i>
+                                        Appointment Details
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  }
+                </div>
+            </div>
+
 
