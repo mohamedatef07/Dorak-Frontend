@@ -3,7 +3,7 @@
   class="appointment-card p-3 mb-3 rounded"
   [ngClass]="'bg-lightblue'"
 >
-  <div class="d-flex justify-content-center mb-4"> 
+  <div class="d-flex justify-content-center mb-4">
     <img [src]="fullImagePath" alt="Provider Image" width="100px" height= "100px" shape="circle"
       class="avatar"*ngIf="fullImagePath" />
 
@@ -55,7 +55,7 @@
 
    <a [routerLink]="['/client/client-profile']" class="btn btn-info btn-cust"  >Back</a>
 <a
-  [routerLink]="appointment.IsLive ? ['/client/client-live-queue', appointment.appointmentId] : null"
+  [routerLink]="appointment.IsLive ? ['/client/client-live-queue', appointment.appointmentId,appointment.ShiftId] : null"
   [class.disabled]="!appointment.IsLive"
   class="btn btn-info btn-cust"
   (click)="!appointment.IsLive && $event.preventDefault()"

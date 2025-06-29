@@ -27,7 +27,7 @@
       </div>
     </div>
 
-    <!-- Right Panel (Specialization and Actions) -->
+    <!-- Right Panel (Specialization, Calendar, and Actions) -->
     <div class="right-panel">
       <div class="specialization-section">
         <h3>Specialization:</h3>
@@ -35,9 +35,47 @@
           <li *ngIf="provider.Specialization">{{ provider.Specialization }}</li>
         </ul>
       </div>
+      <div class="calendar-section">
+        <h3>Assignments Calendar</h3>
+        <div class="calendar-controls">
+          <button mat-button class="nav-button" (click)="prevMonth()">
+            ←
+          </button>
+          <span class="month-title">{{ getMonthName() }}</span>
+          <button mat-button class="nav-button" (click)="nextMonth()">
+            →
+          </button>
+        </div>
+        <div class="calendar-wrapper">
+          <div class="calendar">
+            <div class="calendar-header">
+              <div class="day-header">Sun</div>
+              <div class="day-header">Mon</div>
+              <div class="day-header">Tue</div>
+              <div class="day-header">Wed</div>
+              <div class="day-header">Thu</div>
+              <div class="day-header">Fri</div>
+              <div class="day-header">Sat</div>
+            </div>
+            <div class="calendar-body">
+              <div *ngFor="let day of daysInMonth" class="calendar-day" [ngClass]="{'today': isToday(day.date)}">
+                <ng-container *ngIf="day.date as validDate">
+                  <span *ngIf="validDate.getMonth() === viewDate.getMonth()" class="day-number">
+                    {{ validDate.getDate() }}
+                    <span *ngIf="day.hasAssignment" class="assignment-dot"
+                          [title]="getShiftTooltip(day)">
+                    </span>
+                  </span>
+                </ng-container>
+                <span *ngIf="!day.date" class="empty-day"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="actions">
-        <button mat-raised-button color="primary" (click)="sendInvite()" [disabled]="!selectedDate" matTooltip="Send an invitation to this provider">
-          Send Invite
+        <button mat-raised-button color="primary" (click)="schedule()">
+        Schedule
         </button>
       </div>
     </div>

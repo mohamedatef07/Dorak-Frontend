@@ -47,7 +47,7 @@ export class SearchProviderComponent implements OnInit, AfterViewInit {
   pageIndex: number = 0;
   specializationFilter: string = '';
   searchText: string = '';
-  centerId: number = 0; // Will be set from AuthService
+  centerId: number = 1; // Will be set from AuthService
 
   errorMessage: string = '';
   isLoading: boolean = false;
@@ -61,8 +61,8 @@ export class SearchProviderComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     // Get centerId from AuthService
-    this.centerId = this.authService.getCenterId();
-    console.log('Center ID from AuthService:', this.centerId);
+    // this.centerId = this.authService.getCenterId();
+    // console.log('Center ID from AuthService:', this.centerId);
     this.loadProviders();
   }
 
@@ -198,6 +198,10 @@ export class SearchProviderComponent implements OnInit, AfterViewInit {
   addProvider(): void
   {
     this.router.navigate(['owner/add-provider']);
+  }
+
+  viewProfile(providerId: string): void {
+    this.router.navigate(['owner/provider-profile', providerId]);
   }
 
   getDisplayRange(): string {

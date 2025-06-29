@@ -90,6 +90,11 @@ export const routes: Routes = [
       {
         path: 'center-provider-profile/:id',
         component: CenterProviderProfileComponent,
+        title: 'Center Provider Profile',
+      },
+      {
+        path: 'provider-profile/:id',
+        component: ProviderProfilesComponent,
         title: 'Provider Profile',
       },
       {
@@ -219,7 +224,7 @@ export const routes: Routes = [
           ).then((m) => m.appointmentDetails),
       },
       {
-        path: 'client-live-queue/:appointmentId',
+        path: 'client-live-queue/:appointmentId/:shiftId',
         component: ClientLiveQueueComponent,
         title: 'Live Queue Appointment',
       },

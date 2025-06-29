@@ -24,7 +24,7 @@ import { IOperatorViewModel } from '../../../../types/IOperatorViewModel';
 })
 export class ProviderLiveQueueComponent implements OnInit {
   liveQueues: IProviderLiveQueueViewModel[] = [];
-  providerId: string = '0dad21ac-6842-430b-af98-78f9d12923d1';
+  providerId: string = '8942c804-1498-4dfb-8efd-550e6d3989ed';
   centerId: number = 1;
   shiftId: number = 2;
   pageNumber: number = 1;
