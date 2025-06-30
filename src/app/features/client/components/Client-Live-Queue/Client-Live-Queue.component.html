@@ -1,71 +1,126 @@
-<body>
-  <div class="container mt-4">
-    <div class="container-card">
-      <!-- Doctor Profile -->
-      <img src="./Assest/img/doctor Profile.png" alt="Doctor" class="profile-image" />
-      <h5 class="fw-bold mt-2">Mohamed Ahmed</h5>
-      <p class="text-muted">Specialization: Cardiologist</p>
-
-      <hr />
-
-      <!-- Live Status Updates -->
-      <div class="container mt-4">
-        <h6 class="fw-bold status-text">Live status updates</h6>
-        <div class="status-container">
-          <img [src]="clientInfo.Image" alt="Doctor Illustration" class="illustration" />
-          <div class="w-100">
-            <div class="status-bar">
-             <div class="circle">{{ clientInfo?.Name }}
-
-             </div>
-             <div *ngFor="let item of LiveQueues">
-             <div [ngClass]="item.IsCurrentClient ? 'current-client-style' : ''">
-             <div *ngIf="item.IsCurrentClient">
-            </div>
-            </div>
-             </div>
-            <div class="circle">{{ getCurrentNumber() }}</div>
-
-            </div>
-            <div class="status-labels">
-              <span class="w-33">My Number</span>
-              <span class="w-33">Attend in Clinic</span>
-              <span class="w-33">Current Number</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Estimated Waiting Time -->
-      <h6 class="fw-bold text-start mt-4">Live Estimated Waiting Time</h6>
-      <div class="progress-bar-container mt-2">
-        <div class="progress-bar-fill" [style.width.%]="waitingProgress"></div>
-      </div>
-      <p class="mt-1 text-end">{{ estimatedTime }}</p>
-
-     <h6 class="fw-bold text-start mt-4">Live QUEUE:</h6>
-
-<div *ngFor="let item of LiveQueues; trackBy: trackByFn"
-     class="queue-card"
-     [class.done]="item.Status === QueueAppointmentStatus.Completed"
-     [class.waiting]="item.Status === QueueAppointmentStatus.Waiting"
-     [class.in-progress]="item.Status === QueueAppointmentStatus.InProgress"
-     [class.not-checked]="item.Status === QueueAppointmentStatus.NotChecked">
-   
-  <div class="d-flex align-items-center">
-<img [src]="item.IsCurrentClient ? fullImagePath : 'assets/images/default-user.png'"
-     alt="User"
-     height="50"
-  />
-    <p class="mb-0 ms-5 fw-bold">
-      {{ item.IsCurrentClient ? clientInfo.Name : 'Anonymous' }}
-    </p>
+<!-- Doctor Profile Section -->
+<div class="doctor-profile-section">
+  <div class="doctor-avatar">
+    <img [src]="doctorMainInfo.Image" alt="Doctor" class="doctor-image" />
   </div>
-
-  <span>{{ getStatusText(item.Status) }}</span>
-  <span class="fw-bold">{{ item.CurrentQueuePosition }}</span>
-</div>
+  <div class="doctor-info">
+    <h4 class="doctor-name">{{ doctorMainInfo.FullName }}</h4>
+    <p class="doctor-specialty">
+      <i class="fas fa-user-md me-1"></i>
+      {{ doctorMainInfo.Specialization }}
+    </p>
+    <div class="rating-container mb-2">
+      <p-rating
+        class="star pt-2 pb-2"
+        [(ngModel)]="doctorMainInfo.Rate"
+        [readonly]="true"
+      />
+      <span class="rating-text ms-2">{{ doctorMainInfo.Rate }}</span>
     </div>
   </div>
-</body>
+</div>
 
+<!-- Queue Status Overview -->
+<div class="queue-status-section">
+  <div class="section-header">
+    <h5 class="section-title">
+      <i class="fas fa-chart-line"></i>
+      Queue Status
+    </h5>
+  </div>
+  <div class="status-grid">
+    <div class="status-card current">
+      <div class="status-icon">
+        <i class="fas fa-user-clock"></i>
+      </div>
+      <div class="status-content">
+        <h3 class="status-number">{{ getCurrentNumber() }}</h3>
+        <p class="status-label">Current</p>
+      </div>
+    </div>
+    <div class="status-card total">
+      <div class="status-icon">
+        <i class="fas fa-users"></i>
+      </div>
+      <div class="status-content">
+        <h3 class="status-number">{{ LiveQueues.length }}</h3>
+        <p class="status-label">In Queue</p>
+      </div>
+    </div>
+    <div class="status-card my-position">
+      <div class="status-icon">
+        <i class="fas fa-user-check"></i>
+      </div>
+      <div class="status-content">
+        <h3 class="status-number">{{ getCurrentPosition() }}</h3>
+        <p class="status-label">My Position</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Estimated Wait Time -->
+<div class="wait-time-section">
+  <div class="section-header">
+    <h5 class="section-title">
+      <i class="fas fa-clock"></i>
+      Estimated Wait Time
+    </h5>
+  </div>
+  <div class="progress-container">
+    <div class="progress-bar">
+      <div class="progress-fill" [style.width.%]="waitingProgress"></div>
+    </div>
+    <div class="time-display">
+      <span class="time-text">{{ estimatedTime }}</span>
+    </div>
+  </div>
+</div>
+
+<!-- Live Queue List -->
+<div class="queue-list-section">
+  <div class="section-header">
+    <h5 class="section-title">
+      <i class="fas fa-list-ol"></i>
+      Live Queue
+    </h5>
+  </div>
+  <div class="queue-list">
+    <div
+      *ngFor="let item of LiveQueues; trackBy: trackByFn"
+      class="queue-item"
+      [ngClass]="{
+        completed: item.Status === QueueAppointmentStatus.Completed,
+        'in-progress': item.Status === QueueAppointmentStatus.InProgress,
+        waiting: item.Status === QueueAppointmentStatus.Waiting,
+        'not-checked': item.Status === QueueAppointmentStatus.NotChecked,
+        'current-user': item.IsCurrentClient
+      }"
+    >
+      <div class="queue-item-content">
+        <div class="user-info">
+          <div class="client-avatar">
+            <img
+              [src]="
+                item.IsCurrentClient
+                  ? fullImagePath
+                  : 'assets/images/default-user.png'
+              "
+              alt="User"
+              class="avatar-image"
+            />
+          </div>
+          <div class="user-details">
+            <span class="user-name">{{
+              item.IsCurrentClient ? clientInfo.Name : "Anonymous"
+            }}</span>
+            <span class="status-text">{{ getStatusText(item.Status) }}</span>
+          </div>
+        </div>
+        <div class="position-badge">
+          <span class="position-number">#{{ item.CurrentQueuePosition }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

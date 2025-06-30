@@ -202,11 +202,6 @@ export const routes: Routes = [
         pathMatch: 'full',
       },
       {
-        path: 'doctor-details/:id',
-        component: DoctorDetailsComponent,
-        title: 'Doctor Details',
-      },
-      {
         path: 'client-profile',
         component: ClientProfileComponent,
         title: 'Client Profile',
@@ -233,10 +228,6 @@ export const routes: Routes = [
         path: 'client-wallet',
         component: ClientWalletComponent,
         title: 'Client Wallet',
-      },
-      {
-        path: 'checkout',
-        component: CheckoutComponent,
       },
       {
         path: 'settings',
@@ -267,7 +258,15 @@ export const routes: Routes = [
     component: DoctorsPageComponent,
     title: 'Doctors',
   },
-
+  {
+    path: 'client/doctor-details/:id',
+    component: DoctorDetailsComponent,
+    title: 'Doctor Details',
+  },
+  {
+    path: 'client/checkout',
+    component: CheckoutComponent,
+  },
   // ----------------------------------
 
   // canActivate: [AuthGuard, RoleGuard], data: { expectedRole: 'Client' }
