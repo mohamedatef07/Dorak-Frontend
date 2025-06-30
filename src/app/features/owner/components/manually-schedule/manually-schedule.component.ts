@@ -47,7 +47,7 @@ export class ManuallyScheduleComponent implements OnInit {
   successMessage: string = '';
   isLoading: boolean = false;
   scheduleForm: FormGroup;
-  centerId: number = 1;
+  centerId: number = 3;
   dateOptions: Date[] = [];
   viewDate: Date = new Date();
   assignments: { startDate: Date; endDate: Date }[] = [];
@@ -109,7 +109,6 @@ export class ManuallyScheduleComponent implements OnInit {
 
   loadAssignments(providerId: string): void {
     this.isLoading = true;
-    // Clear error message to ensure the page renders even if there are no assignments
     this.errorMessage = '';
 
     this.apiService
@@ -291,7 +290,7 @@ export class ManuallyScheduleComponent implements OnInit {
           StartTime: this.formatTimeToString(shift.StartTime),
           EndTime: this.formatTimeToString(shift.EndTime),
           MaxPatientsPerDay: shift.MaxPatientsPerDay,
-          OperatorId: 'user1-operator',
+          OperatorId: '1',
         })
       ),
     };
@@ -426,6 +425,6 @@ export class ManuallyScheduleComponent implements OnInit {
   }
 
   goBack(): void {
-    this.router.navigate(['/provider-management']);
+    this.router.navigate(['owner/provider-management']);
   }
 }

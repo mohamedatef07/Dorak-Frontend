@@ -47,7 +47,7 @@ export class WeeklyScheduleComponent implements OnInit {
   successMessage: string = '';
   isLoading: boolean = false;
   scheduleForm: FormGroup;
-  centerId: number = 1;
+  centerId: number = 3;
   daysOfWeek = [
     { value: 0, label: 'Sunday' },
     { value: 1, label: 'Monday' },
@@ -386,7 +386,7 @@ export class WeeklyScheduleComponent implements OnInit {
             StartTime: this.formatTimeToString(shift.StartTime) || '',
             EndTime: this.formatTimeToString(shift.EndTime) || '',
             MaxPatientsPerDay: shift.MaxPatientsPerDay || null,
-            OperatorId: 'user1-operator',
+            OperatorId: '1',
           });
         }
       }
@@ -522,6 +522,6 @@ export class WeeklyScheduleComponent implements OnInit {
   }
 
   goBack(): void {
-    this.router.navigate(['/provider-management']);
+    this.router.navigate(['owner/provider-management']);
   }
 }

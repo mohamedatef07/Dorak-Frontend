@@ -7,6 +7,8 @@ import { IProviderViewModel } from '../../../../types/IProviderViewModel';
 import { ApiService } from '../../../../services/api.service';
 import { ApiResponse } from '../../../../types/ApiResponse';
 import { IShift } from '../../../../types/IShift';
+import { environment } from '../../../../../environments/environment';
+
 
 @Component({
   selector: 'app-center-provider-profile',
@@ -20,7 +22,7 @@ export class CenterProviderProfileComponent implements OnInit {
   errorMessage: string = '';
   isLoading: boolean = false;
   viewDate: Date = new Date();
-  centerId: number = 1;
+  centerId: number = 3;
   assignments: { startDate: Date; endDate: Date }[] = [];
   daysInMonth: { date: Date | null; hasAssignment: boolean; shifts: { startTime: string; endTime: string }[] }[] = [];
 
@@ -44,6 +46,15 @@ export class CenterProviderProfileComponent implements OnInit {
       this.errorMessage = 'Provider ID not found.';
       this.cdr.detectChanges();
     }
+  }
+
+   // Method to get the full image URL
+  getImageUrl(imagePath: string | null): string {
+    if (!imagePath) {
+      return 'https://via.placeholder.com/150'; // Fallback placeholder
+    }
+    // Prepend backend base URL to the image path
+    return `${environment.apiUrl}${imagePath}`;
   }
 
   loadProviderDetails(providerId: string): void {
@@ -195,7 +206,7 @@ export class CenterProviderProfileComponent implements OnInit {
   }
 
   goBack(): void {
-    this.router.navigate(['/provider-management']);
+    this.router.navigate(['owner/provider-management']);
   }
 
   nextMonth(): void {

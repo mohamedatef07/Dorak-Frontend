@@ -6,7 +6,6 @@ import { environment } from '../../../../environments/environment';
 import { IOperator } from '../models/IOperator';
 import { ICreateAppointment } from '../models/ICreateAppointment';
 import { IShiftsTable } from '../models/IShiftsTable';
-
 import { ICenterShifts } from '../models/ICenterShifts';
 import { AuthService } from '../../../services/auth.service';
 
