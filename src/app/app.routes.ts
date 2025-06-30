@@ -46,6 +46,7 @@ import { appointmentDetails } from './features/client/components/appointment-det
 import { ClientUpdateComponent } from './features/client/components/client-update/client-update.component';
 import { SystemPreferencesSettingsComponent } from './features/provider/components/system-preferences-settings/system-preferences-settings.component';
 import { NotificationsComponent } from './components/notifications/notifications.component';
+import { RescheduleAssignmentComponent } from './features/owner/components/reschedule-assignment/reschedule-assignment.component';
 
 export const routes: Routes = [
   {
@@ -106,6 +107,11 @@ export const routes: Routes = [
         path: 'weekly-schedule/:id',
         component: WeeklyScheduleComponent,
         title: 'Weekly Schedule',
+      },
+      {
+        path: 'reschedule-assignment/:id',
+        component: RescheduleAssignmentComponent,
+        title: 'Reschedule Assignment',
       },
       {
         path: 'provider-schedule',

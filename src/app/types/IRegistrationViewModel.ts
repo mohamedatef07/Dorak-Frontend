@@ -18,7 +18,7 @@ export class IRegistrationViewModel {
   City?: string;
   Governorate?: string;
   Country?: string;
-  Image?: string;
+  // Image?: string;
 
   Specialization?: string;
   Bio?: string;

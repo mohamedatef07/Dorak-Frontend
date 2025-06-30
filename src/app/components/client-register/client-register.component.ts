@@ -4,6 +4,7 @@ import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule, NgClass } from '@angular/common';
 import { ApiResponse } from '../../types/ApiResponse';
+import { GenderType } from '../../Enums/GenderType.enum';
 import { IClientRegisterRequest } from '../../types/IClientRegisterRequest';
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -16,10 +17,14 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class ClientRegisterComponent {
   clientRegisterForm: FormGroup;
-  genders = ['Male', 'Female'];
+  genders = [
+    { label: 'Male', value: GenderType.Male },
+    { label: 'Female', value: GenderType.Female }
+  ];
   errorMessage: string | null = null;
   successMessage: string | null = null;
   isLoading = false;
+  fieldErrors: { [key: string]: string[] } = {};
 
   constructor(
     private fb: FormBuilder,
@@ -33,7 +38,7 @@ export class ClientRegisterComponent {
     return this.fb.group({
       userName: ['', [
         Validators.required,
-        Validators.minLength(6),
+        Validators.minLength(8),
         Validators.maxLength(100)
       ]],
       password: ['', [
@@ -44,24 +49,35 @@ export class ClientRegisterComponent {
       ]],
       confirmPassword: ['', [
         Validators.required,
-        Validators.minLength(6),
+        Validators.minLength(8),
         Validators.maxLength(100)
       ]],
       email: ['', [
         Validators.required,
         Validators.email,
+        Validators.minLength(6),
         Validators.maxLength(100)
       ]],
       phoneNumber: ['', [
         Validators.required,
-        Validators.minLength(6),
+        Validators.minLength(8),
         Validators.maxLength(100),
         Validators.pattern(/^\+?[1-9]\d{5,14}$/)
       ]],
-      firstName: [''],
-      lastName: [''],
-      gender: [''],
-      birthDate: [''],
+      firstName: ['', [
+        Validators.required,
+        Validators.maxLength(100)
+      ]],
+      lastName: ['', [
+        Validators.required,
+        Validators.maxLength(100)
+      ]],
+      gender: ['', [
+        Validators.required
+      ]],
+      birthDate: ['', [
+        Validators.required
+      ]],
       street: [''],
       city: [''],
       governorate: [''],
@@ -90,6 +106,7 @@ export class ClientRegisterComponent {
   onSubmit(): void {
     this.errorMessage = null;
     this.successMessage = null;
+    this.fieldErrors = {};
 
     if (this.clientRegisterForm.invalid) {
       this.markFormGroupTouched(this.clientRegisterForm);
@@ -99,27 +116,27 @@ export class ClientRegisterComponent {
 
     this.isLoading = true;
     const formValue = this.clientRegisterForm.value;
-    console.log('Form Value:', formValue);
 
     const registerData: IClientRegisterRequest = {
-      UserName: formValue.userName?.trim(),
+      UserName: formValue.userName.trim(),
       Password: formValue.password,
       ConfirmPassword: formValue.confirmPassword,
       Role: 'Client',
-      Email: formValue.email?.trim(),
-      PhoneNumber: formValue.phoneNumber?.trim(),
-      FirstName: formValue.firstName?.trim() || null,
-      LastName: formValue.lastName?.trim() || null,
-      Gender: formValue.gender || null,
-      BirthDate: formValue.birthDate
-        ? new Date(formValue.birthDate).toISOString().split('T')[0]
-        : null,
+      Email: formValue.email.trim(),
+      PhoneNumber: formValue.phoneNumber.trim(),
+      FirstName: formValue.firstName.trim(),
+      LastName: formValue.lastName.trim(),
+      Gender: parseInt(formValue.gender, 10), // Ensure Gender is an integer (GenderType.Male = 1 or GenderType.Female = 2)
+      BirthDate: new Date(formValue.birthDate).toISOString().split('T')[0],
       Street: formValue.street?.trim() || null,
       City: formValue.city?.trim() || null,
       Governorate: formValue.governorate?.trim() || null,
       Country: formValue.country?.trim() || null,
-      Image: formValue.image || null
+      Image: formValue.image?.trim() || null
     };
+
+    // Log payload for debugging
+    console.log('Payload:', JSON.stringify({ client: registerData }, null, 2));
 
     this.authService.register(registerData).subscribe({
       next: (response: ApiResponse<null>) => this.handleSuccess(response),
@@ -136,10 +153,9 @@ export class ClientRegisterComponent {
   private handleError(err: HttpErrorResponse): void {
     this.isLoading = false;
 
-    if (err.status === 400) {
-      this.errorMessage = err.error?.Message || 'Invalid registration data';
-      console.error('Validation Errors:', err.error?.Message);
-      this.errorMessage = 'Unable to connect to server. Please check your connection.';
+    if (err.status === 400 && err.error?.errors) {
+      this.fieldErrors = err.error.errors;
+      this.errorMessage = err.error.title || 'Invalid registration data';
     } else {
       this.errorMessage = 'An unexpected error occurred. Please try again later.';
     }
@@ -162,9 +178,12 @@ export class ClientRegisterComponent {
     return control ? control.hasError(errorName) && (control.dirty || control.touched) : false;
   }
 
+  getFieldErrors(controlName: string): string[] {
+    return this.fieldErrors[controlName] || this.fieldErrors[`$.${controlName.charAt(0).toUpperCase() + controlName.slice(1)}`] || [];
+  }
+
   isFieldValid(controlName: string): boolean {
     const control = this.clientRegisterForm.get(controlName);
     return control ? control.valid && (control.dirty || control.touched) : false;
   }
-
 }

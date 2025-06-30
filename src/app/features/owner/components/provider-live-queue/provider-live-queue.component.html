@@ -3,10 +3,10 @@
   <div class="header">
     <h2 class="provider-name">{{ providerName }}</h2>
     <div class="header-actions">
-      <button class="settings-btn" aria-label="Settings">
+      <!-- <button class="settings-btn" aria-label="Settings">
         <i class="bi bi-gear-fill"></i>
-      </button>
-      <button class="add-btn" aria-label="Add Patient">
+      </button> -->
+      <button class="add-btn" aria-label="Add Patient" (click)="addPatient()">
         <i class="bi bi-person-plus-fill"></i>
       </button>
       <button class="end-shift-btn" (click)="endShift()" aria-label="End Shift">
@@ -45,7 +45,6 @@
             step="0.01"
             placeholder="Enter fees"
             [(ngModel)]="additionalFees[queue.LiveQueueId]"
-            required
           />
         </div>
         </div>

@@ -18,14 +18,14 @@ import { IOperatorViewModel } from '../../../../types/IOperatorViewModel';
 @Component({
   selector: 'app-provider-live-queue',
   standalone: true,
-  imports: [CommonModule, FormsModule], // Added FormsModule
+  imports: [CommonModule, FormsModule],
   templateUrl: './provider-live-queue.component.html',
   styleUrls: ['./provider-live-queue.component.css'],
 })
 export class ProviderLiveQueueComponent implements OnInit {
   liveQueues: IProviderLiveQueueViewModel[] = [];
-  providerId: string = '8942c804-1498-4dfb-8efd-550e6d3989ed';
-  centerId: number = 1;
+  providerId: string = '';
+  centerId: number = 3;
   shiftId: number = 2;
   pageNumber: number = 1;
   pageSize: number = 16;
@@ -40,7 +40,7 @@ export class ProviderLiveQueueComponent implements OnInit {
     done: 0,
   };
   showPopup: boolean = false;
-  additionalFees: { [key: number]: number } = {}; // Store fees per LiveQueueId as number
+  additionalFees: { [key: number]: number } = {};
   QueueAppointmentStatus = QueueAppointmentStatus; // Expose enum for template
 
   @ViewChild('successPopup') successPopup!: ElementRef;
@@ -172,10 +172,6 @@ export class ProviderLiveQueueComponent implements OnInit {
     const newStatus = this.stringToStatus(newStatusStr);
     let additionalFeesValue: number | undefined = this.additionalFees[liveQueue.LiveQueueId];
 
-    if (newStatus === QueueAppointmentStatus.Completed && !additionalFeesValue) {
-      console.error('Additional Fees must be set when status was InProgress.');
-      return; // Prevent status change if no fee is set
-    }
 
     const updateModel: IUpdateQueueStatusViewModel = {
       LiveQueueId: liveQueue.LiveQueueId,
@@ -312,5 +308,9 @@ export class ProviderLiveQueueComponent implements OnInit {
         this.signalRService.reconnectIfNeeded();
       }
     }, 5000);
+  }
+
+  addPatient(): void {
+    this.router.navigate(['/owner/create-appointment']);
   }
 }

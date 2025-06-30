@@ -1,5 +1,3 @@
-
-
 .schedule-container {
   max-width: 800px;
   margin: 20px auto;
@@ -15,6 +13,11 @@
   border-radius: 4px;
 }
 
+.navigation-buttons button.active {
+  background-color: #007bff;
+  color: white;
+}
+
 .provider-info {
   margin-bottom: 20px;
 }
@@ -26,8 +29,7 @@
 }
 
 mat-form-field {
-  flex: 1;
-  min-width: 120px;
+  width: 100%;
 }
 
 .shifts-section {
@@ -158,7 +160,7 @@ mat-form-field {
   cursor: pointer;
 }
 
-.calendar-day:hover:not(.disabled) {
+.calendar-day:hover {
   background-color: #f9f9f9;
 }
 
@@ -172,27 +174,9 @@ mat-form-field {
   transition: background-color 0.3s, color 0.3s;
 }
 
-.day-number:hover:not(.disabled) {
+.day-number:hover {
   background-color: #e0e0e0;
   color: #000;
-}
-
-.assignment-dot {
-  position: absolute;
-  bottom: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 17px;
-  height: 17px;
-  background: linear-gradient(45deg, #ff6b6b, #ff3333);
-  border: 2px solid #ff9999;
-  border-radius: 50%;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  transition: transform 0.2s;
-}
-
-.assignment-dot:hover {
-  transform: scale(1.3) translateX(-50%);
 }
 
 .today .day-number {
@@ -215,21 +199,30 @@ mat-form-field {
   color: white;
 }
 
-.in-between .day-number {
-  background-color: #d3cce3;
-  color: #333;
+.in-range {
+  background-color: #d3cce3; /* Match manually-schedule styling */
 }
 
-.disabled {
-  background-color: #f0f0f0;
-  cursor: not-allowed;
+.working-days-section {
+  margin-top: 20px;
 }
 
-.disabled .day-number {
-  color: #999;
+.working-days {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
-.disabled .day-number:hover {
-  background-color: transparent;
-  color: #999;
+.add-queue {
+  margin-top: 20px;
+}
+
+.assignment-section {
+  margin-bottom: 20px;
+}
+
+.assignment-header {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
 }
