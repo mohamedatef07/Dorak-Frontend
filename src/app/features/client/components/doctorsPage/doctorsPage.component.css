@@ -12,11 +12,9 @@
 }
 
 .input-group {
-
   padding-top: 10px;
   padding-bottom: 10px;
   width: 100%;
-
 }
 
 .specialty-dropdown,
@@ -27,7 +25,7 @@
   font-weight: 500;
   border-radius: var(--border-radius) 0 0 var(--border-radius);
   padding: 0.75rem 1.25rem;
-   margin: 0; /* تأكدي مفيش margin داخلي */
+  margin: 0; /* تأكدي مفيش margin داخلي */
 }
 
 .city-dropdown {
@@ -84,8 +82,7 @@
   font-weight: bold;
 }
 
-
-.filter-panel button{
+.filter-panel button {
   background-color: rgb(85, 135, 205);
   width: 90%;
 }
@@ -154,4 +151,8 @@
 .book-button:hover {
   background-color: var(--text-color-Light);
   color: white;
+}
+
+.doctors-page-container {
+  padding-top: 5rem;
 }

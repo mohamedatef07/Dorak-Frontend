@@ -1,9 +1,7 @@
-<section>
-<div class="profile-container">
-        <h1 class="page-title">My Profile</h1>
-
-        <!-- Profile Header -->
-       <div class="d-flex flex-column flex-md-row align-items-center mb-4 gap-3">
+<div class="container px-0 m-0">
+  <p class="fw-bold m-0">Profile</p>
+  <!-- Profile Header -->
+  <div class="d-flex flex-column flex-md-row align-items-center mb-4 gap-3">
     <p-avatar image="{{ client.Image }}" shape="circle" class="avatar">
     </p-avatar>
     <div class="text-center text-md-start">
@@ -12,73 +10,71 @@
       <p class="mb-0">Email Address: {{ client.Email }}</p>
     </div>
   </div>
-  <div class="w-100 mb-3" style="text-align: end;">
-  <a [routerLink]="['/client/client-edit-profile']"  class="btn btn-info btn-cust">Edit Profile</a>
-
+  <div class="w-100 mb-3" style="text-align: end">
+    <a
+      [routerLink]="['/client/settings/client-edit-profile']"
+      class="btn btn-info btn-cust"
+      >Edit Profile</a
+    >
   </div>
-
-        <!-- Personal Information -->
-        <div class="card profile-card">
-            <div class="section-header">
-                <h3 class="section-title">Personal information</h3>
-            </div>
-            <div class="section-content">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="info-row">
-                            <div class="info-label">First Name</div>
-                            <div class="info-value">{{profile?.FirstName}}</div>
-                        </div>
-                        <div class="info-row">
-                            <div class="info-label">Email address</div>
-                            <div class="info-value">{{client.Email}}</div>
-                        </div>
-
-                    </div>
-                    <div class="col-md-6">
-                        <div class="info-row">
-                            <div class="info-label">Last Name</div>
-                            <div class="info-value">{{profile?.LastName}}</div>
-                        </div>
-                        <div class="info-row">
-                            <div class="info-label">Phone</div>
-                            <div class="info-value">{{profile?.Phone}}</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  <!-- Personal Information -->
+  <div class="card profile-card">
+    <div class="section-header">
+      <h3 class="section-title">Personal information</h3>
+    </div>
+    <div class="section-content">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="info-row">
+            <div class="info-label">First Name</div>
+            <div class="info-value">{{ profile?.FirstName }}</div>
+          </div>
+          <div class="info-row">
+            <div class="info-label">Email address</div>
+            <div class="info-value">{{ client.Email }}</div>
+          </div>
         </div>
-
-        <!-- Address Information -->
-<div class="card profile-card">
-  <div class="section-header">
-    <h3 class="section-title">Address</h3>
-  </div>
-  <div class="section-content">
-    <div class="row">
-      <div class="col-md-6">
-        <div class="info-row">
-          <div class="info-label">Country</div>
-          <div class="info-value">{{client.Country}}</div>
-        </div>
-        <div class="info-row">
-          <div class="info-label">Governorate</div>
-          <div class="info-value">{{client.Governorate}}</div>
+        <div class="col-md-6">
+          <div class="info-row">
+            <div class="info-label">Last Name</div>
+            <div class="info-value">{{ profile?.LastName }}</div>
+          </div>
+          <div class="info-row">
+            <div class="info-label">Phone</div>
+            <div class="info-value">{{ profile?.Phone }}</div>
+          </div>
         </div>
       </div>
-      <div class="col-md-6">
-        <div class="info-row">
-          <div class="info-label">City</div>
-          <div class="info-value">{{client.City}}</div>
+    </div>
+  </div>
+  <!-- Address Information -->
+  <div class="card profile-card">
+    <div class="section-header">
+      <h3 class="section-title">Address</h3>
+    </div>
+    <div class="section-content">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="info-row">
+            <div class="info-label">Country</div>
+            <div class="info-value">{{ client.Country }}</div>
+          </div>
+          <div class="info-row">
+            <div class="info-label">Governorate</div>
+            <div class="info-value">{{ client.Governorate }}</div>
+          </div>
         </div>
-        <div class="info-row">
-          <div class="info-label">Street</div>
-          <div class="info-value">{{client.Street}}</div>
+        <div class="col-md-6">
+          <div class="info-row">
+            <div class="info-label">City</div>
+            <div class="info-value">{{ client.City }}</div>
+          </div>
+          <div class="info-row">
+            <div class="info-label">Street</div>
+            <div class="info-value">{{ client.Street }}</div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-    </div>
-</section>

@@ -1,3 +1,4 @@
+import { ProviderNotificationsComponent } from './features/provider/components/provider-notifications/provider-notifications.component';
 import { Routes } from '@angular/router';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { LoginComponent } from './components/login/login.component';
@@ -28,7 +29,6 @@ import { ProviderProfileComponent } from './features/provider/components/provide
 import { ManageOperatorsComponent } from './features/owner/components/ManageOperators/ManageOperators.component';
 import { AddOperatorComponent } from './features/owner/components/AddOperator/AddOperator.component';
 import { CreateAppointmentComponent } from './features/owner/components/CreateAppointment/CreateAppointment.component';
-import { EditProfileComponent } from './features/client/components/edit-profile/edit-profile.component';
 import { UpcomingAppointmentsComponent } from './features/client/components/upcoming-appointments/upcoming-appointments.component';
 import { ClientLiveQueueComponent } from './features/client/components/Client-Live-Queue/Client-Live-Queue.component';
 import { ClientWalletComponent } from './features/client/components/ClientWallet/ClientWallet.component';
@@ -45,7 +45,8 @@ import { CenterShiftsTableComponent } from './features/owner/components/center-s
 import { appointmentDetails } from './features/client/components/appointment-details/appointment-details';
 import { ClientUpdateComponent } from './features/client/components/client-update/client-update.component';
 import { SystemPreferencesSettingsComponent } from './features/provider/components/system-preferences-settings/system-preferences-settings.component';
-import { NotificationsComponent } from './components/notifications/notifications.component';
+import { ClientSettingsComponent } from './features/client/components/client-settings/client-settings.component';
+import { ClientNotificationsComponent } from './features/client/components/client-notifications/client-notifications.component';
 import { RescheduleAssignmentComponent } from './features/owner/components/reschedule-assignment/reschedule-assignment.component';
 
 export const routes: Routes = [
@@ -192,7 +193,7 @@ export const routes: Routes = [
       },
       {
         path: 'notifications',
-        component: NotificationsComponent,
+        component: ProviderNotificationsComponent,
         title: 'Notifications',
       },
     ],
@@ -202,21 +203,21 @@ export const routes: Routes = [
     component: ClientLayoutComponent,
     children: [
       {
+        path: '',
+        redirectTo: 'client-profile',
+        pathMatch: 'full',
+      },
+      {
         path: 'doctor-details/:id',
         component: DoctorDetailsComponent,
         title: 'Doctor Details',
       },
-
       {
         path: 'client-profile',
         component: ClientProfileComponent,
         title: 'Client Profile',
       },
-      {
-        path: 'client-edit-profile',
-        component: ClientUpdateComponent,
-        title: 'Edit Client Profile',
-      },
+
       {
         path: 'client-upcoming-appointments',
         component: UpcomingAppointmentsComponent,
@@ -230,7 +231,7 @@ export const routes: Routes = [
           ).then((m) => m.appointmentDetails),
       },
       {
-        path: 'client-live-queue/:appointmentId',
+        path: 'client-live-queue/:appointmentId/:shiftId',
         component: ClientLiveQueueComponent,
         title: 'Live Queue Appointment',
       },
@@ -240,18 +241,37 @@ export const routes: Routes = [
         title: 'Client Wallet',
       },
       {
-        path: 'doctor',
-        component: DoctorsPageComponent,
-      },
-      {
         path: 'checkout',
         component: CheckoutComponent,
       },
       {
-        path: 'change-password',
-        component: ChangePasswordComponent,
+        path: 'settings',
+        component: ClientSettingsComponent,
+        children: [
+          { path: '', redirectTo: 'client-edit-profile', pathMatch: 'full' },
+          {
+            path: 'client-edit-profile',
+            component: ClientUpdateComponent,
+            title: 'Edit Client Profile',
+          },
+          {
+            path: 'change-password',
+            component: ChangePasswordComponent,
+            title: 'Change Password',
+          },
+        ],
+      },
+      {
+        path: 'notifications',
+        component: ClientNotificationsComponent,
+        title: 'Notifications',
       },
     ],
+  },
+  {
+    path: 'client/doctors',
+    component: DoctorsPageComponent,
+    title: 'Doctors',
   },
 
   // ----------------------------------
