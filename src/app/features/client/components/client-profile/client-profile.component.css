@@ -93,11 +93,9 @@
   padding: 20px 30px 0 30px;
 }
 
-.page-title {
-  font-size: 28px;
-  font-weight: 600;
-  color: #212529;
-  margin-bottom: 30px;
+.container > p {
+  color: var(--text-color-Light);
+  font-size: 2rem;
 }
 .avatar {
   width: clamp(60px, 8vw, 100px);

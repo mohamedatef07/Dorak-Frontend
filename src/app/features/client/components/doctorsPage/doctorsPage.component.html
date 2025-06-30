@@ -1,16 +1,18 @@
-
-<div class="container">
+<app-nav-bar></app-nav-bar>
+<div class="container doctors-page-container pb-3">
   <!-- Search bar with dropdowns -->
   <div class="search-container">
     <div class="row w-100">
       <div class="col-12">
         <div class="input-group">
-
           <!-- Specialty Dropdown -->
           <div class="dropdown">
-            <button class="specialty-dropdown dropdown-toggle btn btn-outline-secondary" type="button"
-              data-bs-toggle="dropdown">
-              {{ specialty || 'Specialty' }}
+            <button
+              class="specialty-dropdown dropdown-toggle btn btn-outline-secondary"
+              type="button"
+              data-bs-toggle="dropdown"
+            >
+              {{ specialty || "Specialty" }}
             </button>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" (click)="specialty = ''">All</a></li>
@@ -19,12 +21,14 @@
               </li>
             </ul>
           </div>
-
           <!-- City Dropdown -->
           <div class="dropdown ms-2">
-            <button class="city-dropdown dropdown-toggle btn btn-outline-secondary" type="button"
-              data-bs-toggle="dropdown">
-              {{ city || 'City' }}
+            <button
+              class="city-dropdown dropdown-toggle btn btn-outline-secondary"
+              type="button"
+              data-bs-toggle="dropdown"
+            >
+              {{ city || "City" }}
             </button>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" (click)="city = ''">All</a></li>
@@ -35,14 +39,21 @@
           </div>
 
           <!-- Search Input -->
-          <input type="text" [(ngModel)]="searchText" class="search-input form-control ms-2"
-            placeholder="Search by Name" />
+          <input
+            type="text"
+            [(ngModel)]="searchText"
+            class="search-input form-control ms-2"
+            placeholder="Search by Name"
+          />
 
           <!-- Search Button -->
-          <button class="search-button btn btn-primary ms-2" type="button" (click)="searchDoctors()">
+          <button
+            class="search-button btn btn-primary ms-2"
+            type="button"
+            (click)="searchDoctors()"
+          >
             Search <i class="fas fa-search ms-1"></i>
           </button>
-
         </div>
       </div>
     </div>
@@ -51,30 +62,42 @@
   <div class="row">
     <!-- Filters Sidebar -->
     <div class="col-lg-3 col-md-4">
-      <div class="filter-panel ">
+      <div class="filter-panel">
         <h5 class="mb-3">Filters</h5>
 
         <!-- Title Filter -->
         <div class="mb-3">
           <label class="fw-bold text-white">Title</label>
           <div *ngFor="let t of titles" class="form-check mt-1">
-            <input class="form-check-input" type="checkbox" [value]="t.value" (change)="onTitleChange($event)"
-              id="title-{{ t.value }}" />
-            <label class="form-check-label text-white" for="title-{{ t.value }}">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              [value]="t.value"
+              (change)="onTitleChange($event)"
+              id="title-{{ t.value }}"
+            />
+            <label
+              class="form-check-label text-white"
+              for="title-{{ t.value }}"
+            >
               {{ t.label }}
             </label>
           </div>
         </div>
 
-
         <!-- Gender Filter -->
         <div class="mb-3">
           <label class="fw-bold">Gender</label>
-          <select class="form-select" [(ngModel)]="filterModel.Gender" (change)="applyFilters()">
+          <select
+            class="form-select"
+            [(ngModel)]="filterModel.Gender"
+            (change)="applyFilters()"
+          >
             <option [ngValue]="undefined">All</option>
-            <option *ngFor="let g of genders" [ngValue]="g.value">{{ g.label }}</option>
+            <option *ngFor="let g of genders" [ngValue]="g.value">
+              {{ g.label }}
+            </option>
           </select>
-
         </div>
 
         <!-- City Filter -->
@@ -82,7 +105,12 @@
           <label class="fw-bold">City</label>
           <div *ngFor="let c of cities">
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" [value]="c" (change)="onCityChange($event)" />
+              <input
+                class="form-check-input"
+                type="checkbox"
+                [value]="c"
+                (change)="onCityChange($event)"
+              />
               <label class="form-check-label">{{ c }}</label>
             </div>
           </div>
@@ -91,27 +119,52 @@
         <!-- Rate Filter -->
         <div class="mb-3">
           <label class="fw-bold">Rate</label>
-          <input type="number" class="form-control" placeholder="Min Rate" [(ngModel)]="filterModel.MinRate" min="0" />
-          <input type="number" class="form-control mt-1" placeholder="Max Rate" [(ngModel)]="filterModel.MaxRate"min="0" />
+          <input
+            type="number"
+            class="form-control"
+            placeholder="Min Rate"
+            [(ngModel)]="filterModel.MinRate"
+            min="0"
+          />
+          <input
+            type="number"
+            class="form-control mt-1"
+            placeholder="Max Rate"
+            [(ngModel)]="filterModel.MaxRate"
+            min="0"
+          />
         </div>
 
         <!-- Price Filter -->
         <div class="mb-3">
           <label class="fw-bold">Price</label>
-          <input type="number" class="form-control" placeholder="Min Price" [(ngModel)]="filterModel.MinPrice"
-            min="100" />
-          <input type="number" class="form-control mt-1" placeholder="Max Price" [(ngModel)]="filterModel.MaxPrice"
-            min="2000" />
+          <input
+            type="number"
+            class="form-control"
+            placeholder="Min Price"
+            [(ngModel)]="filterModel.MinPrice"
+            min="100"
+          />
+          <input
+            type="number"
+            class="form-control mt-1"
+            placeholder="Max Price"
+            [(ngModel)]="filterModel.MaxPrice"
+            min="2000"
+          />
         </div>
 
         <!-- Date Filter -->
         <div class="mb-3">
           <label class="fw-bold">Available Date</label>
-          <input type="date" class="form-control" [(ngModel)]="filterModel.AvailableDate" />
-
+          <input
+            type="date"
+            class="form-control"
+            [(ngModel)]="filterModel.AvailableDate"
+          />
         </div>
 
-          <div class="mb-3">
+        <div class="mb-3">
           <button class="btn" (click)="applyFilters()">Apply Filters</button>
         </div>
       </div>
@@ -120,14 +173,19 @@
     <!-- Doctor listings -->
     <div class="col-lg-9 col-md-8">
       <h4 class="content-title">All Specialties</h4>
-      <p class="text-muted mb-4"><small>{{ filteredDoctors.length }} doctors</small></p>
+      <p class="text-muted mb-4">
+        <small>{{ filteredDoctors.length }} doctors</small>
+      </p>
 
       <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
         <div class="col" *ngFor="let doc of doctors">
           <div class="doctor-card">
-          <img *ngIf="fullImagePath" [src]="fullImagePath" alt="Doctor Image" class="img-thumbnail" />
-
-
+            <img
+              *ngIf="fullImagePath"
+              [src]="fullImagePath"
+              alt="Doctor Image"
+              class="img-thumbnail"
+            />
 
             <div class="card-body">
               <div class="doctor-name">{{ doc.FullName }}</div>
@@ -137,13 +195,16 @@
                   <i class="fa-solid fa-star feature-icon"></i> {{ doc.Rate }}
                 </div>
                 <div class="feature">
-                  <i class="fa-regular fa-clock feature-icon"></i> {{ doc.EstimatedDuration }}
+                  <i class="fa-regular fa-clock feature-icon"></i>
+                  {{ doc.EstimatedDuration }}
                 </div>
                 <div class="feature">
-                  <i class="fa-solid fa-dollar-sign feature-icon"></i> {{ doc.Price }}
+                  <i class="fa-solid fa-dollar-sign feature-icon"></i>
+                  {{ doc.Price }}
                 </div>
                 <div class="feature">
-                  <i class="fa-solid fa-location-dot feature-icon"></i> {{ doc.City }}
+                  <i class="fa-solid fa-location-dot feature-icon"></i>
+                  {{ doc.City }}
                 </div>
               </div>
               <button class="book-button" (click)="goToDetails(doc.id)">
@@ -156,3 +217,4 @@
     </div>
   </div>
 </div>
+<app-client-footer></app-client-footer>

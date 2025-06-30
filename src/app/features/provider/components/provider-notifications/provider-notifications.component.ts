@@ -1,15 +1,15 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { ProviderService } from '../../features/provider/services/provider.service';
-import { INotification } from '../../features/provider/models/INotification';
 import { DatePipe } from '@angular/common';
+import { ProviderService } from '../../services/provider.service';
+import { INotification } from '../../../../types/INotification';
 
 @Component({
-  selector: 'app-notifications',
-  templateUrl: './notifications.component.html',
-  styleUrls: ['./notifications.component.css'],
+  selector: 'app-provider-notifications',
+  templateUrl: './provider-notifications.component.html',
+  styleUrls: ['./provider-notifications.component.css'],
   imports: [DatePipe],
 })
-export class NotificationsComponent implements OnInit {
+export class ProviderNotificationsComponent implements OnInit {
   providerServices = inject(ProviderService);
   notifications!: Array<INotification>;
 

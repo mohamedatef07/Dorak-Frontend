@@ -12,6 +12,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ApiResponse } from '../../../../types/ApiResponse';
 import { __param } from 'tslib';
 import { environment } from '../../../../../environments/environment';
+import { TimeStringToDatePipe } from '../../../../pipes/TimeStringToDate.pipe';
 
 @Component({
   selector: 'app-appointment-details',
@@ -21,7 +22,8 @@ import { environment } from '../../../../../environments/environment';
     FormsModule,
     AppointmentStatusEnumValuePipe,
     ClientTypeEnumValuePipe,
-    RouterLink
+    RouterLink,
+    TimeStringToDatePipe
 ],
   templateUrl: './appointment-details.html',
   styleUrls: ['./appointment-details.css']

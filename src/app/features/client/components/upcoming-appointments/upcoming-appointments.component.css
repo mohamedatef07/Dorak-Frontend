@@ -742,33 +742,6 @@ body {
   font-size: 1.2rem;
 }
 
-.rating-container {
-  display: flex;
-  align-items: center;
-  margin-bottom: 1.5rem;
-}
-
-.rating {
-  margin-right: 1rem;
-}
-
-.rating i {
-  color: var(--accent-color);
-  font-size: 1.1rem;
-  margin-right: 3px;
-  transition: all 0.2s ease;
-}
-
-.rating i:hover {
-  transform: scale(1.2);
-}
-
-.rating-text {
-  color: var(--text-muted);
-  font-size: 0.95rem;
-  font-weight: 600;
-}
-
 .appointment-details {
   display: flex;
   flex-wrap: wrap;

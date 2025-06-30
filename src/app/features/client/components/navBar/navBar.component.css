@@ -40,5 +40,8 @@
 .navbar-brand {
   font-family: var(--font-heading);
   font-weight: 700;
-  font-size: 24px;
+  font-size: 2rem;
+}
+.navbar-link {
+  font-size: 1.3rem;
 }

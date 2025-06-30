@@ -1,283 +1,271 @@
-<div class="wallet-container">
-  <div class="card p-4 shadow-sm">
-    <div class="container-fluid p-4">
-      <!-- Header Section -->
-      <div class="row">
-        <div class="col-12">
-          <div
-            class="wallet-header d-flex justify-content-between align-items-center mb-4"
-          >
-            <h2 class="wallet-title mb-0">Wallet</h2>
+<div class="container px-0 m-0">
+  <p class="fw-bold m-0 pb-2">Wallet</p>
+  <div>
+    <!-- Header Section -->
+    <div class="d-flex gap-5">
+      <!-- Left Sidebar - Wallet Card -->
+      <div class="col-4">
+        <!-- Balance Card -->
+        <p-card class="balance-card mb-3 w-100">
+          <div class="balance-content text-center">
+            <div class="wallet-icon mb-3">
+              <i class="p-icon-custom-size pi pi-wallet"></i>
+            </div>
+            <div class="balance-info">
+              <h6 class="balance-label mb-2">Balance</h6>
+              <h3 class="balance-amount">
+                {{ balance | currency : "EGP " : "symbol" : "1.0" }}
+              </h3>
+            </div>
           </div>
-        </div>
+        </p-card>
+        <!-- Return Fund Button -->
+        <p-button
+          label="Return Fund"
+          icon="pi pi-reply"
+          styleClass="p-button-lg return-fund-btn my-3 py-2 "
+          [style]="{
+            'background-color': 'var(--main-bg-color-Light)',
+            color: 'white',
+            borderRadius: '0.5rem'
+          }"
+          (onClick)="openReturnFundDialog()"
+        >
+        </p-button>
       </div>
-      <div class="row">
-        <!-- Left Sidebar - Wallet Card -->
-        <div class="col-12 col-lg-4">
-          <div class="wallet-sidebar">
-            <!-- Balance Card -->
-            <p-card class="balance-card mb-3">
-              <div class="balance-content text-center">
-                <div class="wallet-icon mb-3">
-                  <i class="pi pi-wallet"></i>
-                </div>
-                <div class="balance-info">
-                  <h6 class="balance-label mb-2">Balance :</h6>
-                  <h3 class="balance-amount">{{ getFormattedBalance() }}</h3>
-                </div>
+      <!-- Main Content Area -->
+      <div class="col-8">
+        <!-- Wallet Status Card -->
+        <p-card class="status-card">
+          <div class="status-content text-center">
+            <!-- Empty State -->
+            @if(!(balance > 0)){
+            <div class="empty-state">
+              <div class="empty-icon mb-4">
+                <i class="pi pi-wallet p-icon-custom-size"></i>
               </div>
-            </p-card>
-            <!-- Return Fund Button -->
-            <p-button
-              label="Return Fund"
-              icon="pi pi-reply"
-              styleClass="p-button-lg w-100 return-fund-btn my-3 py-2"
-              [style]="{
-                'background-color': 'var(--main-bg-color-Light)',
-                color: 'var(--main-text-color)',
-                borderRadius: '8px'
-              }"
-              (onClick)="openReturnFundDialog()"
+              <h4 class="empty-message">You Don't have any credit yet</h4>
+              <p class="empty-description mt-3 text-muted">
+                Add funds to your wallet to start using our services. You can
+                add money using various payment methods.
+              </p>
+            </div>
+            }
+            <!-- Active State (when user has balance) -->
+            @if(balance > 0){
+            <div class="active-state">
+              <div class="success-icon mb-4">
+                <i class="pi pi-check-circle p-icon-custom-size"></i>
+              </div>
+              <h4 class="success-message">
+                You have {{ balance | currency : "EGP " : "symbol" : "1.0" }} in
+                your wallet
+              </h4>
+              <p class="success-description mt-3 text-muted">
+                Your wallet is ready to use! You can make payments and bookings.
+              </p>
+            </div>
+            }
+          </div>
+        </p-card>
+        <!-- Transaction History (if any) -->
+        @if(transactions.length > 0){
+        <p-card class="mt-4">
+          <ng-template pTemplate="header">
+            <h5 class="mb-0">
+              <i class="pi pi-history me-2 p-icon-custom-size"></i>
+              Recent Transactions
+            </h5>
+          </ng-template>
+          <div class="transaction-list">
+            @for(transaction of transactions; track $index){
+            <div
+              class="transaction-item d-flex justify-content-between align-items-center p-3 mb-2"
             >
-            </p-button>
-          </div>
-        </div>
-        <!-- Main Content Area -->
-        <div class="col-12 col-lg-8">
-          <div class="main-content">
-            <!-- Wallet Status Card -->
-            <p-card class="status-card">
-              <div class="status-content text-center">
-                <!-- Empty State -->
-                <div *ngIf="!hasCredit()" class="empty-state">
-                  <div class="empty-icon mb-4">
-                    <i class="pi pi-wallet"></i>
-                  </div>
-                  <h4 class="empty-message">{{ getWalletStatusMessage() }}</h4>
-                  <p class="empty-description mt-3 text-muted">
-                    Add funds to your wallet to start using our services. You
-                    can add money using various payment methods.
-                  </p>
+              <div class="transaction-info d-flex align-items-center">
+                <div class="transaction-icon me-3">
+                  <i
+                    class="pi"
+                    [class.pi-arrow-up]="transaction.type === 'debit'"
+                    [class.pi-arrow-down]="transaction.type === 'credit'"
+                    [class.text-danger]="transaction.type === 'debit'"
+                    [class.text-success]="transaction.type === 'credit'"
+                  >
+                  </i>
                 </div>
-
-                <!-- Active State (when user has balance) -->
-                <div *ngIf="hasCredit()" class="active-state">
-                  <div class="success-icon mb-4">
-                    <i class="pi pi-check-circle"></i>
+                <div>
+                  <div class="transaction-description fw-medium">
+                    {{ transaction.description }}
                   </div>
-                  <h4 class="success-message">
-                    {{ getWalletStatusMessage() }}
-                  </h4>
-                  <p class="success-description mt-3 text-muted">
-                    Your wallet is ready to use! You can make payments and
-                    bookings.
-                  </p>
+                  <div class="transaction-date text-muted small">
+                    {{ transaction.date | date : "MMM dd, yyyy - HH:mm" }}
+                  </div>
                 </div>
               </div>
-            </p-card>
-
-            <!-- Transaction History (if any) -->
-            <p-card *ngIf="transactions.length > 0" class="mt-4">
-              <ng-template pTemplate="header">
-                <h5 class="mb-0">
-                  <i class="pi pi-history me-2"></i>
-                  Recent Transactions
-                </h5>
-              </ng-template>
-
-              <div class="transaction-list">
-                <div
-                  *ngFor="let transaction of transactions"
-                  class="transaction-item d-flex justify-content-between align-items-center p-3 mb-2"
+              <div class="transaction-amount">
+                <span
+                  class="fw-bold"
+                  [class.text-success]="transaction.type === 'credit'"
+                  [class.text-danger]="transaction.type === 'debit'"
                 >
-                  <div class="transaction-info d-flex align-items-center">
-                    <div class="transaction-icon me-3">
-                      <i
-                        class="pi"
-                        [class.pi-arrow-up]="transaction.type === 'debit'"
-                        [class.pi-arrow-down]="transaction.type === 'credit'"
-                        [class.text-danger]="transaction.type === 'debit'"
-                        [class.text-success]="transaction.type === 'credit'"
-                      >
-                      </i>
-                    </div>
-                    <div>
-                      <div class="transaction-description fw-medium">
-                        {{ transaction.description }}
-                      </div>
-                      <div class="transaction-date text-muted small">
-                        {{ transaction.date | date : "MMM dd, yyyy - HH:mm" }}
-                      </div>
-                    </div>
-                  </div>
-                  <div class="transaction-amount">
-                    <span
-                      class="fw-bold"
-                      [class.text-success]="transaction.type === 'credit'"
-                      [class.text-danger]="transaction.type === 'debit'"
-                    >
-                      {{ transaction.type === "credit" ? "+" : "-"
-                      }}{{ formatCurrency(transaction.amount) }}
-                    </span>
-                  </div>
-                </div>
+                  {{ transaction.type === "credit" ? "+" : "-"
+                  }}{{ formatCurrency(transaction.amount) }}
+                </span>
               </div>
-            </p-card>
+            </div>
+            }
           </div>
-        </div>
+        </p-card>
+        }
       </div>
     </div>
-
-    <!-- Return Fund Dialog -->
-    <p-dialog
-      header="Return Fund from Wallet"
-      [(visible)]="showReturnFundDialog"
-      [modal]="true"
-      [closable]="true"
-      [draggable]="false"
-      [resizable]="false"
-      styleClass="return-fund-dialog"
-      (onHide)="closeReturnFundDialog()"
-    >
-      <div class="dialog-content">
-        <div class="mb-4">
-          <label for="returnAmount" class="form-label">Amount to Return</label>
-          <p-inputNumber
-            id="returnAmount"
-            [(ngModel)]="returnFundAmount"
-            mode="currency"
-            currency="USD"
-            locale="en-US"
-            [min]="1"
-            [max]="balance"
-            placeholder="Enter amount"
-            styleClass="w-100"
-            inputStyleClass="form-control-lg"
-          >
-          </p-inputNumber>
-          <small class="form-text text-muted">
-            Minimum: $1.00 | Maximum: {{ getFormattedBalance() }}
-          </small>
-        </div>
-
-        <div class="mb-4">
-          <label class="form-label d-block">Return Method</label>
-          <div class="d-flex gap-3">
-            <p-button
-              label="Vodafone Cash"
-              icon="pi pi-mobile"
-              [styleClass]="
-                selectedReturnMethod === 'vodafone'
-                  ? 'p-button-primary'
-                  : 'p-button-outlined'
-              "
-              (onClick)="selectedReturnMethod = 'vodafone'"
-              [style]="
-                selectedReturnMethod === 'vodafone'
-                  ? { 'background-color': 'var(--main-bg-color-Light)' }
-                  : {}
-              "
-            >
-            </p-button>
-            <p-button
-              label="Bank Transfer"
-              icon="pi pi-building"
-              [styleClass]="
-                selectedReturnMethod === 'bank'
-                  ? 'p-button-primary'
-                  : 'p-button-outlined'
-              "
-              (onClick)="selectedReturnMethod = 'bank'"
-              [style]="
-                selectedReturnMethod === 'bank'
-                  ? { 'background-color': 'var(--main-bg-color-Light)' }
-                  : {}
-              "
-            >
-            </p-button>
-          </div>
-        </div>
-
-        <!-- Vodafone Cash Form -->
-        <div class="mb-4" *ngIf="selectedReturnMethod === 'vodafone'">
-          <label for="vodafoneNumber" class="form-label"
-            >Vodafone Cash Number</label
-          >
-          <div class="p-input-group">
-            <span class="p-input-group-addon">+20</span>
-            <input
-              id="vodafoneNumber"
-              type="text"
-              pInputText
-              [(ngModel)]="vodafoneNumber"
-              class="form-control"
-              placeholder="Enter your Vodafone Cash number"
-              pattern="[0-9]{11}"
-              maxlength="11"
-            />
-          </div>
-          <small class="form-text text-muted">
-            Enter your 11-digit Vodafone number
-          </small>
-        </div>
-
-        <!-- Bank Transfer Form -->
-        <div class="mb-4" *ngIf="selectedReturnMethod === 'bank'">
-          <label for="bankAccount" class="form-label"
-            >Bank Account Number</label
-          >
-          <input
-            id="bankAccount"
-            type="text"
-            pInputText
-            [(ngModel)]="bankAccountNumber"
-            class="form-control"
-            placeholder="Enter your bank account number"
-          />
-          <small class="form-text text-muted">
-            Enter your complete bank account number
-          </small>
-        </div>
-
-        <div class="alert alert-info d-flex align-items-center">
-          <i class="pi pi-info-circle me-2"></i>
-          <div>
-            <strong>Processing Time:</strong> 1-3 business days for bank
-            transfers, instant for Vodafone Cash
-          </div>
-        </div>
+  </div>
+  <!-- Return Fund Dialog -->
+  <p-dialog
+    header="Return Fund from Wallet"
+    [(visible)]="showReturnFundDialog"
+    [modal]="true"
+    [closable]="true"
+    [draggable]="false"
+    [resizable]="false"
+    styleClass="return-fund-dialog"
+    (onHide)="closeReturnFundDialog()"
+  >
+    <div class="dialog-content">
+      <div class="mb-4">
+        <label for="returnAmount" class="form-label">Amount to Return</label>
+        <p-inputNumber
+          id="returnAmount"
+          [(ngModel)]="returnFundAmount"
+          mode="currency"
+          currency="USD"
+          locale="en-US"
+          [min]="1"
+          [max]="balance"
+          placeholder="Enter amount"
+          styleClass="w-100"
+          inputStyleClass="form-control-lg"
+        >
+        </p-inputNumber>
+        <small class="form-text text-muted">
+          Minimum: $1.00 | Maximum:
+          {{ balance | currency : "EGP " : "symbol" : "1.0" }}
+        </small>
       </div>
-
-      <ng-template pTemplate="footer">
-        <div class="dialog-footer d-flex justify-content-end gap-2">
+      <div class="mb-4">
+        <label class="form-label d-block">Return Method</label>
+        <div class="d-flex gap-3">
           <p-button
-            label="Cancel"
-            icon="pi pi-times"
-            styleClass="p-button-text"
-            (onClick)="closeReturnFundDialog()"
-            [disabled]="isLoading"
+            label="Vodafone Cash"
+            icon="pi pi-mobile"
+            [styleClass]="
+              selectedReturnMethod === 'vodafone'
+                ? 'p-button-primary'
+                : 'p-button-outlined'
+            "
+            (onClick)="selectedReturnMethod = 'vodafone'"
+            [style]="
+              selectedReturnMethod === 'vodafone'
+                ? { 'background-color': 'var(--main-bg-color-Light)' }
+                : {}
+            "
           >
           </p-button>
           <p-button
-            label="Return Fund"
-            icon="pi pi-check"
-            (onClick)="returnFund()"
-            [loading]="isLoading"
-            [style]="{ 'background-color': 'var(--main-bg-color-Light)' }"
-            [disabled]="
-              !returnFundAmount ||
-              returnFundAmount <= 0 ||
-              !selectedReturnMethod ||
-              (selectedReturnMethod === 'vodafone' && !vodafoneNumber) ||
-              (selectedReturnMethod === 'bank' && !bankAccountNumber)
+            label="Bank Transfer"
+            icon="pi pi-building"
+            [styleClass]="
+              selectedReturnMethod === 'bank'
+                ? 'p-button-primary'
+                : 'p-button-outlined'
+            "
+            (onClick)="selectedReturnMethod = 'bank'"
+            [style]="
+              selectedReturnMethod === 'bank'
+                ? { 'background-color': 'var(--main-bg-color-Light)' }
+                : {}
             "
           >
           </p-button>
         </div>
-      </ng-template>
-    </p-dialog>
-
-    <!-- Toast Messages -->
-    <p-toast position="top-right"></p-toast>
-  </div>
+      </div>
+      <!-- Vodafone Cash Form -->
+      @if(selectedReturnMethod === 'vodafone'){
+      <div class="mb-4">
+        <label for="vodafoneNumber" class="form-label"
+          >Vodafone Cash Number</label
+        >
+        <div class="p-input-group">
+          <span class="p-input-group-addon">+20</span>
+          <input
+            id="vodafoneNumber"
+            type="text"
+            pInputText
+            [(ngModel)]="vodafoneNumber"
+            class="form-control"
+            placeholder="Enter your Vodafone Cash number"
+            pattern="[0-9]{11}"
+            maxlength="11"
+          />
+        </div>
+        <small class="form-text text-muted">
+          Enter your 11-digit Vodafone number
+        </small>
+      </div>
+      }
+      <!-- Bank Transfer Form -->
+      @if(selectedReturnMethod === 'bank'){
+      <div class="mb-4">
+        <label for="bankAccount" class="form-label">Bank Account Number</label>
+        <input
+          id="bankAccount"
+          type="text"
+          pInputText
+          [(ngModel)]="bankAccountNumber"
+          class="form-control"
+          placeholder="Enter your bank account number"
+        />
+        <small class="form-text text-muted">
+          Enter your complete bank account number
+        </small>
+      </div>
+      }
+      <div class="alert alert-info d-flex align-items-center">
+        <i class="pi pi-info-circle me-2"></i>
+        <div>
+          <strong>Processing Time:</strong> 1-3 business days for bank
+          transfers, instant for Vodafone Cash
+        </div>
+      </div>
+    </div>
+    <ng-template pTemplate="footer">
+      <div class="dialog-footer d-flex justify-content-end gap-2">
+        <p-button
+          label="Cancel"
+          icon="pi pi-times"
+          styleClass="p-button-text"
+          (onClick)="closeReturnFundDialog()"
+          [disabled]="isLoading"
+        >
+        </p-button>
+        <p-button
+          label="Return Fund"
+          icon="pi pi-check"
+          (onClick)="returnFund()"
+          [loading]="isLoading"
+          [style]="{ 'background-color': 'var(--main-bg-color-Light)' }"
+          [disabled]="
+            !returnFundAmount ||
+            returnFundAmount <= 0 ||
+            !selectedReturnMethod ||
+            (selectedReturnMethod === 'vodafone' && !vodafoneNumber) ||
+            (selectedReturnMethod === 'bank' && !bankAccountNumber)
+          "
+        >
+        </p-button>
+      </div>
+    </ng-template>
+  </p-dialog>
+  <!-- Toast Messages -->
+  <p-toast position="top-right"></p-toast>
 </div>

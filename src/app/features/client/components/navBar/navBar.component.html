@@ -1,15 +1,25 @@
 <nav class="nav d-flex align-items-center main-text-Color">
-  <div class="container d-flex justify-content-between gap-2 p-0">
+  <div
+    class="container d-flex justify-content-between align-items-center gap-2 p-0"
+  >
     <div class="logo-links d-flex justify-content-center align-items-center">
-      <ul class="d-flex justify-content-center align-items-center gap-5">
-        <li><a class="navbar-brand main-text-Color" [routerLink]="['home']">Dorak</a></li>
+      <ul class="d-flex justify-content-center align-items-center gap-5 m-0">
+        <li>
+          <a class="navbar-brand main-text-Color" [routerLink]="['home']"
+            >Dorak</a
+          >
+        </li>
         <div class="links d-flex gap-3 main-text-Color">
-          <li><a [routerLink]="['home']">Home</a></li>
-          <li><a [routerLink]="['doctors']">Doctors</a></li>
+          <li><a [routerLink]="['home']" class="navbar-link main-text-Color">Home</a></li>
+          <li>
+            <a [routerLink]="['doctors']" class="navbar-link main-text-Color">Doctors</a>
+          </li>
         </div>
       </ul>
     </div>
-    <div class="notifications-and-dropdown d-flex">
+    <div
+      class="notifications-and-dropdown d-flex justify-content-center align-items-center"
+    >
       <div class="display-mode d-flex me-4">
         <button type="button" class="dark-mode">
           <svg
@@ -108,7 +118,7 @@
               <li class="dropdown-item text-center py-1">
                 <a
                   class="main-text-Color d-flex align-items-center justify-content-center gap-1"
-                  [routerLink]="['/provider/notifications']"
+                  [routerLink]="['/client/notifications']"
                   >Show notifications
                   <i class="fa-solid fa-arrow-right-to-bracket"></i
                 ></a>
@@ -117,7 +127,7 @@
           </div>
         </div>
         <div class="profile-img me-4">
-          <a [routerLink]="['/provider/profile']">
+          <a [routerLink]="['/client/client-profile']">
             <img [src]="UserImage" alt="" />
           </a>
         </div>

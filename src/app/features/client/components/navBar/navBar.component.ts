@@ -1,13 +1,14 @@
-import { Component, HostListener, inject, OnInit, Renderer2 } from '@angular/core';
-import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { Component, HostListener, inject, OnInit } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../../services/auth.service';
 import { ProviderService } from '../../../provider/services/provider.service';
 import { MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { environment } from '../../../../../environments/environment';
 import { NotificationsSRService } from '../../../../services/signalR Services/notificationsSR.service';
-import { INotification } from '../../../provider/models/INotification';
+import { INotification } from '../../../../types/INotification';
 import { CommonModule } from '@angular/common';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -20,6 +21,7 @@ export class NavBarComponent implements OnInit {
   providerServices = inject(ProviderService);
   messageServices = inject(MessageService);
   srService = inject(NotificationsSRService);
+  cookie = inject(CookieService);
   router = inject(Router);
 
   private notificationsListSubscription!: Subscription;
@@ -56,6 +58,7 @@ export class NavBarComponent implements OnInit {
   handelLogout() {
     this.authServices.logOut().subscribe({
       next: (res) => {
+        this.cookie.delete('token');
         this.router.navigate(['/login']);
       },
       error: (err) => {

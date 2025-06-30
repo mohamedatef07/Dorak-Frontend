@@ -17,7 +17,6 @@ export class ClientProfileComponent implements OnInit {
   cAuthServices = inject(AuthService);
 
   client: IClientProfile = {
-    Appointments: [],
     ID: '',
     Name: '',
     Image: '',

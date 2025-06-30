@@ -23,7 +23,7 @@ export interface IAppointment {
   UserId: string|null;
   TemporaryClientId: number|null;
   ProviderName:string;
-  Rate: number;
+  ProviderRate: number;
   Specialization: string|null;
   IsLive:boolean;
 }
