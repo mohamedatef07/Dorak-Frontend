@@ -9,11 +9,14 @@ import { IClientInfoForLiveQueue } from '../../models/IClientInfoForLiveQueue';
 import { CommonModule } from '@angular/common';
 import { QueueAppointmentStatus } from '../../../../Enums/QueueAppointmentStatus.enum';
 import { environment } from '../../../../../environments/environment';
+import { IDoctorMainInfo } from '../../models/IDoctorMainInfo';
+import { RatingModule } from 'primeng/rating';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-Client-Live-Queue',
   templateUrl: './Client-Live-Queue.component.html',
-  imports: [CommonModule],
+  imports: [CommonModule, RatingModule, FormsModule],
   styleUrls: ['./Client-Live-Queue.component.css'],
 })
 export class ClientLiveQueueComponent implements OnInit, OnDestroy {
@@ -23,10 +26,17 @@ export class ClientLiveQueueComponent implements OnInit, OnDestroy {
   route = inject(ActivatedRoute);
 
   LiveQueues: IClientLiveQueue[] = [];
-  appoinmentid!: number;
+  appointmentId!: number;
   shiftId!: number;
   userid: string = '';
   fullImagePath: string = '';
+  doctorMainInfo: IDoctorMainInfo = {
+    FullName: '',
+    Specialization: '',
+    Bio: '',
+    Rate: 0,
+    Image: '',
+  };
 
   clientInfo!: IClientInfoForLiveQueue;
 
@@ -39,12 +49,11 @@ export class ClientLiveQueueComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.route.paramMap.subscribe((params) => {
-      this.appoinmentid = Number(params.get('appointmentId'));
+      this.appointmentId = Number(params.get('appointmentId'));
       this.shiftId = Number(params.get('shiftId'));
-      this.ClientService.ClientLiveQueue(this.appoinmentid).subscribe({
+      this.ClientService.ClientLiveQueue(this.appointmentId).subscribe({
         next: (res) => {
           this.LiveQueues = res.Data;
-          console.log('Live Queue Data:', this.LiveQueues);
           this.updateProgress();
         },
         error: (err) => {
@@ -88,6 +97,12 @@ export class ClientLiveQueueComponent implements OnInit, OnDestroy {
     this.subscription = interval(5000).subscribe(() => {
       this.updateProgress();
     });
+
+    const state = history.state;
+    if (state && state.doctorMainInfo) {
+      this.doctorMainInfo = state.doctorMainInfo;
+      this.doctorMainInfo.Image = `${environment.apiUrl}${this.doctorMainInfo.Image}`;
+    }
   }
 
   ngOnDestroy() {
@@ -113,6 +128,21 @@ export class ClientLiveQueueComponent implements OnInit, OnDestroy {
     }
   }
 
+  getStatusClass(status: QueueAppointmentStatus): string {
+    switch (status) {
+      case QueueAppointmentStatus.NotChecked:
+        return 'status-not-checked';
+      case QueueAppointmentStatus.Waiting:
+        return 'status-waiting';
+      case QueueAppointmentStatus.InProgress:
+        return 'status-in-progress';
+      case QueueAppointmentStatus.Completed:
+        return 'status-completed';
+      default:
+        return 'status-waiting';
+    }
+  }
+
   getFullImagePath(imageUrl: string): string {
     return `${environment.apiUrl}${imageUrl}`;
   }
@@ -120,7 +150,10 @@ export class ClientLiveQueueComponent implements OnInit, OnDestroy {
     const current = this.LiveQueues.find((q) => q.Status === 1);
     return current?.CurrentQueuePosition || 0;
   }
-
+  getCurrentPosition(): number {
+    const current = this.LiveQueues.find((q) => q.IsCurrentClient);
+    return current?.CurrentQueuePosition || 0;
+  }
   private updateProgress() {
     if (this.LiveQueues.length === 0) return;
 

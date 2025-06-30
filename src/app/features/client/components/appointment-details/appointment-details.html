@@ -31,13 +31,19 @@
     <div class="col-md-4">
       <div class="detail-item">
         <i class="fas fa-calendar me-2"></i>
-        <span><strong>Date:</strong> {{ appointment.AppointmentDate |date : "d-M-yyyy" }}</span>
+        <span
+          ><strong>Date:</strong> {{ appointment.AppointmentDate |date :
+          "d-M-yyyy" }}</span
+        >
       </div>
     </div>
     <div class="col-md-4">
       <div class="detail-item">
         <i class="fas fa-clock me-2"></i>
-        <span><strong>Time:</strong> {{ appointment.EstimatedTime.toString() | TimeStringToDate | date : "hh:mm a" }}</span>
+        <span
+          ><strong>Time:</strong> {{ appointment.EstimatedTime.toString() |
+          TimeStringToDate | date : "hh:mm a" }}</span
+        >
       </div>
     </div>
     <div class="col-md-4">
@@ -63,7 +69,9 @@
         <i class="fas fa-money-bill-wave me-2"></i>
         <span
           ><strong>Fees:</strong>
-          <span class="fw-bold"> {{ appointment.Fees | currency : "EGP " : "symbol" : "1.0" }}</span></span
+          <span class="fw-bold">
+            {{ appointment.Fees | currency : "EGP " : "symbol" : "1.0" }}</span
+          ></span
         >
       </div>
     </div>
@@ -75,13 +83,28 @@
     >
       <i class="fas fa-arrow-left me-2"></i>Back
     </a>
+
+    @if((appointment.AppointmentStatus | AppointmentStatusEnumValue) ===
+    'Pending' ){
+    <a
+      class="btn btn-gradient-secondary"
+      [routerLink]="['/client/checkout']"
+      [state]="{ checkoutRequest: checkoutRequest }"
+    >
+      <i class="fas fa-eye me-2"></i>
+      Checkout
+    </a>
+    } @else{
     <a
       [routerLink]="appointment.IsLive ? ['/client/client-live-queue', appointment.appointmentId, appointment.ShiftId] : null"
+      [state]="{ doctorMainInfo: doctorMainInfo }"
+
       [class.disabled]="!appointment.IsLive"
       class="btn btn-gradient-secondary"
       (click)="!appointment.IsLive && $event.preventDefault()"
     >
       <i class="fa-solid fa-users-line me-2"></i> Go to Live Queue
     </a>
+    }
   </div>
 </div>

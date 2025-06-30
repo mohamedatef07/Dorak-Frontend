@@ -24,6 +24,6 @@ export interface IAppointment {
   TemporaryClientId: number|null;
   ProviderName:string;
   ProviderRate: number;
-  Specialization: string|null;
+  Specialization: string;
   IsLive:boolean;
 }

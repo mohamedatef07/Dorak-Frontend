@@ -13,53 +13,81 @@ import { ApiResponse } from '../../../../types/ApiResponse';
 import { __param } from 'tslib';
 import { environment } from '../../../../../environments/environment';
 import { TimeStringToDatePipe } from '../../../../pipes/TimeStringToDate.pipe';
+import { AppointmentStatus } from '../../../../Enums/AppointmentStatus.enum';
+import { ICheckoutRequest } from '../../models/ICheckoutRequest';
+import { IDoctorMainInfo } from '../../models/IDoctorMainInfo';
 
 @Component({
   selector: 'app-appointment-details',
-    imports:[ CommonModule,
+  imports: [
+    CommonModule,
     AvatarModule,
     RatingModule,
     FormsModule,
     AppointmentStatusEnumValuePipe,
     ClientTypeEnumValuePipe,
     RouterLink,
-    TimeStringToDatePipe
-],
+    TimeStringToDatePipe,
+  ],
   templateUrl: './appointment-details.html',
-  styleUrls: ['./appointment-details.css']
+  styleUrls: ['./appointment-details.css'],
 })
 export class appointmentDetails implements OnInit {
-
- private route = inject(ActivatedRoute);
+  private route = inject(ActivatedRoute);
   private clientService = inject(ClientService);
 
   appointmentId!: number;
   appointment!: IAppointment;
   fullImagePath: string = '';
+  checkoutRequest: ICheckoutRequest = {
+    Amount: 0,
+    AppointmentId: 0,
+    ClientId: '',
+    StripeToken: '',
+  };
+
+  doctorMainInfo: IDoctorMainInfo = {
+    FullName: '',
+    Specialization: '',
+    Bio: '',
+    Rate: 0,
+    Image: '',
+  };
 
   ngOnInit(): void {
+    const param = this.route.snapshot.paramMap.get('appointmentId');
+    if (param) {
+      this.appointmentId = +param;
 
-const param = this.route.snapshot.paramMap.get('appointmentId');
-  if (param) {
-    this.appointmentId = +param;
+      this.clientService.getAppointmentById(this.appointmentId).subscribe({
+        next: (res) => {
+          this.appointment = res.Data;
+          if (
+            this.appointment.AppointmentStatus === AppointmentStatus.Pending
+          ) {
+            this.checkoutRequest = {
+              AppointmentId: this.appointment.appointmentId,
+              ClientId: this.appointment.UserId,
+              StripeToken: 'tok_visa',
+              Amount: this.appointment.Fees,
+            };
+          }
+          if (this.appointment.ProviderImage) {
+            this.fullImagePath = `${environment.apiUrl}${this.appointment.ProviderImage}`;
+          }
+          this.doctorMainInfo = {
+            FullName: this.appointment.ProviderName,
+            Specialization: this.appointment.Specialization,
+            Bio: '',
+            Rate: this.appointment.ProviderRate,
+            Image: this.appointment.ProviderImage,
+          };
+        },
 
-    this.clientService.getAppointmentById(this.appointmentId).subscribe({
-  next: (res) => {
-    console.log('Response from API:', res);
-    this.appointment = res.Data;
-
-     if (this.appointment.ProviderImage) {
-             this.fullImagePath = `${environment.apiUrl}${this.appointment.ProviderImage}`;
-                 console.log( this.fullImagePath)
-     }
-   },
-
-
-  error: (err) => {
-    console.error(err);
+        error: (err) => {
+          console.error(err);
+        },
+      });
+    }
   }
-});
-
-  }
-}
 }
