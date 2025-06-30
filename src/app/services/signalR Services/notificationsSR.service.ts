@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { INotification } from '../../features/provider/models/INotification';
+import { INotification } from '../../types/INotification';
 import { Subject } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import * as signalR from '@microsoft/signalr';
@@ -26,7 +26,9 @@ export class NotificationsSRService {
       return;
     }
     this.hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl(`${environment.apiUrl}/notificationHub`,{accessTokenFactory: () => token,})
+      .withUrl(`${environment.apiUrl}/notificationHub`, {
+        accessTokenFactory: () => token,
+      })
       .withAutomaticReconnect()
       .build();
     this.hubConnection

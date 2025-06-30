@@ -1,5 +1,4 @@
-/* Main */
-main .container > p {
+.setting-container > p {
   color: var(--text-color-Light);
   font-size: 2rem;
 }
@@ -15,7 +14,7 @@ main .container > p {
 }
 
 .setting-tabs {
-  border-top: 2px solid var(--text-color-Light);
+  border-top: 3px solid var(--text-color-Light);
 }
 
 .setting-link {
@@ -27,7 +26,7 @@ main .container > p {
 .setting-link.active {
   color: var(--text-color-Light) !important;
   background-color: transparent !important;
-  border-top: 4px solid var(--text-color-Light);
+  border-top: 6px solid var(--text-color-Light) !important;
 }
 
 .section-title {

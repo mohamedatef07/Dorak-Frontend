@@ -543,16 +543,12 @@ body {
   font-size: 1.1rem;
 }
 
-/* أقسام المواعيد المحسنة */
-.appointment-section {
-  margin-bottom: 3.5rem;
-}
-
 .section-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 2rem;
+  margin-top: 1rem;
   padding: 1.5rem;
   background: linear-gradient(
     135deg,
@@ -744,33 +740,6 @@ body {
   color: var(--accent-color);
   margin-right: 0.8rem;
   font-size: 1.2rem;
-}
-
-.rating-container {
-  display: flex;
-  align-items: center;
-  margin-bottom: 1.5rem;
-}
-
-.rating {
-  margin-right: 1rem;
-}
-
-.rating i {
-  color: var(--accent-color);
-  font-size: 1.1rem;
-  margin-right: 3px;
-  transition: all 0.2s ease;
-}
-
-.rating i:hover {
-  transform: scale(1.2);
-}
-
-.rating-text {
-  color: var(--text-muted);
-  font-size: 0.95rem;
-  font-weight: 600;
 }
 
 .appointment-details {

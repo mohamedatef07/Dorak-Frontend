@@ -1,16 +1,15 @@
-/* Wallet Container */
-.wallet-container {
-  min-height: 100vh;
-  background: linear-gradient(135deg, #e3f2fd 0%, #f8f9fa 100%);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+.container > p {
+  color: var(--text-color-Light);
+  font-size: 2rem;
 }
-
 /* Header Styles */
 .wallet-header {
   background: transparent;
   padding: 0;
 }
-
+.p-icon-custom-size{
+  font-size: 5rem !important;
+}
 .wallet-title {
   font-size: 2rem;
   font-weight: 700;
@@ -112,7 +111,9 @@
   display: flex;
   gap: 1rem;
 }
-
+::ng-deep .p-button{
+  border: none !important;
+}
 .return-method-buttons ::ng-deep .p-button {
   flex: 1;
   transition: all 0.3s ease;

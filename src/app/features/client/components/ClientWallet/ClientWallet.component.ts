@@ -1,8 +1,7 @@
+import { ITransaction } from './../../models/ITransaction';
 import { ClientService } from './../../services/client.service';
 import { Component, inject, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
-// PrimeNG Imports
+import { CommonModule, CurrencyPipe } from '@angular/common';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
@@ -11,22 +10,12 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { MessageModule } from 'primeng/message';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
-
-// Forms
 import { FormsModule } from '@angular/forms';
 import { IClientWalletProfile } from '../../models/IClientWalletProfile';
 import { AuthService } from '../../../../services/auth.service';
 import { Avatar } from 'primeng/avatar';
 import { environment } from '../../../../../environments/environment';
 
-interface Transaction {
-  id: number;
-  type: 'credit' | 'debit';
-  amount: number;
-  description: string;
-  date: Date;
-  status: 'completed' | 'pending' | 'failed';
-}
 @Component({
   selector: 'app-ClientWallet',
   imports: [
@@ -38,17 +27,18 @@ interface Transaction {
     InputTextModule,
     InputNumberModule,
     MessageModule,
-    ToastModule,Avatar
+    ToastModule,
+    Avatar,
   ],
   templateUrl: './ClientWallet.component.html',
-  styleUrls: ['./ClientWallet.component.css']
+  styleUrls: ['./ClientWallet.component.css'],
 })
 export class ClientWalletComponent implements OnInit {
   ClientService = inject(ClientService);
   cAuthServices = inject(AuthService);
-  clientwallet!:IClientWalletProfile;
-  userid:string= '';
-  balance: number = 0.00;
+  clientWallet!: IClientWalletProfile;
+  userid: string = '';
+  balance: number = 0.0;
   showReturnFundDialog: boolean = false;
   returnFundAmount: number | null = null;
   isLoading: boolean = false;
@@ -57,7 +47,7 @@ export class ClientWalletComponent implements OnInit {
   vodafoneNumber: string = '';
 
   // Transaction history (empty initially)
-  transactions: Transaction[] = [];
+  transactions: ITransaction[] = [];
 
   // Credit/payment methods (for future implementation)
   paymentMethods: string[] = [];
@@ -65,30 +55,30 @@ export class ClientWalletComponent implements OnInit {
   constructor(private messageService: MessageService) {}
 
   ngOnInit() {
-    this.userid= this.cAuthServices.getUserId();
+    this.userid = this.cAuthServices.getUserId();
     this.loadBalance();
     this.loadTransactions();
     this.ClientService.ClientWalletAndProfile(this.userid).subscribe({
       next: (res) => {
-        this.clientwallet = res.Data;
-        this.balance = this.clientwallet.Balance;
-        this.clientwallet.Image = `${environment.apiUrl}${this.clientwallet.Image}`;
+        this.clientWallet = res.Data;
+        this.balance = this.clientWallet.Balance;
+        this.clientWallet.Image = `${environment.apiUrl}${this.clientWallet.Image}`;
       },
       error: (err) => {
         console.error('Error while fetching client wallet profile:', err);
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
-          detail: 'Failed to load wallet profile. Please try again later.'
+          detail: 'Failed to load wallet profile. Please try again later.',
         });
-      }
+      },
     });
   }
 
   loadBalance() {
     // Simulate loading balance from backend
     // In real app, this would be an API call
-    this.balance = 0.00;
+    this.balance = 0.0;
   }
 
   loadTransactions() {
@@ -118,7 +108,7 @@ export class ClientWalletComponent implements OnInit {
       this.messageService.add({
         severity: 'warn',
         summary: 'Invalid Amount',
-        detail: 'Please enter a valid amount greater than 0'
+        detail: 'Please enter a valid amount greater than 0',
       });
       return;
     }
@@ -127,7 +117,7 @@ export class ClientWalletComponent implements OnInit {
       this.messageService.add({
         severity: 'warn',
         summary: 'Missing Information',
-        detail: 'Please select a return method'
+        detail: 'Please select a return method',
       });
       return;
     }
@@ -136,7 +126,7 @@ export class ClientWalletComponent implements OnInit {
       this.messageService.add({
         severity: 'warn',
         summary: 'Missing Information',
-        detail: 'Please enter your Vodafone Cash number'
+        detail: 'Please enter your Vodafone Cash number',
       });
       return;
     }
@@ -145,7 +135,7 @@ export class ClientWalletComponent implements OnInit {
       this.messageService.add({
         severity: 'warn',
         summary: 'Missing Information',
-        detail: 'Please enter your bank account number'
+        detail: 'Please enter your bank account number',
       });
       return;
     }
@@ -154,7 +144,7 @@ export class ClientWalletComponent implements OnInit {
       this.messageService.add({
         severity: 'error',
         summary: 'Insufficient Balance',
-        detail: 'The requested amount exceeds your current balance'
+        detail: 'The requested amount exceeds your current balance',
       });
       return;
     }
@@ -169,22 +159,30 @@ export class ClientWalletComponent implements OnInit {
       this.balance -= this.returnFundAmount;
 
       // Add transaction record
-      const newTransaction: Transaction = {
+      const newTransaction: ITransaction = {
         id: Date.now(),
         type: 'debit',
         amount: this.returnFundAmount,
-        description: `Fund Returned via ${this.selectedReturnMethod === 'vodafone' ? 'Vodafone Cash' : 'Bank Transfer'}`,
+        description: `Fund Returned via ${
+          this.selectedReturnMethod === 'vodafone'
+            ? 'Vodafone Cash'
+            : 'Bank Transfer'
+        }`,
         date: new Date(),
-        status: 'completed'
+        status: 'completed',
       };
       this.transactions.unshift(newTransaction);
 
       this.messageService.add({
         severity: 'success',
         summary: 'Success',
-        detail: `$${this.returnFundAmount.toFixed(2)} has been returned to your ${
-          this.selectedReturnMethod === 'vodafone' ? 'Vodafone Cash account' : 'bank account'
-        }`
+        detail: `$${this.returnFundAmount.toFixed(
+          2
+        )} has been returned to your ${
+          this.selectedReturnMethod === 'vodafone'
+            ? 'Vodafone Cash account'
+            : 'bank account'
+        }`,
       });
 
       this.closeReturnFundDialog();
@@ -192,7 +190,7 @@ export class ClientWalletComponent implements OnInit {
       this.messageService.add({
         severity: 'error',
         summary: 'Error',
-        detail: 'Failed to return funds. Please try again.'
+        detail: 'Failed to return funds. Please try again.',
       });
     } finally {
       this.isLoading = false;
@@ -233,7 +231,7 @@ export class ClientWalletComponent implements OnInit {
     this.messageService.add({
       severity: 'info',
       summary: 'Navigation',
-      detail: 'Opening Terms and Conditions...'
+      detail: 'Opening Terms and Conditions...',
     });
   }
 
@@ -242,24 +240,7 @@ export class ClientWalletComponent implements OnInit {
     this.messageService.add({
       severity: 'info',
       summary: 'Navigation',
-      detail: 'Opening Help & Support...'
+      detail: 'Opening Help & Support...',
     });
-  }
-
-  // Method to check if user has any credit/balance
-  hasCredit(): boolean {
-    return this.balance > 0;
-  }
-
-  // Method to get formatted balance for display
-  getFormattedBalance(): string {
-    return this.formatCurrency(this.balance);
-  }
-
-  // Method to get wallet status message
-  getWalletStatusMessage(): string {
-    return this.hasCredit()
-      ? `You have ${this.getFormattedBalance()} in your wallet`
-      : "You Don't have any credit yet";
   }
 }

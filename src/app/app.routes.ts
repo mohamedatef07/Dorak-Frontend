@@ -1,3 +1,4 @@
+import { ProviderNotificationsComponent } from './features/provider/components/provider-notifications/provider-notifications.component';
 import { Routes } from '@angular/router';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { LoginComponent } from './components/login/login.component';
@@ -44,8 +45,8 @@ import { CenterShiftsTableComponent } from './features/owner/components/center-s
 import { appointmentDetails } from './features/client/components/appointment-details/appointment-details';
 import { ClientUpdateComponent } from './features/client/components/client-update/client-update.component';
 import { SystemPreferencesSettingsComponent } from './features/provider/components/system-preferences-settings/system-preferences-settings.component';
-import { NotificationsComponent } from './components/notifications/notifications.component';
 import { ClientSettingsComponent } from './features/client/components/client-settings/client-settings.component';
+import { ClientNotificationsComponent } from './features/client/components/client-notifications/client-notifications.component';
 
 export const routes: Routes = [
   {
@@ -186,7 +187,7 @@ export const routes: Routes = [
       },
       {
         path: 'notifications',
-        component: NotificationsComponent,
+        component: ProviderNotificationsComponent,
         title: 'Notifications',
       },
     ],
@@ -234,10 +235,6 @@ export const routes: Routes = [
         title: 'Client Wallet',
       },
       {
-        path: 'doctor',
-        component: DoctorsPageComponent,
-      },
-      {
         path: 'checkout',
         component: CheckoutComponent,
       },
@@ -256,10 +253,19 @@ export const routes: Routes = [
             component: ChangePasswordComponent,
             title: 'Change Password',
           },
-
         ],
       },
+      {
+        path: 'notifications',
+        component: ClientNotificationsComponent,
+        title: 'Notifications',
+      },
     ],
+  },
+  {
+    path: 'client/doctors',
+    component: DoctorsPageComponent,
+    title: 'Doctors',
   },
 
   // ----------------------------------
