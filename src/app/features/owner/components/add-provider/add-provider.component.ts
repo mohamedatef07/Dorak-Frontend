@@ -39,9 +39,10 @@ export class AddProviderComponent implements OnInit {
     { value: ProviderType.Permanent, label: 'Permanent' },
   ];
   minPasswordLength = 8;
-  minUsernameLength = 6;
-  minPhoneNumberLength = 10;
+  minUsernameLength = 8;
+  minPhoneNumberLength = 8;
   selectedFile: File | null = null;
+  imagePreview: string | null = null; // New property for image preview
   errorMessage: string = '';
   isSubmitting = false;
 
@@ -69,13 +70,11 @@ export class AddProviderComponent implements OnInit {
       City: '',
       Governorate: '',
       Country: '',
-      Image: '',
       Specialization: '',
-      Bio: '',
+      Bio: 'Add your bio here',
       ExperienceYears: null,
       ProviderType: ProviderType.None,
       LicenseNumber: '',
-
       Availability: '',
       EstimatedDuration: null,
       Rate: null,
@@ -87,23 +86,43 @@ export class AddProviderComponent implements OnInit {
     this.selectedFile = input.files?.[0] || null;
 
     if (!this.selectedFile) {
-      this.model.Image = '';
-
+      this.imagePreview = null; // Clear preview if no file is selected
+      this.snackBar.open('No file selected.', 'Close', { duration: 3000 });
       return;
     }
 
+    // Validate file type
+    const validImageTypes = ['image/jpeg', 'image/png', 'image/gif'];
+    if (!validImageTypes.includes(this.selectedFile.type)) {
+      this.errorMessage = 'Please select a valid image file (JPEG, PNG, or GIF).';
+      this.snackBar.open(this.errorMessage, 'Close', { duration: 5000 });
+      this.selectedFile = null;
+      this.imagePreview = null;
+      return;
+    }
+
+    // Validate file size (e.g., max 5MB)
+    const maxSizeInMB = 5;
+    if (this.selectedFile.size > maxSizeInMB * 1024 * 1024) {
+      this.errorMessage = `File size exceeds ${maxSizeInMB}MB limit.`;
+      this.snackBar.open(this.errorMessage, 'Close', { duration: 5000 });
+      this.selectedFile = null;
+      this.imagePreview = null;
+      return;
+    }
+
+    // Generate image preview
     const reader = new FileReader();
-
     reader.onload = (e: ProgressEvent<FileReader>) => {
-      this.model.Image = e.target?.result as string;
+      this.imagePreview = e.target?.result as string;
+      this.snackBar.open('Image selected successfully!', 'Close', { duration: 3000 });
     };
-
     reader.onerror = () => {
       this.errorMessage = 'Failed to read the image file.';
+      this.snackBar.open(this.errorMessage, 'Close', { duration: 5000 });
       this.selectedFile = null;
-      this.model.Image = '';
+      this.imagePreview = null;
     };
-
     reader.readAsDataURL(this.selectedFile);
   }
 
@@ -131,9 +150,7 @@ export class AddProviderComponent implements OnInit {
     });
 
     if (missingFields.length > 0) {
-      this.errorMessage = `Please fill all required fields: ${missingFields.join(
-        ', '
-      )}.`;
+      this.errorMessage = `Please fill all required fields: ${missingFields.join(', ')}.`;
       return false;
     }
 
@@ -176,54 +193,58 @@ export class AddProviderComponent implements OnInit {
 
     this.isSubmitting = true;
 
-    this.apiService.addProviderAndAssignIt(this.model).subscribe({
+    // Create FormData object
+    const formData = new FormData();
+    // Append all model properties to FormData
+    Object.keys(this.model).forEach((key) => {
+      const value = this.model[key as keyof IRegistrationViewModel];
+      if (value !== null && value !== undefined) {
+        if (key === 'BirthDate' && value instanceof Date) {
+          // Format Date as YYYY-MM-DD
+          const year = value.getFullYear();
+          const month = String(value.getMonth() + 1).padStart(2, '0');
+          const day = String(value.getDate()).padStart(2, '0');
+          formData.append(key, `${year}-${month}-${day}`);
+        } else {
+          formData.append(key, value.toString());
+        }
+      }
+    });
+
+    // Append the image file if selected
+    if (this.selectedFile) {
+      formData.append('Image', this.selectedFile, this.selectedFile.name);
+    }
+
+    this.apiService.addProviderAndAssignIt(formData).subscribe({
       next: (providerId: string) => {
         this.isSubmitting = false;
         this.snackBar.open('Provider added successfully!', 'Close', {
           duration: 3000,
         });
-        console.log('API Response - providerId:', providerId);
-        console.log('Type of providerId:', typeof providerId);
-        console.log('Is providerId empty?', providerId === '');
-
-        if (
-          providerId &&
-          typeof providerId === 'string' &&
-          providerId.trim() !== ''
-        ) {
-          console.log(
-            'Navigating to schedule-options with providerId:',
-            providerId
-          );
+        if (providerId && typeof providerId === 'string' && providerId.trim() !== '') {
           this.router
-            .navigate(['/manually-schedule', providerId])
+            .navigate(['owner/manually-schedule', providerId])
             .then((success) => {
-              console.log('Navigation successful:', success);
               if (!success) {
-                console.error('Navigation failed: Route not resolved');
-                this.router.navigate(['/add-provider']);
+                this.router.navigate(['owner/add-provider']);
               }
             })
             .catch((err) => {
               console.error('Navigation error:', err);
-              this.router.navigate(['/add-provider']);
+              this.router.navigate(['owner/add-provider']);
             });
         } else {
-          console.error('Invalid providerId received:', providerId);
-          this.snackBar.open(
-            'Failed to proceed: Invalid provider ID',
-            'Close',
-            { duration: 5000 }
-          );
+          this.snackBar.open('Failed to proceed: Invalid provider ID', 'Close', {
+            duration: 5000,
+          });
         }
       },
       error: (err: HttpErrorResponse) => {
         this.isSubmitting = false;
         const errorDetail = err.error?.errors
           ? Object.entries(err.error.errors)
-              .map(
-                ([key, value]) => `${key}: ${(value as string[]).join(', ')}`
-              )
+              .map(([key, value]) => `${key}: ${(value as string[]).join(', ')}`)
               .join('; ')
           : err.error?.title || err.message;
         this.errorMessage = errorDetail || 'Failed to add provider.';

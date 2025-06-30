@@ -6,7 +6,6 @@ import { environment } from '../../../../environments/environment';
 import { IOperator } from '../models/IOperator';
 import { ICreateAppointment } from '../models/ICreateAppointment';
 import { IShiftsTable } from '../models/IShiftsTable';
-
 import { ICenterShifts } from '../models/ICenterShifts';
 import { AuthService } from '../../../services/auth.service';
 
@@ -17,7 +16,7 @@ export class OwnerService {
   authServices = inject(AuthService);
   httpClient = inject(HttpClient);
   // operatorId = this.authServices.getUserId();
-  operatorId = 'user1-operator';
+  operatorId = '1';
 
   constructor() {}
 

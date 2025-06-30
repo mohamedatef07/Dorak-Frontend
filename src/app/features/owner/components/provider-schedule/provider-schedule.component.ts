@@ -47,7 +47,7 @@ export class ProviderScheduleComponent implements OnInit, AfterViewInit {
 
   errorMessage: string = '';
   isLoading: boolean = false;
-  centerId: number = 1;
+  centerId: number = 3;
 
   constructor(private apiService: ApiService, private router: Router, private cdr: ChangeDetectorRef) {}
 
@@ -208,9 +208,13 @@ export class ProviderScheduleComponent implements OnInit, AfterViewInit {
 
   navigateToScheduleOptions(providerId: string | undefined): void {
     if (providerId) {
-      this.router.navigate(['/manually-schedule', providerId]);
+      this.router.navigate(['owner/manually-schedule', providerId]);
     } else {
       this.errorMessage = 'Provider ID is missing. Cannot navigate to schedule options.';
     }
+  }
+
+  viewProfile(providerId: string): void {
+    this.router.navigate(['owner/center-provider-profile', providerId]);
   }
 }

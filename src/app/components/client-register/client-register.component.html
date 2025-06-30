@@ -1,3 +1,5 @@
+
+
 <div class="p-4 main-bg">
   <div class="brand-logo text-white bold"></div>
   <div class="login d-flex justify-content-center align-items-center min-vh-100">
@@ -17,23 +19,46 @@
             User Name is Required
           </small>
           <small *ngIf="hasError('userName', 'minlength')" id="userNameHelp" class="form-text text-danger">
-            User Name should be at least 6 Characters
+            User Name should be at least 8 Characters
           </small>
           <small *ngIf="hasError('userName', 'maxlength')" id="userNameHelp" class="form-text text-danger">
             User Name should not exceed 100 Characters
           </small>
+          <small *ngFor="let error of getFieldErrors('userName')" class="form-text text-danger">
+            {{ error }}
+          </small>
         </div>
+
         <!-- First Name and Last Name -->
         <div class="row mb-3">
           <div class="col-md-6 mb-3 mb-md-0">
             <label for="firstName" class="form-label text-dark">First Name</label>
             <input type="text" class="form-control" id="firstName" name="firstName" formControlName="firstName" />
+            <small *ngIf="hasError('firstName', 'required')" class="form-text text-danger">
+              First Name is Required
+            </small>
+            <small *ngIf="hasError('firstName', 'maxlength')" class="form-text text-danger">
+              First Name should not exceed 100 Characters
+            </small>
+            <small *ngFor="let error of getFieldErrors('firstName')" class="form-text text-danger">
+              {{ error }}
+            </small>
           </div>
           <div class="col-md-6">
             <label for="lastName" class="form-label text-dark">Last Name</label>
             <input type="text" class="form-control" id="lastName" name="lastName" formControlName="lastName" />
+            <small *ngIf="hasError('lastName', 'required')" class="form-text text-danger">
+              Last Name is Required
+            </small>
+            <small *ngIf="hasError('lastName', 'maxlength')" class="form-text text-danger">
+              Last Name should not exceed 100 Characters
+            </small>
+            <small *ngFor="let error of getFieldErrors('lastName')" class="form-text text-danger">
+              {{ error }}
+            </small>
           </div>
         </div>
+
         <!-- Email -->
         <div class="mb-3">
           <label for="email" class="form-label text-dark">Email</label>
@@ -45,8 +70,14 @@
           <small *ngIf="hasError('email', 'email')" id="emailHelp" class="form-text text-danger">
             Please enter a valid email address
           </small>
+          <small *ngIf="hasError('email', 'minlength')" id="emailHelp" class="form-text text-danger">
+            Email should be at least 6 Characters
+          </small>
           <small *ngIf="hasError('email', 'maxlength')" id="emailHelp" class="form-text text-danger">
             Email should not exceed 100 Characters
+          </small>
+          <small *ngFor="let error of getFieldErrors('email')" class="form-text text-danger">
+            {{ error }}
           </small>
         </div>
 
@@ -70,6 +101,9 @@
             <small *ngIf="hasError('password', 'noUppercase')" id="passwordHelp" class="form-text text-danger">
               Password must contain at least one uppercase letter
             </small>
+            <small *ngFor="let error of getFieldErrors('password')" class="form-text text-danger">
+              {{ error }}
+            </small>
           </div>
           <div class="col-md-6">
             <label for="confirmPassword" class="form-label text-dark">Confirm Password</label>
@@ -81,6 +115,10 @@
               class="form-text text-danger">
               Confirm Password is Required
             </small>
+            <small *ngIf="hasError('confirmPassword', 'minlength')" id="confirmPasswordHelp"
+              class="form-text text-danger">
+              Confirm Password should be at least 8 Characters
+            </small>
             <small *ngIf="hasError('confirmPassword', 'maxlength')" id="confirmPasswordHelp"
               class="form-text text-danger">
               Confirm Password should not exceed 100 Characters
@@ -89,6 +127,9 @@
               *ngIf="clientRegisterForm.errors?.['passwordMismatch'] && clientRegisterForm.get('confirmPassword')?.touched"
               id="confirmPasswordHelp" class="form-text text-danger">
               Passwords do not match
+            </small>
+            <small *ngFor="let error of getFieldErrors('confirmPassword')" class="form-text text-danger">
+              {{ error }}
             </small>
           </div>
         </div>
@@ -102,7 +143,7 @@
             Phone Number is Required
           </small>
           <small *ngIf="hasError('phoneNumber', 'minlength')" id="phoneNumberHelp" class="form-text text-danger">
-            Phone Number should be at least 6 Characters
+            Phone Number should be at least 8 Characters
           </small>
           <small *ngIf="hasError('phoneNumber', 'maxlength')" id="phoneNumberHelp" class="form-text text-danger">
             Phone Number should not exceed 100 Characters
@@ -110,9 +151,10 @@
           <small *ngIf="hasError('phoneNumber', 'pattern')" id="phoneNumberHelp" class="form-text text-danger">
             Please enter a valid phone number (e.g., +1234567890)
           </small>
+          <small *ngFor="let error of getFieldErrors('phoneNumber')" class="form-text text-danger">
+            {{ error }}
+          </small>
         </div>
-
-
 
         <!-- Gender and Birth Date -->
         <div class="row mb-3">
@@ -120,12 +162,27 @@
             <label for="gender" class="form-label text-dark">Gender</label>
             <select class="form-control" id="gender" name="gender" formControlName="gender">
               <option value="" disabled>Select Gender</option>
-              <option *ngFor="let gender of genders" [value]="gender">{{ gender }}</option>
+              <option *ngFor="let gender of genders" [value]="gender.value">{{ gender.label }}</option>
             </select>
+            <small *ngIf="hasError('gender', 'required')" class="form-text text-danger">
+              Gender is Required
+            </small>
+            <small *ngFor="let error of getFieldErrors('gender')" class="form-text text-danger">
+              {{ error }}
+            </small>
+            <small *ngFor="let error of getFieldErrors('$.Gender')" class="form-text text-danger">
+              {{ error }}
+            </small>
           </div>
           <div class="col-md-6">
             <label for="birthDate" class="form-label text-dark">Birth Date</label>
             <input type="date" class="form-control" id="birthDate" name="birthDate" formControlName="birthDate" />
+            <small *ngIf="hasError('birthDate', 'required')" class="form-text text-danger">
+              Birth Date is Required
+            </small>
+            <small *ngFor="let error of getFieldErrors('birthDate')" class="form-text text-danger">
+              {{ error }}
+            </small>
           </div>
         </div>
 
@@ -134,10 +191,16 @@
           <div class="col-md-6 mb-3 mb-md-0">
             <label for="street" class="form-label text-dark">Street</label>
             <input type="text" class="form-control" id="street" name="street" formControlName="street" />
+            <small *ngFor="let error of getFieldErrors('street')" class="form-text text-danger">
+              {{ error }}
+            </small>
           </div>
           <div class="col-md-6">
             <label for="city" class="form-label text-dark">City</label>
             <input type="text" class="form-control" id="city" name="city" formControlName="city" />
+            <small *ngFor="let error of getFieldErrors('city')" class="form-text text-danger">
+              {{ error }}
+            </small>
           </div>
         </div>
 
@@ -146,24 +209,18 @@
           <div class="col-md-6 mb-3 mb-md-0">
             <label for="governorate" class="form-label text-dark">Governorate</label>
             <input type="text" class="form-control" id="governorate" name="governorate" formControlName="governorate" />
+            <small *ngFor="let error of getFieldErrors('governorate')" class="form-text text-danger">
+              {{ error }}
+            </small>
           </div>
           <div class="col-md-6">
             <label for="country" class="form-label text-dark">Country</label>
             <input type="text" class="form-control" id="country" name="country" formControlName="country" />
+            <small *ngFor="let error of getFieldErrors('country')" class="form-text text-danger">
+              {{ error }}
+            </small>
           </div>
         </div>
-
-        <!-- Image (File Upload) -->
-        <!-- <div class="mb-3">
-          <label for="image" class="form-label text-dark">Profile Image</label>
-          <input
-            type="file"
-            class="form-control"
-            id="image"
-            name="image"
-            formControlName="image"
-          />
-        </div> -->
 
         <button type="submit" class="btn main-btn text-white w-100" [disabled]="isLoading">
           Sign Up

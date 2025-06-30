@@ -1,3 +1,5 @@
+
+
 <div *ngIf="isLoading" class="loading">
   Loading provider details...
 </div>
@@ -16,8 +18,7 @@
     <div class="left-panel">
       <h2>Doctor Information</h2>
       <div class="profile-image">
-        <img *ngIf="provider.Image" [src]="provider.Image" alt="Provider Image" class="provider-image" />
-        <img *ngIf="!provider.Image" src="https://via.placeholder.com/150" alt="Placeholder Image" class="provider-image" />
+        <img [src]="getImageUrl(provider.Image)" alt="Provider Image" class="provider-image" />
       </div>
       <div class="doctor-details">
         <h1>{{ provider.FirstName || 'Unknown' }} {{ provider.LastName || '' }}</h1>

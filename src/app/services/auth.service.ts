@@ -14,7 +14,7 @@ import { IAddOperator } from '../features/owner/models/IAddOperator';
 export class AuthService {
   cookie = inject(CookieService);
   httpClient = inject(HttpClient);
-  private currentCenterId: number = 1; 
+  private currentCenterId: number = 1;
 
   setCenterId(centerId: number): void {
     this.currentCenterId = centerId;
@@ -56,11 +56,11 @@ export class AuthService {
     const payload = JSON.parse(atob(tokenParts[1]));
     return payload['CenterId'];
   }
-  register(
-    registerData: IClientRegisterRequest
-  ): Observable<ApiResponse<null>> {
+
+register(registerData: IClientRegisterRequest): Observable<ApiResponse<null>> {
+    console.log('Payload:', JSON.stringify(registerData, null, 2));
     return this.httpClient.post<ApiResponse<null>>(
-      `${environment.apiUrl}/api/account/Register`,
+      `${environment.apiUrl}/api/account/ClientRegister`,
       registerData
     );
   }

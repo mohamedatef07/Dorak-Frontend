@@ -1,5 +1,3 @@
-
-
 <div *ngIf="isLoading" class="loading">
   Loading...
 </div>
@@ -12,23 +10,22 @@
   {{ successMessage }}
 </div>
 
-<div *ngIf="provider && !isLoading && !errorMessage" class="schedule-container">
-  <h1>Doctor Schedule</h1>
+<div *ngIf="!isLoading && !errorMessage" class="schedule-container">
+  <h1>Reschedule Doctor</h1>
   <div class="navigation-buttons">
-    <button mat-raised-button color="primary" (click)="ManuallySchedule()">Manually</button>
-    <button mat-button (click)="WeeklySchedule()">Weekly</button>
+    <button mat-raised-button color="primary" (click)="toggleMode()" [ngClass]="{'active': isWeeklyMode}">Weekly</button>
+    <button mat-button (click)="toggleMode()" [ngClass]="{'active': !isWeeklyMode}">Manual</button>
   </div>
 
   <button mat-button class="back-button" (click)="goBack()">Back to Dashboard</button>
 
   <div class="provider-info">
-    <h2>Doctor Name {{ provider.FirstName || 'Unknown' }} {{ provider.LastName || '' }}</h2>
-    <p>Specialization: {{ provider.Specialization || 'N/A' }}</p>
+    <h2>Doctor ID: {{ providerId || 'Unknown' }}</h2>
   </div>
 
   <form [formGroup]="scheduleForm" class="schedule-form">
     <div class="calendar-section">
-      <h3>Select Start Date</h3>
+      <h3>Select Date{{ isWeeklyMode ? '' : ' Range' }}</h3>
       <div class="calendar-controls">
         <button mat-button class="nav-button" (click)="prevMonth()">
           ←
@@ -40,7 +37,6 @@
       </div>
       <div class="calendar-wrapper">
         <div class="calendar">
-          <!-- Weekday Headers -->
           <div class="calendar-header">
             <div class="day-header">Sun</div>
             <div class="day-header">Mon</div>
@@ -50,20 +46,16 @@
             <div class="day-header">Fri</div>
             <div class="day-header">Sat</div>
           </div>
-          <!-- Calendar Days -->
           <div class="calendar-body">
-            <div *ngFor="let day of daysInMonth"
-                 class="calendar-day"
-                 [ngClass]="{
-                   'today': isToday(day.date),
-                   'disabled': day.hasAssignment,
-                   'start-date': isSelectedStartDate(day.date)
-                 }"
-                 (click)="selectDate(day)">
+            <div *ngFor="let day of daysInMonth" class="calendar-day" [ngClass]="{
+                'today': isToday(day.date),
+                'start-date': isSelectedStartDate(day.date),
+                'end-date': isSelectedEndDate(day.date),
+                'in-range': isInRange(day.date)
+              }" (click)="selectDate(day)">
               <ng-container *ngIf="day.date as validDate">
                 <span *ngIf="validDate.getMonth() === viewDate.getMonth()" class="day-number">
                   {{ validDate.getDate() }}
-                  <span *ngIf="day.hasAssignment" class="assignment-dot"></span>
                 </span>
               </ng-container>
             </div>
@@ -73,18 +65,16 @@
     </div>
 
     <div formArrayName="assignments">
-      <div *ngFor="let assignment of assignments.controls; let i = index" [formGroupName]="i" class="assignment-section">
+      <div *ngFor="let assignment of assignmentsArray.controls; let i = index" [formGroupName]="i" class="assignment-section">
         <h3>Assignment {{ i + 1 }}</h3>
         <div class="assignment-header">
-          <button mat-button color="warn" (click)="removeAssignment(i)" *ngIf="assignments.length > 1">Remove Assignment</button>
+          <button mat-button color="warn" (click)="removeAssignment(i)" *ngIf="assignmentsArray.length > 1">Remove Assignment</button>
         </div>
 
-        <div class="working-days-section">
+        <div *ngIf="isWeeklyMode" class="working-days-section">
           <h4>Choose Days</h4>
           <div class="working-days">
-            <mat-checkbox
-              *ngFor="let day of daysOfWeek"
-              [checked]="isWorkingDaySelected(day.value, i)"
+            <mat-checkbox *ngFor="let day of daysOfWeek" [checked]="isWorkingDaySelected(day.value, i)"
               (change)="onWorkingDayChange(day.value, $event.checked, i)">
               {{ day.label }}
             </mat-checkbox>
@@ -95,25 +85,29 @@
           <h4>Set Time</h4>
           <div formArrayName="Shifts" *ngFor="let shift of getShifts(i).controls; let j = index">
             <div [formGroupName]="j" class="shift-row">
+              <mat-form-field *ngIf="!isWeeklyMode" appearance="fill">
+                <mat-label>Select Date</mat-label>
+                <mat-select formControlName="Date" required>
+                  <mat-option *ngFor="let date of dateOptions" [value]="date">
+                    {{ date.toLocaleDateString() }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
               <mat-form-field appearance="fill">
                 <mat-label>Start Time</mat-label>
                 <input matInput type="time" formControlName="StartTime" required />
               </mat-form-field>
-
               <mat-form-field appearance="fill">
                 <mat-label>End Time</mat-label>
                 <input matInput type="time" formControlName="EndTime" required />
               </mat-form-field>
-
               <mat-form-field appearance="fill">
                 <mat-label>Max Patients Per Day</mat-label>
                 <input matInput type="number" formControlName="MaxPatientsPerDay" min="1" />
               </mat-form-field>
-
               <button mat-button color="warn" (click)="removeShift(i, j)" *ngIf="getShifts(i).length > 1">Remove</button>
             </div>
           </div>
-
           <div class="add-shift-action">
             <button mat-button color="primary" (click)="addShift(i)">Add Shift</button>
           </div>
@@ -122,12 +116,13 @@
     </div>
 
     <div class="add-queue">
-      <button mat-raised-button color="accent" (click)="addAssignment()">Add Another Queue</button>
+      <button mat-raised-button color="accent" (click)="addAssignment()">Add Another Assignment</button>
     </div>
 
     <div class="actions">
-      <button mat-raised-button color="primary" type="button" (click)="onSubmit()" [disabled]="scheduleForm.invalid || isLoading">
-        Submit
+      <button mat-raised-button color="primary" type="button" (click)="onSubmit()">
+        Reschedule
       </button>
     </div>
   </form>
+</div>
