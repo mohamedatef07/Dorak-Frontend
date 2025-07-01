@@ -1,4 +1,6 @@
-import { Component, OnInit, ChangeDetectorRef, AfterViewInit } from '@angular/core';
+
+
+import { Component, OnInit, ChangeDetectorRef, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink, RouterModule } from '@angular/router';
@@ -50,16 +52,22 @@ export class ProviderManagementComponent implements OnInit, AfterViewInit {
 
   errorMessage: string = '';
   isLoading: boolean = false;
-  centerId: number = 1;
-
+  centerId: number = 3;
+  showDeletePopup: boolean = false;
+  selectedProviderId: string | null = null; 
 
   private statusMap: { [key: string]: number } = {
     Online: 0,
     Offline: 1,
-
   };
 
-  constructor(private apiService: ApiService, private router: Router, private cdr: ChangeDetectorRef) {}
+  @ViewChild('deletePopup') deletePopup!: ElementRef;
+
+  constructor(
+    private apiService: ApiService,
+    private router: Router,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.loadAllProviders();
@@ -81,11 +89,10 @@ export class ProviderManagementComponent implements OnInit, AfterViewInit {
   fetchAllPages(page: number): void {
     this.apiService.getProviders(this.centerId, page, this.pageSize, this.sortBy, this.specializationFilter).subscribe({
       next: (response: ApiResponse<IPaginationViewModel<IProviderViewModel>>) => {
-        console.log(`Page ${page} API response:`, response);
         if (response.Status === 200 && response.Data?.Data) {
           const newProviders = (response.Data.Data as unknown as IProviderViewModel[]).map((provider: IProviderViewModel) => ({
             AssignmentId: provider.AssignmentId,
-            ProviderId: provider.ProviderId || `unknown-${Math.random()}`,
+            ProviderId: provider.ProviderId || 'unknown',
             FirstName: provider.FirstName || 'Unknown',
             LastName: provider.LastName || '',
             Specialization: provider.Specialization || 'N/A',
@@ -109,8 +116,6 @@ export class ProviderManagementComponent implements OnInit, AfterViewInit {
           this.providers.push(...newProviders);
 
           const totalPages = Math.ceil((response.Data.Total || 0) / this.pageSize);
-          console.log(`Total pages: ${totalPages}, Current page: ${page}, Total providers so far: ${this.providers.length}`);
-
           if (page < totalPages) {
             this.fetchAllPages(page + 1);
           } else {
@@ -122,7 +127,6 @@ export class ProviderManagementComponent implements OnInit, AfterViewInit {
       },
       error: (err) => {
         this.handleError('An error occurred while loading providers. Please try again later. (Status: ' + (err.status || 'Unknown') + ')');
-        console.error('API error:', err);
       }
     });
   }
@@ -131,19 +135,14 @@ export class ProviderManagementComponent implements OnInit, AfterViewInit {
     this.isLoading = false;
     const providerMap = new Map<string, IProviderViewModel>();
     this.providers.forEach((provider) => {
-      const providerId = provider.ProviderId || `unknown-${Math.random()}`;
-      if (!providerMap.has(providerId)) {
+      const providerId = provider.ProviderId || `temp-${Math.random()}`; // Use a temporary ID for mapping
+      if (!providerMap.has(providerId) && provider.ProviderId && provider.ProviderId !== 'unknown') { // Only map if ProviderId is valid
         providerMap.set(providerId, provider);
-      } else {
-        console.log(`Duplicate ProviderId ${providerId} found, keeping first entry`);
       }
     });
 
-    this.providers = Array.from(providerMap.values());
+    this.providers = Array.from(providerMap.values()).filter(p => p.ProviderId && p.ProviderId !== 'unknown'); // Filter out 'unknown' ProviderId
     this.totalItems = this.providers.length;
-    console.log('Distinct providers count:', this.providers.length);
-    console.log('Distinct providers:', this.providers);
-
     this.applyFilters();
   }
 
@@ -161,7 +160,7 @@ export class ProviderManagementComponent implements OnInit, AfterViewInit {
     if (this.dateFilter) {
       filteredProviders = filteredProviders.filter(provider => {
         const year = new Date(provider.AddDate).getFullYear().toString();
-        return year === this.dateFilter || (this.dateFilter === '' && !year); // Handle empty filter
+        return year === this.dateFilter || (this.dateFilter === '' && !year);
       });
     }
 
@@ -252,6 +251,49 @@ export class ProviderManagementComponent implements OnInit, AfterViewInit {
     const start = (this.pageIndex * this.pageSize) + 1;
     const end = Math.min((this.pageIndex + 1) * this.pageSize, this.totalItems);
     return `${start} - ${end}`;
+  }
+
+  viewProfile(providerId: string): void {
+    this.router.navigate(['owner/center-provider-profile', providerId]);
+  }
+
+  reschedule(providerId: string): void {
+    this.router.navigate(['owner/reschedule-assignment', providerId]);
+  }
+
+  deleteProvider(providerId: string): void {
+    if (!providerId || providerId.trim() === '' || providerId === 'unknown') {
+      this.handleError('Invalid or missing provider ID. Cannot delete.');
+      return;
+    }
+    this.selectedProviderId = providerId; // Set the provider to delete
+    this.showDeletePopup = true; // Show the custom pop-up instead of confirm
+  }
+
+  confirmDelete(): void {
+    if (this.selectedProviderId && this.selectedProviderId !== 'unknown') {
+      console.log('Attempting to delete provider with ID:', this.selectedProviderId); // Debug log
+      this.apiService.deleteProviderFromCenter(this.selectedProviderId, this.centerId).subscribe({
+        next: (response: ApiResponse<string>) => {
+          if (response.Status === 200) {
+            this.loadAllProviders(); // Reload the provider list after successful deletion
+          } else {
+            this.handleError(response.Message || 'Failed to delete provider. Status: ' + response.Status);
+            console.log('Response Details:', response); // Log full response for debugging
+          }
+        },
+        error: (err) => {
+          this.handleError('An error occurred while deleting the provider. Please try again later. (Status: ' + (err.status || 'Unknown') + ')');
+          console.error('Error Details:', err); // Log error details
+        }
+      });
+    } // If invalid, error is handled above
+    this.cancelDelete(); // Close the pop-up after action
+  }
+
+  cancelDelete(): void {
+    this.showDeletePopup = false; // Hide the pop-up
+    this.selectedProviderId = null; // Reset the selected provider
   }
 
   navigateToScheduleOptions(providerId: string | undefined): void {

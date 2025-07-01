@@ -1,3 +1,5 @@
+
+
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -7,6 +9,7 @@ import { IProviderViewModel } from '../../../../types/IProviderViewModel';
 import { ApiService } from '../../../../services/api.service';
 import { ApiResponse } from '../../../../types/ApiResponse';
 import { IShift } from '../../../../types/IShift';
+import { environment } from '../../../../../environments/environment'; // Adjust path as needed
 
 @Component({
   selector: 'app-provider-profile',
@@ -46,6 +49,15 @@ export class ProviderProfilesComponent implements OnInit {
     }
   }
 
+  // Method to get the full image URL
+  getImageUrl(imagePath: string | null): string {
+    if (!imagePath) {
+      return 'https://via.placeholder.com/150'; // Fallback placeholder
+    }
+    // Prepend backend base URL to the image path
+    return `${environment.apiUrl}${imagePath}`;
+  }
+
   loadProviderDetails(providerId: string): void {
     this.isLoading = true;
     this.errorMessage = '';
@@ -83,25 +95,30 @@ export class ProviderProfilesComponent implements OnInit {
             endDate.setHours(0, 0, 0, 0);
             return { startDate, endDate };
           }).filter(range => !isNaN(range.startDate.getTime()) && !isNaN(range.endDate.getTime()));
-          this.loadShiftsForAllAssignments();
         } else {
+          this.assignments = []; // No assignments, clear the array
           this.errorMessage = response.Message || 'No assignments found.';
-          this.assignments = [];
-          this.cdr.detectChanges();
         }
+        this.loadShiftsForAllAssignments();
       },
       error: (err) => {
         this.isLoading = false;
-        this.errorMessage = 'An error occurred while loading assignments.';
-        this.assignments = [];
-        this.cdr.detectChanges();
+        if (err.status === 404) {
+          this.assignments = []; // Treat 404 as no assignments
+          this.errorMessage = ''; // Clear error message for 404
+        } else {
+          this.errorMessage = 'An error occurred while loading assignments. (Status: ' + (err.status || 'Unknown') + ')';
+        }
+        this.loadShiftsForAllAssignments(); // Always reload calendar
       }
     });
   }
 
   private loadShiftsForAllAssignments(): void {
+    this.initializeCalendar(); // Reinitialize calendar before loading shifts
     if (!this.assignments.length) {
       this.updateCalendar();
+      this.cdr.detectChanges();
       return;
     }
 
@@ -138,7 +155,7 @@ export class ProviderProfilesComponent implements OnInit {
       this.updateCalendar();
       this.cdr.detectChanges();
     }).catch(err => {
-      this.updateCalendar();
+      this.updateCalendar(); // Update calendar even if shift loading fails
       this.cdr.detectChanges();
     });
   }
@@ -202,13 +219,12 @@ export class ProviderProfilesComponent implements OnInit {
     });
   }
 
-   getShiftTooltip(day: { shifts: { startTime: string; endTime: string }[] }): string {
-    return day.shifts.map((s, index) => `Shift ${index + 1}: ${"\n"} Start time: ${new Date(`2000-01-01 ${s.startTime} ${"\n"}`).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit', hour12: true })}\nEnd time: ${new Date(`2000-01-01 ${s.endTime}`).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit', hour12: true })}`).join('\n') || 'No shifts';
+  getShiftTooltip(day: { shifts: { startTime: string; endTime: string }[] }): string {
+    return day.shifts.map((s, index) => `Shift ${index + 1}: ${"\n"} Start time: ${new Date(`2000-01-01 ${s.startTime}`).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit', hour12: true })}\nEnd time: ${new Date(`2000-01-01 ${s.endTime}`).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit', hour12: true })}`).join('\n') || 'No shifts';
   }
 
-
   schedule(): void {
-this.router.navigate([
+    this.router.navigate([
       'owner/manually-schedule',
       this.route.snapshot.paramMap.get('id'),
     ]);

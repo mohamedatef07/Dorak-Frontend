@@ -9,70 +9,57 @@ import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-Client-Profile2',
-  imports:[AvatarModule,RouterLink],
+  imports: [AvatarModule, RouterLink],
   templateUrl: './Client-Profile.component.html',
-  styleUrls: ['./Client-Profile.component.css']
+  styleUrls: ['./Client-Profile.component.css'],
 })
 export class ClientProfileComponent implements OnInit {
-cAuthServices = inject(AuthService);
+  cAuthServices = inject(AuthService);
 
-client: IClientProfile = {
-Appointments: [],
-  ID: '',
-  Name: '',
-  Image: '',
-  Phone: '',
-  Email: '',
-  Street:'',
-  City:'',
-  Governorate:'',
-  Country:'',
+  client: IClientProfile = {
+    ID: '',
+    Name: '',
+    Image: '',
+    Phone: '',
+    Email: '',
+    Street: '',
+    City: '',
+    Governorate: '',
+    Country: '',
+  };
+  userid: string = '';
 
+  profile: IClientUpdate | null = null;
+  fullImagePath: string = '';
+  clientServices = inject(ClientService);
+
+  constructor(private _clientService: ClientService) {}
+
+  getClientProfile(): void {
+    this._clientService.getClientProfile().subscribe({
+      next: (res) => {
+        this.profile = res.Data;
+        if (this.profile?.Image) {
+          this.fullImagePath = `${environment.apiUrl}${this.profile.Image}`;
+        }
+      },
+      error: (err) => console.error('Error loading profile:', err),
+    });
+  }
+
+  ngOnInit(): void {
+    this.getClientProfile();
+    this.userid = this.cAuthServices.getUserId();
+    this.userid = this.cAuthServices.getUserId();
+
+    this.clientServices.getClientProfileAndAppointments(this.userid).subscribe({
+      next: (res) => {
+        this.client = res.Data;
+        this.client.Image = environment.apiUrl + res.Data.Image;
+      },
+      error: (err) => {
+        console.error('Error while fetching client profile:', err);
+      },
+    });
+  }
 }
-userid: string = '';
-
- profile: IClientUpdate | null = null;
-fullImagePath: string = '';
-clientServices = inject(ClientService);
-
-
-   constructor(private _clientService:ClientService) { }
-
- getclientProfile(): void {
-   this._clientService.getClientProfile().subscribe({
-     next: (res) => {
-       this.profile = res.Data;
-             console.log(res.Data)
-
-       if (this.profile?.Image) {
-         this.fullImagePath = `${environment.apiUrl}${this.profile.Image}`;
-             console.log( this.fullImagePath)
-
-       }
-     },
-     error: (err) => console.error('Error loading profile:', err)
-   });
- }
-
-
-   ngOnInit() :void{
- this.getclientProfile();
-  this.userid = this.cAuthServices.getUserId();
-
-   this.userid = this.cAuthServices.getUserId();
-
-  this.clientServices.getClientProfileAndAppointments(this.userid).subscribe({
-    next: (res) => {
-      this.client = res.Data;
-      console.log(res.Data.Image);
-      this.client.Image = environment.apiUrl + res.Data.Image;
-    },
-    error: (err) => {
-      console.error('Error while fetching client profile:', err);
-    },
-  });
-   }
-
-
-}
-

@@ -1,7 +1,6 @@
-import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
-import { INotification } from '../../features/provider/models/INotification';
-import { catchError, Observable, Subject, throwError } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { INotification } from '../../types/INotification';
+import { Subject } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import * as signalR from '@microsoft/signalr';
 import { AuthService } from '../auth.service';
@@ -29,7 +28,9 @@ export class NotificationsSRService {
       return;
     }
     this.hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl(`${environment.apiUrl}/notificationHub`,{accessTokenFactory: () => token,})
+      .withUrl(`${environment.apiUrl}/notificationHub`, {
+        accessTokenFactory: () => token,
+      })
       .withAutomaticReconnect()
       .build();
     this.hubConnection

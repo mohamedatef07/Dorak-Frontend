@@ -1,0 +1,10 @@
+.content-container {
+  padding-top: 6rem;
+  min-height: calc(100vh - 4.5rem) !important;
+  height: fit-content !important;
+}
+.primary-content {
+  background-color: #fcfeff;
+  padding: 2.5rem
+}
+

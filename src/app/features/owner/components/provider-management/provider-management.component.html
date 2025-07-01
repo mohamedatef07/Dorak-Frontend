@@ -1,3 +1,5 @@
+
+
 <div *ngIf="isLoading" class="loading">
   Loading providers...
 </div>
@@ -35,7 +37,6 @@
       <mat-option *ngFor="let spec of specializations" [value]="spec">{{ spec }}</mat-option>
     </mat-select>
   </mat-form-field>
-
   <div class="reset-filter" (click)="resetFilters()">
     Reset Filter
     <svg width="25px" height="25px" viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg">
@@ -59,7 +60,27 @@
       <mat-cell *matCellDef="let row">
         <div class="name-container">
           {{ row.FirstName || 'Unknown' }} {{ row.LastName || '' }}
-          <a [routerLink]="['/center-provider-profile', row.ProviderId || '']" class="view-profile-link">View Profile</a>
+           <button
+            type="button"
+            class="btn"
+            (click)="viewProfile(row.ProviderId || '')"
+          >
+            View Profile
+          </button>
+          <!-- <button
+            type="button"
+            class="btn"
+            (click)="reschedule(row.ProviderId || '')"
+          >
+            Reschedule
+          </button> -->
+          <button
+            type="button"
+            class="btn"
+            (click)="deleteProvider(row.ProviderId || '')"
+          >
+            Delete
+          </button>
         </div>
       </mat-cell>
     </ng-container>
@@ -110,5 +131,16 @@
         <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
       </svg>
     </button>
+  </div>
+</div>
+
+<!-- Custom Delete Confirmation Popup (Styled like ProviderLiveQueueComponent) -->
+<div *ngIf="showDeletePopup" #deletePopup class="custom-popup">
+  <div class="popup-content">
+    <p>Are you sure you want to delete the provider?</p>
+    <div class="popup-actions">
+      <button class="popup-btn yes-btn" (click)="confirmDelete()">Yes</button>
+      <button class="popup-btn no-btn" (click)="cancelDelete()">No</button>
+    </div>
   </div>
 </div>

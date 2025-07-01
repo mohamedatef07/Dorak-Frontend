@@ -4,10 +4,11 @@ import { Router, RouterLink } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { CommonModule } from '@angular/common';
 import { ProviderService } from '../../services/provider.service';
-import { INotification } from '../../models/INotification';
+import { INotification } from '../../../../types/INotification';
 import { NotificationsSRService } from '../../../../services/signalR Services/notificationsSR.service';
 import { environment } from '../../../../../environments/environment';
 import { Subscription } from 'rxjs';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-provider-navbar',
@@ -20,6 +21,7 @@ export class ProviderNavbarComponent {
   providerServices = inject(ProviderService);
   messageServices = inject(MessageService);
   srService = inject(NotificationsSRService);
+  cookie = inject(CookieService);
   router = inject(Router);
 
   private notificationsListSubscription!: Subscription;
@@ -56,6 +58,7 @@ export class ProviderNavbarComponent {
   handelLogout() {
     this.authServices.logOut().subscribe({
       next: (res) => {
+        this.cookie.delete('token');
         this.router.navigate(['/login']);
       },
       error: (err) => {
