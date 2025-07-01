@@ -21,7 +21,7 @@ export class CenterShiftsTableComponent {
   srService = inject(UpdateShiftsListSRService);
   route = inject(Router);
   centerShifts: Array<ICenterShifts> = [];
-  centerId = 3;
+  centerId = 2;
   ShiftType = ShiftType;
 
   ngOnInit() {

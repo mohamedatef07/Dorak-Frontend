@@ -11,6 +11,7 @@ import {
 import { AuthService } from '../../services/auth.service';
 import { NgClass } from '@angular/common';
 import { CookieService } from 'ngx-cookie-service';
+import { NotificationsSRService } from '../../services/signalR Services/notificationsSR.service';
 @Component({
   selector: 'app-login',
   imports: [RouterLink, ReactiveFormsModule, NgClass],
@@ -26,6 +27,7 @@ export class LoginComponent {
   }
   fb = inject(FormBuilder);
   authServices = inject(AuthService);
+  notificationsSR = inject(NotificationsSRService);
   router = inject(Router);
   cookie = inject(CookieService);
   loginStatus!: String;
@@ -56,6 +58,8 @@ export class LoginComponent {
     this.authServices.logIn(LoginData).subscribe({
       next: (res) => {
         this.cookie.set('token', res.Data.Token);
+        debugger;
+        this.notificationsSR.startConnection();
         this.cookie.set('role', res.Data.Roles[0]);
         this.router.navigate(['/home']);
       },
