@@ -79,13 +79,13 @@
                   [ngClass]="{ 'reading-notification': notification.IsRead }"
                 >
                   <h6 class="mb-1 fw-bold">
-                    {{ notification.title }}
+                    {{ notification.Title }}
                   </h6>
                   <p class="mb-1 small message">
-                    {{ notification.message }}
+                    {{ notification.Message }}
                   </p>
                   <small class="text-muted">
-                    {{ notification.createdAt | date : "MMMM d, y" }}
+                    {{ notification.CreatedAt | date : "MMMM d, y" }}
                   </small>
                 </div>
               </div>
