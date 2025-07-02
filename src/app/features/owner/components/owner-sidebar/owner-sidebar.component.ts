@@ -12,25 +12,26 @@ import { PanelMenu } from 'primeng/panelmenu';
   imports: [RouterModule, CommonModule, PanelMenuModule],
 })
 export class OwnerSidebarComponent implements OnInit {
-  currentDate: string = '';
-  currentTime: string = '';
+  currentDate = new Date();
+  private intervalId: any;
+
   isSubmenuOpen = false;
   isOperatorSubmenuOpen = false;
   items: MenuItem[] = [
     {
       label: 'Dashboard',
       icon: 'pi pi-desktop',
-      routerLink: '/owner/dashboard'
+      routerLink: '/owner/dashboard',
     },
     {
       label: 'Manage Doctors',
       icon: 'pi pi-users',
-      routerLink: '/provider/patient-queue'
+      routerLink: '/provider/patient-queue',
     },
     {
       label: 'Manage Queues',
       icon: 'pi pi-calendar',
-      routerLink: '/provider/schedule'
+      routerLink: '/provider/schedule',
     },
     {
       label: 'Manage Operators',
@@ -41,27 +42,28 @@ export class OwnerSidebarComponent implements OnInit {
           label: 'Add Operator',
           icon: 'pi pi-user-plus',
           routerLink: 'add-operator',
-
-
-        }
-      ]
-
+        },
+      ],
     },
     {
       label: 'Analytics',
       icon: 'pi pi-chart-bar',
-      routerLink: '/provider/reports'
-    }
+      routerLink: '/provider/reports',
+    },
   ];
 
+  constructor() {}
 
-  constructor() { }
-  ngOnInit(): void {
-    this.updateDateTime();
-    setInterval(() => {
-      this.updateDateTime();
+  ngOnInit() {
+    this.intervalId = setInterval(() => {
+      this.currentDate = new Date();
     }, 1000);
+  }
 
+  ngOnDestroy(): void {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
   }
 
   toggleSubmenu() {
@@ -70,15 +72,5 @@ export class OwnerSidebarComponent implements OnInit {
 
   toggleOperatorSubmenu() {
     this.isOperatorSubmenuOpen = !this.isOperatorSubmenuOpen;
-  }
-
-  updateDateTime() {
-    const now = new Date();
-    const day = String(now.getDate()).padStart(2, '0');
-    const month = String(now.getMonth() + 1).padStart(2, '0');
-    const year = now.getFullYear();
-
-    this.currentDate = `${day}/${month}/${year}`;
-    this.currentTime = now.toLocaleTimeString();
   }
 }

@@ -2,18 +2,13 @@ import { ClientService } from './../../services/client.service';
 import { AvatarModule } from 'primeng/avatar';
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
-import { IClientProfileAppointment } from '../../models/IClientProfileAppointment';
+import { IClientProfileAppointment } from '../../models/IClientAppointmentCard';
 import { RatingModule } from 'primeng/rating';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-ClientAppointments',
-  imports: [
-    CommonModule,
-    AvatarModule,
-    RatingModule,
-    FormsModule,
-  ],
+  imports: [CommonModule, AvatarModule, RatingModule, FormsModule],
   templateUrl: './ClientAppointments.component.html',
   styleUrls: ['./ClientAppointments.component.css'],
 })

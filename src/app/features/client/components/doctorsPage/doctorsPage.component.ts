@@ -6,20 +6,21 @@ import { Router } from '@angular/router';
 import { IDoctorFilter } from '../../..//..//types/IDoctorFilter';
 import { environment } from '../../../../../environments/environment';
 import { IDoctorCard } from '../../models/IDoctorCard';
+import { ClientFooterComponent } from '../client-footer/client-footer.component';
+import { NavBarComponent } from '../navBar/navBar.component';
 
 @Component({
   selector: 'app-doctorsPage',
   standalone: true,
   templateUrl: './doctorsPage.component.html',
   styleUrls: ['./doctorsPage.component.css'],
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ClientFooterComponent, NavBarComponent],
 })
 export class DoctorsPageComponent implements OnInit {
   searchText: string = '';
   specialty: string = '';
   city: string = '';
   fullImagePath: string = '';
-
 
   specialties: string[] = [
     'Cardiology',
@@ -79,20 +80,17 @@ export class DoctorsPageComponent implements OnInit {
   getAllDoctors(): void {
     this.cardDoctorService.getAllDoctorsCards().subscribe({
       next: (res) => {
-        this.doctors = res.Data;
+        this.doctors = [...res.Data];
         console.log(res.Data);
         // this.doctors.forEach((doctor) => {
         //   doctor.Image = environment.apiUrl + doctor.Image;
         // });
 
-      if ( this.doctors[0].Image) {
-       this.fullImagePath = `${environment.apiUrl}${this.doctors[0].Image}`;
-      console.log(this.fullImagePath);
-}
-
-
+        if (this.doctors[0].Image) {
+          this.fullImagePath = `${environment.apiUrl}${this.doctors[0].Image}`;
+          console.log(this.fullImagePath);
+        }
         this.filteredDoctors = [...this.doctors];
-
       },
       error: (err) => {
         console.error('Error loading doctors:', err);
@@ -141,7 +139,7 @@ export class DoctorsPageComponent implements OnInit {
       this.filterModel.MinPrice === undefined &&
       this.filterModel.MaxPrice === undefined &&
       !this.filterModel.AvailableDate;
-
+    debugger;
     if (noFiltersApplied) {
       this.getAllDoctors();
       return;

@@ -4,9 +4,11 @@ import { Router, RouterLink } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { CommonModule } from '@angular/common';
 import { ProviderService } from '../../services/provider.service';
-import { INotification } from '../../models/INotification';
+import { INotification } from '../../../../types/INotification';
 import { NotificationsSRService } from '../../../../services/signalR Services/notificationsSR.service';
 import { environment } from '../../../../../environments/environment';
+import { Subscription } from 'rxjs';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-provider-navbar',
@@ -19,7 +21,10 @@ export class ProviderNavbarComponent {
   providerServices = inject(ProviderService);
   messageServices = inject(MessageService);
   srService = inject(NotificationsSRService);
+  cookie = inject(CookieService);
   router = inject(Router);
+
+  private notificationsListSubscription!: Subscription;
 
   notifications!: Array<INotification>;
   isDropDownOpen = false;
@@ -53,6 +58,7 @@ export class ProviderNavbarComponent {
   handelLogout() {
     this.authServices.logOut().subscribe({
       next: (res) => {
+        this.cookie.delete('token');
         this.router.navigate(['/login']);
       },
       error: (err) => {
@@ -72,20 +78,21 @@ export class ProviderNavbarComponent {
         this.notifications = [...res.Data];
       },
     });
-    this.srService.notificationsList.subscribe({
-      next: (updatedNotifications) => {
-        this.notifications = [...updatedNotifications];
-        console.log(updatedNotifications);
-      },
-      error: (err) => {
-        this.messageServices.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'The server is experiencing an issue, Please try again soon.',
-          life: 4000,
-        });
-      },
-    });
+    this.notificationsListSubscription =
+      this.srService.notificationsList.subscribe({
+        next: (updatedNotifications) => {
+          this.notifications = [...updatedNotifications];
+        },
+        error: (err) => {
+          this.messageServices.add({
+            severity: 'error',
+            summary: 'Error',
+            detail:
+              'The server is experiencing an issue, Please try again soon.',
+            life: 4000,
+          });
+        },
+      });
     this.srService.notification.subscribe({
       next: (notification) => {
         console.log(notification);
@@ -105,5 +112,8 @@ export class ProviderNavbarComponent {
         });
       },
     });
+  }
+  ngOnDestroy(): void {
+    this.notificationsListSubscription.unsubscribe();
   }
 }

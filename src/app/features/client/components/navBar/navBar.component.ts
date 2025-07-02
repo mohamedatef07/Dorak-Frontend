@@ -1,33 +1,120 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
-import { RouterLinkActive } from '@angular/router';
+import { Component, HostListener, inject, OnInit } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../../../../services/auth.service';
+import { ProviderService } from '../../../provider/services/provider.service';
+import { MessageService } from 'primeng/api';
+import { Subscription } from 'rxjs';
+import { environment } from '../../../../../environments/environment';
+import { NotificationsSRService } from '../../../../services/signalR Services/notificationsSR.service';
+import { INotification } from '../../../../types/INotification';
+import { CommonModule } from '@angular/common';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-nav-bar',
-  imports:[RouterLinkActive,],
+  imports: [CommonModule, RouterLink],
   templateUrl: './navBar.component.html',
-  styleUrls: ['./navBar.component.css']
+  styleUrls: ['./navBar.component.css'],
 })
 export class NavBarComponent implements OnInit {
-  currentTheme: 'light' | 'dark' = 'light';
+  authServices = inject(AuthService);
+  providerServices = inject(ProviderService);
+  messageServices = inject(MessageService);
+  srService = inject(NotificationsSRService);
+  cookie = inject(CookieService);
+  router = inject(Router);
 
-  constructor(private renderer: Renderer2) {}
+  private notificationsListSubscription!: Subscription;
 
-  ngOnInit(): void {
-    const savedTheme = localStorage.getItem('dorak-theme') as 'light' | 'dark';
-    if (savedTheme) {
-      this.setTheme(savedTheme);
-    } else {
-      this.setTheme('light');
+  notifications!: Array<INotification>;
+  isDropDownOpen = false;
+  isNotificationsDropDownOpen = false;
+  UserImage!: string;
+
+  toggleDropDown(event: MouseEvent) {
+    event.stopPropagation();
+    this.isDropDownOpen = !this.isDropDownOpen;
+    this.isNotificationsDropDownOpen = false;
+  }
+  toggleNotificationsDropDown(event: MouseEvent) {
+    event.stopPropagation();
+    this.isNotificationsDropDownOpen = !this.isNotificationsDropDownOpen;
+    this.isDropDownOpen = false;
+  }
+  @HostListener('document:click', ['$event'])
+  handelOutSideClick(event: MouseEvent) {
+    let dropDownIcon = document.getElementById('dropdown-icon');
+    let dropDownList = document.getElementById('dropdown-list');
+    if (
+      dropDownIcon &&
+      dropDownList &&
+      !dropDownIcon.contains(event.target as Node) &&
+      !dropDownIcon.contains(event.target as Node)
+    ) {
+      this.isDropDownOpen = false;
+      this.isNotificationsDropDownOpen = false;
     }
   }
-
-  toggleTheme(): void {
-    this.setTheme(this.currentTheme === 'light' ? 'dark' : 'light');
+  handelLogout() {
+    this.authServices.logOut().subscribe({
+      next: (res) => {
+        this.cookie.delete('token');
+        this.router.navigate(['/login']);
+      },
+      error: (err) => {
+        this.messageServices.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'The server is experiencing an issue, Please try again soon.',
+          life: 4000,
+        });
+      },
+    });
   }
-
-  private setTheme(theme: 'light' | 'dark'): void {
-    this.currentTheme = theme;
-    this.renderer.setAttribute(document.body, 'data-theme', theme);
-    localStorage.setItem('dorak-theme', theme);
+  ngOnInit() {
+    debugger;
+    this.UserImage = `${environment.apiUrl}${this.authServices.getUserImage()}`;
+    this.providerServices.getNotifications().subscribe({
+      next: (res) => {
+        this.notifications = [...res.Data];
+      },
+    });
+    this.notificationsListSubscription =
+      this.srService.notificationsList.subscribe({
+        next: (updatedNotifications) => {
+          this.notifications = [...updatedNotifications];
+        },
+        error: (err) => {
+          this.messageServices.add({
+            severity: 'error',
+            summary: 'Error',
+            detail:
+              'The server is experiencing an issue, Please try again soon.',
+            life: 4000,
+          });
+        },
+      });
+    this.srService.notification.subscribe({
+      next: (notification) => {
+        console.log(notification);
+        this.messageServices.add({
+          severity: 'info',
+          summary: 'New Notification',
+          detail: notification.Message,
+          life: 4000,
+        });
+      },
+      error: (err) => {
+        this.messageServices.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'The server is experiencing an issue, Please try again soon.',
+          life: 4000,
+        });
+      },
+    });
+  }
+  ngOnDestroy(): void {
+    this.notificationsListSubscription.unsubscribe();
   }
 }

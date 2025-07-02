@@ -8,9 +8,9 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root',
 })
 export class UpdateQueueStatusSRService {
-    private hubConnection: signalR.HubConnection | null = null;
-    private LiveQueueListSubject = new Subject<Array<IClientLiveQueue>>();
-    public updatedLiveQueuesList = this.LiveQueueListSubject.asObservable();
+  private hubConnection: signalR.HubConnection | null = null;
+  private LiveQueueListSubject = new Subject<Array<IClientLiveQueue>>();
+  public updatedLiveQueuesList = this.LiveQueueListSubject.asObservable();
   public queueStatusUpdate = new Subject<{
     liveQueueId: number;
     newStatus: string;
@@ -48,13 +48,10 @@ export class UpdateQueueStatusSRService {
           this.queueStatusUpdate.next({ liveQueueId, newStatus });
         }
       );
-      this.hubConnection.on(
-        'QueueUpdated',
-        (lres: Array<IClientLiveQueue>) => {
-          console.log('Live Queue Updated:', lres);
-          this.LiveQueueListSubject.next(lres);
-        }
-      );
+      this.hubConnection.on('QueueUpdated', (lres: Array<IClientLiveQueue>) => {
+        console.log('Live Queue Updated:', lres);
+        this.LiveQueueListSubject.next(lres);
+      });
     } else {
       console.warn(
         'SignalR connection not established, cannot register events.'
@@ -62,6 +59,19 @@ export class UpdateQueueStatusSRService {
     }
   }
 
+  public joinShiftGroup(shiftId: number): void {
+    this.hubConnection
+      ?.invoke('JoinShiftGroup', shiftId)
+      .then(() => console.log(`Joined shift group: shift_${shiftId}`))
+      .catch((err) => console.error('Failed to join shift group:', err));
+  }
+
+  public leaveShiftGroup(shiftId: number): void {
+    this.hubConnection
+      ?.invoke('LeaveShiftGroup', shiftId)
+      .then(() => console.log(`Left shift group: shift_${shiftId}`))
+      .catch((err) => console.error('Failed to leave shift group:', err));
+  }
 
   public reconnectIfNeeded() {
     if (
@@ -79,12 +89,27 @@ export class UpdateQueueStatusSRService {
       : signalR.HubConnectionState.Disconnected;
   }
 
- private stopConnection() {
+  private stopConnection() {
     return this.hubConnection?.stop();
-
   }
-  ngOnDestroy(): void {
-    this.stopConnection();
+  // ngOnDestroy(): void {
+  //   this.stopConnection();
+  //   this.LiveQueueListSubject.complete();
+  //   this.queueStatusUpdate.complete();}
+  async ngOnDestroy(): Promise<void> {
+    try {
+      if (
+        this.hubConnection &&
+        this.hubConnection.state !== signalR.HubConnectionState.Disconnected
+      ) {
+        await this.hubConnection.stop();
+        console.log('SignalR connection stopped');
+      }
+    } catch (error) {
+      console.error('Error while stopping SignalR connection:', error);
+    }
+
     this.LiveQueueListSubject.complete();
-    this.queueStatusUpdate.complete();}
+    this.queueStatusUpdate.complete();
+  }
 }

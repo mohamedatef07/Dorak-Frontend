@@ -1,10 +1,13 @@
-<div class="container d-flex gap-4">
-  <div class="info d-flex flex-column gap-4 col-8 ">
+<app-nav-bar></app-nav-bar>
+<div class="container d-flex gap-4 doctor-details-container">
+  <div class="info d-flex flex-column gap-4 ">
    <app-doctor-main-info [providerId]="doctorId"></app-doctor-main-info>
   <app-doctor-reviews [providerId]="doctorId"></app-doctor-reviews>
 
   </div>
-  <div class="booking col-4">
+  <div class="booking ">
   <app-booking [providerId]="doctorId"></app-booking>
   </div>
 </div>
+<app-client-footer></app-client-footer>
+

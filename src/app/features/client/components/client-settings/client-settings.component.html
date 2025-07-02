@@ -1,0 +1,22 @@
+<div class="setting-container d-flex flex-column gap-3 px-0 m-0">
+  <p class="fw-bold m-0">Settings</p>
+  <ul class="setting-tabs d-flex justify-content-between m-0 p-0">
+    <li class="setting-item">
+      <a
+        class="setting-link"
+        [routerLink]="['/client/settings/client-edit-profile']"
+        [routerLinkActive]="['active']"
+        >Profile Information</a
+      >
+    </li>
+    <li class="setting-item">
+      <a
+        class="setting-link"
+        [routerLink]="['/client/settings/change-password']"
+        [routerLinkActive]="['active']"
+        >Security</a
+      >
+    </li>
+  </ul>
+</div>
+<router-outlet></router-outlet>

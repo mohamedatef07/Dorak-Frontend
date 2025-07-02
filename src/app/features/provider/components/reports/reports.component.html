@@ -1,3 +1,11 @@
-<p>
-  reports works!
-</p>
+<main>
+  <div class="container d-flex flex-column gap-3 pt-4 pb-4 pe-0 ps-0 m-0">
+    <p class="fw-bold m-0">Reports</p>
+    <p-chart
+      type="bar"
+      [data]="chartData"
+      [options]="chartOptions"
+      class="h-[30rem] bg-white main-padding main-radius"
+    />
+  </div>
+</main>

@@ -14,14 +14,15 @@ import { IDoctorCenterServices } from '../models/IDoctorCenterServices';
 import { IDoctorsSearchResult } from '../models/IDoctorsSearchResult';
 import { IClientProfile } from '../models/IClientProfile';
 import { IAppointment } from '../models/IAppointment';
-import { IClientProfileAppointment } from '../models/IClientProfileAppointment';
+import { IClientAppointmentCard } from '../models/IClientAppointmentCard';
 import { IClientWalletProfile } from '../models/IClientWalletProfile';
 import { IDoctorFilter } from '../../../types/IDoctorFilter';
 import { IClientLiveQueue } from '../models/IClientLiveQueue';
 import { IClientInfoForLiveQueue } from '../models/IClientInfoForLiveQueue';
 import { IClientUpdate } from '../models/IClientUpdate';
 import { IDoctorCard } from '../models/IDoctorCard';
-
+import { INotification } from '../../../types/INotification';
+import { IGeneralAppointmentStatistics } from '../models/IGeneralAppointmentStatistics';
 
 @Injectable({
   providedIn: 'root',
@@ -133,35 +134,38 @@ export class ClientService {
 
   getUpcomingAppointments(
     userId: string
-  ): Observable<ApiResponse<IClientProfileAppointment[]>> {
-    return this.httpClient.get<ApiResponse<IClientProfileAppointment[]>>(
+  ): Observable<ApiResponse<IClientAppointmentCard[]>> {
+    return this.httpClient.get<ApiResponse<IClientAppointmentCard[]>>(
       `${environment.apiUrl}/api/client/upcoming-appointments/${userId}`
     );
   }
-  getLastAppointment(userId:string): Observable<ApiResponse<IAppointment>> {
-    return this.httpClient.get<ApiResponse<IAppointment>>
-    (`${environment.apiUrl}/api/client/last-appointment/${userId}`);
-
+  getLastAppointment(userId: string): Observable<ApiResponse<IAppointment>> {
+    return this.httpClient.get<ApiResponse<IAppointment>>(
+      `${environment.apiUrl}/api/client/last-appointment/${userId}`
+    );
   }
-getAppointmentById(appointmentId: number): Observable<ApiResponse<IAppointment>> {
-  return this.httpClient.get<ApiResponse<IAppointment>>(
-    `${environment.apiUrl}/api/client/appointment/${appointmentId}`
-  );
-}
+  getAppointmentById(
+    appointmentId: number
+  ): Observable<ApiResponse<IAppointment>> {
+    return this.httpClient.get<ApiResponse<IAppointment>>(
+      `${environment.apiUrl}/api/client/appointment/${appointmentId}`
+    );
+  }
 
-getClientProfile(): Observable<ApiResponse<IClientUpdate>> {
-  return this.httpClient.get<ApiResponse<IClientUpdate>>(
-    `${environment.apiUrl}/api/client/ClientProfile`
-  );
-}
+  getClientProfile(): Observable<ApiResponse<IClientUpdate>> {
+    return this.httpClient.get<ApiResponse<IClientUpdate>>(
+      `${environment.apiUrl}/api/client/ClientProfile`
+    );
+  }
 
-updateProfile(data: FormData): Observable<{ message: string; status: number; data: any }> {
-  return this.httpClient.post<{ message: string; status: number; data: any }>(
-    `${environment.apiUrl}/api/client/UpdateProfile`,
-    data
-  );
-}
-
+  updateProfile(
+    data: FormData
+  ): Observable<{ message: string; status: number; data: any }> {
+    return this.httpClient.post<{ message: string; status: number; data: any }>(
+      `${environment.apiUrl}/api/client/UpdateProfile`,
+      data
+    );
+  }
 
   Checkout(request: ICheckoutRequest): Observable<ICheckoutRequest> {
     return this.httpClient.post<ICheckoutRequest>(
@@ -202,5 +206,16 @@ updateProfile(data: FormData): Observable<{ message: string; status: number; dat
       `${environment.apiUrl}/api/client/profile-for-live-queue/${userId}`
     );
   }
+  getNotifications(): Observable<ApiResponse<Array<INotification>>> {
+    return this.httpClient.get<ApiResponse<Array<INotification>>>(
+      `${environment.apiUrl}/api/client/notifications`
+    );
+  }
+  getGeneralAppointmentStatistics(): Observable<
+    ApiResponse<IGeneralAppointmentStatistics>
+  > {
+    return this.httpClient.get<ApiResponse<IGeneralAppointmentStatistics>>(
+      `${environment.apiUrl}/api/client/client-general-appointment-statistics`
+    );
+  }
 }
-

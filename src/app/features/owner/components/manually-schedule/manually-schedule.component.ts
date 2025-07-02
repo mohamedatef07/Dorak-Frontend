@@ -1,404 +1,3 @@
-// // import { Component, OnInit } from '@angular/core';
-// // import { ActivatedRoute, Router } from '@angular/router';
-// // import { CommonModule } from '@angular/common';
-// // import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
-// // import { MatButtonModule } from '@angular/material/button';
-// // import { MatFormFieldModule } from '@angular/material/form-field';
-// // import { MatInputModule } from '@angular/material/input';
-// // import { MatSelectModule } from '@angular/material/select';
-// // import { MatDatepickerModule } from '@angular/material/datepicker';
-// // import { MatNativeDateModule } from '@angular/material/core';
-// // import { ApiService } from '../../services/api.service';
-// // import { ApiResponse } from '../../types/ApiResponse';
-// // import { IProviderViewModel } from '../../types/IProviderViewModel';
-// // import { IProviderAssignmentViewModel } from '../../types/IProviderAssignmentViewModel';
-// // import { IShiftViewModel } from '../../types/IShiftViewModel';
-// // import { AssignmentType } from '../../types/Enums/AssignmentType';
-// // import { ShiftType } from '../../types/Enums/ShiftType';
-
-// // @Component({
-// //   selector: 'app-manually-schedule',
-// //   templateUrl: './manually-schedule.component.html',
-// //   styleUrls: ['./manually-schedule.component.css'],
-// //   standalone: true,
-// //   imports: [
-// //     CommonModule,
-// //     FormsModule,
-// //     ReactiveFormsModule,
-// //     MatButtonModule,
-// //     MatFormFieldModule,
-// //     MatInputModule,
-// //     MatSelectModule,
-// //     MatDatepickerModule,
-// //     MatNativeDateModule
-// //   ]
-// // })
-// // export class ManuallyScheduleComponent implements OnInit {
-// //   provider: IProviderViewModel | null = null;
-// //   errorMessage: string = '';
-// //   successMessage: string = '';
-// //   isLoading: boolean = false;
-// //   scheduleForm: FormGroup;
-// //   centerId: number = 1;
-
-// //   constructor(
-// //     private route: ActivatedRoute,
-// //     private router: Router,
-// //     private apiService: ApiService,
-// //     private fb: FormBuilder
-// //   ) {
-// //     this.scheduleForm = this.fb.group({
-// //       StartDate: ['', Validators.required],
-// //       EndDate: [''],
-// //       Shifts: this.fb.array([])
-// //     });
-// //   }
-
-// //   ngOnInit(): void {
-// //     const providerId = this.route.snapshot.paramMap.get('id');
-// //     if (providerId && providerId.trim() !== '') {
-// //       this.loadProviderDetails(providerId);
-// //     } else {
-// //       this.errorMessage = 'Provider ID not found.';
-// //     }
-
-// //     // Add the first shift
-// //     this.addShift();
-// //   }
-
-// //   loadProviderDetails(providerId: string): void {
-// //     this.isLoading = true;
-// //     this.errorMessage = '';
-
-// //     this.apiService.getProviderById(providerId).subscribe({
-// //       next: (response: ApiResponse<IProviderViewModel>) => {
-// //         this.isLoading = false;
-// //         if (response.Status === 200 && response.Data) {
-// //           this.provider = response.Data;
-// //           console.log('Provider details loaded:', this.provider);
-// //         } else {
-// //           this.errorMessage = response.Message || 'Failed to load provider details.';
-// //         }
-// //       },
-// //       error: (err) => {
-// //         this.isLoading = false;
-// //         if (err.status === 401) {
-// //           this.errorMessage = 'Unauthorized access. Please log in.';
-// //           this.router.navigate(['/login']);
-// //         } else {
-// //           this.errorMessage = 'An error occurred while loading provider details. (Status: ' + (err.status || 'Unknown') + ')';
-// //           console.error('API error:', err);
-// //         }
-// //       }
-// //     });
-// //   }
-
-// //   get shifts(): FormArray {
-// //     return this.scheduleForm.get('Shifts') as FormArray;
-// //   }
-
-// //   addShift(): void {
-// //     const shiftGroup = this.fb.group({
-// //       StartTime: ['', Validators.required],
-// //       EndTime: ['', Validators.required],
-// //       MaxPatientsPerDay: [null, [Validators.min(1)]]
-// //     });
-// //     this.shifts.push(shiftGroup);
-// //   }
-
-// //   removeShift(index: number): void {
-// //     this.shifts.removeAt(index);
-// //   }
-
-// //   onSubmit(): void {
-// //     if (this.scheduleForm.invalid) {
-// //       this.errorMessage = 'Please fill in all required fields correctly.';
-// //       return;
-// //     }
-
-// //     if (!this.provider) {
-// //       this.errorMessage = 'Provider details not loaded.';
-// //       return;
-// //     }
-
-// //     const formValue: any = this.scheduleForm.value;
-// //     const model: IProviderAssignmentViewModel = {
-// //       ProviderId: this.provider.ProviderId,
-// //       CenterId: this.centerId,
-// //       StartDate: formValue.StartDate || null,
-// //       EndDate: formValue.EndDate || null,
-// //       AssignmentType: AssignmentType.Visiting,
-// //       Shifts: formValue.Shifts.map((shift: any): IShiftViewModel => ({
-// //         ShiftType: ShiftType.None,
-// //         StartTime: shift.StartTime || '',
-// //         EndTime: shift.EndTime || '',
-// //         MaxPatientsPerDay: shift.MaxPatientsPerDay,
-// //         OperatorId: 'user1-operator'
-// //       }))
-// //     };
-
-// //     this.isLoading = true;
-// //     this.errorMessage = '';
-// //     this.successMessage = '';
-
-// //     this.apiService.assignProviderToCenterManually(model).subscribe({
-// //       next: (response: ApiResponse<string>) => {
-// //         this.isLoading = false;
-// //         if (response.Status === 200) {
-// //           this.successMessage = response.Data || 'Provider scheduled successfully!';
-// //           this.scheduleForm.reset();
-// //           this.shifts.clear();
-// //           this.addShift();
-// //         } else {
-// //           this.errorMessage = response.Message || 'Failed to schedule provider. Status: ' + response.Status;
-// //         }
-// //       },
-// //       error: (err) => {
-// //         this.isLoading = false;
-// //         this.errorMessage = `An error occurred while scheduling the provider. Status: ${err.status || 'Unknown'} - ${err.message || 'No additional details'}`;
-// //         console.error('API error:', err);
-// //       }
-// //     });
-// //   }
-
-// //   ManuallySchedule(): void {
-// //     this.router.navigate(['/manually-schedule', this.route.snapshot.paramMap.get('id')]);
-// //   }
-
-// //   WeeklySchedule(): void {
-// //     this.router.navigate(['/weekly-schedule', this.route.snapshot.paramMap.get('id')]);
-// //   }
-
-// //   goBack(): void {
-// //     this.router.navigate(['/provider-management']);
-// //   }
-// // }
-
-// import { Component, OnInit } from '@angular/core';
-// import { ActivatedRoute, Router } from '@angular/router';
-// import { CommonModule } from '@angular/common';
-// import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
-// import { MatButtonModule } from '@angular/material/button';
-// import { MatFormFieldModule } from '@angular/material/form-field';
-// import { MatInputModule } from '@angular/material/input';
-// import { MatSelectModule } from '@angular/material/select';
-// import { MatDatepickerModule } from '@angular/material/datepicker';
-// import { MatNativeDateModule } from '@angular/material/core';
-// import { ApiService } from '../../services/api.service';
-// import { ApiResponse } from '../../types/ApiResponse';
-// import { IProviderViewModel } from '../../types/IProviderViewModel';
-// import { IProviderAssignmentViewModel } from '../../types/IProviderAssignmentViewModel';
-// import { IShiftViewModel } from '../../types/IShiftViewModel';
-// import { AssignmentType } from '../../types/Enums/AssignmentType';
-// import { ShiftType } from '../../types/Enums/ShiftType';
-
-// @Component({
-//   selector: 'app-manually-schedule',
-//   templateUrl: './manually-schedule.component.html',
-//   styleUrls: ['./manually-schedule.component.css'],
-//   standalone: true,
-//   imports: [
-//     CommonModule,
-//     FormsModule,
-//     ReactiveFormsModule,
-//     MatButtonModule,
-//     MatFormFieldModule,
-//     MatInputModule,
-//     MatSelectModule,
-//     MatDatepickerModule,
-//     MatNativeDateModule
-//   ]
-// })
-// export class ManuallyScheduleComponent implements OnInit {
-//   provider: IProviderViewModel | null = null;
-//   errorMessage: string = '';
-//   successMessage: string = '';
-//   isLoading: boolean = false;
-//   scheduleForm: FormGroup;
-//   centerId: number = 1;
-//   dateOptions: Date[] = [];
-
-//   constructor(
-//     private route: ActivatedRoute,
-//     private router: Router,
-//     private apiService: ApiService,
-//     private fb: FormBuilder
-//   ) {
-//     this.scheduleForm = this.fb.group({
-//       StartDate: ['', Validators.required],
-//       EndDate: [''],
-//       Shifts: this.fb.array([])
-//     });
-
-//     this.scheduleForm.get('StartDate')?.valueChanges.subscribe(() => this.updateDateOptions());
-//     this.scheduleForm.get('EndDate')?.valueChanges.subscribe(() => this.updateDateOptions());
-//   }
-
-//   ngOnInit(): void {
-//     const providerId = this.route.snapshot.paramMap.get('id');
-//     if (providerId && providerId.trim() !== '') {
-//       this.loadProviderDetails(providerId);
-//     } else {
-//       this.errorMessage = 'Provider ID not found.';
-//     }
-
-//     this.addShift();
-//   }
-
-//   loadProviderDetails(providerId: string): void {
-//     this.isLoading = true;
-//     this.errorMessage = '';
-
-//     this.apiService.getProviderById(providerId).subscribe({
-//       next: (response: ApiResponse<IProviderViewModel>) => {
-//         this.isLoading = false;
-//         if (response.Status === 200 && response.Data) {
-//           this.provider = response.Data;
-//           console.log('Provider details loaded:', this.provider);
-//         } else {
-//           this.errorMessage = response.Message || 'Failed to load provider details.';
-//         }
-//       },
-//       error: (err) => {
-//         this.isLoading = false;
-//         if (err.status === 401) {
-//           this.errorMessage = 'Unauthorized access. Please log in.';
-//           this.router.navigate(['/login']);
-//         } else {
-//           this.errorMessage = 'An error occurred while loading provider details. (Status: ' + (err.status || 'Unknown') + ')';
-//           console.error('API error:', err);
-//         }
-//       }
-//     });
-//   }
-
-//   get shifts(): FormArray {
-//     return this.scheduleForm.get('Shifts') as FormArray;
-//   }
-
-//   addShift(): void {
-//     const shiftGroup = this.fb.group({
-//       Date: [this.dateOptions[0] || null, Validators.required],
-//       StartTime: ['', Validators.required],
-//       EndTime: ['', Validators.required],
-//       MaxPatientsPerDay: [null, [Validators.min(1)]]
-//     });
-//     this.shifts.push(shiftGroup);
-//   }
-
-//   removeShift(index: number): void {
-//     this.shifts.removeAt(index);
-//   }
-
-//   updateDateOptions(): void {
-//     const startDateValue = this.scheduleForm.get('StartDate')?.value;
-//     const endDateValue = this.scheduleForm.get('EndDate')?.value;
-//     this.dateOptions = [];
-
-//     // Convert startDate and endDate to Date objects if they are strings
-//     const startDate = startDateValue ? new Date(startDateValue) : null;
-//     const endDate = endDateValue ? new Date(endDateValue) : null;
-
-//     if (startDate && !endDate) {
-//       this.dateOptions.push(new Date(startDate));
-//     } else if (startDate && endDate && endDate >= startDate) {
-//       let currentDate = new Date(startDate);
-//       while (currentDate <= endDate) {
-//         this.dateOptions.push(new Date(currentDate));
-//         currentDate.setDate(currentDate.getDate() + 1);
-//       }
-//     }
-
-//     this.shifts.controls.forEach((control, index) => {
-//       const dateControl = control.get('Date');
-//       if (dateControl && this.dateOptions.length > 0) {
-//         dateControl.setValue(this.dateOptions[0]);
-//         dateControl.updateValueAndValidity();
-//       }
-//     });
-//   }
-
-//   private formatDateToString(date: Date | string | null): string {
-//     if (!date) return '';
-//     if (typeof date === 'string') {
-//       // If date is already a string (e.g., "2025-06-01"), return it as is
-//       return date;
-//     }
-//     // If date is a Date object, format it
-//     return date.toISOString().split('T')[0];
-//   }
-
-//   private formatTimeToString(time: string): string {
-//     return time ? `${time}:00` : '';
-//   }
-
-//   onSubmit(): void {
-//     if (this.scheduleForm.invalid) {
-//       this.errorMessage = 'Please fill in all required fields correctly.';
-//       return;
-//     }
-
-//     if (!this.provider) {
-//       this.errorMessage = 'Provider details not loaded.';
-//       return;
-//     }
-
-//     const formValue: any = this.scheduleForm.value;
-//     const model: IProviderAssignmentViewModel = {
-//       ProviderId: this.provider.ProviderId,
-//       CenterId: this.centerId,
-//       StartDate: this.formatDateToString(formValue.StartDate) || null,
-//       EndDate: this.formatDateToString(formValue.EndDate) || null,
-//       AssignmentType: AssignmentType.Visiting,
-//       Shifts: formValue.Shifts.map((shift: any): IShiftViewModel => ({
-//         ShiftType: ShiftType.None,
-//         ShiftDate: this.formatDateToString(shift.Date),
-//         StartTime: this.formatTimeToString(shift.StartTime),
-//         EndTime: this.formatTimeToString(shift.EndTime),
-//         MaxPatientsPerDay: shift.MaxPatientsPerDay,
-//         OperatorId: 'user1-operator'
-//       }))
-//     };
-
-//     console.log('Sending payload to API:', JSON.stringify(model, null, 2));
-
-//     this.isLoading = true;
-//     this.errorMessage = '';
-//     this.successMessage = '';
-
-//     this.apiService.assignProviderToCenterManually(model).subscribe({
-//       next: (response: ApiResponse<string>) => {
-//         this.isLoading = false;
-//         if (response.Status === 200) {
-//           this.successMessage = response.Data || 'Provider scheduled successfully!';
-//           this.scheduleForm.reset();
-//           this.shifts.clear();
-//           this.addShift();
-//         } else {
-//           this.errorMessage = response.Message || 'Failed to schedule provider. Status: ' + response.Status;
-//         }
-//       },
-//       error: (err) => {
-//         this.isLoading = false;
-//         this.errorMessage = `An error occurred while scheduling the provider. Status: ${err.status || 'Unknown'} - ${err.message || err.error?.message || 'No additional details'}`;
-//         console.error('API error:', err);
-//       }
-//     });
-//   }
-
-//   ManuallySchedule(): void {
-//     this.router.navigate(['/manually-schedule', this.route.snapshot.paramMap.get('id')]);
-//   }
-
-//   WeeklySchedule(): void {
-//     this.router.navigate(['/weekly-schedule', this.route.snapshot.paramMap.get('id')]);
-//   }
-
-//   goBack(): void {
-//     this.router.navigate(['/provider-management']);
-//   }
-// }
-
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -448,7 +47,7 @@ export class ManuallyScheduleComponent implements OnInit {
   successMessage: string = '';
   isLoading: boolean = false;
   scheduleForm: FormGroup;
-  centerId: number = 1;
+  centerId: number = 3;
   dateOptions: Date[] = [];
   viewDate: Date = new Date();
   assignments: { startDate: Date; endDate: Date }[] = [];
@@ -510,11 +109,10 @@ export class ManuallyScheduleComponent implements OnInit {
 
   loadAssignments(providerId: string): void {
     this.isLoading = true;
-    // Clear error message to ensure the page renders even if there are no assignments
     this.errorMessage = '';
 
     this.apiService
-      .getProviderAssignments(providerId, this.centerId)
+      .getAllProviderAssignments(providerId)
       .subscribe({
         next: (response: ApiResponse<any[]>) => {
           this.isLoading = false;
@@ -692,7 +290,7 @@ export class ManuallyScheduleComponent implements OnInit {
           StartTime: this.formatTimeToString(shift.StartTime),
           EndTime: this.formatTimeToString(shift.EndTime),
           MaxPatientsPerDay: shift.MaxPatientsPerDay,
-          OperatorId: 'user1-operator',
+          OperatorId: '1',
         })
       ),
     };
@@ -814,19 +412,19 @@ export class ManuallyScheduleComponent implements OnInit {
 
   ManuallySchedule(): void {
     this.router.navigate([
-      '/manually-schedule',
+      'owner/manually-schedule',
       this.route.snapshot.paramMap.get('id'),
     ]);
   }
 
   WeeklySchedule(): void {
     this.router.navigate([
-      '/weekly-schedule',
+      'owner/weekly-schedule',
       this.route.snapshot.paramMap.get('id'),
     ]);
   }
 
   goBack(): void {
-    this.router.navigate(['/provider-management']);
+    this.router.navigate(['owner/provider-management']);
   }
 }

@@ -13,15 +13,16 @@
 .filter .reset-filter p {
   color: #ea0234;
 }
-::ng-deep .p-select .p-icon {
-  margin-left: 0.4rem !important;
-  width: 1.1rem !important;
+
+::ng-deep .p-iconwrapper {
+  color: #012a4a !important;
 }
-::ng-deep .p-select-list-container {
-  padding: 0.5rem !important;
-  background-color: white !important;
-  color: var(--text-color-Light) !important;
+::ng-deep .p-select {
+  border: 1px solid var(--p-select-overlay-border-color) !important;
 }
-::ng-deep .p-select-option {
-  padding: 0.5rem !important;
+::ng-deep .p-select-label.p-placeholder {
+  color: #012a4a !important;
+}
+::ng-deep .p-select:hover {
+  border: 1px solid var(--p-select-overlay-border-color) !important;
 }

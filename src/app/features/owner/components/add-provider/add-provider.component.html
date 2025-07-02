@@ -82,12 +82,21 @@
       </div>
     </div>
 
-   <div class="right-column">
+    <div class="right-column">
       <div class="doctor-image">
-        <!-- <img *ngIf="model.Image" [src]="model.Image" alt="Doctor Image" /> -->
+        <img *ngIf="imagePreview" [src]="imagePreview" alt="Doctor Image" class="preview-image" />
+        <span *ngIf="!imagePreview">No image selected</span>
       </div>
-      <input type="file" id="image" (change)="onFileSelected($event)" class="file-input" />
-      <button type="button" class="upload-photo-btn">Upload photo</button>
+      <input
+        type="file"
+        id="image"
+        #fileInput
+        (change)="onFileSelected($event)"
+        class="file-input"
+        accept="image/*"
+        style="display: none;"
+      />
+      <button type="button" class="upload-photo-btn" (click)="fileInput.click()">Upload photo</button>
     </div>
 
     <div class="button-container">
@@ -95,7 +104,7 @@
     </div>
 
     <div *ngIf="errorMessage" class="error">
-      {{ errorMessage }}
+      <p>{{ errorMessage }}</p>
     </div>
   </form>
 </div>

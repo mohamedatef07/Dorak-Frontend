@@ -9,10 +9,12 @@ import { IProviderViewModel } from '../types/IProviderViewModel';
 import { IRegistrationViewModel } from '../types/IRegistrationViewModel';
 import { IProviderAssignmentViewModel } from '../types/IProviderAssignmentViewModel';
 import { IWeeklyProviderAssignmentViewModel } from '../types/IWeeklyProviderAssignmentViewModel';
+import { IRescheduleAssignmentViewModel } from '../types/IRescheduleAssignmentViewModel';
 import { IProviderLiveQueueViewModel } from '../types/IProviderLiveQueueViewModel';
 import { IUpdateQueueStatusViewModel } from '../types/IUpdateQueueStatusViewModel';
 import { GenderType } from '../Enums/GenderType.enum';
 import { IOperatorViewModel } from '../types/IOperatorViewModel';
+import { IShift } from '../types/IShift';
 
 @Injectable({
   providedIn: 'root'
@@ -41,68 +43,43 @@ export class ApiService {
     centerId: number
   ): Observable<ApiResponse<IPaginationViewModel<IProviderViewModel>>> {
     return this.httpClient.get<ApiResponse<IPaginationViewModel<IProviderViewModel>>>(
-      `${environment.apiUrl}/api/center/SearchProvider?searchText=${searchText}&pageNumber=${pageNumber}&pageSize=${pageSize}&sortBy=${sortBy}&specializationFilter=${specializationFilter}¢erId=${centerId}`
+      `${environment.apiUrl}/api/center/SearchProvider?searchText=${searchText}&pageNumber=${pageNumber}&pageSize=${pageSize}&sortBy=${sortBy}&specializationFilter=${specializationFilter}&centerId=${centerId}`
     );
   }
 
-  addProviderAndAssignIt(user: IRegistrationViewModel): Observable<string> {
-    const genderMap: { [key: string]: GenderType } = {
-      'none': GenderType.None,
-      'Male': GenderType.Male,
-      'Female': GenderType.Female
-    };
-
-    const genderValue = user.Gender ? genderMap[user.Gender] ?? GenderType.None : GenderType.None;
-
-    const defaultBirthDate = new Date().toISOString().split('T')[0];
-    let birthDateStr: string;
-
-    if (user.BirthDate instanceof Date && !isNaN(user.BirthDate.getTime())) {
-      birthDateStr = user.BirthDate.toISOString().split('T')[0];
-    } else if (typeof user.BirthDate === 'string' && user.BirthDate.trim() !== '') {
-      birthDateStr = user.BirthDate;
-    } else {
-      birthDateStr = defaultBirthDate;
-    }
-
-    const body: IRegistrationViewModel = {
-      UserName: user.UserName,
-      Email: user.Email,
-      PhoneNumber: user.PhoneNumber,
-      Password: user.Password,
-      ConfirmPassword: user.ConfirmPassword,
-      Role: user.Role,
-      FirstName: user.FirstName,
-      LastName: user.LastName,
-      Gender: genderValue,
-      BirthDate: birthDateStr,
-      Street: user.Street,
-      City: user.City,
-      Governorate: user.Governorate,
-      Country: user.Country,
-      Image: user.Image,
-      Specialization: user.Specialization,
-      LicenseNumber: user.LicenseNumber,
-      Bio: user.Bio,
-      ExperienceYears: user.ExperienceYears,
-      ProviderType: user.ProviderType,
-      Availability: user.Availability,
-      EstimatedDuration: user.EstimatedDuration,
-      Rate: user.Rate
-    };
-
-    console.log('API request body:', JSON.stringify(body, null, 2));
-
+ addProviderAndAssignIt(formData: FormData): Observable<string> {
     return this.httpClient
-      .post<ApiResponse<string>>(`${environment.apiUrl}/api/center/AddProviderAndAssignIt`, body)
+      .post<ApiResponse<string>>(`${environment.apiUrl}/api/center/AddProviderAndAssignIt`, formData)
       .pipe(
         map((response: ApiResponse<string>) => {
           if (response.Status === 200 && response.Data && response.Data !== 'Not Valid') {
             return response.Data;
           }
           throw new Error(response.Message || 'Failed to add provider');
+        }),
+        catchError((error) => {
+          console.error('API error:', error);
+          throw error;
         })
       );
+  }
+
+deleteProviderFromCenter(providerId: string, centerId: number): Observable<ApiResponse<string>> {
+    if (!providerId || providerId.trim() === '' || providerId.startsWith('unknown-') || providerId.startsWith('temp-')) {
+      console.error('Invalid providerId:', providerId);
+      throw new Error('Invalid providerId provided to deleteProviderFromCenter');
+    }
+    const body = {
+      providerId: providerId,
+      centerId: centerId
+    };
+    console.log('Sending delete request with providerId:', providerId, 'and centerId:', centerId);
+    return this.httpClient.post<ApiResponse<string>>(`${environment.apiUrl}/api/center/DeleteProviderFromCenter`, body).pipe(
+      catchError(error => {
+        console.error('API Error Response:', error);
+        throw error; // Re-throw to be handled by the subscriber
+      })
+    );
   }
 
   assignProviderToCenterManually(model: IProviderAssignmentViewModel): Observable<ApiResponse<string>> {
@@ -126,6 +103,20 @@ export class ApiService {
     );
   }
 
+  rescheduleAssignment(model: IRescheduleAssignmentViewModel): Observable<ApiResponse<string>> {
+    const body = {
+      ...model,
+      StartDate: model.StartDate instanceof Date ? model.StartDate.toISOString().split('T')[0] : model.StartDate,
+      EndDate: model.EndDate instanceof Date ? model.EndDate.toISOString().split('T')[0] : model.EndDate,
+      Shifts: model.Shifts?.map(shift => ({
+        ...shift,
+        ShiftDate: shift.ShiftDate || undefined
+      }))
+    };
+    return this.httpClient.post<ApiResponse<string>>(`${environment.apiUrl}/api/center/RescheduleAssignment`, body);
+  }
+
+
   getProviderById(providerId: string): Observable<ApiResponse<IProviderViewModel>> {
     return this.httpClient.get<ApiResponse<IProviderViewModel>>(
       `${environment.apiUrl}/api/Provider/GetProviderById/${providerId}`
@@ -134,6 +125,26 @@ export class ApiService {
 
   getProviderAssignments(providerId: string, centerId: number): Observable<ApiResponse<any[]>> {
     return this.httpClient.get<ApiResponse<any[]>>(`${environment.apiUrl}/api/provider/${providerId}/assignments?centerId=${centerId}`);
+  }
+
+  getShifts(date: Date, centerId: number): Observable<ApiResponse<IShift[]>> {
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const dateOnly = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+    return this.httpClient.get<ApiResponse<IShift[]>>(`${environment.apiUrl}/api/shift/get-shifts?date=${dateOnly}&centerId=${centerId}`);
+  }
+
+  getAllProviderAssignments(providerId: string): Observable<ApiResponse<any[]>> {
+    return this.httpClient.get<ApiResponse<any[]>>(`${environment.apiUrl}/api/provider/${providerId}/all-assignments`);
+  }
+
+  getAllShifts(date: Date, providerId: string): Observable<ApiResponse<IShift[]>> {
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const dateOnly = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+    return this.httpClient.get<ApiResponse<IShift[]>>(`${environment.apiUrl}/api/shift/get-all-shifts?date=${dateOnly}&providerId=${providerId}`);
   }
 
   getProviderLiveQueues(
