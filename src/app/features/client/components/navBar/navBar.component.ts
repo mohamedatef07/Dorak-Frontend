@@ -72,6 +72,7 @@ export class NavBarComponent implements OnInit {
     });
   }
   ngOnInit() {
+    debugger;
     this.UserImage = `${environment.apiUrl}${this.authServices.getUserImage()}`;
     this.providerServices.getNotifications().subscribe({
       next: (res) => {
