@@ -40,17 +40,19 @@ export class SearchProviderComponent implements OnInit, AfterViewInit {
   @ViewChild('tableElement') tableElement: ElementRef | undefined;
 
   providers: IProviderViewModel[] = [];
-  specializations: string[] = ['All', 'Cardiology', 'Pediatrics', 'Orthopedics'];
+  specializations: string[] = ['Cardiology', 'Pediatrics', 'Orthopedics'];
 
   totalItems: number = 0;
   pageSize: number = 9;
   pageIndex: number = 0;
   specializationFilter: string = '';
   searchText: string = '';
+  sortFilter: string = ''; // Added sort filter
   centerId: number = 1; // Will be set from AuthService
 
   errorMessage: string = '';
   isLoading: boolean = false;
+  sortBy: string = 'AddDate';
 
   constructor(
     private apiService: ApiService,
@@ -155,6 +157,16 @@ export class SearchProviderComponent implements OnInit, AfterViewInit {
       }
     });
   }
+applyFilters(): void {
+    let filteredProviders = [...this.providers];
+
+    if (this.sortFilter) {
+      filteredProviders.sort((a, b) => {
+        if (this.sortFilter === 'Name') return `${a.FirstName} ${a.LastName}`.localeCompare(`${b.FirstName} ${b.LastName}`);
+        return 0;
+      });
+    }
+  }
 
   formatDate(dateStr: string): string {
     const date = new Date(dateStr);
@@ -209,4 +221,32 @@ export class SearchProviderComponent implements OnInit, AfterViewInit {
     const end = Math.min((this.pageIndex + 1) * this.pageSize, this.totalItems);
     return `${start}-${end}`;
   }
+
+  onSortChange(event: string): void {
+    this.sortBy = event;
+    this.pageIndex = 0;
+    // You may want to pass sortBy to your API if supported, otherwise sort locally:
+    if (this.sortBy === 'Name') {
+      this.providers.sort((a, b) => {
+        const nameA = ((a.FirstName || '') + ' ' + (a.LastName || '')).trim().toLowerCase();
+        const nameB = ((b.FirstName || '') + ' ' + (b.LastName || '')).trim().toLowerCase();
+        return nameA.localeCompare(nameB);
+      });
+    } else {
+      // Default: sort by AddDate descending (if available)
+      this.providers.sort((a, b) => {
+        if (!a.AddDate || !b.AddDate) return 0;
+        return new Date(b.AddDate).getTime() - new Date(a.AddDate).getTime();
+      });
+    }
+    this.dataSource = new MatTableDataSource<IProviderViewModel>(this.providers);
+    this.cdr.detectChanges();
+  }
+
+  onSortFilterChange(event: string): void {
+    this.sortFilter = event;
+    this.pageIndex = 0;
+    this.applyFilters();
+  }
+
 }

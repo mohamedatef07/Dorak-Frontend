@@ -1,177 +1,92 @@
-
-:host {
-  display: block;
-  font-family: var(--font-body);
-  padding: var(--padding);
-  color: var(--text-color-Light);
-}
-
-.loading,
-.error-message,
-.no-data {
-  text-align: center;
-  color: var(--text-color-Light);
-  padding: 1rem;
-  font-size: var(--font-p);
-}
-
-.controls {
-  display: flex;
-  align-items: center;
-  margin-bottom: 1rem;
-  background-color: white;
-  padding: 0.5rem var(--padding);
+.page-title {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  padding: 15px;
+  color: #fff;
+  background-color: var(--main-bg-color-Light);
+  width: fit-content;
   border-radius: var(--border-radius);
 }
 
-.controls .icon {
+.filter {
+  border-radius: var(--border-radius);
+  font-size: 0.8rem;
+  font-weight: bolder;
+  margin-top: 1rem;
+  background-color: white;
+  width: fit-content;
   display: flex;
   align-items: center;
-  background-color: white;
-  padding: 0.25rem;
+  -webkit-border-radius: var(--border-radius);
+  -moz-border-radius: var(--border-radius);
+  -ms-border-radius: var(--border-radius);
+  -o-border-radius: var(--border-radius);
 }
-
-.controls .filter-field {
-  width: 150px;
-  margin: 0 0.25rem;
-  position: relative;
-}
-
-.controls .filter-field .mat-form-field-outline {
-  display: none;
-}
-
-.controls .filter-field .mat-form-field-wrapper {
-  padding-bottom: 0;
-}
-
-.controls .filter-field .mat-form-field-infix {
+.filter select {
+  color: var(--text-color-Light);
+  font-weight: 500;
+  background: transparent;
   border: none;
-  background-color: white;
-  padding: 0.5rem 1rem;
-  position: relative;
-  color: var(--text-color-Light);
+  outline: none;
+  font-size: 0.8rem;
 }
-
-.controls .filter-field .mat-form-field-infix::after {
-  content: '';
-  position: absolute;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  width: 1px;
-  background-color: var(--text-color-Light);
+.filter .filter-border {
+  border-right: 1px var(--text-color-Light) solid;
+  outline: none;
 }
-
-.controls .filter-field:last-child .mat-form-field-infix::after {
-  display: none;
+.filter .sort-by select {
+  border: none;
+  outline: none;
 }
-
-.controls .filter-field .mat-select {
-  padding: 0.5rem 1rem;
-  color: var(--text-color-Light);
-  font-family: var(--font-body);
-  font-size: var(--font-p);
-  background-color: white;
-}
-
-::ng-deep .mat-select-panel {
-  background-color: white !important;
-}
-
-::ng-deep .mat-option {
-  background-color: white !important;
-}
-
-.mat-mdc-option {
-  background-color: white !important;
-  color: var(--text-color-Light);
-}
-
-.controls .reset-filter {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: var(--error-text);
-  font-family: var(--font-body);
-  font-size: var(--font-p);
+.filter .reset-filter {
   cursor: pointer;
-  background-color: white;
-  padding: 0.5rem 1rem;
-  transition: var(--transition);
+  color: var(--error-text);
+  background: none;
+  font-weight: bold;
 }
 
-.table-container {
+.doctors-table {
   background-color: white;
-  border-radius: var(--border-radius);
-  overflow: hidden;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   color: var(--text-color-Light);
+  border-radius: var(--border-radius);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  max-height: 350px;
+  overflow: hidden;
 }
 
-mat-table {
+table {
   width: 100%;
   border-collapse: collapse;
-  color: var(--text-color-Light);
 }
-
-mat-header-row {
-  background-color: var(--main-bg-color-Light);
+thead tr {
+  background-color: #2980b9;
+  border-top-left-radius: var(--border-radius);
+  border-top-right-radius: var(--border-radius);
 }
-
-mat-header-cell {
+th:first-child {
+  border-top-left-radius: var(--border-radius);
+}
+th:last-child {
+  border-top-right-radius: var(--border-radius);
+}
+th {
   background-color: var(--main-bg-color-Light);
-  color: var(--button-text-color-Light);
+  color: white;
   text-align: center;
-  padding: 0.75rem;
+  padding: 0.75rem 0.9375rem;
   font-weight: bold;
-  font-family: var(--font-heading);
-  border-bottom: 2px solid #ffffff;
 }
-
-mat-cell {
-  padding: 0.75rem;
+td {
+  padding: 0.75rem 0.9375rem;
   text-align: center;
-  color: var(--text-color-Light);
-  border-bottom: 1px solid #dee2e6;
+  border-bottom: 1px solid #f0f0f0;
+}
+tr:last-child td {
+  border-bottom: none;
 }
 
-mat-row {
-  background-color: #ffffff;
-}
-
-mat-row.even-row {
-  background-color: #f8f9fa;
-}
-
-.status-online {
-  padding: 0.25rem 0.5rem;
-  border-radius: var(--border-radius);
-  background-color: var(--active-bg);
-  color: var(--active-text);
-  font-weight: 500;
-}
-
-.status-offline {
-  padding: 0.25rem 0.5rem;
-  border-radius: var(--border-radius);
-  background-color: var(--error-bg);
-  color: var(--error-text);
-  font-weight: 500;
-}
-
-.name-container {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  width: 200px;
-}
-
-.name-container a {
-  margin-left: 1rem;
-}
-
-.view-profile-link {
+.view-doc-profile {
   font-size: 0.75rem;
   padding: 0.5rem 0.75rem;
   background-color: var(--button-bg-color-Light);
@@ -180,22 +95,16 @@ mat-row.even-row {
   border: 1px var(--hover-border-Light) solid;
   transition: var(--transition);
 }
-
-.view-profile-link:hover {
-  font-size: 0.75rem;
-  padding: 0.5rem 0.75rem;
+.view-doc-profile:hover {
   background-color: var(--hover-bg-Light);
   color: var(--hover-text-Light);
   border: 1px var(--hover-border-Light) solid;
-  border-radius: var(--border-radius);
 }
 
-.pagination-controls {
+.pagination-container {
   display: flex;
   align-items: center;
-  margin-top: 1rem;
 }
-
 .showing-text {
   color: var(--text-color-Light);
   font-size: 0.875rem;
@@ -203,50 +112,53 @@ mat-row.even-row {
   border-radius: var(--border-radius);
   margin-right: 0.625rem;
 }
-
-.pagination-buttons {
-  display: flex;
-  gap: 0.5rem;
-}
-
 .pagination-btn {
   width: 2.25rem;
   height: 2.25rem;
   border: 1px solid var(--button-bg-color-Light);
   background-color: var(--button-bg-color-Light);
   color: var(--button-text-color-Light);
+  transition: var(--transition);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
 }
-
 .pagination-btn:first-of-type {
   border-top-left-radius: 0.25rem;
   border-bottom-left-radius: 0.25rem;
 }
-
 .pagination-btn:last-of-type {
   border-top-right-radius: 0.25rem;
   border-bottom-right-radius: 0.25rem;
 }
-
-.pagination-btn:hover:not(:disabled) {
+.pagination-btn:hover {
   background-color: var(--hover-bg-Light);
   color: var(--hover-text-Light);
   border: 1px var(--hover-border-Light) solid;
 }
-
 .pagination-btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
 
-.pagination-btn svg {
-  width: 16px;
-  height: 16px;
+.status-online {
+  padding: 0.45rem 0.85rem;;
+  border-radius: var(--border-radius);
+  background-color: var(--active-bg);
+  color: var(--active-text);
+  font-weight: bold;
+
+}
+.status-offline {
+  padding: 0.45rem 0.85rem;
+  border-radius: var(--border-radius);
+  background-color: var(--error-bg);
+  color: var(--error-text);
+  font-weight: bold;
 }
 
+/* Keep popup and error styles from previous version for completeness */
 .custom-popup {
   position: fixed;
   top: 0;
@@ -259,7 +171,6 @@ mat-row.even-row {
   align-items: center;
   z-index: 1000;
 }
-
 .popup-content {
   background-color: #ffffff;
   padding: 20px;
@@ -269,31 +180,18 @@ mat-row.even-row {
   min-width: 300px;
   border-left: 5px solid #007bff;
 }
-
 .popup-content p {
   margin: 0;
   font-size: 18px;
   color: #333;
   padding: 10px;
 }
-
-.popup-content::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 5px;
-  background: linear-gradient(to right, #dc3545, #007bff);
-}
-
 .popup-actions {
   margin-top: 20px;
   display: flex;
   justify-content: center;
   gap: 10px;
 }
-
 .popup-btn {
   padding: 8px 16px;
   border: none;
@@ -301,22 +199,27 @@ mat-row.even-row {
   cursor: pointer;
   font-size: 14px;
 }
-
 .yes-btn {
   background-color: #dc3545;
   color: white;
 }
-
 .yes-btn:hover {
   background-color: #c82333;
 }
-
 .no-btn {
   background-color: #6c757d;
   color: white;
 }
-
 .no-btn:hover {
   background-color: #5a6268;
+}
+
+.loading,
+.error-message,
+.no-data {
+  text-align: center;
+  color: var(--text-color-Light);
+  padding: 1rem;
+  font-size: var(--font-p);
 }
 

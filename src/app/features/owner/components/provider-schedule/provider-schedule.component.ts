@@ -37,12 +37,13 @@ export class ProviderScheduleComponent implements OnInit, AfterViewInit {
   dataSource: MatTableDataSource<IProviderViewModel> = new MatTableDataSource<IProviderViewModel>([]);
 
   providers: IProviderViewModel[] = [];
-  specializations: string[] = ['All', 'Cardiology', 'Pediatrics', 'Orthopedics'];
+  specializations: string[] = ['Cardiology', 'Pediatrics', 'Orthopedics'];
 
   totalItems: number = 0;
   pageSize: number = 9;
   pageIndex: number = 0;
   sortBy: string = 'AddDate';
+  sortFilter: string = '';
   specializationFilter: string = '';
 
   errorMessage: string = '';
@@ -146,6 +147,24 @@ export class ProviderScheduleComponent implements OnInit, AfterViewInit {
     }, 0);
   }
 
+  applyFilters(): void {
+    let filteredProviders = [...this.providers];
+
+    // Sorting by Name
+    if (this.sortFilter === 'Name') {
+      filteredProviders.sort((a, b) => {
+        const nameA = ((a.FirstName || '') + ' ' + (a.LastName || '')).trim().toLowerCase();
+        const nameB = ((b.FirstName || '') + ' ' + (b.LastName || '')).trim().toLowerCase();
+        return nameA.localeCompare(nameB);
+      });
+    }
+
+    this.totalItems = filteredProviders.length;
+    const startIndex = this.pageIndex * this.pageSize;
+    this.dataSource.data = filteredProviders.slice(startIndex, startIndex + this.pageSize);
+    this.cdr.detectChanges();
+  }
+
   handleError(message: string): void {
     this.isLoading = false;
     this.errorMessage = message;
@@ -164,9 +183,14 @@ export class ProviderScheduleComponent implements OnInit, AfterViewInit {
     this.loadAllProviders();
   }
 
+  onSortFilterChange(event: string): void {
+    this.sortFilter = event;
+    this.pageIndex = 0;
+    this.applyFilters();
+  }
+
   onSpecializationFilterChange(event: any): void {
-    console.log('Specialization filter changed to:', event);
-    this.specializationFilter = event === 'All' ? '' : event;
+    this.specializationFilter = event;
     this.pageIndex = 0;
     this.loadAllProviders();
   }
