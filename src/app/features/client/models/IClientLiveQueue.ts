@@ -8,4 +8,5 @@ export interface IClientLiveQueue {
   Type: ClientType;
   Status: QueueAppointmentStatus;
   IsCurrentClient: boolean;
+  AppointmentId: number;
 }
