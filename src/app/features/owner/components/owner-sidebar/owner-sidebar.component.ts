@@ -26,7 +26,29 @@ export class OwnerSidebarComponent implements OnInit {
     {
       label: 'Manage Doctors',
       icon: 'pi pi-users',
-      routerLink: '/provider/patient-queue',
+      items: [
+        {
+          label: 'View Doctors',
+          icon: 'fa fa-user-doctor',
+          routerLink: '/owner/provider-management',
+        },
+         {
+          label: 'Schedule Doctors',
+          icon: 'pi pi-calendar-clock',
+          routerLink: '/owner/provider-schedule',
+        },
+        {
+          label: 'Add Doctors',
+          icon: 'pi pi-user-plus',
+          routerLink: '/owner/add-provider',
+        },
+
+        {
+          label: 'Search Doctors',
+          icon: 'pi pi-search',
+          routerLink: '/owner/search-provider',
+        },
+      ]
     },
     {
       label: 'Manage Queues',

@@ -1,7 +1,7 @@
 
 
 <div *ngIf="isLoading" class="loading">
-  Loading providers...
+  Loading doctors...
 </div>
 
 <div *ngIf="errorMessage && !isLoading" class="error-message">
@@ -67,13 +67,13 @@
           >
             View Profile
           </button>
-          <!-- <button
+          <button
             type="button"
             class="btn"
             (click)="reschedule(row.ProviderId || '')"
           >
             Reschedule
-          </button> -->
+          </button>
           <button
             type="button"
             class="btn"
@@ -113,7 +113,7 @@
 </div>
 
 <div *ngIf="!isLoading && dataSource.data.length === 0 && !errorMessage" class="no-data">
-  No providers found.
+  No doctors found.
 </div>
 
 <div *ngIf="!isLoading" class="pagination-controls">
@@ -134,13 +134,13 @@
   </div>
 </div>
 
-<!-- Custom Delete Confirmation Popup (Styled like ProviderLiveQueueComponent) -->
 <div *ngIf="showDeletePopup" #deletePopup class="custom-popup">
   <div class="popup-content">
-    <p>Are you sure you want to delete the provider?</p>
+    <p>Are you sure you want to delete this doctor?</p>
     <div class="popup-actions">
       <button class="popup-btn yes-btn" (click)="confirmDelete()">Yes</button>
       <button class="popup-btn no-btn" (click)="cancelDelete()">No</button>
     </div>
   </div>
 </div>
+

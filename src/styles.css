@@ -8,7 +8,7 @@
   --main-bg-color-Light: #2a6f97;
   --bg-color-Light: #ecf0f1;
   --text-color-Light: #012a4a;
-  --side-bar-text-color-Light: #ecf0f1;
+  --side-bar-text-color-Light: #eceef1;
   --button-bg-color-Light: #2a6f97;
   --button-text-color-Light: white;
   --hover-bg-Light: #ecf0f1;
@@ -238,9 +238,14 @@ a {
   display: flex;
   align-items: center;
   gap: 1rem;
-  font-size: 1.25rem;
-  color: var(--side-bar-text-color-Light);
+  font-size: 1.1rem;
+  color: var(--text-color-Light);
   padding: var(--padding);
+}
+
+.p-panelmenu-submenu-icon {
+  color: none !important;
+  font-size: 1.2rem;
 }
 .side-bar .date-time .date-time-info span {
   color: var(--side-bar-text-color-Light);
