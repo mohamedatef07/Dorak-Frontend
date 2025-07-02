@@ -1,5 +1,3 @@
-
-
 import { Component, OnInit, ChangeDetectorRef, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -54,7 +52,7 @@ export class ProviderManagementComponent implements OnInit, AfterViewInit {
   isLoading: boolean = false;
   centerId: number = 3;
   showDeletePopup: boolean = false;
-  selectedProviderId: string | null = null; 
+  selectedProviderId: string | null = null;
 
   private statusMap: { [key: string]: number } = {
     Online: 0,
@@ -149,11 +147,12 @@ export class ProviderManagementComponent implements OnInit, AfterViewInit {
   applyFilters(): void {
     let filteredProviders = [...this.providers];
 
-    if (this.sortFilter) {
+    // Sorting by Name
+    if (this.sortFilter === 'Name') {
       filteredProviders.sort((a, b) => {
-        if (this.sortFilter === 'Name') return `${a.FirstName} ${a.LastName}`.localeCompare(`${b.FirstName} ${b.LastName}`);
-        if (this.sortFilter === 'AddDate') return new Date(a.AddDate).getTime() - new Date(b.AddDate).getTime();
-        return 0;
+        const nameA = ((a.FirstName || '') + ' ' + (a.LastName || '')).trim().toLowerCase();
+        const nameB = ((b.FirstName || '') + ' ' + (b.LastName || '')).trim().toLowerCase();
+        return nameA.localeCompare(nameB);
       });
     }
 
@@ -250,7 +249,7 @@ export class ProviderManagementComponent implements OnInit, AfterViewInit {
   getDisplayRange(): string {
     const start = (this.pageIndex * this.pageSize) + 1;
     const end = Math.min((this.pageIndex + 1) * this.pageSize, this.totalItems);
-    return `${start} - ${end}`;
+    return `${start}-${end}`;
   }
 
   viewProfile(providerId: string): void {
