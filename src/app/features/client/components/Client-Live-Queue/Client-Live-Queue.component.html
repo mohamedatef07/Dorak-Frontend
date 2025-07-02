@@ -100,15 +100,16 @@
       <div class="queue-item-content">
         <div class="user-info">
           <div class="client-avatar">
-            <img
-              [src]="
-                item.IsCurrentClient
-                  ? fullImagePath
-                  : 'assets/images/default-user.png'
-              "
-              alt="User"
-              class="avatar-image"
+            @if(item.IsCurrentClient){
+            <img [src]="fullImagePath" alt="User" class="avatar-image" />
+            }@else{
+            <p-avatar
+              icon="pi pi-user"
+              class="mr-2"
+              size="large"
+              shape="circle"
             />
+            }
           </div>
           <div class="user-details">
             <span class="user-name">{{

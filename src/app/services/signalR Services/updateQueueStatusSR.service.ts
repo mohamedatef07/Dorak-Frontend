@@ -49,7 +49,9 @@ export class UpdateQueueStatusSRService {
         }
       );
       this.hubConnection.on('QueueUpdated', (lres: Array<IClientLiveQueue>) => {
-        console.log('Live Queue Updated:', lres);
+        debugger;
+        console.log(lres);
+
         this.LiveQueueListSubject.next(lres);
       });
     } else {
@@ -62,7 +64,7 @@ export class UpdateQueueStatusSRService {
   public joinShiftGroup(shiftId: number): void {
     this.hubConnection
       ?.invoke('JoinShiftGroup', shiftId)
-      .then(() => console.log(`Joined shift group: shift_${shiftId}`))
+      .then(() => {debugger; console.log(`Joined shift group: shift_${shiftId}`)})
       .catch((err) => console.error('Failed to join shift group:', err));
   }
 

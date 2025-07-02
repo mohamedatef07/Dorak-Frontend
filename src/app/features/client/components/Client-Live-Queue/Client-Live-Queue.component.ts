@@ -12,11 +12,12 @@ import { environment } from '../../../../../environments/environment';
 import { IDoctorMainInfo } from '../../models/IDoctorMainInfo';
 import { RatingModule } from 'primeng/rating';
 import { FormsModule } from '@angular/forms';
+import { AvatarModule } from 'primeng/avatar';
 
 @Component({
   selector: 'app-Client-Live-Queue',
   templateUrl: './Client-Live-Queue.component.html',
-  imports: [CommonModule, RatingModule, FormsModule],
+  imports: [CommonModule, RatingModule, FormsModule, AvatarModule],
   styleUrls: ['./Client-Live-Queue.component.css'],
 })
 export class ClientLiveQueueComponent implements OnInit, OnDestroy {
@@ -70,8 +71,6 @@ export class ClientLiveQueueComponent implements OnInit, OnDestroy {
         this.updateProgress();
         if (this.clientInfo?.Image) {
           this.fullImagePath = `${environment.apiUrl}${this.clientInfo.Image}`;
-          console.log(this.fullImagePath);
-          console.log(environment.apiUrl);
         }
 
         if (this.shiftId) {
@@ -85,8 +84,8 @@ export class ClientLiveQueueComponent implements OnInit, OnDestroy {
 
     this.srService.updatedLiveQueuesList.subscribe({
       next: (updatedList) => {
+        debugger;
         this.LiveQueues = [...updatedList];
-        console.log('Updated Live Queue List:', this.LiveQueues);
         this.updateProgress();
       },
       error: (err) => {
@@ -120,7 +119,7 @@ export class ClientLiveQueueComponent implements OnInit, OnDestroy {
       case QueueAppointmentStatus.Waiting:
         return ' Waiting';
       case QueueAppointmentStatus.InProgress:
-        return 'In Consultation';
+        return 'In Progress';
       case QueueAppointmentStatus.Completed:
         return 'Done';
       default:
