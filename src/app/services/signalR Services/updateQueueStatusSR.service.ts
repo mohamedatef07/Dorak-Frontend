@@ -29,12 +29,18 @@ export class UpdateQueueStatusSRService {
 
     this.hubConnection
       .start()
-      .then(() => console.log('SignalR connection started'))
+      .then(() => {
+        console.log('SignalR connection started');
+        this.registerOnServerEvents();
+      })
       .catch((err) =>
         console.error('Error while starting SignalR connection: ', err)
       );
 
-    this.hubConnection.onreconnected(() => console.log('SignalR reconnected'));
+    this.hubConnection.onreconnected(() => {
+      console.log('SignalR reconnected');
+      this.registerOnServerEvents();
+    });
     this.hubConnection.onclose(() =>
       console.log('SignalR connection closed, attempting to reconnect...')
     );
@@ -49,9 +55,7 @@ export class UpdateQueueStatusSRService {
         }
       );
       this.hubConnection.on('QueueUpdated', (lres: Array<IClientLiveQueue>) => {
-        debugger;
-        console.log(lres);
-
+        console.log('Live Queue Updated:', lres);
         this.LiveQueueListSubject.next(lres);
       });
     } else {
@@ -62,10 +66,21 @@ export class UpdateQueueStatusSRService {
   }
 
   public joinShiftGroup(shiftId: number): void {
-    this.hubConnection
-      ?.invoke('JoinShiftGroup', shiftId)
-      .then(() => {debugger; console.log(`Joined shift group: shift_${shiftId}`)})
-      .catch((err) => console.error('Failed to join shift group:', err));
+    if (this.hubConnection?.state === signalR.HubConnectionState.Connected) {
+      this.hubConnection
+        ?.invoke('JoinShiftGroup', shiftId)
+        .then(() => console.log(`Joined shift group: shift_${shiftId}`))
+        .catch((err) => console.error('Failed to join shift group:', err));
+    } else {
+      console.log('SignalR connection is not connected, retrying...');
+      // Retry connection or handle it
+      this.reconnectIfNeeded();
+      setTimeout(() => {
+        if (this.hubConnection?.state === signalR.HubConnectionState.Connected) {
+          this.joinShiftGroup(shiftId); // Retry joining after reconnection
+        }
+      }, 1000); // Retry after 1 second
+    }
   }
 
   public leaveShiftGroup(shiftId: number): void {

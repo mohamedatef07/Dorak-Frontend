@@ -34,7 +34,9 @@
         <i class="fas fa-user-clock"></i>
       </div>
       <div class="status-content">
-        <h3 class="status-number">{{ getCurrentNumber() }}</h3>
+        <h3 class="status-number">
+          {{ getClientCurrentNumber() == 0 ? "NA" : getClientCurrentNumber() }}
+        </h3>
         <p class="status-label">Current</p>
       </div>
     </div>
@@ -52,7 +54,7 @@
         <i class="fas fa-user-check"></i>
       </div>
       <div class="status-content">
-        <h3 class="status-number">{{ getCurrentPosition() }}</h3>
+        <h3 class="status-number">{{ getClientPosition() }}</h3>
         <p class="status-label">My Position</p>
       </div>
     </div>
@@ -86,42 +88,53 @@
     </h5>
   </div>
   <div class="queue-list">
-    <div
-      *ngFor="let item of LiveQueues; trackBy: trackByFn"
-      class="queue-item"
-      [ngClass]="{
-        completed: item.Status === QueueAppointmentStatus.Completed,
-        'in-progress': item.Status === QueueAppointmentStatus.InProgress,
-        waiting: item.Status === QueueAppointmentStatus.Waiting,
-        'not-checked': item.Status === QueueAppointmentStatus.NotChecked,
-        'current-user': item.IsCurrentClient
-      }"
-    >
-      <div class="queue-item-content">
-        <div class="user-info">
-          <div class="client-avatar">
-            @if(item.IsCurrentClient){
-            <img [src]="fullImagePath" alt="User" class="avatar-image" />
-            }@else{
-            <p-avatar
-              icon="pi pi-user"
-              class="mr-2"
-              size="large"
-              shape="circle"
-            />
-            }
+    <p-carousel
+    class="pcar"
+    [value]="LiveQueues"
+    [numVisible]="4"
+    [numScroll]="4"
+    orientation="vertical" >
+  >
+    <ng-template let-entry #item>
+      <div class="entry m-2">
+        <div
+        class="queue-item"
+        [ngClass]="{
+          completed: entry.Status === QueueAppointmentStatus.Completed,
+          'in-progress': entry.Status === QueueAppointmentStatus.InProgress,
+          waiting: entry.Status === QueueAppointmentStatus.Waiting,
+          'not-checked': entry.Status === QueueAppointmentStatus.NotChecked,
+          'current-user': entry.IsCurrentClient
+        }"
+      >
+        <div class="queue-item-content">
+          <div class="user-info">
+            <div class="client-avatar">
+              @if(entry.IsCurrentClient){
+              <img [src]="fullImagePath" alt="User" class="avatar-image" />
+              }@else{
+              <p-avatar
+                icon="pi pi-user"
+                class="mr-2"
+                size="large"
+                shape="circle"
+              />
+              }
+            </div>
+            <div class="user-details">
+              <span class="user-name">{{
+                entry.IsCurrentClient ? clientInfo.Name : "Anonymous"
+              }}</span>
+              <span class="status-text">{{ getStatusText(entry.Status) }}</span>
+            </div>
           </div>
-          <div class="user-details">
-            <span class="user-name">{{
-              item.IsCurrentClient ? clientInfo.Name : "Anonymous"
-            }}</span>
-            <span class="status-text">{{ getStatusText(item.Status) }}</span>
+          <div class="position-badge">
+            <span class="position-number">#{{ entry.CurrentQueuePosition }}</span>
           </div>
-        </div>
-        <div class="position-badge">
-          <span class="position-number">#{{ item.CurrentQueuePosition }}</span>
         </div>
       </div>
-    </div>
+      </div>
+    </ng-template>
+  </p-carousel>
   </div>
 </div>

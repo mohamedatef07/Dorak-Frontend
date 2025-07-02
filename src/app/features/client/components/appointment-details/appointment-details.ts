@@ -8,7 +8,7 @@ import { AvatarModule } from 'primeng/avatar';
 import { RatingModule } from 'primeng/rating';
 import { FormsModule } from '@angular/forms';
 import { ClientTypeEnumValuePipe } from '../../../../pipes/ClientTypeEnumValue.pipe';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ApiResponse } from '../../../../types/ApiResponse';
 import { __param } from 'tslib';
 import { environment } from '../../../../../environments/environment';
@@ -16,6 +16,7 @@ import { TimeStringToDatePipe } from '../../../../pipes/TimeStringToDate.pipe';
 import { AppointmentStatus } from '../../../../Enums/AppointmentStatus.enum';
 import { ICheckoutRequest } from '../../models/ICheckoutRequest';
 import { IDoctorMainInfo } from '../../models/IDoctorMainInfo';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-appointment-details',
@@ -33,9 +34,10 @@ import { IDoctorMainInfo } from '../../models/IDoctorMainInfo';
   styleUrls: ['./appointment-details.css'],
 })
 export class appointmentDetails implements OnInit {
-  private route = inject(ActivatedRoute);
+  private activatedRoute = inject(ActivatedRoute);
+  private router = inject(Router);
   private clientService = inject(ClientService);
-
+  private messageServices = inject(MessageService);
   appointmentId!: number;
   appointment!: IAppointment;
   fullImagePath: string = '';
@@ -55,7 +57,7 @@ export class appointmentDetails implements OnInit {
   };
 
   ngOnInit(): void {
-    const param = this.route.snapshot.paramMap.get('appointmentId');
+    const param = this.activatedRoute.snapshot.paramMap.get('appointmentId');
     if (param) {
       this.appointmentId = +param;
 
@@ -89,5 +91,27 @@ export class appointmentDetails implements OnInit {
         },
       });
     }
+  }
+  public clientCancelAppointment(appointmentId: number): void {
+    this.clientService.cancelAppointment(appointmentId).subscribe({
+      next: (res) => {
+        console.log(res);
+        this.messageServices.add({
+          severity: 'info',
+          summary: 'info',
+          detail: 'Appointment cancelled successfully',
+          life: 4000,
+        });
+        this.router.navigate(['/client/client-upcoming-appointments']);
+      },
+      error: (err) => {
+        this.messageServices.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Failed to cancel appointment. Please try again later',
+          life: 4000,
+        });
+      },
+    });
   }
 }
