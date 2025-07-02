@@ -42,7 +42,7 @@ export class AddProviderComponent implements OnInit {
   minUsernameLength = 8;
   minPhoneNumberLength = 8;
   selectedFile: File | null = null;
-  imagePreview: string | null = null; // New property for image preview
+  imagePreview: string | null = null; 
   errorMessage: string = '';
   isSubmitting = false;
 
@@ -115,7 +115,6 @@ export class AddProviderComponent implements OnInit {
     const reader = new FileReader();
     reader.onload = (e: ProgressEvent<FileReader>) => {
       this.imagePreview = e.target?.result as string;
-      this.snackBar.open('Image selected successfully!', 'Close', { duration: 3000 });
     };
     reader.onerror = () => {
       this.errorMessage = 'Failed to read the image file.';
