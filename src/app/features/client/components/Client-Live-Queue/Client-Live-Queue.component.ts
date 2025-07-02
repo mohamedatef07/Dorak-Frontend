@@ -85,7 +85,7 @@ export class ClientLiveQueueComponent implements OnInit, OnDestroy {
 
     this.srService.updatedLiveQueuesList.subscribe({
       next: (updatedList) => {
-        this.LiveQueues = [...updatedList];
+        this.handleUpdatedList(updatedList);
         console.log('Updated Live Queue List:', this.LiveQueues);
         this.updateProgress();
       },
@@ -105,6 +105,18 @@ export class ClientLiveQueueComponent implements OnInit, OnDestroy {
     }
   }
 
+  private handleUpdatedList(updatedList: IClientLiveQueue[]): void {
+    // Iterate over the updatedList and change IsCurrentClient based on the AppointmentId match
+    this.LiveQueues = updatedList.map((queue) => {
+      // Compare AppointmentId and set IsCurrentClient based on the condition
+      return {
+        ...queue,
+        IsCurrentClient: queue.AppointmentId === this.appointmentId,
+      };
+    });
+
+    console.log('Updated Live Queue List:', this.LiveQueues);
+  }
   ngOnDestroy() {
     this.subscription?.unsubscribe();
 
