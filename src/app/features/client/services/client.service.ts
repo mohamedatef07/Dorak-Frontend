@@ -20,8 +20,9 @@ import { IDoctorFilter } from '../../../types/IDoctorFilter';
 import { IClientLiveQueue } from '../models/IClientLiveQueue';
 import { IClientInfoForLiveQueue } from '../models/IClientInfoForLiveQueue';
 import { IClientUpdate } from '../models/IClientUpdate';
-import { IDoctorCard } from '../models/iDoctorcard';
 import { IGeneralAppointmentStatistics } from '../models/IGeneralAppointmentStatistics';
+import { IDoctorCard } from '../models/IDoctorCard';
+import { PaginationApiResponse } from '../../../types/PaginationApiResponse';
 
 @Injectable({
   providedIn: 'root',
@@ -132,10 +133,12 @@ export class ClientService {
   }
 
   getUpcomingAppointments(
-    userId: string
-  ): Observable<ApiResponse<IClientAppointmentCard[]>> {
-    return this.httpClient.get<ApiResponse<IClientAppointmentCard[]>>(
-      `${environment.apiUrl}/api/client/upcoming-appointments/${userId}`
+    userId: string,
+    pageNumber: number,
+    pageSize: number
+  ): Observable<PaginationApiResponse<IClientAppointmentCard[]>> {
+    return this.httpClient.get<PaginationApiResponse<IClientAppointmentCard[]>>(
+      `${environment.apiUrl}/api/client/upcoming-appointments/${userId}?pageNumber=${pageNumber}&pageSize=${pageSize}`
     );
   }
   getLastAppointment(userId: string): Observable<ApiResponse<IAppointment>> {
@@ -220,11 +223,12 @@ export class ClientService {
   }
 
   getAppointmentsHistory(
-    userId: string
-  ): Observable<ApiResponse<IClientAppointmentCard[]>> {
-    // TODO: Replace with the actual endpoint for appointment history
-    return this.httpClient.get<ApiResponse<IClientAppointmentCard[]>>(
-      `${environment.apiUrl}/api/client/appointments-history/${userId}`
+    userId: string,
+    pageNumber: number,
+    pageSize: number
+  ): Observable<PaginationApiResponse<IClientAppointmentCard[]>> {
+    return this.httpClient.get<PaginationApiResponse<IClientAppointmentCard[]>>(
+      `${environment.apiUrl}/api/client/appointments-history/${userId}?pageNumber=${pageNumber}&pageSize=${pageSize}`
     );
   }
 }
