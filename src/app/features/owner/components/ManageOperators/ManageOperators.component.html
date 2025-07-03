@@ -1,53 +1,51 @@
 <p-toast></p-toast>
 <!-- Search Bar -->
-<div class="col-12 col-md-6 mx-auto">
-    <span class="p-input-icon-left w-100">
-        <i class="pi pi-search"></i>
-        <input type="text" class="form-control p-inputtext-sm p-shadow-2" placeholder="Search by name..."
-            [(ngModel)]="searchTerm" (ngModelChange)="onSearchChange()">
-    </span>
+<div class="col-12 col-md-6 mx-auto mb-1 mt-3">
+    <input type="text" class="form-control p-inputtext-sm p-shadow-2" placeholder="Search by name..."
+        [(ngModel)]="searchTerm" (ngModelChange)="onSearchChange()">
 </div>
 
-<div class="doctors-table my-3">
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>NAME</th>
-                <th></th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let operator of paginatedOperators; let i = index">
-                <td>{{ (currentPage - 1) * pageSize + i + 1 }}</td>
-                <td>{{ operator.FirstName + ' ' + operator.LastName }}</td>
-                <td><button class="view-doc-profile" (click)="DeleteOperator(operator.OperatorId)">Delete</button></td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+<div class="content-wrapper d-flex flex-column flex-grow-1">
+  <div class="doctors-table my-3 flex-grow-1">
+      <table class="table table-hover align-middle mb-0">
+          <thead>
+              <tr>
+                  <th>ID</th>
+                  <th>NAME</th>
+                  <th></th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let operator of paginatedOperators; let i = index">
+                  <td>{{ (currentPage - 1) * pageSize + i + 1 }}</td>
+                  <td>{{ operator.FirstName + ' ' + operator.LastName }}</td>
+                  <td><button class="view-doc-profile" (click)="DeleteOperator(operator.OperatorId)">Delete</button></td>
+              </tr>
+          </tbody>
+      </table>
+  </div>
 
-<div class="pagination-container ms-5">
-    <div class="showing-text">
-        Showing {{ (currentPage - 1) * pageSize + 1 }}-{{ getPaginationEndIndex() }} of {{ filteredOperators.length }}
-    </div>
-    <div class="pagination-buttons d-flex">
-        <button class="pagination-btn" aria-label="Previous page" (click)="goToPreviousPage()"
-            [disabled]="currentPage === 1">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                class="bi bi-chevron-left" viewBox="0 0 16 16">
-                <path fill-rule="evenodd"
-                    d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
-            </svg>
-        </button>
-        <button class="pagination-btn" aria-label="Next page" (click)="goToNextPage()"
-            [disabled]="currentPage === totalPages">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                class="bi bi-chevron-right" viewBox="0 0 16 16">
-                <path fill-rule="evenodd"
-                    d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
-            </svg>
-        </button>
-    </div>
+  <div class="pagination-container ms-5">
+      <div class="showing-text">
+          Showing {{ (currentPage - 1) * pageSize + 1 }}-{{ getPaginationEndIndex() }} of {{ filteredOperators.length }}
+      </div>
+      <div class="pagination-buttons d-flex">
+          <button class="pagination-btn" aria-label="Previous page" (click)="goToPreviousPage()"
+              [disabled]="currentPage === 1">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                  class="bi bi-chevron-left" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd"
+                      d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
+              </svg>
+          </button>
+          <button class="pagination-btn" aria-label="Next page" (click)="goToNextPage()"
+              [disabled]="currentPage === totalPages">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                  class="bi bi-chevron-right" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd"
+                      d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+              </svg>
+          </button>
+      </div>
+  </div>
 </div>

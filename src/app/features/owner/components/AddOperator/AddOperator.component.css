@@ -49,11 +49,29 @@
   border-radius: var(--border-radius) !important;
   font-size: 1.1rem !important;
   padding: 0.75rem 1.5rem !important;
-  transition: background 0.2s;
+  transition: ease-in-out 0.4s;
+  height: 25px !important; 
 }
 :host ::ng-deep .custom-register-btn:hover,
 :host ::ng-deep .custom-register-btn:focus {
-  background: #012a4a !important;
+  background: var(--main-bg-color-Light) !important;
   color: white !important;
   /* border: 1px solid var(--hover-border-Light) !important; */
+}
+
+.back-btn{
+  color: var(--text-color-Light) !important;
+  border: none !important;
+  border-radius: var(--border-radius) !important;
+  font-size: 1.1rem !important;
+  padding: 0.75rem 1.5rem !important;
+  transition: ease-in-out 0.4s;
+  height: 25px !important; 
+}
+.back-btn:hover{
+  color: var(--main-bg-color-Light) !important;
+}
+
+:host ::ng-deep .p-inputtext:enabled:focus{
+  border-color: #012a4a;
 }

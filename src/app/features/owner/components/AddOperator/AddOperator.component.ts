@@ -148,4 +148,8 @@ export class AddOperatorComponent implements OnInit {
     );
   }
 
+  goBack() {
+    this.router.navigate(['../'], { relativeTo: this.router.routerState.root });
+  }
+
 }

@@ -22,7 +22,7 @@ export class ManageOperatorsComponent implements OnInit {
   operators: IOperator[] = [];
   paginatedOperators: IOperator[] = [];
   currentPage = 1;
-  pageSize = 5;
+  pageSize = 8;
   get totalPages(): number {
     return Math.ceil(this.operators.length / this.pageSize);
   }
