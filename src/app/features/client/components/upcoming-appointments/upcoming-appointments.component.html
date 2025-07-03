@@ -110,8 +110,8 @@
               class="btn btn-gradient-secondary appointment-btn text-start"
               [routerLink]="['/client/appointment', appointment.appointmentId]"
             >
-            <i class="fas fa-info-circle me-2"></i>
-            Details
+              <i class="fas fa-info-circle me-2"></i>
+              Details
             </button>
           </div>
         </div>
@@ -194,6 +194,28 @@
             </button>
           </div>
         </div>
+      </div>
+      } @empty {
+      <div class="text-muted text-center">No upcoming appointments found.</div>
+      } @if(Appointments.length > 0){
+      <div class="d-flex justify-content-center align-items-center gap-2 mt-4">
+        <button
+          class="btn main-btn-bg"
+          (click)="previousPage()"
+          [disabled]="!canGoPrevious"
+        >
+          Previous
+        </button>
+        <span class="current-page"
+          >Page {{ currentPage }} of {{ totalPages }}</span
+        >
+        <button
+          class="btn main-btn-bg"
+          (click)="nextPage()"
+          [disabled]="!canGoNext"
+        >
+          Next
+        </button>
       </div>
       }
     </div>

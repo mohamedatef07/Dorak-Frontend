@@ -28,14 +28,53 @@ export class AppointmentsHistoryComponent implements OnInit {
   AppointmentsHistory: IClientAppointmentCard[] = [];
   userid: string = '';
   fullImagePath: string = `${environment.apiUrl}`;
+  currentPage: number = 1;
+  pageSize: number = 10;
+  totalRecords: number = 0;
+  totalPages: number = 0;
   constructor() {}
 
   ngOnInit() {
     this.userid = this.authService.getUserId();
-    this.clientService.getAppointmentsHistory(this.userid).subscribe({
+    this.loadAppointmentsHistory();
+  }
+  nextPage() {
+    this.currentPage++;
+    this.loadAppointmentsHistory();
+  }
+
+  previousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.loadAppointmentsHistory();
+    }
+  }
+
+  get canGoNext(): boolean {
+    return this.currentPage * this.pageSize < this.totalRecords;
+  }
+
+  get canGoPrevious(): boolean {
+    return this.currentPage > 1;
+  }
+
+  get startRecord(): number {
+    return (this.currentPage - 1) * this.pageSize + 1;
+  }
+
+  get endRecord(): number {
+    const end = this.currentPage * this.pageSize;
+    return end > this.totalRecords ? this.totalRecords : end;
+  }
+  loadAppointmentsHistory() {
+    this.clientService.getAppointmentsHistory(this.userid, this.currentPage, this.pageSize).subscribe({
       next: (res) => {
         this.AppointmentsHistory = [...res.Data];
-      },
+        this.totalRecords = res.TotalRecords;
+        this.currentPage = res.CurrentPage;
+        this.pageSize = res.PageSize;
+        this.totalPages = res.TotalPages;
+        },
       error: (err) => {
         this.messageService.add({
           severity: 'error',
