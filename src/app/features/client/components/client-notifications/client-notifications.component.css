@@ -2,6 +2,49 @@
   color: var(--text-color-Light);
   font-size: 2rem;
 }
+
+.notifications-list {
+  width: 80%;
+  background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-light) 100%);
+  border-radius: var(--border-radius-xl);
+  box-shadow: var(--shadow-md);
+  padding: 2rem 0;
+  margin: 0 auto;
+}
+
+.notification-item {
+  background: #fff;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-color);
+  transition: box-shadow 0.3s, border-color 0.3s;
+  padding: 1.5rem 2rem;
+  position: relative;
+}
+
+.notification-item:hover {
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary-color);
+}
+
+.notification-title {
+  color: var(--primary-color);
+  font-size: 1.2rem;
+}
+
+.notification-date {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.notification-message {
+  color: var(--text-primary);
+  font-size: 1.05rem;
+}
+
 .no-found-notifications {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
+  color: var(--text-muted);
+  padding: 1.5rem 0;
+  text-align: center;
 }

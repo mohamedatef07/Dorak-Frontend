@@ -9,6 +9,7 @@ import { NotificationsSRService } from '../../../../services/signalR Services/no
 import { INotification } from '../../../../types/INotification';
 import { CommonModule } from '@angular/common';
 import { CookieService } from 'ngx-cookie-service';
+import { NotificationService } from '../../../../services/Notification.service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -23,7 +24,7 @@ export class NavBarComponent implements OnInit {
   srService = inject(NotificationsSRService);
   cookie = inject(CookieService);
   router = inject(Router);
-
+  notificationService = inject(NotificationService);
   private notificationsListSubscription!: Subscription;
 
   notifications!: Array<INotification>;
@@ -73,7 +74,7 @@ export class NavBarComponent implements OnInit {
   }
   ngOnInit() {
     this.UserImage = `${environment.apiUrl}${this.authServices.getUserImage()}`;
-    this.providerServices.getNotifications().subscribe({
+    this.notificationService.getNotifications().subscribe({
       next: (res) => {
         this.notifications = [...res.Data];
       },
