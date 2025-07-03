@@ -75,9 +75,5 @@ export class ProviderService {
       `${environment.apiUrl}/api/provider/general-statistics`
     );
   }
-  getNotifications(): Observable<ApiResponse<Array<INotification>>> {
-    return this.httpClient.get<ApiResponse<Array<INotification>>>(
-      `${environment.apiUrl}/api/provider/notifications`
-    );
-  }
+
 }

@@ -9,7 +9,7 @@ import { IClientAppointmentCard } from '../../models/IClientAppointmentCard';
 import { IAppointment } from '../../models/IAppointment';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { routes } from '../../../../app.routes';
-import { IDoctorCard } from '../../models/IDoctorCard';
+import { IDoctorCard } from '../../models/iDoctorcard';
 import { environment } from '../../../../../environments/environment';
 import { TimeStringToDatePipe } from '../../../../pipes/TimeStringToDate.pipe';
 import { IGeneralAppointmentStatistics } from '../../models/IGeneralAppointmentStatistics';

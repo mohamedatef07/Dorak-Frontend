@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { ProviderService } from '../../services/provider.service';
 import { INotification } from '../../../../types/INotification';
+import { NotificationService } from '../../../../services/Notification.service';
 
 @Component({
   selector: 'app-provider-notifications',
@@ -11,12 +12,13 @@ import { INotification } from '../../../../types/INotification';
 })
 export class ProviderNotificationsComponent implements OnInit {
   providerServices = inject(ProviderService);
+  notificationService = inject(NotificationService);
   notifications!: Array<INotification>;
 
   constructor() {}
 
   ngOnInit() {
-    this.providerServices.getNotifications().subscribe({
+    this.notificationService.getNotifications().subscribe({
       next: (res) => {
         this.notifications = [...res.Data];
       },

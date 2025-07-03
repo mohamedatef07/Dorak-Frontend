@@ -20,8 +20,7 @@ import { IDoctorFilter } from '../../../types/IDoctorFilter';
 import { IClientLiveQueue } from '../models/IClientLiveQueue';
 import { IClientInfoForLiveQueue } from '../models/IClientInfoForLiveQueue';
 import { IClientUpdate } from '../models/IClientUpdate';
-import { IDoctorCard } from '../models/IDoctorCard';
-import { INotification } from '../../../types/INotification';
+import { IDoctorCard } from '../models/iDoctorcard';
 import { IGeneralAppointmentStatistics } from '../models/IGeneralAppointmentStatistics';
 
 @Injectable({
@@ -204,11 +203,6 @@ export class ClientService {
   ): Observable<ApiResponse<IClientInfoForLiveQueue>> {
     return this.httpClient.get<ApiResponse<IClientInfoForLiveQueue>>(
       `${environment.apiUrl}/api/client/profile-for-live-queue/${userId}`
-    );
-  }
-  getNotifications(): Observable<ApiResponse<Array<INotification>>> {
-    return this.httpClient.get<ApiResponse<Array<INotification>>>(
-      `${environment.apiUrl}/api/client/notifications`
     );
   }
   getGeneralAppointmentStatistics(): Observable<
