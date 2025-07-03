@@ -16,7 +16,7 @@ import { TimeStringToDatePipe } from '../../../../pipes/TimeStringToDate.pipe';
 import { AppointmentStatus } from '../../../../Enums/AppointmentStatus.enum';
 import { ICheckoutRequest } from '../../models/ICheckoutRequest';
 import { IDoctorMainInfo } from '../../models/IDoctorMainInfo';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-appointment-details',
@@ -38,6 +38,7 @@ export class appointmentDetails implements OnInit {
   private router = inject(Router);
   private clientService = inject(ClientService);
   private messageServices = inject(MessageService);
+  private confirmService = inject(ConfirmationService);
   appointmentId!: number;
   appointment!: IAppointment;
   fullImagePath: string = '';
@@ -92,24 +93,32 @@ export class appointmentDetails implements OnInit {
       });
     }
   }
-  public clientCancelAppointment(appointmentId: number): void {
-    this.clientService.cancelAppointment(appointmentId).subscribe({
-      next: (res) => {
-        console.log(res);
-        this.messageServices.add({
-          severity: 'info',
-          summary: 'info',
-          detail: 'Appointment cancelled successfully',
-          life: 4000,
-        });
-        this.router.navigate(['/client/client-upcoming-appointments']);
-      },
-      error: (err) => {
-        this.messageServices.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'Failed to cancel appointment. Please try again later',
-          life: 4000,
+  public clientCancelAppointment(appointmentId: number, event: Event): void {
+
+    this.confirmService.confirm({
+      target: event.target as EventTarget,
+      message: 'Do you want to cancel this appointment?',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.clientService.cancelAppointment(appointmentId).subscribe({
+          next: (res) => {
+            this.messageServices.add({
+              severity: 'success',
+              summary: 'Success',
+              detail: 'Appointment cancelled successfully',
+              life: 4000,
+            });
+            this.router.navigate(['/client/client-upcoming-appointments']);
+          },
+          error: (err) => {
+            this.messageServices.add({
+              severity: 'error',
+              summary: 'Error',
+              detail:
+                'Failed to cancel appointment. Please try again later',
+              life: 4000,
+            });
+          },
         });
       },
     });

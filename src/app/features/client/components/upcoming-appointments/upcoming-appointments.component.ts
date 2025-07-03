@@ -9,12 +9,13 @@ import { IClientAppointmentCard } from '../../models/IClientAppointmentCard';
 import { IAppointment } from '../../models/IAppointment';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { routes } from '../../../../app.routes';
-import { IDoctorCard } from '../../models/IDoctorCard';
+import { IDoctorCard } from '../../models/iDoctorcard';
 import { environment } from '../../../../../environments/environment';
 import { TimeStringToDatePipe } from '../../../../pipes/TimeStringToDate.pipe';
 import { IGeneralAppointmentStatistics } from '../../models/IGeneralAppointmentStatistics';
 import { MessageService } from 'primeng/api';
 import { AppointmentStatusEnumValuePipe } from '../../../../pipes/AppointmentStatusEnumValue.pipe';
+import { AppointmentStatus } from '../../../../Enums/AppointmentStatus.enum';
 
 @Component({
   selector: 'app-upcoming-appointments',
@@ -41,20 +42,17 @@ export class UpcomingAppointmentsComponent implements OnInit {
   Appointments: IClientAppointmentCard[] = [];
   appointmentStatistics!: IGeneralAppointmentStatistics;
   userid: string = '';
-  fullImagePath: string = '';
+  fullImagePath: string = `${environment.apiUrl}`;
   appointmentId!: number;
   appointment!: IAppointment;
 
   constructor() {}
   ngOnInit() {
+
     this.userid = this.cAuthServices.getUserId();
     this.clientServices.getUpcomingAppointments(this.userid).subscribe({
       next: (res) => {
-        this.Appointments = res.Data;
-        if (this.appointment.ProviderImage) {
-          this.fullImagePath = `${environment.apiUrl}${this.appointment.ProviderImage}`;
-          console.log(this.fullImagePath);
-        }
+        this.Appointments = [...res.Data];
       },
       error: (err) => {
         this.messageServices.add({
@@ -82,9 +80,6 @@ export class UpcomingAppointmentsComponent implements OnInit {
       next: (res) => {
         this.appointment = res.Data;
         let ProviderId = this.appointment.ProviderId;
-        if (this.appointment.ProviderImage) {
-          this.fullImagePath = `${environment.apiUrl}${this.appointment.ProviderImage}`;
-        }
       },
       error: (err) => {
         this.messageServices.add({

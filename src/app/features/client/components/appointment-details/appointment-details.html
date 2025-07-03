@@ -27,48 +27,43 @@
     </div>
   </div>
   <hr />
-  <div class="row g-4 mb-4">
+  <div class="details-row mb-4 pt-4">
     <div class="col-md-4">
-      <div class="detail-item">
+      <div class="detail-item d-flex align-items-center justify-content-center">
         <i class="fas fa-calendar me-2"></i>
-        <span
-          ><strong>Date:</strong> {{ appointment.AppointmentDate |date :
-          "d-M-yyyy" }}</span
-        >
+        <span> {{ appointment.AppointmentDate |date : "d-M-yyyy" }}</span>
       </div>
     </div>
     <div class="col-md-4">
-      <div class="detail-item">
+      <div class="detail-item d-flex align-items-center justify-content-center">
         <i class="fas fa-clock me-2"></i>
         <span
-          ><strong>Time:</strong> {{ appointment.EstimatedTime.toString() |
-          TimeStringToDate | date : "hh:mm a" }}</span
+          >{{ appointment.EstimatedTime.toString() | TimeStringToDate | date :
+          "hh:mm a" }}</span
         >
       </div>
     </div>
     <div class="col-md-4">
-      <div class="detail-item">
+      <div class="detail-item d-flex align-items-center justify-content-center">
         <i class="fa-solid fa-house-chimney-medical me-2"></i>
         <span
-          ><strong>Status:</strong> {{ appointment.AppointmentStatus |
-          AppointmentStatusEnumValue }}</span
+          >{{ appointment.AppointmentStatus | AppointmentStatusEnumValue
+          }}</span
         >
       </div>
     </div>
+  </div>
+  <div class="details-row mb-4">
     <div class="col-md-4">
-      <div class="detail-item">
+      <div class="detail-item d-flex align-items-center justify-content-center">
         <i class="fas fa-user-tag me-2"></i>
-        <span
-          ><strong>Client Type:</strong> {{ appointment.clientType |
-          ClientTypeEnumValue }}</span
-        >
+        <span>{{ appointment.clientType | ClientTypeEnumValue }}</span>
       </div>
     </div>
     <div class="col-md-4">
-      <div class="detail-item">
+      <div class="detail-item d-flex align-items-center justify-content-center">
         <i class="fas fa-money-bill-wave me-2"></i>
-        <span
-          ><strong>Fees:</strong>
+        <span>
           <span class="fw-bold">
             {{ appointment.Fees | currency : "EGP " : "symbol" : "1.0" }}</span
           ></span
@@ -76,10 +71,10 @@
       </div>
     </div>
   </div>
-  <div class="d-flex gap-3 mt-4">
+  <div class="d-flex gap-3 mt-5 pt-5">
     <a
       [routerLink]="['/client/client-upcoming-appointments']"
-      class="btn btn-gradient-primary"
+      class="btn btn-secondary d-flex align-items-center"
     >
       <i class="fas fa-arrow-left me-2"></i>Back
     </a>
@@ -87,7 +82,7 @@
     @if((appointment.AppointmentStatus | AppointmentStatusEnumValue) ===
     'Pending' ){
     <a
-      class="btn btn-gradient-secondary"
+      class="btn main-btn-bg"
       [routerLink]="['/client/checkout']"
       [state]="{ checkoutRequest: checkoutRequest }"
     >
@@ -98,15 +93,18 @@
     <a
       [routerLink]="appointment.IsLive ? ['/client/client-live-queue', appointment.appointmentId, appointment.ShiftId] : null"
       [state]="{ doctorMainInfo: doctorMainInfo }"
-
       [class.disabled]="!appointment.IsLive"
-      class="btn d-flex align-items-center"
+      class="btn d-flex align-items-center main-btn-bg"
       (click)="!appointment.IsLive && $event.preventDefault()"
     >
       <i class="fa-solid fa-users-line me-2"></i> Go to Live Queue
     </a>
     }
-    <button pRipple class="btn btn-danger" (click)="clientCancelAppointment(appointment.appointmentId)">
+    <button
+      pRipple
+      class="btn btn-danger"
+      (click)="clientCancelAppointment(appointment.appointmentId, $event)"
+    >
       <i class="fa-solid fa-xmark me-2"></i> Cancel Appointment
     </button>
   </div>

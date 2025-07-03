@@ -20,8 +20,7 @@ import { IDoctorFilter } from '../../../types/IDoctorFilter';
 import { IClientLiveQueue } from '../models/IClientLiveQueue';
 import { IClientInfoForLiveQueue } from '../models/IClientInfoForLiveQueue';
 import { IClientUpdate } from '../models/IClientUpdate';
-import { IDoctorCard } from '../models/IDoctorCard';
-import { INotification } from '../../../types/INotification';
+import { IDoctorCard } from '../models/iDoctorcard';
 import { IGeneralAppointmentStatistics } from '../models/IGeneralAppointmentStatistics';
 
 @Injectable({
@@ -206,11 +205,6 @@ export class ClientService {
       `${environment.apiUrl}/api/client/profile-for-live-queue/${userId}`
     );
   }
-  getNotifications(): Observable<ApiResponse<Array<INotification>>> {
-    return this.httpClient.get<ApiResponse<Array<INotification>>>(
-      `${environment.apiUrl}/api/client/notifications`
-    );
-  }
   getGeneralAppointmentStatistics(): Observable<
     ApiResponse<IGeneralAppointmentStatistics>
   > {
@@ -222,6 +216,15 @@ export class ClientService {
     return this.httpClient.post<ApiResponse<null>>(
       `${environment.apiUrl}/api/client/cancel-appointment/?appointmentId=${appointmentId}`,
       {}
+    );
+  }
+
+  getAppointmentsHistory(
+    userId: string
+  ): Observable<ApiResponse<IClientAppointmentCard[]>> {
+    // TODO: Replace with the actual endpoint for appointment history
+    return this.httpClient.get<ApiResponse<IClientAppointmentCard[]>>(
+      `${environment.apiUrl}/api/client/appointments-history/${userId}`
     );
   }
 }

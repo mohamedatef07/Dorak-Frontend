@@ -99,3 +99,20 @@
   all: unset;
   display: revert;
 }
+
+.details-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.details-row > div {
+  flex: 1 1 0;
+  min-width: 180px;
+  max-width: 220px;
+}
+
+.detail-item {
+  width: 100%;
+  justify-content: flex-start;
+}
