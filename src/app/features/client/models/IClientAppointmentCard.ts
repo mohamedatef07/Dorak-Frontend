@@ -5,6 +5,7 @@ export interface IClientAppointmentCard {
   ProviderId: string;
   ProviderName: string;
   ProviderRate: number;
+  ProviderImage: string;
   Specialization: string;
   AppointmentDate: Date;
   AppointmentStatus: AppointmentStatus;

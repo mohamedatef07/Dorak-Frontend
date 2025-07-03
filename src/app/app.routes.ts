@@ -48,6 +48,7 @@ import { SystemPreferencesSettingsComponent } from './features/provider/componen
 import { ClientSettingsComponent } from './features/client/components/client-settings/client-settings.component';
 import { ClientNotificationsComponent } from './features/client/components/client-notifications/client-notifications.component';
 import { RescheduleAssignmentComponent } from './features/owner/components/reschedule-assignment/reschedule-assignment.component';
+import { AppointmentsHistoryComponent } from './features/client/components/appointments-history/appointments-history.component';
 
 export const routes: Routes = [
   {
@@ -210,13 +211,18 @@ export const routes: Routes = [
       {
         path: 'client-profile',
         component: ClientProfileComponent,
-        title: 'Client Profile',
+        title: 'Profile',
       },
 
       {
         path: 'client-upcoming-appointments',
         component: UpcomingAppointmentsComponent,
-        title: 'Client Upcoming Appointments',
+        title: 'Upcoming Appointments',
+      },
+      {
+        path: 'appointments-history',
+        component: AppointmentsHistoryComponent,
+        title: 'Appointments History',
       },
       {
         path: 'appointment/:appointmentId',

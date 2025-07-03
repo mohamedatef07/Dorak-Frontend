@@ -224,4 +224,13 @@ export class ClientService {
       {}
     );
   }
+
+  getAppointmentsHistory(
+    userId: string
+  ): Observable<ApiResponse<IClientAppointmentCard[]>> {
+    // TODO: Replace with the actual endpoint for appointment history
+    return this.httpClient.get<ApiResponse<IClientAppointmentCard[]>>(
+      `${environment.apiUrl}/api/client/appointments-history/${userId}`
+    );
+  }
 }

@@ -10,7 +10,7 @@
             </div>
             <div class="stat-content">
               <h3>{{ appointmentStatistics.TotalAppointments }}</h3>
-              <p>Total Appointments</p>
+              <p>Appointments</p>
             </div>
           </div>
         </div>
@@ -48,67 +48,70 @@
       </div>
       <div class="appointment-card last-appointment">
         <div class="appointment-status completed"></div>
-        <div class="row align-items-center">
-          <div class="col-md-8">
-            <div class="d-flex">
-              <div class="doctor-image-container">
-                <img
-                  *ngIf="fullImagePath"
-                  [src]="fullImagePath"
-                  alt="Doctor Image"
-                  class="doctor-image"
-                />
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="d-flex align-items-center">
+            <div class="doctor-image-container me-3">
+              @if(appointment.ProviderImage){
+              <img
+                [src]="`${fullImagePath}${appointment.ProviderImage}`"
+                alt="Doctor Image"
+                class="doctor-image"
+              />
+              }@else{
+              <p-avatar
+                icon="pi pi-user"
+                class="mr-2 avatar-image"
+                size="xlarge"
+              />
+              }
+            </div>
+            <div class="doctor-info">
+              <h5 class="doctor-name">{{ appointment?.ProviderName }}</h5>
+              <div class="doctor-specialty">
+                <i class="fas fa-user-md me-1"></i>
+                {{ appointment?.Specialization }}
               </div>
-              <div class="doctor-info">
-                <h5 class="doctor-name">{{ appointment?.ProviderName }}</h5>
-                <div class="doctor-specialty">
-                  <i class="fas fa-user-md me-1"></i>
-                  {{ appointment?.Specialization }}
+              <div class="rating-container">
+                <div class="rating">
+                  <p-rating
+                    class="star pt-2 pb-2"
+                    [(ngModel)]="appointment.ProviderRate"
+                    [readonly]="true"
+                  />
                 </div>
-                <div class="rating-container">
-                  <div class="rating">
-                    <p-rating
-                      class="star pt-2 pb-2"
-                      [(ngModel)]="appointment.ProviderRate"
-                      [readonly]="true"
-                    />
-                  </div>
-                  <span class="rating-text">{{
-                    appointment.ProviderRate
+                <span class="rating-text">{{ appointment.ProviderRate }}</span>
+              </div>
+              <div class="appointment-details d-flex flex-row gap-4 mt-2">
+                <div class="detail-item">
+                  <i class="fas fa-calendar me-1"></i>
+                  <span>{{
+                    appointment.AppointmentDate | date : "d-M-yyyy"
                   }}</span>
                 </div>
-                <div class="appointment-details">
-                  <div class="detail-item">
-                    <i class="fas fa-calendar me-1"></i>
-                    <span>{{
-                      appointment.AppointmentDate | date : "d-M-yyyy"
-                    }}</span>
-                  </div>
-                  <div class="detail-item">
-                    <i class="fas fa-clock me-1"></i>
-                    <span>{{
-                      appointment.EstimatedTime.toString()
-                        | TimeStringToDate
-                        | date : "hh:mm a"
-                    }}</span>
-                  </div>
-                  <div class="detail-item">
-                    <i class="fa-solid fa-house-chimney-medical"></i>
-                    <span>{{
-                      appointment.AppointmentStatus | AppointmentStatusEnumValue
-                    }}</span>
-                  </div>
+                <div class="detail-item">
+                  <i class="fas fa-clock me-1"></i>
+                  <span>{{
+                    appointment.EstimatedTime.toString()
+                      | TimeStringToDate
+                      | date : "hh:mm a"
+                  }}</span>
+                </div>
+                <div class="detail-item">
+                  <i class="fa-solid fa-house-chimney-medical"></i>
+                  <span>{{
+                    appointment.AppointmentStatus | AppointmentStatusEnumValue
+                  }}</span>
                 </div>
               </div>
             </div>
           </div>
-          <div class="col-md-3 text-end">
+          <div class="text-end">
             <button
-              class="btn btn-gradient-primary appointment-btn"
+              class="btn btn-gradient-secondary appointment-btn text-start"
               [routerLink]="['/client/appointment', appointment.appointmentId]"
             >
-              <i class="fas fa-eye me-2"></i>
-              View Details
+            <i class="fas fa-info-circle me-2"></i>
+            Details
             </button>
           </div>
         </div>
@@ -124,66 +127,70 @@
     <div class="appointment-section d-flex flex-column gap-3">
       @for (appointment of Appointments; let i = $index; track $index){
       <div class="appointment-card upcoming-appointment">
-        <div class="appointment-status upcoming"></div>
-        <div class="row align-items-center">
-          <div class="col-md-8">
-            <div class="d-flex">
-              <div class="doctor-image-container">
-                <img
-                  *ngIf="fullImagePath"
-                  [src]="fullImagePath"
-                  alt="Doctor Image"
-                  class="doctor-image"
-                />
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="d-flex align-items-center">
+            <div class="doctor-image-container me-3">
+              @if(appointment.ProviderImage){
+              <img
+                [src]="`${fullImagePath}${appointment.ProviderImage}`"
+                alt="Doctor Image"
+                class="doctor-image"
+              />
+              }@else{
+              <p-avatar
+                icon="pi pi-user"
+                class="mr-2 avatar-image"
+                size="xlarge"
+              />
+              }
+            </div>
+            <div class="doctor-info">
+              <h5 class="doctor-name">{{ appointment?.ProviderName }}</h5>
+              <div class="doctor-specialty">
+                <i class="fas fa-user-md me-1"></i>
+                {{ appointment?.Specialization }}
               </div>
-              <div class="doctor-info">
-                <h5 class="doctor-name">{{ appointment?.ProviderName }}</h5>
-                <div class="doctor-specialty">
-                  <i class="fas fa-user-md me-1"></i>
-                  {{ appointment?.Specialization }}
+              <div class="rating-container">
+                <div class="rating">
+                  <p-rating
+                    class="star pt-2 pb-2"
+                    [(ngModel)]="appointment.ProviderRate"
+                    [readonly]="true"
+                  />
                 </div>
-                <div class="rating-container">
-                  <div class="rating">
-                    <p-rating
-                      class="star pt-2 pb-2"
-                      [(ngModel)]="appointment.ProviderRate"
-                      [readonly]="true"
-                    />
-                  </div>
-                  <span class="rating-text">{{
-                    appointment.ProviderRate
+                <span class="rating-text">{{ appointment.ProviderRate }}</span>
+              </div>
+              <div class="appointment-details d-flex flex-row gap-4 mt-2">
+                <div class="detail-item">
+                  <i class="fas fa-calendar me-1"></i>
+                  <span>{{
+                    appointment.AppointmentDate | date : "d-M-yyyy"
                   }}</span>
                 </div>
-                <div class="appointment-details">
-                  <div class="detail-item">
-                    <i class="fas fa-calendar me-1"></i>
-                    <span>{{ appointment?.AppointmentDate }}</span>
-                  </div>
-                  <div class="detail-item">
-                    <i class="fas fa-clock me-1"></i>
-                    <span>{{
-                      appointment.EstimatedTime.toString()
-                        | TimeStringToDate
-                        | date : "hh:mm a"
-                    }}</span>
-                  </div>
-                  <div class="detail-item">
-                    <i class="fa-solid fa-house-chimney-medical"></i>
-                    <span>{{
-                      appointment.AppointmentStatus | AppointmentStatusEnumValue
-                    }}</span>
-                  </div>
+                <div class="detail-item">
+                  <i class="fas fa-clock me-1"></i>
+                  <span>{{
+                    appointment.EstimatedTime.toString()
+                      | TimeStringToDate
+                      | date : "hh:mm a"
+                  }}</span>
+                </div>
+                <div class="detail-item">
+                  <i class="fa-solid fa-house-chimney-medical"></i>
+                  <span>{{
+                    appointment.AppointmentStatus | AppointmentStatusEnumValue
+                  }}</span>
                 </div>
               </div>
             </div>
           </div>
-          <div class="col-md-3 text-end">
+          <div class="text-end">
             <button
-              class="btn btn-gradient-secondary appointment-btn"
+              class="btn btn-gradient-secondary appointment-btn text-start"
               [routerLink]="['/client/appointment', appointment.AppointmentId]"
             >
               <i class="fas fa-info-circle me-2"></i>
-              Appointment Details
+              Details
             </button>
           </div>
         </div>
