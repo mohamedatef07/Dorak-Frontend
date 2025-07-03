@@ -33,6 +33,18 @@
       </div>
       <div class="sidebar-item">
         <a
+          [routerLink]="['/client/appointments-history']"
+          [routerLinkActive]="['active-link']"
+          class="sidebar-link"
+        >
+          <div class="sidebar-icon">
+            <i class="fas fa-calendar-alt"></i>
+          </div>
+          <span>Appointments History</span>
+        </a>
+      </div>
+      <div class="sidebar-item">
+        <a
           [routerLink]="['/client/client-wallet']"
           [routerLinkActive]="['active-link']"
           class="sidebar-link"
