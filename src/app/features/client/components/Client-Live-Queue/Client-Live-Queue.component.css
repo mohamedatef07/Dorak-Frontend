@@ -81,7 +81,6 @@
   box-shadow: var(--shadow-sm);
 }
 
-
 @keyframes pulse-online {
   0%,
   100% {
@@ -504,4 +503,17 @@
   .status-number {
     font-size: 1.25rem;
   }
+}
+::ng-deep .p-button {
+  background-color: #3a7599 !important;
+  padding: 0.2rem !important;
+}
+::ng-deep .p-button .p-icon {
+  color: white !important;
+}
+::ng-deep .p-carousel-indicator-active .p-carousel-indicator-button {
+  background-color: #3a7599 !important;
+}
+::ng-deep .p-carousel-viewport {
+  height: 600px !important;
 }

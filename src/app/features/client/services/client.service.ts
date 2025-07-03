@@ -218,4 +218,10 @@ export class ClientService {
       `${environment.apiUrl}/api/client/client-general-appointment-statistics`
     );
   }
+  cancelAppointment(appointmentId: number): Observable<ApiResponse<null>> {
+    return this.httpClient.post<ApiResponse<null>>(
+      `${environment.apiUrl}/api/client/cancel-appointment/?appointmentId=${appointmentId}`,
+      {}
+    );
+  }
 }
