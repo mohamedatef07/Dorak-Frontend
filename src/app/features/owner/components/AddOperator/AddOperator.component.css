@@ -1,0 +1,59 @@
+.profile-image-wrapper {
+  width: 180px;
+  height: 180px;
+}
+.profile-image {
+  width: 180px;
+  height: 180px;
+  object-fit: cover;
+  border: 3px solid #f0f0f0;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+  background: #fff;
+}
+:host ::ng-deep .change-image-label {
+  font-size: 1rem !important;
+  padding: 10px !important;
+  border: 1px solid #eee;
+  border-radius: 100% !important;
+  transition: background 0.2s;
+}
+.change-image-label:hover {
+  background: #f5f5f5;
+}
+
+.profile-image-wrapper {
+  width: 180px;
+  height: 180px;
+}
+.profile-image {
+  width: 180px;
+  height: 180px;
+  object-fit: cover;
+  border: 3px solid #f0f0f0;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+  background: #fff;
+}
+.change-image-label {
+  font-size: 1.3rem;
+  border: 1px solid #eee;
+  transition: background 0.2s;
+}
+.change-image-label:hover {
+  background: #f5f5f5;
+}
+
+:host ::ng-deep .custom-register-btn{
+  background: var(--button-bg-color-Light) !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: var(--border-radius) !important;
+  font-size: 1.1rem !important;
+  padding: 0.75rem 1.5rem !important;
+  transition: background 0.2s;
+}
+:host ::ng-deep .custom-register-btn:hover,
+:host ::ng-deep .custom-register-btn:focus {
+  background: #012a4a !important;
+  color: white !important;
+  /* border: 1px solid var(--hover-border-Light) !important; */
+}

@@ -1,51 +1,81 @@
-<form [formGroup]="AddOperatorForm" (ngSubmit)="HandleSubmitForm()">
-  <div>
-    <label for="userName">Username</label>
-    <input id="userName" type="text" formControlName="UserName" placeholder="Enter username" />
+<div class="container mt-3">
+  <!-- <p-toast></p-toast> -->
+  <h4 class="mb-4">Add Operator</h4>
+  <div class="row mx-3">
+    <div class="col-md-12 col-lg-6">
+      <form [formGroup]="AddOperatorForm" (ngSubmit)="HandleSubmitForm()" class="w-100">
+        <div class="mb-3">
+          <p-floatlabel variant="on">
+            <input pInputText id="userName" type="text" formControlName="UserName" />
+            <label for="userName">Username</label>
+          </p-floatlabel>
+        </div>
+        <div class="mb-3">
+          <p-floatlabel variant="on">
+            <input pInputText id="email" type="email" formControlName="Email" />
+            <label for="email">Email</label>
+          </p-floatlabel>
+        </div>
+        <div class="mb-3">
+          <p-floatlabel variant="on">
+            <input pInputText id="phoneNumber" type="text" formControlName="PhoneNumber" />
+            <label for="phoneNumber">Phone Number</label>
+          </p-floatlabel>
+        </div>
+        <div class="mb-3">
+          <p-floatlabel variant="on">
+            <input pInputText id="password" type="password" formControlName="Password" />
+            <label for="password">Password</label>
+          </p-floatlabel>
+        </div>
+        <div class="mb-3">
+          <p-floatlabel variant="on">
+            <input pInputText id="confirmPassword" type="password" formControlName="ConfirmPassword" />
+            <label for="confirmPassword">Confirm Password</label>
+          </p-floatlabel>
+        </div>
+        <div class="mb-3">
+          <p-floatlabel variant="on">
+            <input pInputText id="firstName" type="text" formControlName="FirstName" />
+            <label for="firstName">First Name</label>
+          </p-floatlabel>
+        </div>
+        <div class="mb-3">
+          <p-floatlabel variant="on">
+            <input pInputText id="lastName" type="text" formControlName="LastName" />
+            <label for="lastName">Last Name</label>
+          </p-floatlabel>
+        </div>
+        <div class="mb-3 w-50">
+          <p-autoComplete inputId="genderInput" formControlName="Gender" [dropdown]="true"
+            [suggestions]="filteredGenders" field="label" [forceSelection]="true"
+            (completeMethod)="filterGender($event)" placeholder="Select Gender" styleClass="w-100">
+            <ng-template let-gender pTemplate="item">
+              <div>{{ gender.label }}</div>
+            </ng-template>
+          </p-autoComplete>
+        </div>
+      </form>
+    </div>
+    <div class="col-md-12 col-lg-6 d-flex flex-column align-items-center justify-content-start mt-4 mt-md-0">
+      <div class="profile-image-wrapper position-relative mb-3">
+        <img *ngIf="imagePreview; else noImage" [src]="imagePreview" alt="Profile Preview"
+          class="rounded-circle profile-image" />
+        <ng-template #noImage>
+          <div class="rounded-circle bg-light d-flex align-items-center justify-content-center profile-image">
+            <span class="text-muted">No Image</span>
+          </div>
+        </ng-template>
+        <label for="imageUpload"
+          class="change-image-label position-absolute bottom-0 end-0 translate-middle p-1 bg-white rounded-circle shadow-sm"
+          style="cursor:pointer;">
+          <i class="pi pi-camera"></i>
+        </label>
+        <input type="file" id="imageUpload" (change)="onImageSelected($event)" accept="image/*" class="d-none" />
+      </div>
+      <small class="text-muted mb-3">JPG, PNG, or GIF. Max 2MB.</small>
+      <button type="button" pButton label="Register" class=" custom-register-btn mt-2 w-50"
+        [disabled]="AddOperatorForm.invalid" (click)="HandleSubmitForm()"></button>
+    </div>
   </div>
-
-  <div>
-    <label for="email">Email</label>
-    <input id="email" type="email" formControlName="Email" placeholder="Enter email" />
-  </div>
-
-  <div>
-    <label for="phoneNumber">Phone Number</label>
-    <input id="phoneNumber" type="text" formControlName="PhoneNumber" placeholder="Enter phone number" />
-  </div>
-
-  <div>
-    <label for="password">Password</label>
-    <input id="password" type="password" formControlName="Password" placeholder="Enter password" />
-  </div>
-
-  <div>
-    <label for="confirmPassword">Confirm Password</label>
-    <input id="confirmPassword" type="password" formControlName="ConfirmPassword" placeholder="Confirm password" />
-  </div>
-
-  <div>
-    <label for="firstName">First Name</label>
-    <input id="firstName" type="text" formControlName="FirstName" placeholder="Enter first name" />
-  </div>
-
-  <div>
-    <label for="lastName">Last Name</label>
-    <input id="lastName" type="text" formControlName="LastName" placeholder="Enter last name" />
-  </div>
-
-  <div>
-    <label for="gender">Gender</label>
-    <select id="gender" formControlName="Gender">
-      <option [value]="1">Male</option>
-      <option [value]="2">Female</option>
-    </select>
-  </div>
-
-  <div>
-    <label for="CenterID">Center ID</label>
-    <input id="CenterID" type="text" formControlName="CenterId" placeholder="Enter Center ID" readonly/>
-  </div>
-
-  <button type="submit">Register</button>
-</form>
+</div>
