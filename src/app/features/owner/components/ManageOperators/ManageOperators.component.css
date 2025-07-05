@@ -144,3 +144,25 @@ tr:last-child td {
     opacity: 0.5;
     cursor: not-allowed;
 }
+
+.search {
+  width: 100%;
+  max-width: 400px;
+  margin-left: 0;
+}
+.search .search-container {
+  width: 100%;
+  background-color: white;
+  border: 1px solid var(--button-bg-color-Light);
+  border-radius: var(--border-radius);
+}
+.search .search-container input {
+  width: 100%;
+  font-size: 1rem;
+  border: none;
+  padding: 0.5rem;
+  background: transparent;
+}
+.search .search-container input::placeholder {
+  color: #a0aec0;
+}

@@ -1,8 +1,8 @@
-<p-toast></p-toast>
 <!-- Search Bar -->
-<div class="col-12 col-md-6 mx-auto mb-1 mt-3">
-    <input type="text" class="form-control p-inputtext-sm p-shadow-2" placeholder="Search by name..."
-        [(ngModel)]="searchTerm" (ngModelChange)="onSearchChange()">
+<div class="search d-flex gap-3 mb-1 mt-3">
+  <div class="search-container d-flex align-items-center pe-3 ps-3 flex-grow-1">
+    <i class="fa-solid fa-magnifying-glass"></i><input [(ngModel)]="searchTerm" type="text" placeholder="Search by name..." (ngModelChange)="onSearchChange()" />
+  </div>
 </div>
 
 <div class="content-wrapper d-flex flex-column flex-grow-1">
@@ -12,14 +12,14 @@
               <tr>
                   <th>ID</th>
                   <th>NAME</th>
-                  <th></th>
+                  <th>Actions</th>
               </tr>
           </thead>
           <tbody>
               <tr *ngFor="let operator of paginatedOperators; let i = index">
                   <td>{{ (currentPage - 1) * pageSize + i + 1 }}</td>
                   <td>{{ operator.FirstName + ' ' + operator.LastName }}</td>
-                  <td><button class="view-doc-profile" (click)="DeleteOperator(operator.OperatorId)">Delete</button></td>
+                  <td><button class="btn btn-danger" (click)="DeleteOperator(operator.OperatorId, $event)">Delete</button></td>
               </tr>
           </tbody>
       </table>

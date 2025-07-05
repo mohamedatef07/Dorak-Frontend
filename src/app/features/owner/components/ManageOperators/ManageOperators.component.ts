@@ -4,7 +4,7 @@ import { IOperator } from '../../models/IOperator';
 import { CommonModule } from '@angular/common';
 import { ApiResponse } from '../../../../types/ApiResponse';
 import { AuthService } from '../../../../services/auth.service';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { FormsModule } from '@angular/forms';
 
@@ -19,6 +19,7 @@ export class ManageOperatorsComponent implements OnInit {
   private ownerService = inject(OwnerService);
   private authService = inject(AuthService);
   private messageService = inject(MessageService);
+  private confirmService = inject(ConfirmationService);
   operators: IOperator[] = [];
   paginatedOperators: IOperator[] = [];
   currentPage = 1;
@@ -49,32 +50,36 @@ export class ManageOperatorsComponent implements OnInit {
     });
   }
 
-  DeleteOperator(OperatorId:string):void {
-    console.log(OperatorId);
-    if (!confirm('Are you sure you want to delete this operator?')) {
-    return;
+  DeleteOperator(OperatorId:string, event: Event):void {
+    this.confirmService.confirm({
+      target: event.target as EventTarget,
+      message: 'Do you want to delete this operator?',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.ownerService.deleteOperatorById(OperatorId).subscribe({
+          next: (res) => {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Success',
+              detail: 'Operator deleted successfully',
+              life: 4000,
+            });
+            // this.ngOnInit();
+          },
+          error: (err) => {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail:
+                'Failed to delete operator. Please try again later',
+              life: 4000,
+            });
+          },
+        });
+      },
+    });
   }
-
-  this.ownerService.deleteOperatorById(OperatorId).subscribe({
-    next: (res) => {
-      this.operators = this.operators.filter(op => op.OperatorId !== OperatorId);
-      this.filteredOperators = this.filteredOperators.filter(op => op.OperatorId !== OperatorId);
-      this.updatePaginatedOperators();
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Success',
-        detail: 'Operator deleted successfully.'
-      });
-    },
-    error: (err) => {
-      this.messageService.add({
-        severity: 'error',
-        summary: 'Error',
-        detail: 'Failed to delete operator. Please try again.'
-      });
-    }
-  });
-  }
+  
 
   updatePaginatedOperators() {
     const startIndex = (this.currentPage - 1) * this.pageSize;

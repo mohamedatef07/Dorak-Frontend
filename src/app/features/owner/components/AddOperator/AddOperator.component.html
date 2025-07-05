@@ -2,7 +2,8 @@
   <div class=" add-operator-card p-4 rounded shadow-sm bg-white">
     <button type="button" icon="pi pi-arrow-left" class="back-btn h-25 me-2"
       (click)="goBack()"><i class="fa-solid fa-arrow-left"></i> Back</button>
-    <h4 class="mt-4 mb-2">Add Operator</h4>
+    <h4 class="mb-2 text-center fw-bold">Add Operator</h4>
+    <hr class="mb-4">
     <div class="row mx-3">
       <div class="col-md-12 col-lg-6">
         <form [formGroup]="AddOperatorForm" (ngSubmit)="HandleSubmitForm()" class="w-100">

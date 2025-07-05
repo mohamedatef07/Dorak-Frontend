@@ -75,3 +75,9 @@
 :host ::ng-deep .p-inputtext:enabled:focus{
   border-color: #012a4a;
 }
+h4{
+  color: var(--text-color-Light) !important;
+}
+hr{
+  border-color: var(--button-bg-color-Light) !important;
+}
