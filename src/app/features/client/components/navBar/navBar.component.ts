@@ -3,7 +3,6 @@ import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../../services/auth.service';
 import { ProviderService } from '../../../provider/services/provider.service';
 import { MessageService } from 'primeng/api';
-import { Subscription } from 'rxjs';
 import { environment } from '../../../../../environments/environment';
 import { NotificationsSRService } from '../../../../services/signalR Services/notificationsSR.service';
 import { INotification } from '../../../../types/INotification';
@@ -25,8 +24,7 @@ export class NavBarComponent implements OnInit {
   cookie = inject(CookieService);
   router = inject(Router);
   notificationService = inject(NotificationService);
-  private notificationsListSubscription!: Subscription;
-
+  unreadCount = 0;
   notifications!: Array<INotification>;
   isDropDownOpen = false;
   isNotificationsDropDownOpen = false;
@@ -37,11 +35,13 @@ export class NavBarComponent implements OnInit {
     this.isDropDownOpen = !this.isDropDownOpen;
     this.isNotificationsDropDownOpen = false;
   }
+
   toggleNotificationsDropDown(event: MouseEvent) {
     event.stopPropagation();
     this.isNotificationsDropDownOpen = !this.isNotificationsDropDownOpen;
     this.isDropDownOpen = false;
   }
+
   @HostListener('document:click', ['$event'])
   handelOutSideClick(event: MouseEvent) {
     let dropDownIcon = document.getElementById('dropdown-icon');
@@ -56,6 +56,7 @@ export class NavBarComponent implements OnInit {
       this.isNotificationsDropDownOpen = false;
     }
   }
+
   handelLogout() {
     this.authServices.logOut().subscribe({
       next: (res) => {
@@ -73,32 +74,60 @@ export class NavBarComponent implements OnInit {
       },
     });
   }
+
   ngOnInit() {
     this.UserImage = `${environment.apiUrl}${this.authServices.getUserImage()}`;
+    this.loadNotifications();
+    this.setupSignalRSubscriptions();
+  }
+
+  loadNotifications() {
     this.notificationService.getNotifications(1, 3).subscribe({
       next: (res) => {
-        this.notifications = [...res.Data];
+        const notificationsWithLocalStatus = this.notificationService.updateNotificationsWithLocalStatus(res.Data);
+        this.notifications = [...notificationsWithLocalStatus];
+        this.updateUnreadCount();
+      },
+      error: (err) => {
+        this.messageServices.add({
+          key: 'main-toast',
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Failed to load notifications. Please try again soon.',
+          life: 4000,
+        });
       },
     });
-    this.notificationsListSubscription =
-      this.srService.notificationsList.subscribe({
-        next: (updatedNotifications) => {
-          this.notifications = [...updatedNotifications];
-        },
-        error: (err) => {
-          this.messageServices.add({
-            key: 'main-toast',
-            severity: 'error',
-            summary: 'Error',
-            detail:
-              'The server is experiencing an issue, Please try again soon.',
-            life: 4000,
-          });
-        },
-      });
+  }
+
+  setupSignalRSubscriptions() {
+    this.srService.notificationsList.subscribe({
+      next: (updatedNotifications) => {
+        // Use shared service to update notifications with local read status
+        const updatedNotificationsWithLocalChanges = this.notificationService.updateNotificationsWithLocalStatus(updatedNotifications);
+        this.notifications = [...updatedNotificationsWithLocalChanges].slice(0, 3);
+        this.updateUnreadCount();
+      },
+      error: (err) => {
+        this.messageServices.add({
+          key: 'main-toast',
+          severity: 'error',
+          summary: 'Error',
+          detail: 'The server is experiencing an issue, Please try again soon.',
+          life: 4000,
+        });
+      },
+    });
+
     this.srService.notification.subscribe({
       next: (notification) => {
         this.notificationService.showNotificationToast(notification);
+        // Add new notification to the list and update count
+        this.notifications.unshift(notification);
+        if (this.notifications.length > 3) {
+          this.notifications = this.notifications.slice(0, 3);
+        }
+        this.updateUnreadCount();
       },
       error: (err) => {
         this.messageServices.add({
@@ -111,7 +140,13 @@ export class NavBarComponent implements OnInit {
       },
     });
   }
-  ngOnDestroy(): void {
-    this.notificationsListSubscription.unsubscribe();
+
+  updateUnreadCount() {
+    this.unreadCount = this.notificationService.getUnreadCount(this.notifications);
+  }
+
+  handleNotificationClick(notification: INotification) {
+    this.notificationService.handleNotificationClick(notification, this.messageServices);
+    this.updateUnreadCount();
   }
 }
