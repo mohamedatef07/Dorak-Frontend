@@ -64,6 +64,7 @@ export class NavBarComponent implements OnInit {
       },
       error: (err) => {
         this.messageServices.add({
+          key: 'main-toast',
           severity: 'error',
           summary: 'Error',
           detail: 'The server is experiencing an issue, Please try again soon.',
@@ -86,6 +87,7 @@ export class NavBarComponent implements OnInit {
         },
         error: (err) => {
           this.messageServices.add({
+            key: 'main-toast',
             severity: 'error',
             summary: 'Error',
             detail:
@@ -96,16 +98,11 @@ export class NavBarComponent implements OnInit {
       });
     this.srService.notification.subscribe({
       next: (notification) => {
-        console.log(notification);
-        this.messageServices.add({
-          severity: 'info',
-          summary: 'New Notification',
-          detail: notification.Message,
-          life: 4000,
-        });
+        this.notificationService.showNotificationToast(notification);
       },
       error: (err) => {
         this.messageServices.add({
+          key: 'main-toast',
           severity: 'error',
           summary: 'Error',
           detail: 'The server is experiencing an issue, Please try again soon.',

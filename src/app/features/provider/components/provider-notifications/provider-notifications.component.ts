@@ -53,23 +53,27 @@ export class ProviderNotificationsComponent implements OnInit {
     const end = this.currentPage * this.pageSize;
     return end > this.totalRecords ? this.totalRecords : end;
   }
-    loadNotifications() {
-    this.notificationService.getNotifications(this.currentPage, this.pageSize).subscribe({
-      next: (res) => {
-        this.notifications = [...res.Data];
-        this.totalRecords = res.TotalRecords;
-        this.currentPage = res.CurrentPage;
-        this.pageSize = res.PageSize;
-        this.totalPages = res.TotalPages;
+  loadNotifications() {
+    this.notificationService
+      .getNotifications(this.currentPage, this.pageSize)
+      .subscribe({
+        next: (res) => {
+          this.notifications = [...res.Data];
+          this.totalRecords = res.TotalRecords;
+          this.currentPage = res.CurrentPage;
+          this.pageSize = res.PageSize;
+          this.totalPages = res.TotalPages;
         },
-      error: (err) => {
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'The server is experiencing an issue, Please try again soon.',
-          life: 4000,
-        });
-      },
-    });
+        error: (err) => {
+          this.messageService.add({
+            key: 'main-toast',
+            severity: 'error',
+            summary: 'Error',
+            detail:
+              'The server is experiencing an issue, Please try again soon.',
+            life: 4000,
+          });
+        },
+      });
   }
 }

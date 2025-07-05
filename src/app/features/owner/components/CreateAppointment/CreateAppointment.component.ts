@@ -1,13 +1,21 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { OwnerService } from '../../services/owner.service';
 import { ApiResponse } from '../../../../types/ApiResponse';
 import { ICreateAppointment } from '../../models/ICreateAppointment';
 import { IShiftsTable } from '../../models/IShiftsTable';
 import { IShiftServices } from '../../models/IShiftServices';
 import { AuthService } from '../../../../services/auth.service';
-import { AutoCompleteModule, AutoCompleteSelectEvent } from 'primeng/autocomplete';
+import {
+  AutoCompleteModule,
+  AutoCompleteSelectEvent,
+} from 'primeng/autocomplete';
 import { InputTextModule } from 'primeng/inputtext';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { DatePickerModule } from 'primeng/datepicker';
@@ -67,7 +75,10 @@ export class CreateAppointmentComponent implements OnInit {
     this.CreateAppointmentForm = new FormGroup({
       FirstName: new FormControl(''),
       LastName: new FormControl(''),
-      ContactInfo: new FormControl('', [Validators.required, Validators.pattern(/^\+?\d{10,15}$/)]),
+      ContactInfo: new FormControl('', [
+        Validators.required,
+        Validators.pattern(/^\+?\d{10,15}$/),
+      ]),
       AdditionalFees: new FormControl(0),
       AppointmentDate: new FormControl(null),
       ServiceId: new FormControl(null),
@@ -99,13 +110,17 @@ export class CreateAppointmentComponent implements OnInit {
         this.storeUniqueProviderNames();
         this.filteredProviders = [...this.ProviderName];
 
-        const initialServiceId = this.CreateAppointmentForm.get('ServiceId')?.value;
+        const initialServiceId =
+          this.CreateAppointmentForm.get('ServiceId')?.value;
         if (initialServiceId) {
-          this.selectedService = this.Services.find(s => s.ServiceId === initialServiceId) || null;
+          this.selectedService =
+            this.Services.find((s) => s.ServiceId === initialServiceId) || null;
           this.updateFees();
         }
 
-        this.CreateAppointmentForm.get('ProviderId')?.valueChanges.subscribe(() => this.filterRecords());
+        this.CreateAppointmentForm.get('ProviderId')?.valueChanges.subscribe(
+          () => this.filterRecords()
+        );
       },
       error: (err: any) => {
         console.error('Error while fetching operators:', err);
@@ -117,11 +132,18 @@ export class CreateAppointmentComponent implements OnInit {
     // Normalize provider names to ensure uniqueness (trim and lowercase for comparison)
     this.ProviderName = Array.from(
       new Set(
-        this.Records.map(record => record.ProviderName?.trim().toLowerCase() ?? '')
+        this.Records.map(
+          (record) => record.ProviderName?.trim().toLowerCase() ?? ''
+        )
       )
-    ).map(name => 
-      this.Records.find(record => record.ProviderName?.trim().toLowerCase() === name)?.ProviderName ?? ''
-    ).filter(name => name !== '');
+    )
+      .map(
+        (name) =>
+          this.Records.find(
+            (record) => record.ProviderName?.trim().toLowerCase() === name
+          )?.ProviderName ?? ''
+      )
+      .filter((name) => name !== '');
   }
 
   formatDateToYMD(date: Date | null): string | null {
@@ -133,19 +155,22 @@ export class CreateAppointmentComponent implements OnInit {
   }
 
   filterRecords() {
-    const calendarDate: Date | null = this.CreateAppointmentForm.get('AppointmentDate')?.value;
+    const calendarDate: Date | null =
+      this.CreateAppointmentForm.get('AppointmentDate')?.value;
     const formattedDate = this.formatDateToYMD(calendarDate);
     const serviceId = this.CreateAppointmentForm.get('ServiceId')?.value;
     const providerId = this.CreateAppointmentForm.get('ProviderId')?.value;
 
-    console.log("Filter Date:", formattedDate);
-    console.log("serviceId:", serviceId);
-    console.log("providerId:", providerId);
+    console.log('Filter Date:', formattedDate);
+    console.log('serviceId:', serviceId);
+    console.log('providerId:', providerId);
 
     this.filteredRecords = this.Records.reduce(
       (filtered: IShiftsTable[], record: IShiftsTable) => {
-        const matchesDate = !formattedDate || record.ShiftDate === formattedDate;
-        const matchesProvider = !providerId || record.ProviderName === providerId;
+        const matchesDate =
+          !formattedDate || record.ShiftDate === formattedDate;
+        const matchesProvider =
+          !providerId || record.ProviderName === providerId;
 
         if (!serviceId) {
           if (matchesDate && matchesProvider) {
@@ -184,14 +209,14 @@ export class CreateAppointmentComponent implements OnInit {
 
   searchServices(event: any) {
     let query = event.query;
-    this.filteredServices = this.Services.filter(service =>
+    this.filteredServices = this.Services.filter((service) =>
       service.ServiceName.toLowerCase().includes(query.toLowerCase())
     );
   }
 
   searchProviders(event: any) {
     let query = event.query;
-    this.filteredProviders = this.ProviderName.filter(provider =>
+    this.filteredProviders = this.ProviderName.filter((provider) =>
       provider.toLowerCase().includes(query.toLowerCase())
     );
   }
@@ -237,6 +262,7 @@ export class CreateAppointmentComponent implements OnInit {
     console.log('bookNow called'); // For debugging
     if (!this.CreateAppointmentForm.get('ContactInfo')?.valid) {
       this.messageService.add({
+        key: 'main-toast',
         severity: 'error',
         summary: 'Invalid Contact Info',
         detail: 'Please enter a valid phone number (10-15 digits, optional +).',
@@ -276,7 +302,7 @@ export class CreateAppointmentComponent implements OnInit {
     }
   }
 
-   HandleSubmitForm() {
+  HandleSubmitForm() {
     console.log(this.selectedShiftRecord);
 
     if (!this.selectedShiftRecord) {
@@ -332,9 +358,12 @@ export class CreateAppointmentComponent implements OnInit {
           while (backdrops.length > 0) {
             backdrops[0].parentNode?.removeChild(backdrops[0]);
           }
-        }, 500); 
+        }, 500);
 
-        this.router.navigate(['/owner/provider-live-queue',appointmentData.ShiftId])
+        this.router.navigate([
+          '/owner/provider-live-queue',
+          appointmentData.ShiftId,
+        ]);
       },
       error: (error) => {
         this.isSubmitting = false;

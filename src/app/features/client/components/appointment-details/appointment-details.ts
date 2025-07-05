@@ -94,7 +94,6 @@ export class appointmentDetails implements OnInit {
     }
   }
   public clientCancelAppointment(appointmentId: number, event: Event): void {
-
     this.confirmService.confirm({
       target: event.target as EventTarget,
       message: 'Do you want to cancel this appointment?',
@@ -114,13 +113,32 @@ export class appointmentDetails implements OnInit {
             this.messageServices.add({
               severity: 'error',
               summary: 'Error',
-              detail:
-                'Failed to cancel appointment. Please try again later',
+              detail: 'Failed to cancel appointment. Please try again later',
               life: 4000,
             });
           },
         });
       },
     });
+  }
+
+  public isCancelButtonDisabled(): boolean {
+    if (!this.appointment?.AppointmentDate) {
+      return true;
+    }
+
+    const today = new Date();
+    const appointmentDate = new Date(this.appointment.AppointmentDate);
+
+    // Set today to start of day for accurate comparison
+    today.setHours(0, 0, 0, 0);
+    appointmentDate.setHours(0, 0, 0, 0);
+
+    // Calculate the difference in days
+    const timeDifference = appointmentDate.getTime() - today.getTime();
+    const daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
+
+    // Disable if appointment is less than 2 days away
+    return daysDifference <= 2;
   }
 }

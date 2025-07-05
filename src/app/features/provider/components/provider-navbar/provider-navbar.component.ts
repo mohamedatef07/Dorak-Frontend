@@ -64,6 +64,7 @@ export class ProviderNavbarComponent {
       },
       error: (err) => {
         this.messageServices.add({
+          key: 'main-toast',
           severity: 'error',
           summary: 'Error',
           detail: 'The server is experiencing an issue, Please try again soon.',
@@ -82,10 +83,11 @@ export class ProviderNavbarComponent {
     this.notificationsListSubscription =
       this.srService.notificationsList.subscribe({
         next: (updatedNotifications) => {
-          this.notifications = [...updatedNotifications];
+          this.notifications = [...updatedNotifications].slice(0,3);
         },
         error: (err) => {
           this.messageServices.add({
+            key: 'main-toast',
             severity: 'error',
             summary: 'Error',
             detail:
@@ -96,16 +98,11 @@ export class ProviderNavbarComponent {
       });
     this.srService.notification.subscribe({
       next: (notification) => {
-        console.log(notification);
-        this.messageServices.add({
-          severity: 'info',
-          summary: 'New Notification',
-          detail: notification.Message,
-          life: 4000,
-        });
+        this.notificationService.showNotificationToast(notification);
       },
       error: (err) => {
         this.messageServices.add({
+          key: 'main-toast',
           severity: 'error',
           summary: 'Error',
           detail: 'The server is experiencing an issue, Please try again soon.',
