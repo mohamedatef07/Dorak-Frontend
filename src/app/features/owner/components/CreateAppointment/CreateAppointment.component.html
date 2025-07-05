@@ -75,8 +75,8 @@
           <td>{{ (currentPage - 1) * pageSize + i + 1 }}</td>
           <td>{{ record.ProviderName }}</td>
           <td>{{ record.ShiftDate }}</td>
-          <td>{{ record.StartTime }}</td>
-          <td>{{ record.EndTime }}</td>
+          <td>{{ record.StartTime.toString() | TimeStringToDate | date : "h:mm a" }}</td>
+          <td>{{ record.EndTime.toString() | TimeStringToDate | date : "h:mm a" }}</td>
           <td>{{ record.Services[0].BasePrice }}</td>
           <td>
             <button type="button" class="view-doc-profile" (click)="bookNow(record)">

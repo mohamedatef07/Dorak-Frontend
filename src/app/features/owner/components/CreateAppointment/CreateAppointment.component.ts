@@ -24,6 +24,7 @@ import { FluidModule } from 'primeng/fluid';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
+import { TimeStringToDatePipe } from "../../../../pipes/TimeStringToDate.pipe";
 declare var bootstrap: any;
 
 @Component({
@@ -40,7 +41,8 @@ declare var bootstrap: any;
     FluidModule,
     AutoCompleteModule,
     ToastModule,
-  ],
+    TimeStringToDatePipe
+],
   providers: [MessageService],
   standalone: true,
 })
