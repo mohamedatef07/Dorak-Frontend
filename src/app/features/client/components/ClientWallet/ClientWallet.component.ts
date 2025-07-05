@@ -67,6 +67,7 @@ export class ClientWalletComponent implements OnInit {
       error: (err) => {
         console.error('Error while fetching client wallet profile:', err);
         this.messageService.add({
+          key: 'main-toast',
           severity: 'error',
           summary: 'Error',
           detail: 'Failed to load wallet profile. Please try again later.',
@@ -106,6 +107,7 @@ export class ClientWalletComponent implements OnInit {
   async returnFund() {
     if (!this.returnFundAmount || this.returnFundAmount <= 0) {
       this.messageService.add({
+        key: 'main-toast',
         severity: 'warn',
         summary: 'Invalid Amount',
         detail: 'Please enter a valid amount greater than 0',
@@ -115,6 +117,7 @@ export class ClientWalletComponent implements OnInit {
 
     if (!this.selectedReturnMethod) {
       this.messageService.add({
+        key: 'main-toast',
         severity: 'warn',
         summary: 'Missing Information',
         detail: 'Please select a return method',
@@ -124,6 +127,7 @@ export class ClientWalletComponent implements OnInit {
 
     if (this.selectedReturnMethod === 'vodafone' && !this.vodafoneNumber) {
       this.messageService.add({
+        key: 'main-toast',
         severity: 'warn',
         summary: 'Missing Information',
         detail: 'Please enter your Vodafone Cash number',
@@ -133,6 +137,7 @@ export class ClientWalletComponent implements OnInit {
 
     if (this.selectedReturnMethod === 'bank' && !this.bankAccountNumber) {
       this.messageService.add({
+        key: 'main-toast',
         severity: 'warn',
         summary: 'Missing Information',
         detail: 'Please enter your bank account number',
@@ -142,6 +147,7 @@ export class ClientWalletComponent implements OnInit {
 
     if (this.returnFundAmount > this.balance) {
       this.messageService.add({
+        key: 'main-toast',
         severity: 'error',
         summary: 'Insufficient Balance',
         detail: 'The requested amount exceeds your current balance',
@@ -174,6 +180,7 @@ export class ClientWalletComponent implements OnInit {
       this.transactions.unshift(newTransaction);
 
       this.messageService.add({
+        key: 'main-toast',
         severity: 'success',
         summary: 'Success',
         detail: `$${this.returnFundAmount.toFixed(
@@ -188,6 +195,7 @@ export class ClientWalletComponent implements OnInit {
       this.closeReturnFundDialog();
     } catch (error) {
       this.messageService.add({
+        key: 'main-toast',
         severity: 'error',
         summary: 'Error',
         detail: 'Failed to return funds. Please try again.',
@@ -229,6 +237,7 @@ export class ClientWalletComponent implements OnInit {
   openTermsAndConditions() {
     // In real app, this would navigate to terms page or open modal
     this.messageService.add({
+      key: 'main-toast',
       severity: 'info',
       summary: 'Navigation',
       detail: 'Opening Terms and Conditions...',
@@ -238,6 +247,7 @@ export class ClientWalletComponent implements OnInit {
   openHelpSupport() {
     // In real app, this would navigate to help page or open support chat
     this.messageService.add({
+      key: 'main-toast',
       severity: 'info',
       summary: 'Navigation',
       detail: 'Opening Help & Support...',
