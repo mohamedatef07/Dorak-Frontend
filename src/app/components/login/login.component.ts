@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 import { CookieService } from 'ngx-cookie-service';
 import { NotificationsSRService } from '../../services/signalR Services/notificationsSR.service';
@@ -18,12 +19,14 @@ import { ToastModule } from 'primeng/toast';
   providers: [MessageService],
   standalone: true,
   imports: [
+    CommonModule,
     FormsModule,
     ButtonModule,
     CheckboxModule,
     InputTextModule,
     DividerModule,
     ToastModule,
+    RouterModule,
   ],
 })
 export class LoginComponent {
@@ -75,14 +78,7 @@ export class LoginComponent {
     });
   }
 
-  onGoogleLogin(): void {
-    this.messageService.add({
-      severity: 'info',
-      summary: 'Google Login',
-      detail: 'Google authentication would be implemented here',
-      life: 3000,
-    });
-  }
+
 
   onForgotPassword(): void {
     this.messageService.add({
@@ -103,12 +99,7 @@ export class LoginComponent {
   }
 
   onStartAcademy(): void {
-    this.messageService.add({
-      severity: 'info',
-      summary: 'Academy',
-      detail: 'Academy section would be implemented here',
-      life: 3000,
-    });
+    this.router.navigate(['/home']);
   }
 
   togglePasswordVisibility(): void {
