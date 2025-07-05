@@ -1,8 +1,7 @@
 
-  <div class="container d-flex flex-column gap-3 py-4 px-0 m-0">
-    <p class="fw-bold m-0">Notifications</p>
+    <p class="fw-bold m-0 client-notifications">Notifications</p>
     <div
-      class="notifications-list d-flex flex-column gap-2"
+      class="notifications-list py-2 d-flex flex-column gap-2"
     >
       @for(notification of notifications; track $index){
       <div class="notification-item d-flex flex-column gap-2">
@@ -18,7 +17,26 @@
       <span class="no-found-notifications">
         No Notifications Found
       </span>
-      }
+      }@if(notifications.length > 0){
+        <div class="d-flex justify-content-center align-items-center gap-2 mt-4">
+          <button
+            class="btn main-btn-bg"
+            (click)="previousPage()"
+            [disabled]="!canGoPrevious"
+          >
+            Previous
+          </button>
+          <span class="current-page"
+            >Page {{ currentPage }} of {{ totalPages }}</span
+          >
+          <button
+            class="btn main-btn-bg"
+            (click)="nextPage()"
+            [disabled]="!canGoNext"
+          >
+            Next
+          </button>
+        </div>
+        }
     </div>
-  </div>
 

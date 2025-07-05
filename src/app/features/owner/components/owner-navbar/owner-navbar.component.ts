@@ -13,7 +13,7 @@ export class OwnerNavbarComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.notificationService.getNotifications().subscribe({
+    this.notificationService.getNotifications(1, 3).subscribe({
       next: (res) => {
         this.notifications = [...res.Data];
       },

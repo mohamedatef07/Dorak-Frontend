@@ -18,6 +18,28 @@
         </div>
         <p class="notification-message m-0">{{ notification.Message }}</p>
       </div>
+      } @empty {
+      <div class="text-muted text-center">No notifications found.</div>
+      } @if(notifications.length > 0){
+      <div class="d-flex justify-content-center align-items-center gap-2 mt-4">
+        <button
+          class="btn main-btn-bg"
+          (click)="previousPage()"
+          [disabled]="!canGoPrevious"
+        >
+          Previous
+        </button>
+        <span class="current-page"
+          >Page {{ currentPage }} of {{ totalPages }}</span
+        >
+        <button
+          class="btn main-btn-bg"
+          (click)="nextPage()"
+          [disabled]="!canGoNext"
+        >
+          Next
+        </button>
+      </div>
       }
     </div>
   </div>

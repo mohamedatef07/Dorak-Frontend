@@ -1,15 +1,10 @@
-.container > p {
+.client-notifications {
   color: var(--text-color-Light);
   font-size: 2rem;
 }
 
 .notifications-list {
-  width: 80%;
-  background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-light) 100%);
   border-radius: var(--border-radius-xl);
-  box-shadow: var(--shadow-md);
-  padding: 2rem 0;
-  margin: 0 auto;
 }
 
 .notification-item {

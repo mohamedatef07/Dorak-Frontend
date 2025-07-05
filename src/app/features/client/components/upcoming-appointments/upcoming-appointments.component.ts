@@ -9,7 +9,7 @@ import { IClientAppointmentCard } from '../../models/IClientAppointmentCard';
 import { IAppointment } from '../../models/IAppointment';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { routes } from '../../../../app.routes';
-import { IDoctorCard } from '../../models/iDoctorcard';
+import { IDoctorCard } from '../../models/IDoctorCard';
 import { environment } from '../../../../../environments/environment';
 import { TimeStringToDatePipe } from '../../../../pipes/TimeStringToDate.pipe';
 import { IGeneralAppointmentStatistics } from '../../models/IGeneralAppointmentStatistics';
@@ -26,7 +26,7 @@ import { AppointmentStatus } from '../../../../Enums/AppointmentStatus.enum';
     FormsModule,
     RouterLink,
     TimeStringToDatePipe,
-    AppointmentStatusEnumValuePipe
+    AppointmentStatusEnumValuePipe,
   ],
   templateUrl: './upcoming-appointments.component.html',
   styleUrls: ['./upcoming-appointments.component.css'],
@@ -41,28 +41,17 @@ export class UpcomingAppointmentsComponent implements OnInit {
   doctors: IDoctorCard[] = [];
   Appointments: IClientAppointmentCard[] = [];
   appointmentStatistics!: IGeneralAppointmentStatistics;
-  userid: string = '';
+  userid: string = this.cAuthServices.getUserId();
   fullImagePath: string = `${environment.apiUrl}`;
   appointmentId!: number;
   appointment!: IAppointment;
-
+  currentPage: number = 1;
+  pageSize: number = 10;
+  totalRecords: number = 0;
+  totalPages: number = 0;
   constructor() {}
   ngOnInit() {
-
-    this.userid = this.cAuthServices.getUserId();
-    this.clientServices.getUpcomingAppointments(this.userid).subscribe({
-      next: (res) => {
-        this.Appointments = [...res.Data];
-      },
-      error: (err) => {
-        this.messageServices.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'The server is experiencing an issue, Please try again soon.',
-          life: 4000,
-        });
-      },
-    });
+    this.loadUpcomingAppointments();
     this.clientServices.getGeneralAppointmentStatistics().subscribe({
       next: (res) => {
         this.appointmentStatistics = res.Data;
@@ -109,5 +98,52 @@ export class UpcomingAppointmentsComponent implements OnInit {
         },
       });
     }
+  }
+  nextPage() {
+    this.currentPage++;
+    this.loadUpcomingAppointments();
+  }
+
+  previousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.loadUpcomingAppointments();
+    }
+  }
+
+  get canGoNext(): boolean {
+    return this.currentPage * this.pageSize < this.totalRecords;
+  }
+
+  get canGoPrevious(): boolean {
+    return this.currentPage > 1;
+  }
+
+  get startRecord(): number {
+    return (this.currentPage - 1) * this.pageSize + 1;
+  }
+
+  get endRecord(): number {
+    const end = this.currentPage * this.pageSize;
+    return end > this.totalRecords ? this.totalRecords : end;
+  }
+  loadUpcomingAppointments() {
+    this.clientServices.getUpcomingAppointments(this.userid, this.currentPage, this.pageSize).subscribe({
+      next: (res) => {
+        this.Appointments = [...res.Data];
+        this.totalRecords = res.TotalRecords;
+        this.currentPage = res.CurrentPage;
+        this.pageSize = res.PageSize;
+        this.totalPages = res.TotalPages; 
+      },
+      error: (err) => {
+        this.messageServices.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'The server is experiencing an issue, Please try again soon.',
+          life: 4000,
+        });
+      },
+    });
   }
 }
