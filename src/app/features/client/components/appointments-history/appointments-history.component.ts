@@ -17,13 +17,20 @@ import { TimeStringToDatePipe } from '../../../../pipes/TimeStringToDate.pipe';
   templateUrl: './appointments-history.component.html',
   styleUrls: ['./appointments-history.component.css'],
   encapsulation: ViewEncapsulation.None,
-  imports: [CommonModule, AvatarModule, RatingModule, FormsModule, RouterLink, TimeStringToDatePipe, AppointmentStatusEnumValuePipe],
+  imports: [
+    CommonModule,
+    AvatarModule,
+    RatingModule,
+    FormsModule,
+    RouterLink,
+    TimeStringToDatePipe,
+    AppointmentStatusEnumValuePipe,
+  ],
 })
 export class AppointmentsHistoryComponent implements OnInit {
   clientService = inject(ClientService);
   authService = inject(AuthService);
   messageService = inject(MessageService);
-
 
   AppointmentsHistory: IClientAppointmentCard[] = [];
   userid: string = '';
@@ -67,22 +74,26 @@ export class AppointmentsHistoryComponent implements OnInit {
     return end > this.totalRecords ? this.totalRecords : end;
   }
   loadAppointmentsHistory() {
-    this.clientService.getAppointmentsHistory(this.userid, this.currentPage, this.pageSize).subscribe({
-      next: (res) => {
-        this.AppointmentsHistory = [...res.Data];
-        this.totalRecords = res.TotalRecords;
-        this.currentPage = res.CurrentPage;
-        this.pageSize = res.PageSize;
-        this.totalPages = res.TotalPages;
+    this.clientService
+      .getAppointmentsHistory(this.userid, this.currentPage, this.pageSize)
+      .subscribe({
+        next: (res) => {
+          this.AppointmentsHistory = [...res.Data];
+          this.totalRecords = res.TotalRecords;
+          this.currentPage = res.CurrentPage;
+          this.pageSize = res.PageSize;
+          this.totalPages = res.TotalPages;
         },
-      error: (err) => {
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'The server is experiencing an issue, Please try again soon.',
-          life: 4000,
-        });
-      },
-    });
+        error: (err) => {
+          this.messageService.add({
+            key: 'main-toast',
+            severity: 'error',
+            summary: 'Error',
+            detail:
+              'The server is experiencing an issue, Please try again soon.',
+            life: 4000,
+          });
+        },
+      });
   }
 }
