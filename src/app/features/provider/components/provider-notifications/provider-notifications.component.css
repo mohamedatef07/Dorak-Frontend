@@ -1,9 +1,8 @@
-.notifications-list{
-  width: 80%;
+.notifications-list {
+  border-radius: var(--border-radius-xl);
   background: #fff;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   border: 1px solid #e1e5e9;
-  border-radius: var(--border-radius);
 }
 
 .notification-item {
@@ -70,6 +69,23 @@
   margin: 0;
 }
 
+.no-found-notifications {
+  font-size: 1.1rem;
+  color: #6c757d;
+  padding: 3rem 1.5rem;
+  text-align: center;
+  background: #f8f9fa;
+  border-radius: var(--border-radius);
+  border: 2px dashed #dee2e6;
+}
+
+.no-found-notifications i {
+  font-size: 2rem;
+  color: #adb5bd;
+  margin-bottom: 1rem;
+  display: block;
+}
+
 .unread-indicator {
   display: flex;
   align-items: center;
@@ -101,75 +117,25 @@
 
 /* Mark All as Read button */
 .mark-all-read-btn {
-  background: linear-gradient(135deg, var(--primary-color), #0056b3);
   border: none;
   color: white;
   padding: 0.5rem 1rem;
   border-radius: 20px;
   font-weight: 500;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3);
 }
-
-.mark-all-read-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.4);
-  background: linear-gradient(135deg, #0056b3, var(--primary-color));
-}
-
 .mark-all-read-btn:active {
   transform: translateY(0);
 }
 
-/* Pagination styling */
-.pagination-container {
-  background: #fff;
-  padding: 1.5rem;
-  border-radius: var(--border-radius);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  border: 1px solid #e1e5e9;
-  margin-top: 2rem;
-}
-
-.pagination-btn {
-  background: var(--primary-color);
-  border: none;
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  min-width: 80px;
-}
-
-.pagination-btn:hover:not(:disabled) {
-  background: #0056b3;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
-}
-
-.pagination-btn:disabled {
-  background: #6c757d;
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
-}
-
-.current-page {
-  font-weight: 600;
-  color: var(--primary-color);
-  background: #e3f2fd;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  border: 1px solid #bbdefb;
+/* Loading state */
+.notification-item.loading {
+  opacity: 0.6;
+  pointer-events: none;
 }
 
 /* Responsive design */
 @media (max-width: 768px) {
-  .notifications-list {
-    width: 100%;
-  }
-
   .notification-item {
     padding: 1rem 1.5rem;
   }
@@ -182,5 +148,9 @@
 
   .notification-date {
     margin-left: 0;
+  }
+
+  .client-notifications {
+    font-size: 1.5rem;
   }
 }

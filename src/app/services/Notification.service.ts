@@ -5,6 +5,7 @@ import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { PaginationApiResponse } from '../types/PaginationApiResponse';
 import { MessageService } from 'primeng/api';
+import { ApiResponse } from '../types/ApiResponse';
 
 @Injectable({
   providedIn: 'root',
@@ -41,9 +42,15 @@ export class NotificationService {
     });
   }
 
-  markAsRead(notificationId: number): Observable<void> {
-    return this.httpClient.post<void>(
+  markAsRead(notificationId: number): Observable<null> {
+    return this.httpClient.post<null>(
       `${environment.apiUrl}/api/Notification/MarkAsRead/${notificationId}`,
+      {}
+    );
+  }
+  markAllAsRead(): Observable<ApiResponse<null>> {
+    return this.httpClient.post<ApiResponse<null>>(
+      `${environment.apiUrl}/api/Notification/MarkAllAsRead`,
       {}
     );
   }
@@ -57,33 +64,32 @@ export class NotificationService {
     }
   }
 
-  // Check if notification is read locally
-  isNotificationReadLocally(notificationId: number): boolean {
-    return this.readNotificationIds.has(notificationId);
-  }
-
   // Update notifications with local read status
-  updateNotificationsWithLocalStatus(notifications: Array<INotification>): Array<INotification> {
-    return notifications.map(notification => ({
+  updateNotificationsWithLocalStatus(
+    notifications: Array<INotification>
+  ): Array<INotification> {
+    return notifications.map((notification) => ({
       ...notification,
-      IsRead: notification.IsRead || this.readNotificationIds.has(notification.NotificationId)
+      IsRead:
+        notification.IsRead ||
+        this.readNotificationIds.has(notification.NotificationId),
     }));
   }
 
   // Get unread count
   getUnreadCount(notifications: Array<INotification>): number {
-    return notifications.filter(notification =>
-      !notification.IsRead && !this.readNotificationIds.has(notification.NotificationId)
+    return notifications.filter(
+      (notification) =>
+        !notification.IsRead &&
+        !this.readNotificationIds.has(notification.NotificationId)
     ).length;
   }
 
-  // Clear all read status (useful for logout)
-  clearReadStatus(): void {
-    this.readNotificationIds.clear();
-  }
-
   // Shared method to handle notification click
-  handleNotificationClick(notification: INotification, messageService: MessageService): void {
+  handleNotificationClick(
+    notification: INotification,
+    messageService: MessageService
+  ): void {
     if (!notification.IsRead) {
       this.markAsRead(notification.NotificationId).subscribe({
         next: () => {
@@ -98,32 +104,8 @@ export class NotificationService {
             detail: 'Failed to mark notification as read.',
             life: 4000,
           });
-        }
+        },
       });
     }
-  }
-
-  // Shared method to mark all notifications as read
-  markAllNotificationsAsRead(notifications: Array<INotification>, messageService: MessageService): void {
-    const unreadNotifications = notifications.filter(n => !n.IsRead);
-    if (unreadNotifications.length === 0) return;
-
-    unreadNotifications.forEach(notification => {
-      this.markAsRead(notification.NotificationId).subscribe({
-        next: () => {
-          notification.IsRead = true;
-          this.updateLocalReadStatus(notification.NotificationId, true);
-        },
-        error: (err) => {
-          messageService.add({
-            key: 'main-toast',
-            severity: 'error',
-            summary: 'Error',
-            detail: 'Failed to mark notification as read.',
-            life: 4000,
-          });
-        }
-      });
-    });
   }
 }

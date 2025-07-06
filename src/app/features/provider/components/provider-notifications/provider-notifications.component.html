@@ -5,69 +5,58 @@
     <!-- Mark All as Read button -->
     @if (unreadCount > 0) {
       <div class="d-flex justify-content-end mb-3">
-        <button
-          class="btn mark-all-read-btn"
-          (click)="markAllAsRead()">
+        <button class="btn mark-all-read-btn main-btn-bg" (click)="markAllAsRead()">
           <i class="fas fa-check-double me-2"></i>
           Mark All as Read
         </button>
       </div>
-    }
-
-    <div class="notifications-list p-3">
-      @for(notification of notifications; track $index){
-      <div
-        class="notification-item"
-        (click)="handleNotificationClick(notification)"
-        [ngClass]="{ 'reading-notification': notification.IsRead }">
-        <div class="notification-header">
-          <div class="d-flex align-items-center gap-2">
-            <h6 class="notification-title">
-              {{ notification.Title }}
-            </h6>
-            <!-- Unread indicator -->
-            @if (!notification.IsRead) {
+      }
+      <div class="notifications-list p-3">
+        @for(notification of notifications; track $index){
+        <div
+          class="notification-item"
+          (click)="handleNotificationClick(notification)"
+          [ngClass]="{ 'reading-notification': notification.IsRead }"
+        >
+          <div class="notification-header">
+            <div class="d-flex align-items-center gap-2">
+              <h6 class="notification-title">
+                {{ notification.Title }}
+              </h6>
+              <!-- Unread indicator -->
+              @if (!notification.IsRead) {
               <div class="unread-indicator">
                 <div class="bg-primary rounded-circle"></div>
               </div>
-            }
+              }
+            </div>
+            <span class="notification-date">
+              {{ notification.CreatedAt | date : "MMM d, y 'at' h:mm a" }}
+            </span>
           </div>
-          <span class="notification-date">
-            {{ notification.CreatedAt | date : "MMM d, y 'at' h:mm a" }}
-          </span>
+          <p class="notification-message">{{ notification.Message }}</p>
         </div>
-        <p class="notification-message">{{ notification.Message }}</p>
+        } @empty {
+        <div class="no-found-notifications">
+          <i class="fas fa-bell-slash"></i>
+          <span>No Notifications Found</span>
+        </div>
+        }
       </div>
-      } @empty {
-      <div class="text-muted text-center py-4">
-        <i class="fas fa-bell-slash mb-2" style="font-size: 2rem; color: #adb5bd; display: block;"></i>
-        <span>No notifications found.</span>
+      @if(notifications.length > 0){
+      <div class="d-flex justify-content-center align-items-center gap-2 mt-4">
+        <button
+          class="btn main-btn-bg"
+          (click)="previousPage()"
+          [disabled]="!canGoPrevious"
+        >
+          Previous
+        </button>
+        <span class="current-page">Page {{ currentPage }} of {{ totalPages }}</span>
+        <button class="btn main-btn-bg" (click)="nextPage()" [disabled]="!canGoNext">
+          Next
+        </button>
       </div>
       }
-    </div>
-
-    @if(notifications.length > 0){
-      <div class="pagination-container">
-        <div class="d-flex justify-content-center align-items-center gap-3">
-          <button
-            class="btn pagination-btn"
-            (click)="previousPage()"
-            [disabled]="!canGoPrevious">
-            <i class="fas fa-chevron-left me-1"></i>
-            Previous
-          </button>
-          <span class="current-page">
-            Page {{ currentPage }} of {{ totalPages }}
-          </span>
-          <button
-            class="btn pagination-btn"
-            (click)="nextPage()"
-            [disabled]="!canGoNext">
-            Next
-            <i class="fas fa-chevron-right ms-1"></i>
-          </button>
-        </div>
-      </div>
-    }
   </div>
 </main>
