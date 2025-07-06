@@ -36,7 +36,7 @@ export class OwnerService {
 
   deleteOperatorById(operatorId: string): Observable<ApiResponse<any>> {
     return this.httpClient.delete<ApiResponse<any>>(
-      `${environment.apiUrl}/api/Operator/delete-operator?operatorId=${operatorId}`
+      `${environment.apiUrl}/api/Operator/Delete?operatorId=${operatorId}`
     );
   }
 
