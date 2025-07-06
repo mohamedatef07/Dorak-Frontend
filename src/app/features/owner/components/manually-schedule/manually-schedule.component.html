@@ -1,49 +1,46 @@
+<div *ngIf="isLoading" class="loading modern-loading"><span>Loading...</span></div>
 
-
-<div *ngIf="isLoading" class="loading">
-  Loading...
+<div *ngIf="errorMessage && !isLoading" class="error-popup">
+  <div class="error-popup-content">
+    <i class="fas fa-exclamation-triangle error-icon"></i>
+    <span>{{ errorMessage }}</span>
+    <button class="close-btn" (click)="errorMessage = ''" aria-label="Close">&times;</button>
+  </div>
 </div>
 
-<div *ngIf="errorMessage && !isLoading" class="error-message">
-  {{ errorMessage }}
+<div *ngIf="successMessage && !isLoading" class="success-popup">
+  <div class="success-popup-content">
+    <i class="fas fa-check-circle success-icon"></i>
+    <span>{{ successMessage }}</span>
+    <button class="close-btn" (click)="successMessage = ''" aria-label="Close">&times;</button>
+  </div>
 </div>
 
-<div *ngIf="successMessage && !isLoading" class="success-message">
-  {{ successMessage }}
-</div>
+<h1 class="page-title">Schedule Assignments</h1>
 
-<div *ngIf="provider && !isLoading && !errorMessage" class="schedule-container">
-  <h1>Doctor Schedule</h1>
+<div *ngIf="provider && !isLoading && !errorMessage" class="schedule-container modern-card">
+
+  <div class="provider-info-modern">
+    <span class="doctor-name">Doctor Name: {{ provider.FirstName || 'Unknown' }} {{ provider.LastName || '' }}</span>
+    <span class="doctor-specialty">Specialization: {{ provider.Specialization || 'N/A' }}</span>
+  </div>
+
   <div class="navigation-buttons">
-    <button mat-raised-button color="primary" (click)="ManuallySchedule()">Manually</button>
-    <button mat-button (click)="WeeklySchedule()">Weekly</button>
+    <button class="btn-primary" (click)="ManuallySchedule()">Manually</button>
+    <button class="btn-secondary" (click)="WeeklySchedule()">Weekly</button>
   </div>
 
-  <!-- Back Button -->
-  <button mat-button class="back-button" (click)="goBack()">Back to Dashboard</button>
-
-  <!-- Provider Info -->
-  <div class="provider-info">
-    <h2>Doctor Name {{ provider.FirstName || 'Unknown' }} {{ provider.LastName || '' }}</h2>
-    <p>Specialization: {{ provider.Specialization || 'N/A' }}</p>
-  </div>
-
-  <!-- Scheduling Form -->
   <form [formGroup]="scheduleForm" class="schedule-form">
-    <div class="calendar-section">
-      <h3>Select Date Range</h3>
-      <div class="calendar-controls">
-        <button mat-button class="nav-button" (click)="prevMonth()">
-          ←
-        </button>
-        <span class="month-title">{{ getMonthName() }}</span>
-        <button mat-button class="nav-button" (click)="nextMonth()">
-          →
-        </button>
-      </div>
-      <div class="calendar-wrapper">
-        <div class="calendar">
-          <!-- Weekday Headers -->
+    <div class="schedule-flex-row">
+      <div class="calendar-section modern-card">
+        <h2 class="inner-title">Select Date Range</h2>
+        <div class="calendar-controls">
+          <button type="button" class="nav-button" (click)="prevMonth()">◄</button>
+          <span class="month-title">{{ viewDate | date: 'MMMM yyyy' }}</span>
+          <button type="button" class="nav-button" (click)="nextMonth()">►</button>
+        </div>
+
+        <div class="calendar-wrapper modern-calendar-wrapper">
           <div class="calendar-header">
             <div class="day-header">Sun</div>
             <div class="day-header">Mon</div>
@@ -53,75 +50,70 @@
             <div class="day-header">Fri</div>
             <div class="day-header">Sat</div>
           </div>
-          <!-- Calendar Days -->
+
           <div class="calendar-body">
-            <div *ngFor="let day of daysInMonth"
-                 class="calendar-day"
-                 [ngClass]="{
+            <div *ngFor="let day of daysInMonth" class="calendar-day" [ngClass]="{
                    'today': isToday(day.date),
                    'disabled': day.hasAssignment,
                    'start-date': isSelectedStartDate(day.date),
                    'end-date': isSelectedEndDate(day.date),
                    'in-between': isInBetweenDate(day.date)
-                 }"
-                 (click)="selectDate(day)">
+                 }" (click)="selectDate(day)">
               <ng-container *ngIf="day.date as validDate">
-                <span *ngIf="validDate.getMonth() === viewDate.getMonth()" class="day-number">
-                  {{ validDate.getDate() }}
+                <div *ngIf="validDate.getMonth() === viewDate.getMonth()" class="day-number-wrapper">
+                  <span class="day-number">{{ validDate.getDate() }}</span>
                   <span *ngIf="day.hasAssignment" class="assignment-dot"></span>
-                </span>
+                </div>
               </ng-container>
             </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="shifts-section">
-      <h3>Set Time</h3>
-
-      <div formArrayName="Shifts" *ngFor="let shift of shifts.controls; let i = index">
-        <div [formGroupName]="i" class="shift-row">
-          <mat-form-field appearance="fill">
-            <mat-label>Select Date</mat-label>
-            <mat-select formControlName="Date" required>
-              <mat-option *ngFor="let date of dateOptions" [value]="date">
-                {{ date.toLocaleDateString() }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <mat-form-field appearance="fill">
-            <mat-label>Start Time</mat-label>
-            <input matInput type="time" formControlName="StartTime" required />
-          </mat-form-field>
-
-          <mat-form-field appearance="fill">
-            <mat-label>End Time</mat-label>
-            <input matInput type="time" formControlName="EndTime" required />
-          </mat-form-field>
-
-          <mat-form-field appearance="fill">
-            <mat-label>Set Patients Number Per Day</mat-label>
-            <input matInput type="number" formControlName="MaxPatientsPerDay" min="1" />
-          </mat-form-field>
-
-          <button mat-button color="warn" (click)="removeShift(i)" [disabled]="shifts.length === 1">
-            Remove Shift
+      <div class="shifts-section modern-card">
+        <div formArrayName="Shifts">
+          <div *ngFor="let shift of shifts.controls; let i = index" [formGroupName]="i" class="shift-card">
+            <div class="shift-card-header">
+              <span class="shift-label">Shift {{ i + 1 }}</span>
+              <button type="button" class="btn btn-danger btn-remove-shift" (click)="removeShift(i)"
+                *ngIf="shifts.length > 1"
+                aria-label="Remove Shift">
+                Remove
+              </button>
+            </div>
+            <div class="shift-fields">
+              <div class="form-group">
+                <label class="form-label">Select Date</label>
+                <select formControlName="Date" required class="form-control">
+                  <option *ngFor="let date of dateOptions" [value]="date">{{ date.toLocaleDateString() }}</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Start Time</label>
+                <input type="time" formControlName="StartTime" required class="form-control" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">End Time</label>
+                <input type="time" formControlName="EndTime" required class="form-control" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Patients Number</label>
+                <input type="number" formControlName="MaxPatientsPerDay" min="1" class="form-control" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="add-shift-action">
+          <button type="button" class="btn btn-secondary queue-btn" (click)="addShift()">
+            <i class="fas fa-plus"></i> Add Shift
           </button>
         </div>
       </div>
-
-      <div class="add-shift-action">
-        <button mat-button color="primary" (click)="addShift()">Add Shift</button>
-      </div>
     </div>
 
-    <!-- Submit Button -->
     <div class="actions">
-      <button mat-raised-button color="primary" type="button" (click)="onSubmit()" [disabled]="scheduleForm.invalid || isLoading">
-        Submit
-      </button>
+      <button type="button" class="btn-primary" (click)="onSubmit()"
+        [disabled]="scheduleForm.invalid || isLoading">Submit</button>
     </div>
   </form>
 </div>

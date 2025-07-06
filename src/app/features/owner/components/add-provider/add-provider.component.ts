@@ -42,7 +42,7 @@ export class AddProviderComponent implements OnInit {
   minUsernameLength = 8;
   minPhoneNumberLength = 8;
   selectedFile: File | null = null;
-  imagePreview: string | null = null; 
+  imagePreview: string | null = null;
   errorMessage: string = '';
   isSubmitting = false;
 
@@ -71,7 +71,7 @@ export class AddProviderComponent implements OnInit {
       Governorate: '',
       Country: '',
       Specialization: '',
-      Bio: 'Add your bio here',
+      Bio: 'No bio provided yet.',
       ExperienceYears: null,
       ProviderType: ProviderType.None,
       LicenseNumber: '',

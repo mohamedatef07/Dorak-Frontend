@@ -136,7 +136,6 @@ export class ManuallyScheduleComponent implements OnInit {
             );
             console.log('Assignments array after mapping:', this.assignments);
           } else {
-            // No assignments found or empty data, treat as a normal case
             this.assignments = [];
             console.log(
               'No assignments found, assignments set to:',
@@ -148,12 +147,10 @@ export class ManuallyScheduleComponent implements OnInit {
         },
         error: (err) => {
           this.isLoading = false;
-          // Only set an error message for unexpected errors (e.g., network issues, server errors)
           if (err.status !== 404) {
             this.errorMessage = 'An error occurred while loading assignments.';
             console.error('Assignment load error:', err);
           } else {
-            // 404 means no assignments, which is a valid case
             this.assignments = [];
             console.log(
               'No assignments found (404), assignments set to:',
@@ -286,7 +283,9 @@ export class ManuallyScheduleComponent implements OnInit {
       Shifts: formValue.Shifts.map(
         (shift: any): IShiftViewModel => ({
           ShiftType: ShiftType.None,
-          ShiftDate: this.formatDateToString(shift.Date),
+          ShiftDate: this.formatDateToString(
+            typeof shift.Date === 'string' ? new Date(shift.Date) : shift.Date
+          ),
           StartTime: this.formatTimeToString(shift.StartTime),
           EndTime: this.formatTimeToString(shift.EndTime),
           MaxPatientsPerDay: shift.MaxPatientsPerDay,
@@ -428,3 +427,4 @@ export class ManuallyScheduleComponent implements OnInit {
     this.router.navigate(['owner/provider-management']);
   }
 }
+

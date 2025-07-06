@@ -7,6 +7,7 @@
   background-color: var(--main-bg-color-Light);
   width: fit-content;
   border-radius: var(--border-radius);
+      font-weight: 600;
 }
 
 .loading, .error-message, .no-data {

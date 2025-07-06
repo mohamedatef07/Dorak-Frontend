@@ -24,9 +24,9 @@ import { IOperatorViewModel } from '../../../../types/IOperatorViewModel';
 })
 export class ProviderLiveQueueComponent implements OnInit {
   liveQueues: IProviderLiveQueueViewModel[] = [];
-  providerId: string = '2293a1da-9c6c-4239-bde5-433abf0039f4';
-  centerId: number = 1;
-  shiftId: number = 8;
+  providerId: string = 'bc5edf66-098d-4fdd-82ed-44cdb6b208fa';
+  centerId: number = 3;
+  shiftId: number = 22;
   pageNumber: number = 1;
   pageSize: number = 16;
   totalItems: number = 0;
@@ -67,7 +67,7 @@ export class ProviderLiveQueueComponent implements OnInit {
       next: (response: ApiResponse<IProviderViewModel>) => {
         if (response.Status === 200 && response.Data) {
           const provider = response.Data;
-          this.providerName = `Dr. ${provider.FirstName} ${provider.LastName}`;
+          this.providerName = `Dr. ${provider.FirstName} ${provider.LastName} Patients`;
         } else {
           console.error('Failed to load provider name:', response.Message);
           this.providerName = 'Unknown Provider';
@@ -102,7 +102,7 @@ export class ProviderLiveQueueComponent implements OnInit {
               : response.Data.Data || { $values: [] };
             console.log('Normalized Data:', normalizedData);
             this.liveQueues = normalizedData.$values.map((item) => ({
-              LiveQueueId: Number(item.LiveQueueId), // Ensure it's a number
+              LiveQueueId: Number(item.LiveQueueId),
               ClientFullName: item.ClientFullName,
               ClientType: this.mapClientType(item.ClientType),
               EstimatedTime: item.EstimatedTime,

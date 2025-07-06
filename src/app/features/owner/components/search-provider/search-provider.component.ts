@@ -48,7 +48,7 @@ export class SearchProviderComponent implements OnInit, AfterViewInit {
   specializationFilter: string = '';
   searchText: string = '';
   sortFilter: string = ''; // Added sort filter
-  centerId: number = 1; // Will be set from AuthService
+  centerId: number = 3; // Will be set from AuthService
 
   errorMessage: string = '';
   isLoading: boolean = false;
