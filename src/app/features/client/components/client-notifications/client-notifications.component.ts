@@ -62,7 +62,10 @@ export class ClientNotificationsComponent implements OnInit {
       .getNotifications(this.currentPage, this.pageSize)
       .subscribe({
         next: (res) => {
-          const notificationsWithLocalStatus = this.notificationService.updateNotificationsWithLocalStatus(res.Data);
+          const notificationsWithLocalStatus =
+            this.notificationService.updateNotificationsWithLocalStatus(
+              res.Data
+            );
           this.notifications = [...notificationsWithLocalStatus];
           this.totalRecords = res.TotalRecords;
           this.currentPage = res.CurrentPage;
@@ -85,7 +88,10 @@ export class ClientNotificationsComponent implements OnInit {
     this.srService.notificationsList.subscribe({
       next: (updatedNotifications) => {
         // Use shared service to update notifications with local read status
-        const updatedNotificationsWithLocalChanges = this.notificationService.updateNotificationsWithLocalStatus(updatedNotifications);
+        const updatedNotificationsWithLocalChanges =
+          this.notificationService.updateNotificationsWithLocalStatus(
+            updatedNotifications
+          );
         this.notifications = [...updatedNotificationsWithLocalChanges];
         this.updateUnreadCount();
       },
@@ -102,16 +108,50 @@ export class ClientNotificationsComponent implements OnInit {
   }
 
   updateUnreadCount() {
-    this.unreadCount = this.notificationService.getUnreadCount(this.notifications);
+    this.unreadCount = this.notificationService.getUnreadCount(
+      this.notifications
+    );
   }
 
   handleNotificationClick(notification: INotification) {
-    this.notificationService.handleNotificationClick(notification, this.messageService);
+    this.notificationService.handleNotificationClick(
+      notification,
+      this.messageService
+    );
     this.updateUnreadCount();
   }
 
   markAllAsRead() {
-    this.notificationService.markAllNotificationsAsRead(this.notifications, this.messageService);
-    this.updateUnreadCount();
+    this.notificationService.markAllAsRead().subscribe({
+      next: () => {
+        // Mark all notifications as read locally
+        this.notifications.forEach((notification) => {
+          notification.IsRead = true;
+          this.notificationService.updateLocalReadStatus(
+            notification.NotificationId,
+            true
+          );
+        });
+
+        this.updateUnreadCount();
+
+        this.messageService.add({
+          key: 'main-toast',
+          severity: 'success',
+          summary: 'Success',
+          detail: 'All notifications marked as read.',
+          life: 3000,
+        });
+      },
+      error: (err) => {
+        this.messageService.add({
+          key: 'main-toast',
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Failed to mark all notifications as read.',
+          life: 4000,
+        });
+      },
+    });
   }
 }
