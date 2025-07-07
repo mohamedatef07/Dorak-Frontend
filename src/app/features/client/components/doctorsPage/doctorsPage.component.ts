@@ -5,22 +5,32 @@ import { ClientService } from '../../services/client.service';
 import { Router } from '@angular/router';
 import { IDoctorFilter } from '../../..//..//types/IDoctorFilter';
 import { environment } from '../../../../../environments/environment';
-import { IDoctorCard } from '../../models/iDoctorcard';
+import { IDoctorCard } from '../../models/IDoctorCard';
 import { ClientFooterComponent } from '../client-footer/client-footer.component';
 import { NavBarComponent } from '../navBar/navBar.component';
+import { DoctorTitle } from '../../../../Enums/DoctorTitle.enum';
+import { GenderType } from '../../../../Enums/GenderType.enum';
+import { SelectModule } from 'primeng/select';
+import { CheckboxModule } from 'primeng/checkbox';
 
 @Component({
   selector: 'app-doctorsPage',
   standalone: true,
   templateUrl: './doctorsPage.component.html',
   styleUrls: ['./doctorsPage.component.css'],
-  imports: [CommonModule, FormsModule, ClientFooterComponent, NavBarComponent],
+  imports: [CommonModule, FormsModule, ClientFooterComponent, NavBarComponent,SelectModule, CheckboxModule],
 })
 export class DoctorsPageComponent implements OnInit {
+  doctors: IDoctorCard[] = [];
+  filteredDoctors: IDoctorCard[] = [];
+
   searchText: string = '';
   specialty: string = '';
   city: string = '';
+
   fullImagePath: string = '';
+  selectedTitles: string[] = [];
+  selectedGenders: string[] = [];
 
   specialties: string[] = [
     'Cardiology',
@@ -28,12 +38,17 @@ export class DoctorsPageComponent implements OnInit {
     'Neurology',
     'Pediatrics',
   ];
-  cities: string[] = ['Cairo', 'Giza', 'Alexandria', 'Aswan'];
+  cities: string[] = ['naser city', 'Giza', 'Alexandria', 'Aswan'];
 
 
-  selectedTitles: number[] = [];
-  selectedCities: string[] = [];
-  selectedGender!:any;
+
+  titles: Array<string> = Object.values(DoctorTitle).filter(
+    (value) => typeof value === 'string' && value !== 'None'
+  ) as string[];
+
+  genders : Array<string> = Object.values(GenderType).filter(
+    (value) => typeof value === 'string' && value !== 'None'
+  ) as string[];
 
   filterModel: IDoctorFilter = {
     Title: undefined,
@@ -48,8 +63,7 @@ export class DoctorsPageComponent implements OnInit {
     AvailableDate: undefined,
   };
 
-  doctors: IDoctorCard[] = [];
-  filteredDoctors: IDoctorCard[] = [];
+
 
   constructor(
     private cardDoctorService: ClientService,
