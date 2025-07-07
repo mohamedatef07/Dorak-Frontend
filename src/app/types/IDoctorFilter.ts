@@ -1,18 +1,14 @@
 export interface IDoctorFilter {
- Title?: number;            
+  Title?: number;
   Gender?: number;
   City?: string;
+  SearchText?: string;
+  Specialization?: string;
   MinRate?: number;
   MaxRate?: number;
   MinPrice?: number;
   MaxPrice?: number;
   AvailableDate?: string;
-
-  FullName?: string;
-  Specialization?: string;
-  Rate?: number;
-  Price?: number;
-  EstimatedDuration?: number;
 }
 
 
