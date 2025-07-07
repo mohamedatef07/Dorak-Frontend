@@ -23,6 +23,8 @@ import { IWeeklyProviderAssignmentViewModel } from '../../../../types/IWeeklyPro
 import { IShiftViewModel } from '../../../../types/IShiftViewModel';
 import { AssignmentType } from '../../../../Enums/AssignmentType.enum';
 import { ShiftType } from '../../../../Enums/ShiftType.enum';
+import { AuthService } from '../../../../services/auth.service';
+
 @Component({
   selector: 'app-weekly-schedule',
   templateUrl: './weekly-schedule.component.html',
@@ -47,7 +49,8 @@ export class WeeklyScheduleComponent implements OnInit {
   successMessage: string = '';
   isLoading: boolean = false;
   scheduleForm: FormGroup;
-  centerId: number = 3;
+  centerId: number = 0;
+  operatorId = '0';
   daysOfWeek = [
     { value: 0, label: 'Sunday' },
     { value: 1, label: 'Monday' },
@@ -67,7 +70,8 @@ export class WeeklyScheduleComponent implements OnInit {
     private router: Router,
     private apiService: ApiService,
     private fb: FormBuilder,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private authService: AuthService
   ) {
     this.scheduleForm = this.fb.group({
       assignments: this.fb.array([this.createAssignmentGroup()]),
@@ -77,6 +81,8 @@ export class WeeklyScheduleComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.centerId = this.authService.getCenterId();
+    this.operatorId = this.authService.getUserId();
     const providerId = this.route.snapshot.paramMap.get('id');
     if (providerId && providerId.trim() !== '') {
       this.loadProviderDetails(providerId);
@@ -386,7 +392,7 @@ export class WeeklyScheduleComponent implements OnInit {
             StartTime: this.formatTimeToString(shift.StartTime) || '',
             EndTime: this.formatTimeToString(shift.EndTime) || '',
             MaxPatientsPerDay: shift.MaxPatientsPerDay || null,
-            OperatorId: '1',
+            OperatorId: this.operatorId,
           });
         }
       }

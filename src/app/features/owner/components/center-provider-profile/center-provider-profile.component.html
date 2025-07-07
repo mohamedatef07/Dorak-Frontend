@@ -1,41 +1,57 @@
-<div *ngIf="isLoading" class="loading">
-  Loading provider details...
+<div *ngIf="isLoading" class="loading-section">
+  <p>Loading doctor details...</p>
 </div>
 
-<div *ngIf="provider && !isLoading" class="profile-container">
-  <button mat-button class="back-button" (click)="goBack()">Back to Dashboard</button>
-
-  <div class="profile-layout">
-    <div class="left-panel">
-      <h2>Doctor Information</h2>
-      <div class="profile-image">
-        <img [src]="getImageUrl(provider.Image)" alt="Provider Image" class="provider-image" />
-      </div>
-      <div class="doctor-details">
-        <h1>{{ provider.FirstName || 'Unknown' }} {{ provider.LastName || '' }}</h1>
-        <p><strong>Bio:</strong> {{ provider.Bio || 'N/A' }}</p>
-        <p><strong>Email:</strong> {{ provider.Email || 'N/A' }}</p>
-        <p><strong>Phone Number:</strong> {{ provider.PhoneNumber || 'N/A' }}</p>
-      </div>
+<div *ngIf="provider && !isLoading">
+  <div *ngIf="errorMessage && !isLoading" class="error-popup">
+    <div class="error-popup-content">
+      <i class="fas fa-exclamation-triangle error-icon"></i>
+      <span>{{ errorMessage }}</span>
+      <button class="close-btn" (click)="errorMessage = ''" aria-label="Close">&times;</button>
     </div>
+  </div>
 
-    <div class="right-panel">
-      <div class="specialization-section">
-        <h3>Specialization:</h3>
-        <ul>
-          <li *ngIf="provider.Specialization">{{ provider.Specialization }}</li>
-        </ul>
+  <div class="back-button-container">
+    <button class="btn btn-outline" (click)="goBack()">
+      <i class="fas fa-arrow-left"></i> Back to View Doctors
+    </button>
+  </div>
+
+  <div class="profile-calendar-wrapper">
+    <section class="doctor-profile-section">
+      <div class="doctor-profile-card">
+        <div class="doctor-image-container">
+          <img [src]="getImageUrl(provider.Image)"
+            alt="{{ provider.FirstName }} {{ provider.LastName }}'s Profile Image" class="doctor-img" />
+        </div>
+        <div class="doctor-info">
+          <h2 class="doctor-name">{{ provider.FirstName || 'Unknown' }} {{ provider.LastName || '' }}</h2>
+          <p class="doctor-specialty">Specialization: {{ provider.Specialization || 'N/A' }}</p>
+          <p class="doctor-bio">{{ provider.Bio || 'N/A' }}</p>
+          <p class="doctor-city">City: {{ provider.City || 'N/A' }}</p>
+          <p class="doctor-experience">Experience Years: {{ provider.ExperienceYears || 'N/A' }}</p>
+          <hr class="profile-divider" />
+          <div class="doctor-metrics">
+            <div class="contact-item">
+              <i class="fas fa-envelope"></i>
+              <span>{{ provider.Email || 'N/A' }}</span>
+            </div>
+            <div class="contact-item">
+              <i class="fas fa-phone"></i>
+              <span>{{ provider.PhoneNumber || 'N/A' }}</span>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="calendar-section">
-        <h3>Assignments Calendar</h3>
+    </section>
+
+    <section class="calendar-section">
+      <div class="calendar-container">
+        <h2 class="inner-title">Assignments Calendar</h2>
         <div class="calendar-controls">
-          <button mat-button class="nav-button" (click)="prevMonth()">
-            ←
-          </button>
+          <button class="btn btn-outline nav-button" (click)="prevMonth()">◄</button>
           <span class="month-title">{{ getMonthName() }}</span>
-          <button mat-button class="nav-button" (click)="nextMonth()">
-            →
-          </button>
+          <button class="btn btn-outline nav-button" (click)="nextMonth()">►</button>
         </div>
         <div class="calendar-wrapper">
           <div class="calendar">
@@ -48,21 +64,36 @@
               <div class="day-header">Fri</div>
               <div class="day-header">Sat</div>
             </div>
+
             <div class="calendar-body">
-              <div *ngFor="let day of daysInMonth" class="calendar-day" [ngClass]="{'today': isToday(day.date)}">
-                <ng-container *ngIf="day.date as validDate">
-                  <span *ngIf="validDate.getMonth() === viewDate.getMonth()" class="day-number">
-                    {{ validDate.getDate() }}
-                    <span *ngIf="day.hasAssignment" class="assignment-dot"
-                          [title]="getShiftTooltip(day)">
+              <ng-container *ngFor="let day of daysInMonth">
+                <div class="calendar-day" [ngClass]="{ 'empty-day': !day.date, 'today': isToday(day.date) }">
+                  <ng-container *ngIf="day.date">
+                    <span class="day-number">
+                      {{ day.date.getDate() }}
                     </span>
-                  </span>
-                </ng-container>
-                <span *ngIf="!day.date" class="empty-day"></span>
-              </div>
+                    <span *ngIf="day.hasAssignment" class="assignment-dot">
+                      <span class="custom-tooltip">
+                        <ng-container *ngIf="day.shifts && day.shifts.length; ">
+                          <ng-container *ngFor="let shift of day.shifts; let i = index">
+                            <span class="shift-details">
+                              <strong>Shift {{ i + 1 }}</strong><br>
+                              Start: {{ ('2000-01-01T' + shift.startTime) | date:'h:mm a' }}<br>
+                              End: {{ ('2000-01-01T' + shift.endTime) | date:'h:mm a' }}
+                            </span>
+                            <br *ngIf="i < day.shifts.length - 1">
+                          </ng-container>
+                        </ng-container>
+                        
+                      </span>
+                    </span>
+                  </ng-container>
+                </div>
+              </ng-container>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
   </div>
+</div>

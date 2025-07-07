@@ -148,14 +148,14 @@ deleteProviderFromCenter(providerId: string, centerId: number): Observable<ApiRe
   }
 
   getProviderLiveQueues(
-    providerId: string,
+    // providerId: string,
     centerId: number,
     shiftId: number,
     pageNumber: number = 1,
     pageSize: number = 16
   ): Observable<ApiResponse<IPaginationViewModel<IProviderLiveQueueViewModel>>> {
     return this.httpClient.get<ApiResponse<IPaginationViewModel<IProviderLiveQueueViewModel>>>(
-      `${environment.apiUrl}/api/operator/GetProviderLiveQueues?providerId=${providerId}&centerId=${centerId}&shiftId=${shiftId}&pageNumber=${pageNumber}&pageSize=${pageSize}`
+      `${environment.apiUrl}/api/operator/GetProviderLiveQueues?centerId=${centerId}&shiftId=${shiftId}&pageNumber=${pageNumber}&pageSize=${pageSize}`
     ).pipe(
       map((response: ApiResponse<IPaginationViewModel<IProviderLiveQueueViewModel>>) => response),
       catchError((error) => {

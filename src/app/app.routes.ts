@@ -12,7 +12,6 @@ import { CenterProviderProfileComponent } from './features/owner/components/cent
 import { ManuallyScheduleComponent } from './features/owner/components/manually-schedule/manually-schedule.component';
 import { WeeklyScheduleComponent } from './features/owner/components/weekly-schedule/weekly-schedule.component';
 import { ProviderLiveQueueComponent } from './features/owner/components/provider-live-queue/provider-live-queue.component';
-import { ProviderScheduleComponent } from './features/owner/components/provider-schedule/provider-schedule.component';
 import { ProviderLayoutComponent } from './features/provider/components/provider-layout/provider-layout.component';
 import { OwnerLayoutComponent } from './features/owner/components/owner-layout/owner-layout.component';
 import { ClientLayoutComponent } from './features/client/components/client-layout/client-layout.component';
@@ -48,76 +47,87 @@ import { ClientSettingsComponent } from './features/client/components/client-set
 import { ClientNotificationsComponent } from './features/client/components/client-notifications/client-notifications.component';
 import { RescheduleAssignmentComponent } from './features/owner/components/reschedule-assignment/reschedule-assignment.component';
 import { AppointmentsHistoryComponent } from './features/client/components/appointments-history/appointments-history.component';
+import { RoleGuard } from './guards/role.guard';
+import { AuthGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   {
     path: 'owner',
     component: OwnerLayoutComponent,
+    canActivate: [AuthGuard, RoleGuard],
+    data: { expectedRole: ['Admin', 'Operator'] },
     children: [
       {
         path: 'center-shifts',
         component: CenterShiftsComponent,
         title: 'Center Shifts',
+        data: { expectedRole: ['Admin'] },
       },
       {
         path: 'manage-operators',
         component: ManageOperatorsComponent,
         title: 'Manage Operators',
+        data: { expectedRole: ['Admin'] },
       },
       {
         path: 'add-operator',
         component: AddOperatorComponent,
         title: 'Add Operator',
+        data: { expectedRole: ['Admin'] },
       },
       {
         path: 'create-appointment',
         component: CreateAppointmentComponent,
         title: 'Create Appointment',
+        data: { expectedRole: ['Admin'] },
       },
       {
         path: 'provider-management',
         component: ProviderManagementComponent,
         title: 'Provider Management',
+        data: { expectedRole: ['Admin'] },
       },
       {
         path: 'add-provider',
         component: AddProviderComponent,
         title: 'Add Provider',
+        data: { expectedRole: ['Admin'] },
       },
       {
         path: 'search-provider',
         component: SearchProviderComponent,
         title: 'Search Provider',
+        data: { expectedRole: ['Admin'] },
       },
       {
         path: 'center-provider-profile/:id',
         component: CenterProviderProfileComponent,
         title: 'Center Provider Profile',
+        data: { expectedRole: ['Admin'] },
       },
       {
         path: 'provider-profile/:id',
         component: ProviderProfilesComponent,
         title: 'Provider Profile',
+        data: { expectedRole: ['Admin'] },
       },
       {
         path: 'manually-schedule/:id',
         component: ManuallyScheduleComponent,
         title: 'Manually Schedule',
+        data: { expectedRole: ['Admin'] },
       },
       {
         path: 'weekly-schedule/:id',
         component: WeeklyScheduleComponent,
         title: 'Weekly Schedule',
+        data: { expectedRole: ['Admin'] },
       },
       {
         path: 'reschedule-assignment/:id',
         component: RescheduleAssignmentComponent,
         title: 'Reschedule Assignment',
-      },
-      {
-        path: 'provider-schedule',
-        component: ProviderScheduleComponent,
-        title: 'Provider Schedule',
+        data: { expectedRole: ['Admin'] },
       },
       {
         path: 'center-shifts-table',
@@ -134,22 +144,27 @@ export const routes: Routes = [
         path: 'manage-operators',
         component: ManageOperatorsComponent,
         title: 'Manage Operators',
+        data: { expectedRole: ['Admin'] },
       },
       {
         path: 'add-operator',
         component: AddOperatorComponent,
         title: 'Add Operator',
+        data: { expectedRole: ['Admin'] },
       },
       {
         path: 'create-appointment',
         component: CreateAppointmentComponent,
         title: 'Create Appointment',
+        data: { expectedRole: ['Admin'] },
       },
     ],
   },
   {
     path: 'provider',
     component: ProviderLayoutComponent,
+    canActivate: [AuthGuard, RoleGuard],
+    data: { expectedRole: ['Provider'] },
     children: [
       { path: 'dashboard', component: DashboardComponent, title: 'Dashboard' },
       {
@@ -201,6 +216,8 @@ export const routes: Routes = [
   {
     path: 'client',
     component: ClientLayoutComponent,
+    canActivate: [AuthGuard, RoleGuard],
+    data: { expectedRole: ['Client'] },
     children: [
       {
         path: '',
@@ -268,15 +285,21 @@ export const routes: Routes = [
     path: 'client/doctors',
     component: DoctorsPageComponent,
     title: 'Doctors',
+    canActivate: [AuthGuard, RoleGuard],
+    data: { expectedRole: ['Client'] }
   },
   {
     path: 'client/doctor-details/:id',
     component: DoctorDetailsComponent,
     title: 'Doctor Details',
+    canActivate: [AuthGuard, RoleGuard],
+    data: { expectedRole: ['Client'] }
   },
   {
     path: 'client/checkout',
     component: CheckoutComponent,
+    canActivate: [AuthGuard, RoleGuard],
+    data: { expectedRole: ['Client'] },
   },
   // ----------------------------------
 

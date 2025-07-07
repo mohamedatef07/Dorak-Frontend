@@ -14,11 +14,11 @@ import { IAddOperator } from '../features/owner/models/IAddOperator';
 export class AuthService {
   cookie = inject(CookieService);
   httpClient = inject(HttpClient);
-  private currentCenterId: number = 1;
+  // private currentCenterId: number = 1;
 
-  setCenterId(centerId: number): void {
-    this.currentCenterId = centerId;
-  }
+  // setCenterId(centerId: number): void {
+  //   this.currentCenterId = centerId;
+  // }
 
   getAuthToken() {
     return this.cookie.get('token') || '';

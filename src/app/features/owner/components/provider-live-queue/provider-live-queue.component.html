@@ -1,11 +1,7 @@
-<div class="container">
-  <!-- Header -->
+
   <div class="header">
     <h2 class="provider-name">{{ providerName }}</h2>
     <div class="header-actions">
-      <!-- <button class="settings-btn" aria-label="Settings">
-        <i class="bi bi-gear-fill"></i>
-      </button> -->
       <button class="add-btn" aria-label="Add Patient" (click)="addPatient()">
         <i class="bi bi-person-plus-fill"></i>
       </button>
@@ -32,9 +28,9 @@
       <div class="queue-details">
         <div class="client-name">{{ queue.ClientFullName }}</div>
         <div class="client-info">
-          <span>Patient Type: {{ getClientTypeString(queue.ClientType) }}</span><br />
+          <span>Patient Type: {{ getClientTypeString(queue.ClientType) }}</span>
           <span>PhoneNumber: {{ queue.PhoneNumber }}</span>
-          <br>
+
           <span>Estimated Time: {{ formatTime(queue.EstimatedTime) }}</span>
           <span *ngIf="queue.ArrivalTime">Arrival Time: {{ formatTime(queue.ArrivalTime) }}</span>
            <div *ngIf="queue.Status === QueueAppointmentStatus.InProgress" class="additional-fees-input">
@@ -43,7 +39,6 @@
             id="additionalFees_{{ queue.LiveQueueId }}"
             type="number"
             step="0.01"
-            placeholder="Enter fees"
             [(ngModel)]="additionalFees[queue.LiveQueueId]"
           />
         </div>
@@ -63,10 +58,32 @@
             {{ getStatusString(status) }}
           </option>
         </select>
-
       </div>
     </div>
   </div>
+
+  <!-- Pagination (UI only, no logic)
+  <div class="pagination-container ms-5" style="margin-top: 24px;">
+    <div class="showing-text">
+      Showing 1-{{ liveQueues?.length || 0 }} of {{ liveQueues?.length || 0 }}
+    </div>
+    <div class="pagination-buttons d-flex">
+      <button class="pagination-btn" disabled aria-label="Previous page">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+          class="bi bi-chevron-left" viewBox="0 0 16 16">
+          <path fill-rule="evenodd"
+            d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
+        </svg>
+      </button>
+      <button class="pagination-btn" disabled aria-label="Next page">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+          class="bi bi-chevron-right" viewBox="0 0 16 16">
+          <path fill-rule="evenodd"
+            d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+        </svg>
+      </button>
+    </div>
+  </div> -->
 
   <!-- Custom Success Popup -->
   <div *ngIf="showPopup" #successPopup class="custom-popup">
@@ -74,4 +91,4 @@
       <p>Shift ended successfully!</p>
     </div>
   </div>
-</div>
+

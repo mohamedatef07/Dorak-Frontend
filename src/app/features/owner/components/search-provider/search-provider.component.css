@@ -6,6 +6,7 @@
   background-color: var(--main-bg-color-Light);
   width: fit-content;
   border-radius: var(--border-radius);
+      font-weight: 600;
 }
 
 .page-container {
@@ -182,7 +183,8 @@ tr:last-child td {
   transition: var(--transition);
   margin: 0 2px;
 }
-.view-doc-profile:hover, .view-profile-link:hover, .select-pill:hover {
+
+.view-doc-profile:hover:not([type="button"]), .view-profile-link:hover, .select-pill:hover {
   background-color: var(--hover-bg-Light);
   color: var(--hover-text-Light);
   border: 1px var(--hover-border-Light) solid;
