@@ -1,22 +1,33 @@
-<div class="setting-container d-flex flex-column gap-3 px-0 m-0">
-  <p class="fw-bold m-0">Settings</p>
-  <ul class="setting-tabs d-flex justify-content-between m-0 p-0">
-    <li class="setting-item">
-      <a
-        class="setting-link"
-        [routerLink]="['/client/settings/client-edit-profile']"
-        [routerLinkActive]="['active']"
-        >Profile Information</a
-      >
-    </li>
-    <li class="setting-item">
-      <a
-        class="setting-link"
-        [routerLink]="['/client/settings/change-password']"
-        [routerLinkActive]="['active']"
-        >Security</a
-      >
-    </li>
-  </ul>
+<div class="card shadow-sm border-0 rounded-4 py-4 px-4 mb-4 bg-white">
+  <div
+    class="d-flex align-items-center justify-content-between"
+  >
+    <div class="d-flex align-items-center gap-2 mb-2 mb-md-0">
+      <i class="fas fa-cog" style="color: #2a6f97; font-size: 1.6rem"></i>
+      <span class="fw-bold fs-4 main-text-Color">Settings</span>
+    </div>
+    <ul class="nav nav-underline nav-justified w-md-auto gap-2 w-50">
+      <li class="nav-item d-flex justify-content-center align-items-center">
+        <a
+          class="nav-link fw-semibold fs-6 px-3"
+          [routerLink]="['/client/settings/client-edit-profile']"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <i class="fas fa-user me-2"></i>Personal Settings
+        </a>
+      </li>
+      <li class="nav-item d-flex justify-content-center align-items-center">
+        <a
+          class="nav-link fw-semibold fs-6 px-3"
+          [routerLink]="['/client/settings/change-password']"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <i class="fas fa-lock me-2"></i>Security Settings
+        </a>
+      </li>
+    </ul>
+  </div>
 </div>
 <router-outlet></router-outlet>

@@ -134,7 +134,7 @@ export class UpcomingAppointmentsComponent implements OnInit {
         this.totalRecords = res.TotalRecords;
         this.currentPage = res.CurrentPage;
         this.pageSize = res.PageSize;
-        this.totalPages = res.TotalPages; 
+        this.totalPages = res.TotalPages;
       },
       error: (err) => {
         this.messageServices.add({

@@ -8,19 +8,29 @@ import { environment } from '../../../../../environments/environment';
 import { IDoctorCard } from '../../models/IDoctorCard';
 import { ClientFooterComponent } from '../client-footer/client-footer.component';
 import { NavBarComponent } from '../navBar/navBar.component';
+import { DoctorTitle } from '../../../../Enums/DoctorTitle.enum';
+import { GenderType } from '../../../../Enums/GenderType.enum';
+import { SelectModule } from 'primeng/select';
+import { CheckboxModule } from 'primeng/checkbox';
 
 @Component({
   selector: 'app-doctorsPage',
   standalone: true,
   templateUrl: './doctorsPage.component.html',
   styleUrls: ['./doctorsPage.component.css'],
-  imports: [CommonModule, FormsModule, ClientFooterComponent, NavBarComponent],
+  imports: [CommonModule, FormsModule, ClientFooterComponent, NavBarComponent,SelectModule, CheckboxModule],
 })
 export class DoctorsPageComponent implements OnInit {
+  doctors: IDoctorCard[] = [];
+  filteredDoctors: IDoctorCard[] = [];
+
   searchText: string = '';
   specialty: string = '';
   city: string = '';
+
   fullImagePath: string = '';
+  selectedTitles: string[] = [];
+  selectedGenders: string[] = [];
 
   specialties: string[] = [
     'Cardiology',
@@ -28,28 +38,24 @@ export class DoctorsPageComponent implements OnInit {
     'Neurology',
     'Pediatrics',
   ];
-  cities: string[] = ['Cairo', 'Giza', 'Alexandria', 'Aswan'];
+  cities: string[] = ['naser city', 'Giza', 'Alexandria', 'Aswan'];
 
-  titles = [
-    { value: 1, label: 'Professor' },
-    { value: 2, label: 'Lecturer' },
-    { value: 3, label: 'Consultant' },
-    { value: 4, label: 'Specialist' },
-  ];
 
-  genders = [
-    { value: 1, label: 'Male' },
-    { value: 2, label: 'Female' },
-  ];
 
-  selectedTitles: number[] = [];
-  selectedCities: string[] = [];
-  selectedGender: number | undefined;
+  titles: Array<string> = Object.values(DoctorTitle).filter(
+    (value) => typeof value === 'string' && value !== 'None'
+  ) as string[];
+
+  genders : Array<string> = Object.values(GenderType).filter(
+    (value) => typeof value === 'string' && value !== 'None'
+  ) as string[];
 
   filterModel: IDoctorFilter = {
     Title: undefined,
     Gender: undefined,
     City: undefined,
+    SearchText: undefined,
+    Specialization: undefined,
     MinRate: undefined,
     MaxRate: undefined,
     MinPrice: undefined,
@@ -57,8 +63,7 @@ export class DoctorsPageComponent implements OnInit {
     AvailableDate: undefined,
   };
 
-  doctors: IDoctorCard[] = [];
-  filteredDoctors: IDoctorCard[] = [];
+
 
   constructor(
     private cardDoctorService: ClientService,
@@ -77,18 +82,12 @@ export class DoctorsPageComponent implements OnInit {
     this.getAllDoctors();
   }
 
-  getAllDoctors(): void {
-    this.cardDoctorService.getAllDoctorsCards().subscribe({
+  getAllDoctors(filter?: Partial<IDoctorFilter>): void {
+    this.cardDoctorService.getAllDoctorsCards(filter).subscribe({
       next: (res) => {
         this.doctors = [...res.Data];
-        console.log(res.Data);
-        // this.doctors.forEach((doctor) => {
-        //   doctor.Image = environment.apiUrl + doctor.Image;
-        // });
-
-        if (this.doctors[0].Image) {
+        if (this.doctors[0]?.Image) {
           this.fullImagePath = `${environment.apiUrl}${this.doctors[0].Image}`;
-          console.log(this.fullImagePath);
         }
         this.filteredDoctors = [...this.doctors];
       },
@@ -100,107 +99,55 @@ export class DoctorsPageComponent implements OnInit {
 
   onTitleChange(event: any): void {
     const value = Number(event.target.value);
-    if (event.target.checked) {
-      this.filterModel.Title = value;
-    } else {
-      this.filterModel.Title = undefined;
-    }
+    this.filterModel.Title = event.target.checked ? value : undefined;
     this.applyFilters();
   }
 
   onCityChange(event: any): void {
     const value = event.target.value;
-
-    if (event.target.checked) {
-      this.selectedCities.push(value);
-    } else {
-      this.selectedCities = this.selectedCities.filter((c) => c !== value);
-    }
-
-    this.filterModel.City =
-      this.selectedCities.length > 0 ? this.selectedCities[0] : undefined;
-
+    this.filterModel.City = event.target.checked ? value : undefined;
     this.applyFilters();
   }
 
   onGenderChange(event: any): void {
     const value = Number(event.target.value);
-    this.filterModel.Gender = value || undefined;
+    this.filterModel.Gender = value;
+    this.applyFilters();
+  }
+
+  onSpecializationChange(specialization: string): void {
+    this.filterModel.Specialization = specialization || undefined;
     this.applyFilters();
   }
 
   applyFilters(): void {
-    const noFiltersApplied =
-      !this.filterModel.Title &&
-      !this.filterModel.Gender &&
-      this.selectedCities.length === 0 &&
-      this.filterModel.MinRate === undefined &&
-      this.filterModel.MaxRate === undefined &&
-      this.filterModel.MinPrice === undefined &&
-      this.filterModel.MaxPrice === undefined &&
-      !this.filterModel.AvailableDate;
-    debugger;
-    if (noFiltersApplied) {
+    // Clean up the filter model by removing undefined values
+    const cleanFilter: Partial<IDoctorFilter> = {};
+    Object.entries(this.filterModel).forEach(([key, value]) => {
+      if (value !== undefined && value !== '') {
+        cleanFilter[key as keyof IDoctorFilter] = value;
+      }
+    });
+
+    // If there are no filters, get all doctors
+    if (Object.keys(cleanFilter).length === 0) {
       this.getAllDoctors();
       return;
     }
 
-    const rawBody: IDoctorFilter = {
-      Title: this.filterModel.Title,
-      Gender: this.filterModel.Gender,
-      City: this.selectedCities[0],
-      MinRate: this.filterModel.MinRate,
-      MaxRate: this.filterModel.MaxRate,
-      MinPrice: this.filterModel.MinPrice,
-      MaxPrice: this.filterModel.MaxPrice,
-      AvailableDate: this.filterModel.AvailableDate,
-    };
-
-    const body: Partial<IDoctorFilter> = {};
-
-    for (const key in rawBody) {
-      const typedKey = key as keyof IDoctorFilter;
-      const value = rawBody[typedKey];
-
-      if (value !== undefined && value !== null) {
-        (body as any)[typedKey] = value;
-      }
-    }
-
-    this.cardDoctorService.searchDoctorsByFilter(body).subscribe({
-      next: (res) => {
-        this.filteredDoctors = res.Data;
-      },
-      error: (err) => console.error('Filter error: ', err),
-    });
+    this.getAllDoctors(cleanFilter);
   }
 
   searchDoctors(): void {
-    this.cardDoctorService.getAllDoctorsCards().subscribe({
-      next: (res) => {
-        this.doctors = res.Data;
-        const keyword = this.searchText.trim().toLowerCase();
-        const selectedCity = this.city.trim().toLowerCase();
-        const selectedSpecialty = this.specialty.trim().toLowerCase();
+    this.filterModel.SearchText = this.searchText;
+    this.filterModel.City = this.city || undefined;
+    this.filterModel.Specialization = this.specialty || undefined;
 
-        this.filteredDoctors = this.doctors.filter((doc) => {
-          const nameMatch = doc.FullName.toLowerCase().includes(keyword);
-          const cityMatch = selectedCity
-            ? doc.City.toLowerCase().includes(selectedCity)
-            : true;
-          const specialtyMatch = selectedSpecialty
-            ? doc.Specialization.toLowerCase().includes(selectedSpecialty)
-            : true;
-          return nameMatch && cityMatch && specialtyMatch;
-        });
+    this.applyFilters();
 
-        this.searchText = '';
-        this.city = '';
-        this.specialty = '';
-      },
-      error: (err) => {
-        console.error('Error during search:', err);
-      },
-    });
+    // Reset search inputs after applying
+    this.searchText = '';
+    this.city = '';
+    this.specialty = '';
   }
 }

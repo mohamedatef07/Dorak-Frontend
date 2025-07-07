@@ -12,28 +12,18 @@
               type="button"
               data-bs-toggle="dropdown"
             >
-              {{ specialty || "Specialty" }}
+              {{ filterModel.Specialization || "Specialty" }}
             </button>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" (click)="specialty = ''">All</a></li>
-              <li *ngFor="let s of specialties">
-                <a class="dropdown-item" (click)="specialty = s">{{ s }}</a>
+              <li>
+                <a class="dropdown-item" (click)="onSpecializationChange('')"
+                  >All</a
+                >
               </li>
-            </ul>
-          </div>
-          <!-- City Dropdown -->
-          <div class="dropdown ms-2">
-            <button
-              class="city-dropdown dropdown-toggle btn btn-outline-secondary"
-              type="button"
-              data-bs-toggle="dropdown"
-            >
-              {{ city || "City" }}
-            </button>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" (click)="city = ''">All</a></li>
-              <li *ngFor="let c of cities">
-                <a class="dropdown-item" (click)="city = c">{{ c }}</a>
+              <li *ngFor="let s of specialties">
+                <a class="dropdown-item" (click)="onSpecializationChange(s)">{{
+                  s
+                }}</a>
               </li>
             </ul>
           </div>
@@ -63,46 +53,40 @@
     <!-- Filters Sidebar -->
     <div class="col-lg-3 col-md-4">
       <div class="filter-panel">
-        <h5 class="mb-3">Filters</h5>
-
+        <h5 class="mb-3 fs-6">Filters</h5>
         <!-- Title Filter -->
         <div class="mb-3">
-          <label class="fw-bold text-white">Title</label>
-          <div *ngFor="let t of titles" class="form-check mt-1">
-            <input
-              class="form-check-input"
-              type="checkbox"
-              [value]="t.value"
-              (change)="onTitleChange($event)"
-              id="title-{{ t.value }}"
-            />
-            <label
-              class="form-check-label text-white"
-              for="title-{{ t.value }}"
-            >
-              {{ t.label }}
-            </label>
-          </div>
+          <label class="fw-bold fs-5">Title</label>
+          @for(title of titles; track $index) {
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                [value]="title"
+                (change)="onTitleChange($event)"
+              />
+              <label class="form-check-label">{{ title }}</label>
+            </div>
+          }
         </div>
-
         <!-- Gender Filter -->
         <div class="mb-3">
-          <label class="fw-bold">Gender</label>
-          <select
-            class="form-select"
-            [(ngModel)]="filterModel.Gender"
-            (change)="applyFilters()"
-          >
-            <option [ngValue]="undefined">All</option>
-            <option *ngFor="let g of genders" [ngValue]="g.value">
-              {{ g.label }}
-            </option>
-          </select>
+          <label class="fw-bold fs-5">Gender</label>
+          @for(gender of genders; track $index) {
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                [value]="gender"
+                (change)="onGenderChange($event)"
+              />
+              <label class="form-check-label">{{ gender }}</label>
+            </div>
+          }
         </div>
-
         <!-- City Filter -->
         <div class="mb-3">
-          <label class="fw-bold">City</label>
+          <label class="fw-bold fs-5">City</label>
           <div *ngFor="let c of cities">
             <div class="form-check">
               <input
@@ -115,7 +99,6 @@
             </div>
           </div>
         </div>
-
         <!-- Rate Filter -->
         <div class="mb-3">
           <label class="fw-bold">Rate</label>
@@ -162,10 +145,6 @@
             class="form-control"
             [(ngModel)]="filterModel.AvailableDate"
           />
-        </div>
-
-        <div class="mb-3">
-          <button class="btn" (click)="applyFilters()">Apply Filters</button>
         </div>
       </div>
     </div>
