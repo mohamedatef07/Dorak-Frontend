@@ -88,16 +88,13 @@
         <!-- Gender Filter -->
         <div class="mb-3">
           <label class="fw-bold">Gender</label>
-          <select
-            class="form-select"
-            [(ngModel)]="filterModel.Gender"
-            (change)="applyFilters()"
-          >
-            <option [ngValue]="undefined">All</option>
-            <option *ngFor="let g of genders" [ngValue]="g.value">
-              {{ g.label }}
-            </option>
-          </select>
+          <p-select
+          [options]="Genders"
+          [(ngModel)]="selectedGender"
+          placeholder="Gender"
+          class="w-full md:w-56"
+          (onChange)="filterQueueEntries()"
+        />
         </div>
 
         <!-- City Filter -->
@@ -163,20 +160,14 @@
             [(ngModel)]="filterModel.AvailableDate"
           />
         </div>
-
-        <div class="mb-3">
-          <button class="btn" (click)="applyFilters()">Apply Filters</button>
-        </div>
       </div>
     </div>
-
     <!-- Doctor listings -->
     <div class="col-lg-9 col-md-8">
       <h4 class="content-title">All Specialties</h4>
       <p class="text-muted mb-4">
         <small>{{ filteredDoctors.length }} doctors</small>
       </p>
-
       <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
         <div class="col" *ngFor="let doc of doctors">
           <div class="doctor-card">

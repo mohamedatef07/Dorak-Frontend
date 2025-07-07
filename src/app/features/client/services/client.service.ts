@@ -1,3 +1,4 @@
+import { IDoctorFilter } from './../../../types/IDoctorFilter';
 import { ICheckoutRequest } from '../models/ICheckoutRequest';
 import { ApiResponse } from './../../../types/ApiResponse';
 import { HttpClient, HttpParams } from '@angular/common/http';
@@ -16,7 +17,6 @@ import { IClientProfile } from '../models/IClientProfile';
 import { IAppointment } from '../models/IAppointment';
 import { IClientAppointmentCard } from '../models/IClientAppointmentCard';
 import { IClientWalletProfile } from '../models/IClientWalletProfile';
-import { IDoctorFilter } from '../../../types/IDoctorFilter';
 import { IClientLiveQueue } from '../models/IClientLiveQueue';
 import { IClientInfoForLiveQueue } from '../models/IClientInfoForLiveQueue';
 import { IClientUpdate } from '../models/IClientUpdate';
@@ -33,35 +33,18 @@ export class ClientService {
 
   constructor() {}
 
-  getAllDoctorsCards(): Observable<ApiResponse<Array<IDoctorCard>>> {
-    return this.httpClient.get<ApiResponse<Array<IDoctorCard>>>(
-      `${environment.apiUrl}/API/Client/cards`
+  getAllDoctorsCards(
+    filter: IDoctorFilter
+  ): Observable<ApiResponse<Array<IDoctorCard>>> {
+    return this.httpClient.post<ApiResponse<Array<IDoctorCard>>>(
+      `${environment.apiUrl}/api/Client/provider-cards`,
+      { filter }
     );
   }
 
   getDoctorsById(id: string | null): Observable<ApiResponse<any>> {
     return this.httpClient.get<ApiResponse<any>>(
       `${environment.apiUrl}/api/Provider/GetProviderById/${id}`
-    );
-  }
-  searchDoctors(
-    searchText: string = '',
-    city: string = '',
-    specialization: string = ''
-  ): Observable<ApiResponse<Array<IDoctorCard>>> {
-    const params = new HttpParams()
-      .set('searchText', searchText)
-      .set('city', city)
-      .set('specialization', specialization);
-    return this.httpClient.get<ApiResponse<Array<IDoctorCard>>>(
-      'http://localhost:5139/api/Client/search',
-      { params }
-    );
-  }
-  searchDoctorsByFilter(filter: IDoctorFilter) {
-    return this.httpClient.post<ApiResponse<Array<IDoctorCard>>>(
-      'http://localhost:5139/api/Client/filter',
-      filter
     );
   }
 

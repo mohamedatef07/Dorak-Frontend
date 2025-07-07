@@ -30,21 +30,10 @@ export class DoctorsPageComponent implements OnInit {
   ];
   cities: string[] = ['Cairo', 'Giza', 'Alexandria', 'Aswan'];
 
-  titles = [
-    { value: 1, label: 'Professor' },
-    { value: 2, label: 'Lecturer' },
-    { value: 3, label: 'Consultant' },
-    { value: 4, label: 'Specialist' },
-  ];
-
-  genders = [
-    { value: 1, label: 'Male' },
-    { value: 2, label: 'Female' },
-  ];
 
   selectedTitles: number[] = [];
   selectedCities: string[] = [];
-  selectedGender: number | undefined;
+  selectedGender!:any;
 
   filterModel: IDoctorFilter = {
     Title: undefined,
@@ -78,24 +67,7 @@ export class DoctorsPageComponent implements OnInit {
   }
 
   getAllDoctors(): void {
-    this.cardDoctorService.getAllDoctorsCards().subscribe({
-      next: (res) => {
-        this.doctors = [...res.Data];
-        console.log(res.Data);
-        // this.doctors.forEach((doctor) => {
-        //   doctor.Image = environment.apiUrl + doctor.Image;
-        // });
 
-        if (this.doctors[0].Image) {
-          this.fullImagePath = `${environment.apiUrl}${this.doctors[0].Image}`;
-          console.log(this.fullImagePath);
-        }
-        this.filteredDoctors = [...this.doctors];
-      },
-      error: (err) => {
-        console.error('Error loading doctors:', err);
-      },
-    });
   }
 
   onTitleChange(event: any): void {
@@ -105,7 +77,6 @@ export class DoctorsPageComponent implements OnInit {
     } else {
       this.filterModel.Title = undefined;
     }
-    this.applyFilters();
   }
 
   onCityChange(event: any): void {
@@ -119,88 +90,6 @@ export class DoctorsPageComponent implements OnInit {
 
     this.filterModel.City =
       this.selectedCities.length > 0 ? this.selectedCities[0] : undefined;
-
-    this.applyFilters();
   }
 
-  onGenderChange(event: any): void {
-    const value = Number(event.target.value);
-    this.filterModel.Gender = value || undefined;
-    this.applyFilters();
-  }
-
-  applyFilters(): void {
-    const noFiltersApplied =
-      !this.filterModel.Title &&
-      !this.filterModel.Gender &&
-      this.selectedCities.length === 0 &&
-      this.filterModel.MinRate === undefined &&
-      this.filterModel.MaxRate === undefined &&
-      this.filterModel.MinPrice === undefined &&
-      this.filterModel.MaxPrice === undefined &&
-      !this.filterModel.AvailableDate;
-    debugger;
-    if (noFiltersApplied) {
-      this.getAllDoctors();
-      return;
-    }
-
-    const rawBody: IDoctorFilter = {
-      Title: this.filterModel.Title,
-      Gender: this.filterModel.Gender,
-      City: this.selectedCities[0],
-      MinRate: this.filterModel.MinRate,
-      MaxRate: this.filterModel.MaxRate,
-      MinPrice: this.filterModel.MinPrice,
-      MaxPrice: this.filterModel.MaxPrice,
-      AvailableDate: this.filterModel.AvailableDate,
-    };
-
-    const body: Partial<IDoctorFilter> = {};
-
-    for (const key in rawBody) {
-      const typedKey = key as keyof IDoctorFilter;
-      const value = rawBody[typedKey];
-
-      if (value !== undefined && value !== null) {
-        (body as any)[typedKey] = value;
-      }
-    }
-
-    this.cardDoctorService.searchDoctorsByFilter(body).subscribe({
-      next: (res) => {
-        this.filteredDoctors = res.Data;
-      },
-      error: (err) => console.error('Filter error: ', err),
-    });
-  }
-
-  searchDoctors(): void {
-    this.cardDoctorService.getAllDoctorsCards().subscribe({
-      next: (res) => {
-        this.doctors = res.Data;
-        const keyword = this.searchText.trim().toLowerCase();
-        const selectedCity = this.city.trim().toLowerCase();
-        const selectedSpecialty = this.specialty.trim().toLowerCase();
-
-        this.filteredDoctors = this.doctors.filter((doc) => {
-          const nameMatch = doc.FullName.toLowerCase().includes(keyword);
-          const cityMatch = selectedCity
-            ? doc.City.toLowerCase().includes(selectedCity)
-            : true;
-          const specialtyMatch = selectedSpecialty
-            ? doc.Specialization.toLowerCase().includes(selectedSpecialty)
-            : true;
-          return nameMatch && cityMatch && specialtyMatch;
-        });
-
-        this.searchText = '';
-        this.city = '';
-        this.specialty = '';
-      },
-      error: (err) => {
-        console.error('Error during search:', err);
-      },
-    });
-  }
 }
