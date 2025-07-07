@@ -49,6 +49,7 @@ import { RescheduleAssignmentComponent } from './features/owner/components/resch
 import { AppointmentsHistoryComponent } from './features/client/components/appointments-history/appointments-history.component';
 import { RoleGuard } from './guards/role.guard';
 import { AuthGuard } from './guards/auth.guard';
+import { CenterRegisterComponent } from './components/CenterRegister/CenterRegister.component';
 
 export const routes: Routes = [
   {
@@ -320,6 +321,7 @@ export const routes: Routes = [
   },
   { path: 'login', component: LoginComponent, title: 'Login', data: { animation: 'login' } },
   { path: 'register', component: RegisterComponent, title: 'Register', data: { animation: 'register' } },
+  { path: 'center-register', component: CenterRegisterComponent, title: 'Register Center', data: { animation: 'centerRegister' } },
   {
     path: 'unauthorized',
     component: UnauthorizedComponent,
