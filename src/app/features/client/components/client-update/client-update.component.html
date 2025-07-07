@@ -1,11 +1,32 @@
-<div class="form-container mt-3">
-  <div class="form-header">
-    <div class="profile-section">
-      <img [src]="imagePreview" alt="Profile Picture" class="profile-image" />
-      <div class="profile-info">
-        <div class="profile-actions">
-          <button class="btn btn-upload" (click)="fileInput.click()">
-            Upload New Picture
+<div class="px-0 m-0 d-flex justify-content-center align-items-center">
+  <div class="card shadow-sm border-0 rounded-4 p-4 w-100">
+    <div
+      class="d-flex flex-column flex-md-row align-items-center gap-4 border-bottom pb-4 mb-4"
+    >
+      <div>
+        <img
+          [src]="imagePreview"
+          alt="Profile Picture"
+          class="rounded-circle shadow"
+          style="
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border: 4px solid #2a6f97;
+            background: linear-gradient(135deg, #e3f2fd 0%, #fff 100%);
+          "
+        />
+      </div>
+      <div class="flex-grow-1 text-center text-md-start">
+        <div
+          class="d-flex flex-column flex-md-row align-items-center gap-2 justify-content-md-between"
+        >
+          <span class="fw-bold fs-5">Update Profile Picture</span>
+          <button
+            class="btn btn-upload main-btn-bg px-4 text-white fw-semibold mt-2 mt-md-0"
+            (click)="fileInput.click()"
+          >
+            <i class="fas fa-upload me-2"></i>Upload New Picture
           </button>
           <input
             #fileInput
@@ -17,68 +38,57 @@
         </div>
       </div>
     </div>
-  </div>
-  <div class="form-body">
     <form [formGroup]="personalForm" (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <div>
-          <h6>FirstName</h6>
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label">First Name</label>
           <input type="text" class="form-control" formControlName="FirstName" />
         </div>
-      </div>
-      <div class="form-group">
-        <div>
-          <h6>LastName</h6>
+        <div class="col-md-6">
+          <label class="form-label">Last Name</label>
           <input type="text" class="form-control" formControlName="LastName" />
         </div>
-      </div>
-      <div class="form-group">
-        <div>
-          <h6>Email</h6>
-          <input type="text" class="form-control" formControlName="Email" />
+        <div class="col-md-6">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-control" formControlName="Email" />
         </div>
-      </div>
-      <div class="form-group">
-        <div>
-          <h6>PhoneNumber</h6>
+        <div class="col-md-6">
+          <label class="form-label">Phone Number</label>
           <input
             type="text"
             class="form-control"
             formControlName="PhoneNumber"
           />
         </div>
-      </div>
-      <div class="form-group">
-        <div>
-          <h6>Country</h6>
+        <div class="col-md-6">
+          <label class="form-label">Country</label>
           <input type="text" class="form-control" formControlName="Country" />
         </div>
-      </div>
-      <div class="form-group">
-        <div>
-          <h6>City</h6>
+        <div class="col-md-6">
+          <label class="form-label">City</label>
           <input type="text" class="form-control" formControlName="City" />
         </div>
-      </div>
-      <div class="form-group">
-        <div>
-          <h6>Government</h6>
+        <div class="col-md-6">
+          <label class="form-label">Governorate</label>
           <input
             type="text"
             class="form-control"
             formControlName="Governorate"
           />
         </div>
-      </div>
-      <div class="form-group">
-        <div>
-          <h6>Street</h6>
+        <div class="col-md-6">
+          <label class="form-label">Street</label>
           <input type="text" class="form-control" formControlName="Street" />
         </div>
       </div>
-      <button type="submit" class="btn btn-update main-btn-bg" (click)="onSubmit()">
-        Update
-      </button>
+      <div class="d-flex justify-content-end mt-4">
+        <button
+          type="submit"
+          class="btn main-btn-bg px-5 text-white fw-semibold btn-update"
+        >
+          <i class="fas fa-save me-2"></i>Update
+        </button>
+      </div>
     </form>
   </div>
 </div>

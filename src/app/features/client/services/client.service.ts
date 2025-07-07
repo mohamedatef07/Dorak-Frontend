@@ -1,5 +1,4 @@
-import { IDoctorCard } from './../models/iDoctorcard';
-
+import { IDoctorCard } from './../models/IDoctorCard';
 import { ICheckoutRequest } from '../models/ICheckoutRequest';
 import { ApiResponse } from './../../../types/ApiResponse';
 import { HttpClient, HttpParams } from '@angular/common/http';
@@ -40,8 +39,8 @@ export class ClientService {
    */
   getAllDoctorsCards(filter?: Partial<IDoctorFilter>): Observable<ApiResponse<Array<IDoctorCard>>> {
     if (!filter || Object.keys(filter).length === 0) {
-      return this.httpClient.get<ApiResponse<Array<IDoctorCard>>>(
-        `${environment.apiUrl}/API/Client/provider-cards`
+      return this.httpClient.post<ApiResponse<Array<IDoctorCard>>>(
+        `${environment.apiUrl}/api/Client/provider-cards`,filter || {}
       );
     } else {
       return this.httpClient.post<ApiResponse<Array<IDoctorCard>>>(
