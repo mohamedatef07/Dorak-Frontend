@@ -1,0 +1,37 @@
+<nav class="navbar navbar-expand-lg fixed-top">
+  <div class="container">
+    <!-- Brand -->
+    <a class="navbar-brand d-flex align-items-center" href="#">
+      <div class="position-relative me-3">
+        <div class="icon-container-lg" style="background: var(--primary-gradient)">
+          <!-- <lucide-icon [name]="stethoscopeIcon.name" class="text-white" size="32"></lucide-icon> -->
+        </div>
+        <div class="position-absolute top-0 end-0 translate-middle">
+          <span class="badge bg-success rounded-pill animate-pulse-slow" style="width: 16px; height: 16px;"></span>
+        </div>
+      </div>
+      <div>
+        <!-- <span class="gradient-text fw-bold fs-4">{{ content.brand }}</span> -->
+        <!-- <div class="text-muted small fw-medium">Queue Management</div> -->
+      </div>
+    </a>
+
+    <!-- Mobile Toggle -->
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <!-- <lucide-icon [name]="menuIcon.name" size="24"></lucide-icon> -->
+    </button>
+
+    <!-- Navigation -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mx-auto">
+        <li class="nav-item" *ngFor="let item of content.nav">
+          <!-- <a class="nav-link px-3" [href]="'#' + item.toLowerCase().replace(/\\s+/g, '-')">
+            {{ item }}
+          </a> -->
+        </li>
+      </ul>
+
+
+    </div>
+  </div>
+</nav>
