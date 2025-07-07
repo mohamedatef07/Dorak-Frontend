@@ -3,7 +3,6 @@ import { Routes } from '@angular/router';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
-import { ClientRegisterComponent } from './components/client-register/client-register.component';
 import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
 import { ProviderManagementComponent } from './features/owner/components/provider-management/provider-management.component';
 import { AddProviderComponent } from './features/owner/components/add-provider/add-provider.component';
@@ -296,13 +295,8 @@ export const routes: Routes = [
     ],
     title: 'Home',
   },
-  { path: 'login', component: LoginComponent, title: 'Login' },
-  { path: 'register', component: RegisterComponent, title: 'Register' },
-  {
-    path: 'client-register',
-    component: ClientRegisterComponent,
-    title: 'Client Register',
-  },
+  { path: 'login', component: LoginComponent, title: 'Login', data: { animation: 'login' } },
+  { path: 'register', component: RegisterComponent, title: 'Register', data: { animation: 'register' } },
   {
     path: 'unauthorized',
     component: UnauthorizedComponent,

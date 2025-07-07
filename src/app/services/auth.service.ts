@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { ILoginRequest } from '../types/ILoginRequest';
-import { IClientRegisterRequest } from '../types/IClientRegisterRequest';
+import { IRegistrationModel } from '../types/IClientRegisterRequest';
 import { ApiResponse } from '../types/ApiResponse';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
@@ -57,10 +57,9 @@ export class AuthService {
     return payload['CenterId'];
   }
 
-register(registerData: IClientRegisterRequest): Observable<ApiResponse<null>> {
-    console.log('Payload:', JSON.stringify(registerData, null, 2));
+  register(registerData: IRegistrationModel | FormData): Observable<ApiResponse<null>> {
     return this.httpClient.post<ApiResponse<null>>(
-      `${environment.apiUrl}/api/account/ClientRegister`,
+      `${environment.apiUrl}/api/account/Register`,
       registerData
     );
   }
