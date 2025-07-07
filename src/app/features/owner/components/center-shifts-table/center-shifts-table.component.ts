@@ -1,3 +1,4 @@
+import { AuthService } from './../../../../services/auth.service';
 import { ICenterShifts } from './../../models/ICenterShifts';
 import { Component, inject } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -17,11 +18,12 @@ import { ShiftType } from '../../../../Enums/ShiftType.enum';
 export class CenterShiftsTableComponent {
   messageServices = inject(MessageService);
   ownerServices = inject(OwnerService);
+  authServices = inject(AuthService);
   confirmService = inject(ConfirmationService);
   srService = inject(UpdateShiftsListSRService);
   route = inject(Router);
   centerShifts: Array<ICenterShifts> = [];
-  centerId = 1;
+  centerId = this.authServices.getCenterId();
   ShiftType = ShiftType;
 
   ngOnInit() {

@@ -5,33 +5,38 @@
 :host ::ng-deep .pi-calendar:before,
 :host ::ng-deep .pi-cog:before,
 :host ::ng-deep .pi-chart-bar:before,
-:host ::ng-deep .pi-user-plus:before
-{
-  color: var(--text-color-Light); 
+:host ::ng-deep .pi-user-plus:before {
+  color: var(--text-color-Light);
   font-size: 18px;
   margin: 0 10px;
 }
 
 :host ::ng-deep .p-panelmenu-panel,
-:host ::ng-deep .p-panelmenu-panel:first-child
-:host ::ng-deep .p-panelmenu-panel:last-child{
-  color: var(--text-color-Light); 
+:host ::ng-deep .p-panelmenu-panel:first-child:host ::ng-deep .p-panelmenu-panel:last-child {
+  color: var(--text-color-Light);
   font-size: 0.875rem;
   font-weight: 600;
   border-radius: 15px 0 0 15px;
   margin-bottom: 10px;
-  
+
 }
 
-:host ::ng-deep .p-panelmenu-item-label{
+:host ::ng-deep .p-panelmenu-item-label {
   display: contents;
-  color: var(--text-color-Light); 
+  color: var(--text-color-Light);
   font-size: 0.75rem;
 }
 
-:host ::ng-deep .side-bar ul li a{
+:host ::ng-deep .side-bar ul li a {
   padding: 5px 20px;
 }
 
-
+:host ::ng-deep .p-panelmenu-submenu .fa-user-doctor,
+:host ::ng-deep .p-panelmenu-submenu .fa-calendar-days,
+:host ::ng-deep .p-panelmenu-submenu .fa-magnifying-glass,
+:host ::ng-deep .p-panelmenu-submenu .fa-user-plus {
+  margin-left: 10px;
+  color: var(--text-color-Light);
+  font-size: 18px;
+}
 

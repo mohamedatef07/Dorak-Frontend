@@ -1,7 +1,7 @@
 import { UpdateQueueStatusSRService } from '../../../../services/signalR Services/updateQueueStatusSR.service';
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms'; // Added for ngModel
+import { FormsModule } from '@angular/forms';
 import { ApiService } from '../../../../services/api.service';
 import { ApiResponse } from '../../../../types/ApiResponse';
 import { IProviderLiveQueueViewModel } from '../../../../types/IProviderLiveQueueViewModel';
@@ -14,6 +14,8 @@ import * as signalR from '@microsoft/signalr';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { IOperatorViewModel } from '../../../../types/IOperatorViewModel';
+import { AuthService } from '../../../../services/auth.service';
+
 
 @Component({
   selector: 'app-provider-live-queue',
@@ -24,9 +26,10 @@ import { IOperatorViewModel } from '../../../../types/IOperatorViewModel';
 })
 export class ProviderLiveQueueComponent implements OnInit {
   liveQueues: IProviderLiveQueueViewModel[] = [];
-  providerId: string = '2293a1da-9c6c-4239-bde5-433abf0039f4';
-  centerId: number = 1;
-  shiftId: number = 8;
+
+  // providerId: string = 'bc5edf66-098d-4fdd-82ed-44cdb6b208fa';
+  centerId: number = 0;
+  shiftId: number = 0;
   pageNumber: number = 1;
   pageSize: number = 16;
   totalItems: number = 0;
@@ -49,42 +52,44 @@ export class ProviderLiveQueueComponent implements OnInit {
     private apiService: ApiService,
     private signalRService: UpdateQueueStatusSRService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
+    this.centerId = this.authService.getCenterId();
     this.route.paramMap.subscribe(params => {
       this.shiftId = +params.get('shiftId')!;
-      this.loadProviderName();
+      // this.loadProviderName();
       this.loadLiveQueues();
     });
     this.subscribeToQueueUpdates();
     this.checkSignalRConnection();
   }
 
-  loadProviderName(): void {
-    this.apiService.getProviderById(this.providerId).subscribe({
-      next: (response: ApiResponse<IProviderViewModel>) => {
-        if (response.Status === 200 && response.Data) {
-          const provider = response.Data;
-          this.providerName = `Dr. ${provider.FirstName} ${provider.LastName}`;
-        } else {
-          console.error('Failed to load provider name:', response.Message);
-          this.providerName = 'Unknown Provider';
-        }
-      },
-      error: (error) => {
-        console.error('Error fetching provider name:', error);
-        this.providerName = 'Unknown Provider';
-      },
-    });
-  }
+  // loadProviderName(): void {
+  //   this.apiService.getProviderById(this.providerId).subscribe({
+  //     next: (response: ApiResponse<IProviderViewModel>) => {
+  //       if (response.Status === 200 && response.Data) {
+  //         const provider = response.Data;
+  //         this.providerName = `Dr. ${provider.FirstName} ${provider.LastName} Patients`;
+  //       } else {
+  //         console.error('Failed to load provider name:', response.Message);
+  //         this.providerName = 'Unknown Provider';
+  //       }
+  //     },
+  //     error: (error) => {
+  //       console.error('Error fetching provider name:', error);
+  //       this.providerName = 'Unknown Provider';
+  //     },
+  //   });
+  // }
 
   loadLiveQueues(): void {
     this.liveQueues = [];
     this.apiService
       .getProviderLiveQueues(
-        this.providerId,
+        // this.providerId,
         this.centerId,
         this.shiftId,
         this.pageNumber,
@@ -102,7 +107,7 @@ export class ProviderLiveQueueComponent implements OnInit {
               : response.Data.Data || { $values: [] };
             console.log('Normalized Data:', normalizedData);
             this.liveQueues = normalizedData.$values.map((item) => ({
-              LiveQueueId: Number(item.LiveQueueId), // Ensure it's a number
+              LiveQueueId: Number(item.LiveQueueId),
               ClientFullName: item.ClientFullName,
               ClientType: this.mapClientType(item.ClientType),
               EstimatedTime: item.EstimatedTime,
@@ -207,7 +212,7 @@ export class ProviderLiveQueueComponent implements OnInit {
   }
 
   endShift(): void {
-    const operatorId = 'user1-operator';
+    const operatorId = this.authService.getUserId();
     this.apiService.endShift(this.shiftId, operatorId).subscribe({
       next: (response: ApiResponse<IOperatorViewModel>) => {
         if (response.Status === 200) {
