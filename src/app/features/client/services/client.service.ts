@@ -37,7 +37,7 @@ export class ClientService {
    * Get all doctors, or filter/search if filter is provided.
    * @param filter Optional filter/search object
    */
-  getAllDoctorsCards(filter?: Partial<IDoctorFilter>): Observable<ApiResponse<Array<IDoctorCard>>> {
+  getAllDoctorsCards(filter: Partial<IDoctorFilter>={}): Observable<ApiResponse<Array<IDoctorCard>>> {
     if (!filter || Object.keys(filter).length === 0) {
       return this.httpClient.post<ApiResponse<Array<IDoctorCard>>>(
         `${environment.apiUrl}/api/Client/provider-cards`,filter || {}
