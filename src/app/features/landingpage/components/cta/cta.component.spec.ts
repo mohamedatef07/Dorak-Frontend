@@ -3,21 +3,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { LandingPageLayoutComponent } from './landingPage-layout.component';
+import { CtaComponent } from './cta.component';
 
-describe('LandingPageLayoutComponent', () => {
-  let component: LandingPageLayoutComponent;
-  let fixture: ComponentFixture<LandingPageLayoutComponent>;
+describe('CtaComponent', () => {
+  let component: CtaComponent;
+  let fixture: ComponentFixture<CtaComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LandingPageLayoutComponent ]
+      declarations: [ CtaComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LandingPageLayoutComponent);
+    fixture = TestBed.createComponent(CtaComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

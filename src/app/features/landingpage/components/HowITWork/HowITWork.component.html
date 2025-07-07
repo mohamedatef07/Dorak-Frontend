@@ -1,0 +1,39 @@
+<section id="how-it-works" class="py-5 bg-white">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center mb-5">
+        <h2 class="display-4 fw-bold text-dark mb-4">
+          {{ content.title }}
+        </h2>
+        <p class="lead text-muted">
+          {{ content.subtitle }}
+        </p>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      <div *ngFor="let step of content.steps; let i = index" class="col-lg-3 col-md-6">
+        <div class="card h-100 border-0 shadow-sm position-relative">
+          <!-- Step Number -->
+          <div class="position-absolute top-0 start-50 translate-middle">
+            <span [class]="'badge bg-' + step.color + ' rounded-circle p-2 fs-6'">
+              {{ i + 1 }}
+            </span>
+          </div>
+
+          <div class="card-body p-4 text-center pt-5">
+            <div [class]="'icon-container bg-' + step.color + ' text-white mb-3 mx-auto'">
+              <!-- <lucide-icon [name]="step.icon.name" size="24"></lucide-icon> -->
+            </div>
+            <h5 class="card-title fw-semibold mb-3">
+              {{ step.title }}
+            </h5>
+            <p class="card-text text-muted small">
+              {{ step.description }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
