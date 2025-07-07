@@ -40,7 +40,7 @@
           <button
             class="search-button btn btn-primary ms-2"
             type="button"
-            (click)="searchDoctors()"
+            (click)="applyFilters()"
           >
             Search <i class="fas fa-search ms-1"></i>
           </button>
@@ -57,32 +57,34 @@
         <!-- Title Filter -->
         <div class="mb-3">
           <label class="fw-bold fs-5">Title</label>
-          @for(title of titles; track $index) {
+          <div *ngFor="let title of titles">
             <div class="form-check">
               <input
                 class="form-check-input"
                 type="checkbox"
-                [value]="title"
+                [value]="title.value"
+                [checked]="selectedTitles.includes(title.value)"
                 (change)="onTitleChange($event)"
               />
-              <label class="form-check-label">{{ title }}</label>
+              <label class="form-check-label">{{ title.label }}</label>
             </div>
-          }
+          </div>
         </div>
         <!-- Gender Filter -->
         <div class="mb-3">
           <label class="fw-bold fs-5">Gender</label>
-          @for(gender of genders; track $index) {
+          <div *ngFor="let gender of genders">
             <div class="form-check">
               <input
                 class="form-check-input"
                 type="checkbox"
-                [value]="gender"
+                [value]="gender.value"
+                [checked]="selectedGenders.includes(gender.value)"
                 (change)="onGenderChange($event)"
               />
-              <label class="form-check-label">{{ gender }}</label>
+              <label class="form-check-label">{{ gender.label }}</label>
             </div>
-          }
+          </div>
         </div>
         <!-- City Filter -->
         <div class="mb-3">
