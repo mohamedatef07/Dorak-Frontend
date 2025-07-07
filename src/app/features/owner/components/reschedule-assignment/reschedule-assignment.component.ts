@@ -24,6 +24,7 @@ import { IShiftViewModel } from '../../../../types/IShiftViewModel';
 import { AssignmentType } from '../../../../Enums/AssignmentType.enum';
 import { ShiftType } from '../../../../Enums/ShiftType.enum';
 import { switchMap } from 'rxjs/operators';
+import { AuthService } from '../../../../services/auth.service';
 
 @Component({
   selector: 'app-reschedule-assignment',
@@ -47,7 +48,8 @@ export class RescheduleAssignmentComponent implements OnInit {
   successMessage: string = '';
   isLoading: boolean = false;
   scheduleForm: FormGroup;
-  centerId: number = 3;
+  centerId: number = 0;
+  operatorId: string = '0';
   providerId: string = '';
   daysOfWeek = [
     { value: 0, label: 'Sunday' },
@@ -70,7 +72,8 @@ export class RescheduleAssignmentComponent implements OnInit {
     private router: Router,
     private apiService: ApiService,
     private fb: FormBuilder,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private authService: AuthService
   ) {
     this.scheduleForm = this.fb.group({
       assignments: this.fb.array([this.createAssignmentGroup()]),
@@ -79,6 +82,8 @@ export class RescheduleAssignmentComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.operatorId = this.authService.getUserId();
+    this.centerId = this.authService.getCenterId();
     this.route.paramMap.pipe(
       switchMap(params => {
         this.providerId = params.get('id') || '';
@@ -289,7 +294,7 @@ export class RescheduleAssignmentComponent implements OnInit {
             StartTime: this.formatTimeToString(shift.get('StartTime').value),
             EndTime: this.formatTimeToString(shift.get('EndTime').value),
             MaxPatientsPerDay: shift.get('MaxPatientsPerDay').value || null,
-            OperatorId: '1',
+            OperatorId: this.operatorId
           }));
         });
       } else {
@@ -303,7 +308,7 @@ export class RescheduleAssignmentComponent implements OnInit {
               StartTime: this.formatTimeToString(shift.get('StartTime').value),
               EndTime: this.formatTimeToString(shift.get('EndTime').value),
               MaxPatientsPerDay: shift.get('MaxPatientsPerDay').value || null,
-              OperatorId: '1',
+              OperatorId: this.operatorId,
             };
           }
           return {
@@ -312,7 +317,7 @@ export class RescheduleAssignmentComponent implements OnInit {
             StartTime: this.formatTimeToString(shift.get('StartTime').value),
             EndTime: this.formatTimeToString(shift.get('EndTime').value),
             MaxPatientsPerDay: shift.get('MaxPatientsPerDay').value || null,
-            OperatorId: '1',
+            OperatorId: this.operatorId,
           };
         });
         console.log('Submitting shifts:', shifts); // Debug log

@@ -13,6 +13,8 @@ import { ApiService } from '../../../../services/api.service';
 import { IPaginationViewModel } from '../../../../types/IPaginationViewModel';
 import { IProviderViewModel } from '../../../../types/IProviderViewModel';
 import { ApiResponse } from '../../../../types/ApiResponse';
+import { AuthService } from '../../../../services/auth.service';
+
 
 @Component({
   selector: 'app-provider-schedule',
@@ -50,7 +52,7 @@ export class ProviderManagementComponent implements OnInit, AfterViewInit {
 
   errorMessage: string = '';
   isLoading: boolean = false;
-  centerId: number = 3;
+  centerId: number = 0;
   showDeletePopup: boolean = false;
   selectedProviderId: string | null = null;
 
@@ -64,10 +66,12 @@ export class ProviderManagementComponent implements OnInit, AfterViewInit {
   constructor(
     private apiService: ApiService,
     private router: Router,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
+    this.centerId = this.authService.getCenterId();
     this.loadAllProviders();
   }
 
@@ -302,5 +306,5 @@ export class ProviderManagementComponent implements OnInit, AfterViewInit {
       this.errorMessage = 'Provider ID is missing. Cannot navigate to schedule options.';
     }
   }
-  
+
 }
