@@ -47,7 +47,7 @@ export class OwnerSidebarComponent implements OnInit {
     {
       label: 'Manage Queues',
       icon: 'pi pi-calendar',
-      routerLink: '/provider/schedule',
+      routerLink: '/owner/center-shifts-table',
     },
     {
       label: 'Manage Operators',

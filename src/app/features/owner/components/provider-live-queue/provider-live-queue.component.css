@@ -7,7 +7,7 @@
 }
 
 .header h2 {
-  font-size: 2rem;
+    font-size: 1.6rem;
     margin-bottom: 20px;
     margin-top: 20px;
     padding: 15px;
@@ -47,7 +47,6 @@
   border-radius: 5px;
   cursor: pointer;
   font-size: 14px;
-  font-weight: 600;
   display: inline-block;
 }
 

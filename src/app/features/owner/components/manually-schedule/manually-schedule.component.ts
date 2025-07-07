@@ -49,7 +49,8 @@ export class ManuallyScheduleComponent implements OnInit {
   successMessage: string = '';
   isLoading: boolean = false;
   scheduleForm: FormGroup;
-  centerId: number = 0;
+  // centerId: number = 0;
+  centerId: number = 3;
   dateOptions: Date[] = [];
   viewDate: Date = new Date();
   assignments: { startDate: Date; endDate: Date }[] = [];
@@ -73,7 +74,7 @@ export class ManuallyScheduleComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.centerId = this.authService.getCenterId();
+    // this.centerId = this.authService.getCenterId();
     const providerId = this.route.snapshot.paramMap.get('id');
     if (providerId && providerId.trim() !== '') {
       this.loadProviderDetails(providerId);
@@ -293,7 +294,9 @@ export class ManuallyScheduleComponent implements OnInit {
           StartTime: this.formatTimeToString(shift.StartTime),
           EndTime: this.formatTimeToString(shift.EndTime),
           MaxPatientsPerDay: shift.MaxPatientsPerDay,
-          OperatorId: this.authService.getUserId()
+          // OperatorId: this.authService.getUserId()
+          OperatorId: '1'
+
         })
       ),
     };

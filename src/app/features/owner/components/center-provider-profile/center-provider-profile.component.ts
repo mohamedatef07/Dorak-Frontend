@@ -50,12 +50,10 @@ export class CenterProviderProfileComponent implements OnInit {
     }
   }
 
-   // Method to get the full image URL
   getImageUrl(imagePath: string | null): string {
     if (!imagePath) {
-      return 'https://via.placeholder.com/150'; // Fallback placeholder
+      return 'https://via.placeholder.com/150';
     }
-    // Prepend backend base URL to the image path
     return `${environment.apiUrl}${imagePath}`;
   }
 

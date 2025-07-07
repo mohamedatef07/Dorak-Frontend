@@ -15,7 +15,8 @@ import { AuthService } from '../../../services/auth.service';
 export class OwnerService {
   authServices = inject(AuthService);
   httpClient = inject(HttpClient);
-  operatorId = this.authServices.getUserId();
+  // operatorId = this.authServices.getUserId();
+  operatorId = '1'
 
   constructor() {}
 

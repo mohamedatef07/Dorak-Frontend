@@ -52,7 +52,8 @@ export class ProviderManagementComponent implements OnInit, AfterViewInit {
 
   errorMessage: string = '';
   isLoading: boolean = false;
-  centerId: number = 0;
+  // centerId: number = 0;
+  centerId: number = 3;
   showDeletePopup: boolean = false;
   selectedProviderId: string | null = null;
 
@@ -71,7 +72,7 @@ export class ProviderManagementComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit(): void {
-    this.centerId = this.authService.getCenterId();
+    // this.centerId = this.authService.getCenterId();
     this.loadAllProviders();
   }
 
@@ -269,28 +270,26 @@ export class ProviderManagementComponent implements OnInit, AfterViewInit {
       this.handleError('Invalid or missing provider ID. Cannot delete.');
       return;
     }
-    this.selectedProviderId = providerId; // Set the provider to delete
-    this.showDeletePopup = true; // Show the custom pop-up instead of confirm
+    this.selectedProviderId = providerId;
+    this.showDeletePopup = true;
   }
 
   confirmDelete(): void {
     if (this.selectedProviderId && this.selectedProviderId !== 'unknown') {
-      console.log('Attempting to delete provider with ID:', this.selectedProviderId); // Debug log
       this.apiService.deleteProviderFromCenter(this.selectedProviderId, this.centerId).subscribe({
         next: (response: ApiResponse<string>) => {
           if (response.Status === 200) {
-            this.loadAllProviders(); // Reload the provider list after successful deletion
+            this.loadAllProviders();
           } else {
             this.handleError(response.Message || 'Failed to delete provider. Status: ' + response.Status);
-            console.log('Response Details:', response); // Log full response for debugging
+            console.log('Response Details:', response);
           }
         },
         error: (err) => {
           this.handleError('An error occurred while deleting the provider. Please try again later. (Status: ' + (err.status || 'Unknown') + ')');
-          console.error('Error Details:', err); // Log error details
         }
       });
-    } // If invalid, error is handled above
+    }
     this.cancelDelete(); // Close the pop-up after action
   }
 

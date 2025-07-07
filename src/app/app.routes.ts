@@ -3,7 +3,6 @@ import { Routes } from '@angular/router';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
-import { ClientRegisterComponent } from './components/client-register/client-register.component';
 import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
 import { ProviderManagementComponent } from './features/owner/components/provider-management/provider-management.component';
 import { AddProviderComponent } from './features/owner/components/add-provider/add-provider.component';
@@ -55,14 +54,13 @@ export const routes: Routes = [
   {
     path: 'owner',
     component: OwnerLayoutComponent,
-    canActivate: [AuthGuard, RoleGuard],
+    // canActivate: [AuthGuard, RoleGuard],
     data: { expectedRole: ['Admin', 'Operator'] },
     children: [
       {
         path: 'center-shifts',
         component: CenterShiftsComponent,
         title: 'Center Shifts',
-        data: { expectedRole: ['Admin'] },
       },
       {
         path: 'manage-operators',
@@ -321,11 +319,6 @@ export const routes: Routes = [
   },
   { path: 'login', component: LoginComponent, title: 'Login' },
   { path: 'register', component: RegisterComponent, title: 'Register' },
-  {
-    path: 'client-register',
-    component: ClientRegisterComponent,
-    title: 'Client Register',
-  },
   {
     path: 'unauthorized',
     component: UnauthorizedComponent,

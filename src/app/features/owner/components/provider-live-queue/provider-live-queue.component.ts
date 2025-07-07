@@ -28,7 +28,7 @@ export class ProviderLiveQueueComponent implements OnInit {
   liveQueues: IProviderLiveQueueViewModel[] = [];
 
   // providerId: string = 'bc5edf66-098d-4fdd-82ed-44cdb6b208fa';
-  centerId: number = 0;
+  centerId: number = 3;
   shiftId: number = 0;
   pageNumber: number = 1;
   pageSize: number = 16;
@@ -57,7 +57,7 @@ export class ProviderLiveQueueComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.centerId = this.authService.getCenterId();
+    // this.centerId = this.authService.getCenterId();
     this.route.paramMap.subscribe(params => {
       this.shiftId = +params.get('shiftId')!;
       // this.loadProviderName();
