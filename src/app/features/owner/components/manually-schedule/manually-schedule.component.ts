@@ -22,6 +22,8 @@ import { IProviderAssignmentViewModel } from '../../../../types/IProviderAssignm
 import { IShiftViewModel } from '../../../../types/IShiftViewModel';
 import { AssignmentType } from '../../../../Enums/AssignmentType.enum';
 import { ShiftType } from '../../../../Enums/ShiftType.enum';
+import { AuthService } from '../../../../services/auth.service';
+
 
 
 @Component({
@@ -47,7 +49,7 @@ export class ManuallyScheduleComponent implements OnInit {
   successMessage: string = '';
   isLoading: boolean = false;
   scheduleForm: FormGroup;
-  centerId: number = 3;
+  centerId: number = 0;
   dateOptions: Date[] = [];
   viewDate: Date = new Date();
   assignments: { startDate: Date; endDate: Date }[] = [];
@@ -60,7 +62,8 @@ export class ManuallyScheduleComponent implements OnInit {
     private router: Router,
     private apiService: ApiService,
     private fb: FormBuilder,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private authService: AuthService
   ) {
     this.scheduleForm = this.fb.group({
       Shifts: this.fb.array([]),
@@ -70,6 +73,7 @@ export class ManuallyScheduleComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.centerId = this.authService.getCenterId();
     const providerId = this.route.snapshot.paramMap.get('id');
     if (providerId && providerId.trim() !== '') {
       this.loadProviderDetails(providerId);
@@ -136,7 +140,6 @@ export class ManuallyScheduleComponent implements OnInit {
             );
             console.log('Assignments array after mapping:', this.assignments);
           } else {
-            // No assignments found or empty data, treat as a normal case
             this.assignments = [];
             console.log(
               'No assignments found, assignments set to:',
@@ -148,12 +151,10 @@ export class ManuallyScheduleComponent implements OnInit {
         },
         error: (err) => {
           this.isLoading = false;
-          // Only set an error message for unexpected errors (e.g., network issues, server errors)
           if (err.status !== 404) {
             this.errorMessage = 'An error occurred while loading assignments.';
             console.error('Assignment load error:', err);
           } else {
-            // 404 means no assignments, which is a valid case
             this.assignments = [];
             console.log(
               'No assignments found (404), assignments set to:',
@@ -286,11 +287,13 @@ export class ManuallyScheduleComponent implements OnInit {
       Shifts: formValue.Shifts.map(
         (shift: any): IShiftViewModel => ({
           ShiftType: ShiftType.None,
-          ShiftDate: this.formatDateToString(shift.Date),
+          ShiftDate: this.formatDateToString(
+            typeof shift.Date === 'string' ? new Date(shift.Date) : shift.Date
+          ),
           StartTime: this.formatTimeToString(shift.StartTime),
           EndTime: this.formatTimeToString(shift.EndTime),
           MaxPatientsPerDay: shift.MaxPatientsPerDay,
-          OperatorId: '1',
+          OperatorId: this.authService.getUserId()
         })
       ),
     };
@@ -428,3 +431,4 @@ export class ManuallyScheduleComponent implements OnInit {
     this.router.navigate(['owner/provider-management']);
   }
 }
+

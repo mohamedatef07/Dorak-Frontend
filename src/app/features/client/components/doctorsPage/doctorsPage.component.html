@@ -12,28 +12,12 @@
               type="button"
               data-bs-toggle="dropdown"
             >
-              {{ specialty || "Specialty" }}
+              {{ filterModel.Specialization || "Specialty" }}
             </button>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" (click)="specialty = ''">All</a></li>
+              <li><a class="dropdown-item" (click)="onSpecializationChange('')">All</a></li>
               <li *ngFor="let s of specialties">
-                <a class="dropdown-item" (click)="specialty = s">{{ s }}</a>
-              </li>
-            </ul>
-          </div>
-          <!-- City Dropdown -->
-          <div class="dropdown ms-2">
-            <button
-              class="city-dropdown dropdown-toggle btn btn-outline-secondary"
-              type="button"
-              data-bs-toggle="dropdown"
-            >
-              {{ city || "City" }}
-            </button>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" (click)="city = ''">All</a></li>
-              <li *ngFor="let c of cities">
-                <a class="dropdown-item" (click)="city = c">{{ c }}</a>
+                <a class="dropdown-item" (click)="onSpecializationChange(s)">{{ s }}</a>
               </li>
             </ul>
           </div>

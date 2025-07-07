@@ -1,4 +1,6 @@
 import { IDoctorFilter } from './../../../types/IDoctorFilter';
+import { IDoctorCard } from './../models/iDoctorcard';
+
 import { ICheckoutRequest } from '../models/ICheckoutRequest';
 import { ApiResponse } from './../../../types/ApiResponse';
 import { HttpClient, HttpParams } from '@angular/common/http';
@@ -21,7 +23,6 @@ import { IClientLiveQueue } from '../models/IClientLiveQueue';
 import { IClientInfoForLiveQueue } from '../models/IClientInfoForLiveQueue';
 import { IClientUpdate } from '../models/IClientUpdate';
 import { IGeneralAppointmentStatistics } from '../models/IGeneralAppointmentStatistics';
-import { IDoctorCard } from '../models/IDoctorCard';
 import { PaginationApiResponse } from '../../../types/PaginationApiResponse';
 
 @Injectable({
@@ -33,13 +34,21 @@ export class ClientService {
 
   constructor() {}
 
-  getAllDoctorsCards(
-    filter: IDoctorFilter
-  ): Observable<ApiResponse<Array<IDoctorCard>>> {
-    return this.httpClient.post<ApiResponse<Array<IDoctorCard>>>(
-      `${environment.apiUrl}/api/Client/provider-cards`,
-      { filter }
-    );
+  /**
+   * Get all doctors, or filter/search if filter is provided.
+   * @param filter Optional filter/search object
+   */
+  getAllDoctorsCards(filter?: Partial<IDoctorFilter>): Observable<ApiResponse<Array<IDoctorCard>>> {
+    if (!filter || Object.keys(filter).length === 0) {
+      return this.httpClient.get<ApiResponse<Array<IDoctorCard>>>(
+        `${environment.apiUrl}/API/Client/provider-cards`
+      );
+    } else {
+      return this.httpClient.post<ApiResponse<Array<IDoctorCard>>>(
+        `${environment.apiUrl}/api/Client/provider-cards`,
+        filter
+      );
+    }
   }
 
   getDoctorsById(id: string | null): Observable<ApiResponse<any>> {

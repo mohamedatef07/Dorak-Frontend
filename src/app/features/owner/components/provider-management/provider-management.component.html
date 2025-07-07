@@ -71,6 +71,7 @@
         <td>
           <div style="display: flex; gap: 0.75rem; justify-content: center;">
             <button class="view-doc-profile me-1" (click)="viewProfile(row.ProviderId || '')">View Profile</button>
+            <button class="view-doc-profile me-1" (click)="navigateToScheduleOptions(row.ProviderId || '')">Schedule</button>
             <button class="view-doc-profile me-1" (click)="reschedule(row.ProviderId || '')">Reschedule</button>
             <button class="view-doc-profile" (click)="deleteProvider(row.ProviderId || '')">Delete</button>
           </div>
