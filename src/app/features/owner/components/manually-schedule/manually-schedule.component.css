@@ -40,8 +40,8 @@ body[data-theme="dark"] .schedule-container.modern-card {
 
     margin-top: 20px;
     padding: 15px;
-    color: #fff;
-    background-color: var(--main-bg-color-Light);
+    color: #000;
+    /* background-color: var(--main-bg-color-Light); */
     width: fit-content;
     border-radius: var(--border-radius);
     font-weight: 600;
@@ -496,6 +496,13 @@ body[data-theme="dark"] .shift-label {
   display: flex;
   flex-direction: column;
 }
+
+option {
+  padding: 8px;
+  font-size: 1rem;
+  background-color: #fff !important;
+}
+
 
 /* Calendar: Empty Days */
 .calendar-day:empty,

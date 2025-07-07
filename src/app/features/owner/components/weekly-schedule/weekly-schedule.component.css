@@ -30,9 +30,8 @@ body[data-theme="dark"] .schedule-container.modern-card {
  font-size: 2rem;
     margin-top: 20px;
     padding: 15px;
-    color: #fff;
-    background-color: var(--main-bg-color-Light);
-    width: fit-content;
+color: #000;
+    /* background-color: var(--main-bg-color-Light); */    width: fit-content;
     border-radius: var(--border-radius);
     font-weight: 600;
 }

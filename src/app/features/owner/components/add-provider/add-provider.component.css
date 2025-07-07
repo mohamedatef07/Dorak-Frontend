@@ -9,12 +9,10 @@
 
 .page-title {
       font-size: 2rem;
-    margin-bottom: 20px;
-    margin-top: 20px;
+   
     margin-left: 33%;
     padding: 10px;
-    color: #fff;
-    background-color: var(--main-bg-color-Light);
+   color: #000;
     width: 30%;
     border-radius: var(--border-radius);
     font-weight: 100;
@@ -200,10 +198,246 @@ select:focus {
   flex: 1;
 }
 .error::before {
-  content: '\26A0'; /* Unicode warning icon */
+  content: '\26A0';
   font-size: 1.4rem;
   color: var(--alert-color);
   margin-right: 0.5rem;
   opacity: 0.85;
 }
 
+
+/* * {
+  font-family: Poppins-regular !important;
+}
+
+.add-provider-card {
+  background: #fff;
+  border-radius: var(--card-radius);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.13);
+  padding: 2.5rem 2rem;
+  max-width: 1300px;
+  margin: 2rem auto;
+}
+
+body[data-theme="dark"] .add-provider-card {
+  background: #023e68;
+  box-shadow: 0 6px 32px rgba(0, 0, 0, 0.3);
+}
+
+h4 {
+  color: var(--text-color-Light);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+
+body[data-theme="dark"] h4 {
+  color: var(--text-dark);
+}
+
+hr {
+  border-color: var(--button-bg-color-Light);
+  margin: 0 0 1.5rem 0;
+}
+
+.error-popup {
+  position: fixed;
+  top: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2000;
+  background: transparent;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.error-popup-content {
+  background: var(--bg-primary);
+  border-radius: var(--card-radius);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.13);
+  padding: 18px 32px 18px 24px;
+  font-size: 1.08rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 320px;
+  max-width: 90vw;
+  pointer-events: all;
+  position: relative;
+  font-family: var(--font-heading);
+  color: var(--alert-color);
+  border: 2px solid var(--alert-color);
+}
+
+body[data-theme="dark"] .error-popup-content {
+  background: var(--bg-dark);
+  color: var(--text-dark);
+}
+
+.error-icon {
+  color: var(--alert-color);
+  font-size: 1.6em;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5em;
+  font-weight: bold;
+  cursor: pointer;
+  position: absolute;
+  top: 8px;
+  right: 16px;
+  line-height: 1;
+  padding: 0;
+  transition: color 0.2s;
+  color: var(--alert-color);
+}
+
+.close-btn:hover {
+  color: #b71c1c;
+}
+
+.profile-image-wrapper {
+  width: 180px;
+  height: 180px;
+  position: relative;
+}
+
+.profile-image {
+  width: 180px;
+  height: 180px;
+  object-fit: cover;
+  border: 3px solid #f0f0f0;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.10);
+  background: #fff;
+}
+
+body[data-theme="dark"] .profile-image {
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.change-image-label {
+  font-size: 1rem;
+  padding: 10px;
+  border: 1px solid #eee;
+  border-radius: 100%;
+  transition: background 0.2s;
+  background: #fff;
+}
+
+body[data-theme="dark"] .change-image-label {
+  border-color: rgba(255, 255, 255, 0.2);
+  background: #023e68;
+}
+
+.change-image-label:hover {
+  background: #f5f5f5;
+}
+
+body[data-theme="dark"] .change-image-label:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+:host ::ng-deep .p-inputtext {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-family: var(--font-body);
+  font-size: var(--font-p);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+body[data-theme="dark"] :host ::ng-deep .p-inputtext {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: var(--text-dark);
+}
+
+:host ::ng-deep .p-inputtext:enabled:focus {
+  border-color: #012a4a;
+  box-shadow: 0 0 0 0.25rem rgba(97, 165, 194, 0.25);
+}
+
+:host ::ng-deep .p-autocomplete .p-inputtext {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-family: var(--font-body);
+  font-size: var(--font-p);
+}
+
+body[data-theme="dark"] :host ::ng-deep .p-autocomplete .p-inputtext {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: var(--text-dark);
+}
+
+:host ::ng-deep .p-autocomplete .p-inputtext:enabled:focus {
+  border-color: #012a4a;
+  box-shadow: 0 0 0 0.25rem rgba(97, 165, 194, 0.25);
+}
+
+:host ::ng-deep .p-floatlabel label {
+  font-weight: 600;
+  color: var(--text-color-Light);
+  font-family: var(--font-heading);
+  font-size: var(--font-p);
+}
+
+body[data-theme="dark"] :host ::ng-deep .p-floatlabel label {
+  color: var(--text-dark);
+}
+
+:host ::ng-deep .p-autocomplete .p-autocomplete-dropdown .p-icon {
+  color: var(--text-color-Light);
+}
+
+body[data-theme="dark"] :host ::ng-deep .p-autocomplete .p-autocomplete-dropdown .p-icon {
+  color: var(--text-dark);
+}
+
+:host ::ng-deep .custom-register-btn {
+  background: var(--button-bg-color-Light);
+  color: #fff;
+  border: none;
+  border-radius: var(--border-radius);
+  font-size: 1.1rem;
+  padding: 0.75rem 1.5rem;
+  transition: ease-in-out 0.4s;
+  height: 25px;
+}
+
+:host ::ng-deep .custom-register-btn:hover,
+:host ::ng-deep .custom-register-btn:focus {
+  background: var(--main-bg-color-Light);
+  color: white;
+}
+
+.back-btn {
+  color: var(--text-color-Light);
+  border: none;
+  border-radius: var(--border-radius);
+  font-size: 1.1rem;
+  padding: 0.75rem 1.5rem;
+  transition: ease-in-out 0.4s;
+  height: 25px;
+}
+
+.back-btn:hover {
+  color: var(--main-bg-color-Light);
+}
+
+body[data-theme="dark"] .back-btn {
+  color: var(--text-dark);
+}
+
+body[data-theme="dark"] .back-btn:hover {
+  color: #4a8eab;
+} */

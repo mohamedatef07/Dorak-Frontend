@@ -26,7 +26,7 @@ export class ProviderLiveQueueComponent implements OnInit {
   liveQueues: IProviderLiveQueueViewModel[] = [];
   providerId: string = 'bc5edf66-098d-4fdd-82ed-44cdb6b208fa';
   centerId: number = 3;
-  shiftId: number = 22;
+  shiftId: number = 0;
   pageNumber: number = 1;
   pageSize: number = 16;
   totalItems: number = 0;

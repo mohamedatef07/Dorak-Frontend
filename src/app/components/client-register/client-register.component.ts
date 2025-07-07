@@ -126,7 +126,7 @@ export class ClientRegisterComponent {
       PhoneNumber: formValue.phoneNumber.trim(),
       FirstName: formValue.firstName.trim(),
       LastName: formValue.lastName.trim(),
-      Gender: parseInt(formValue.gender, 10), // Ensure Gender is an integer (GenderType.Male = 1 or GenderType.Female = 2)
+      Gender: parseInt(formValue.gender, 10),
       BirthDate: new Date(formValue.birthDate).toISOString().split('T')[0],
       Street: formValue.street?.trim() || null,
       City: formValue.city?.trim() || null,
@@ -134,10 +134,6 @@ export class ClientRegisterComponent {
       Country: formValue.country?.trim() || null,
       Image: formValue.image?.trim() || null
     };
-
-    // Log payload for debugging
-    console.log('Payload:', JSON.stringify({ client: registerData }, null, 2));
-
     this.authService.register(registerData).subscribe({
       next: (response: ApiResponse<null>) => this.handleSuccess(response),
       error: (err: HttpErrorResponse) => this.handleError(err),
@@ -160,8 +156,7 @@ export class ClientRegisterComponent {
       this.errorMessage = 'An unexpected error occurred. Please try again later.';
     }
 
-    console.error('Full Error Response:', err);
-    console.error('Error Body:', err.error);
+
   }
 
   private markFormGroupTouched(formGroup: FormGroup): void {

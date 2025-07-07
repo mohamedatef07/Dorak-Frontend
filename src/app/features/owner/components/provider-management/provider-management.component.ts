@@ -295,11 +295,12 @@ export class ProviderManagementComponent implements OnInit, AfterViewInit {
     this.selectedProviderId = null; // Reset the selected provider
   }
 
-  navigateToScheduleOptions(providerId: string | undefined): void {
+ navigateToScheduleOptions(providerId: string | undefined): void {
     if (providerId) {
-      this.router.navigate(['/schedule-options', providerId]);
+      this.router.navigate(['owner/manually-schedule', providerId]);
     } else {
       this.errorMessage = 'Provider ID is missing. Cannot navigate to schedule options.';
     }
   }
+  
 }

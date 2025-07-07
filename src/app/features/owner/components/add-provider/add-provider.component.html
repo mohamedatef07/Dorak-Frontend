@@ -1,5 +1,6 @@
- <h2 class="page-title">Add Doctor</h2>
 <div class="add-provider-card">
+   <h2 class="page-title">Add Doctor</h2>
+<hr class="mb-4">
   <form #providerForm="ngForm" (ngSubmit)="onSubmit()" class="form-layout">
     <div class="form-columns">
       <div class="left-column">
@@ -26,7 +27,7 @@
         <div class="input-group">
           <label for="specialization">Specialization</label>
           <select id="specialization" name="specialization" [(ngModel)]="model.Specialization" class="form-select" required>
-            <option value="" disabled selected hidden>Choose Specialization</option>
+            <option value="" disabled selected hidden></option>
             <option *ngFor="let spec of specializations" [value]="spec">{{ spec }}</option>
           </select>
         </div>
@@ -35,7 +36,7 @@
           <select id="gender" name="gender" [(ngModel)]="model.Gender" class="form-select">
             <option value="Male">Male</option>
             <option value="Female">Female</option>
-            
+
           </select>
         </div>
         <div class="input-group">
@@ -97,3 +98,150 @@
   </form>
 </div>
 
+
+<!-- <div class="mt-3">
+  <div class="add-provider-card p-4 rounded shadow-sm bg-white">
+    <button type="button" icon="pi pi-arrow-left" class="back-btn h-25 me-2" (click)="goBack()">
+      <i class="fa-solid fa-arrow-left"></i> Back
+    </button>
+    <h4 class="mb-2 text-center fw-bold">Add Doctor</h4>
+    <hr class="mb-4">
+    <div *ngIf="errorMessage" class="error-popup">
+      <div class="error-popup-content">
+        <i class="fas fa-exclamation-triangle error-icon"></i>
+        <span>{{ errorMessage }}</span>
+        <button class="close-btn" (click)="errorMessage = ''" aria-label="Close">×</button>
+      </div>
+    </div>
+    <div class="row mx-3">
+      <div class="col-md-12 col-lg-6">
+        <form #providerForm="ngForm" (ngSubmit)="onSubmit()" class="w-100">
+          <div class="mb-3">
+            <p-floatlabel variant="on">
+              <input pInputText id="userName" type="text" name="userName" [(ngModel)]="model.UserName" required />
+              <label for="userName">Username</label>
+            </p-floatlabel>
+          </div>
+          <div class="mb-3">
+            <p-floatlabel variant="on">
+              <input pInputText id="firstName" type="text" name="firstName" [(ngModel)]="model.FirstName" required />
+              <label for="firstName">First Name</label>
+            </p-floatlabel>
+          </div>
+          <div class="mb-3">
+            <p-floatlabel variant="on">
+              <input pInputText id="lastName" type="text" name="lastName" [(ngModel)]="model.LastName" required />
+              <label for="lastName">Last Name</label>
+            </p-floatlabel>
+          </div>
+          <div class="mb-3">
+            <p-floatlabel variant="on">
+              <input pInputText id="email" type="email" name="email" [(ngModel)]="model.Email" required />
+              <label for="email">Email</label>
+            </p-floatlabel>
+          </div>
+          <div class="mb-3">
+            <p-floatlabel variant="on">
+              <input pInputText id="phoneNumber" type="text" name="phoneNumber" [(ngModel)]="model.PhoneNumber" required />
+              <label for="phoneNumber">Phone Number</label>
+            </p-floatlabel>
+          </div>
+          <div class="mb-3">
+            <p-floatlabel variant="on">
+              <p-autoComplete inputId="specialization" name="specialization" [(ngModel)]="model.Specialization" [dropdown]="true"
+                [suggestions]="specializationOptions" field="label" [forceSelection]="true" placeholder="Choose Specialization" styleClass="w-100">
+                <ng-template let-spec pTemplate="item">
+                  <div>{{ spec.label }}</div>
+                </ng-template>
+              </p-autoComplete>
+              <label for="specialization">Specialization</label>
+            </p-floatlabel>
+          </div>
+          <div class="mb-3">
+            <p-floatlabel variant="on">
+              <p-autoComplete inputId="gender" name="gender" [(ngModel)]="model.Gender" [dropdown]="true"
+                [suggestions]="filteredGenders" field="label" [forceSelection]="true" (completeMethod)="filterGender($event)" placeholder="Select Gender" styleClass="w-100">
+                <ng-template let-gender pTemplate="item">
+                  <div>{{ gender.label }}</div>
+                </ng-template>
+              </p-autoComplete>
+              <label for="gender">Gender</label>
+            </p-floatlabel>
+          </div>
+          <div class="mb-3">
+            <p-floatlabel variant="on">
+              <input pInputText id="birthDate" type="date" name="birthDate" [(ngModel)]="model.BirthDate" required />
+              <label for="birthDate">Birth Date</label>
+            </p-floatlabel>
+          </div>
+          <div class="mb-3">
+            <p-floatlabel variant="on">
+              <input pInputText id="street" type="text" name="street" [(ngModel)]="model.Street" />
+              <label for="street">Street</label>
+            </p-floatlabel>
+          </div>
+          <div class="mb-3">
+            <p-floatlabel variant="on">
+              <input pInputText id="city" type="text" name="city" [(ngModel)]="model.City" />
+              <label for="city">City</label>
+            </p-floatlabel>
+          </div>
+          <div class="mb-3">
+            <p-floatlabel variant="on">
+              <input pInputText id="governorate" type="text" name="governorate" [(ngModel)]="model.Governorate" />
+              <label for="governorate">Governorate</label>
+            </p-floatlabel>
+          </div>
+          <div class="mb-3">
+            <p-floatlabel variant="on">
+              <input pInputText id="country" type="text" name="country" [(ngModel)]="model.Country" />
+              <label for="country">Country</label>
+            </p-floatlabel>
+          </div>
+          <div class="mb-3">
+            <p-floatlabel variant="on">
+              <input pInputText id="experienceYears" type="number" name="experienceYears" [(ngModel)]="model.ExperienceYears" />
+              <label for="experienceYears">Experience Years</label>
+            </p-floatlabel>
+          </div>
+          <div class="mb-3">
+            <p-floatlabel variant="on">
+              <input pInputText id="licenseNumber" type="text" name="licenseNumber" [(ngModel)]="model.LicenseNumber" />
+              <label for="licenseNumber">License Number</label>
+            </p-floatlabel>
+          </div>
+          <div class="mb-3">
+            <p-floatlabel variant="on">
+              <p-autoComplete inputId="providerType" name="providerType" [(ngModel)]="model.ProviderType" [dropdown]="true"
+                [suggestions]="providerTypeOptions" field="label" [forceSelection]="true" placeholder="Select Provider Type" styleClass="w-100">
+                <ng-template let-type pTemplate="item">
+                  <div>{{ type.label }}</div>
+                </ng-template>
+              </p-autoComplete>
+              <label for="providerType">Provider Type</label>
+            </p-floatlabel>
+          </div>
+        </form>
+      </div>
+      <div class="col-md-12 col-lg-6 d-flex flex-column align-items-center justify-content-start mt-4 mt-md-0">
+        <div class="profile-image-wrapper position-relative mb-3">
+          <img *ngIf="imagePreview; else noImage" [src]="imagePreview" alt="Profile Preview" class="rounded-circle profile-image" />
+          <ng-template #noImage>
+            <div class="rounded-circle bg-light d-flex align-items-center justify-content-center profile-image">
+              <span class="text-muted">No Image</span>
+            </div>
+          </ng-template>
+          <label for="imageUpload"
+            class="change-image-label position-absolute bottom-0 end-0 translate-middle p-1 bg-white rounded-circle shadow-sm"
+            style="cursor:pointer;">
+            <i class="pi pi-camera"></i>
+          </label>
+          <input type="file" id="imageUpload" (change)="onFileSelected($event)" accept="image/*" class="d-none" />
+        </div>
+        <small class="text-muted mb-3">JPG, PNG, or GIF. Max 2MB.</small>
+        <button type="button" pButton label="Save" class="custom-register-btn mt-2 w-50"
+          [disabled]="isSubmitting || providerForm.invalid" (click)="onSubmit()"></button>
+      </div>
+    </div>
+  </div>
+</div> -->
