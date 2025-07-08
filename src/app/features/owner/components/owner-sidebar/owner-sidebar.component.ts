@@ -33,18 +33,13 @@ export class OwnerSidebarComponent implements OnInit {
           routerLink: '/owner/provider-management',
         },
          {
-          label: 'Schedule Doctors',
-          icon: 'pi pi-calendar-clock',
-          routerLink: '/owner/provider-schedule',
-        },
-         {
           label: 'Search Doctors',
-          icon: 'pi pi-search',
+          icon: 'fa fa-magnifying-glass',
           routerLink: '/owner/search-provider',
         },
         {
           label: 'Add Doctors',
-          icon: 'pi pi-user-plus',
+          icon: 'fa fa-user-plus',
           routerLink: '/owner/add-provider',
         },
       ]

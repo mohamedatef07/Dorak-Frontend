@@ -5,6 +5,7 @@ import { environment } from '../../../environments/environment';
 import * as signalR from '@microsoft/signalr';
 import { AuthService } from '../auth.service';
 import { HttpClient } from '@angular/common/http';
+import { PaginationApiResponse } from '../../types/PaginationApiResponse';
 
 @Injectable({
   providedIn: 'root',
@@ -23,8 +24,7 @@ export class NotificationsSRService {
   }
   public startConnection() {
     const token = this.authService.getAuthToken();
-    console.log('token : ',token);
-     ;
+    console.log('token : ', token);
     if (!token) {
       console.warn('No auth token found. SignalR connection aborted.');
       return;
@@ -37,13 +37,12 @@ export class NotificationsSRService {
       .build();
     this.hubConnection
       .start()
-      .then(() => {console.log('SignalR connection started')
+      .then(() => {
+        console.log('SignalR connection started');
 
         const connectionId = this.hubConnection?.connectionId;
-        this.registerUserToNotificationHub(connectionId || '').subscribe(data=>
-        {
-
-        }
+        this.registerUserToNotificationHub(connectionId || '').subscribe(
+          (data) => {}
         );
         console.log('SignalR connection ID: ', connectionId);
       })
@@ -57,26 +56,22 @@ export class NotificationsSRService {
       console.log('SignalR reconnected with connection ID: ', connectionId);
     });
   }
+
   private registerOnServerEvents() {
     if (this.hubConnection) {
       this.hubConnection.on(
         'updatedNotifications',
-        (updatedNotifications: Array<INotification>) => {
-          this.notificationsListSubject.next(updatedNotifications);
+        (updatedNotifications: PaginationApiResponse<Array<INotification>>) => {
+          this.notificationsListSubject.next(updatedNotifications.Data);
         }
       );
 
       this.hubConnection.on(
         'NewMessagePublished',
         (shiftCancellationNotification: INotification) => {
-          debugger;
-          console.log(shiftCancellationNotification);
-
           this.notificationSubject.next(shiftCancellationNotification);
         }
       );
-
-
     } else {
       console.warn(
         'SignalR connection not established, cannot register events.'
@@ -87,29 +82,23 @@ export class NotificationsSRService {
     return this.hubConnection?.stop();
   }
 
- registerUserToNotificationHub(ConnectionId: string): Observable<any> {
+  registerUserToNotificationHub(ConnectionId: string): Observable<any> {
     if (!ConnectionId) {
-
       console.error('Invalid connectionId.');
       return throwError(() => new Error('Invalid connectionId.'));
     }
-     ;
     const url = `${environment.apiUrl}/api/Notification/RegisterUserToNotificationHub`;
-    // const url = 'http://localhost:5139/api/Notification/RegisterUserToNotificationHub';
-     // Payload to send to the backend
-     const payload = { ConnectionId: ConnectionId };
+    const payload = { ConnectionId: ConnectionId };
 
-     return this.httpClient
-       .post<any>(url, payload)
-       .pipe(
-         catchError(err => {
-           console.error('Error occurred:', err);
-           return throwError(() => new Error('Failed to register user to notification hub.'));
-         })
-       );
+    return this.httpClient.post<any>(url, payload).pipe(
+      catchError((err) => {
+        console.error('Error occurred:', err);
+        return throwError(
+          () => new Error('Failed to register user to notification hub.')
+        );
+      })
+    );
   }
-
-
 
   ngOnDestroy(): void {
     this.stopConnection();

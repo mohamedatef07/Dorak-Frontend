@@ -60,7 +60,7 @@
             class="dropdown d-flex position-relative"
             (click)="toggleNotificationsDropDown($event)"
           >
-            <button id="dropdown-icon">
+            <button id="dropdown-icon" class="position-relative">
               <svg
                 width="25"
                 height="25"
@@ -81,48 +81,67 @@
                   fill="#012a4a"
                 />
               </svg>
+              <!-- Unread notification badge -->
+              @if (unreadCount > 0) {
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                      style="font-size: 0.6rem; transform: translate(-50%, -50%); ">
+                  {{ unreadCount > 99 ? '99+' : unreadCount }}
+                </span>
+              }
             </button>
             <ul
-              class="d-none p-3 z-3 m-0"
+              class="d-none p-0 z-3 m-0"
               id="notifications-dropdown-list"
               [ngClass]="{
                 'd-none': !isNotificationsDropDownOpen,
-                'd-flex flex-column gap-2 position-absolute':
+                'd-flex flex-column position-absolute':
                   isNotificationsDropDownOpen
               }"
             >
               @for (notification of notifications; track $index) {
-              <li class="dropdown-item">
+              <li class="dropdown-item" (click)="handleNotificationClick(notification)">
                 <div class="d-flex justify-content-between align-items-start">
-                  <div
-                    class="flex-grow-1 me-3 p-1"
-                    [ngClass]="{ 'reading-notification': notification.IsRead }"
-                  >
-                    <h6 class="mb-1 fw-bold">
-                      {{ notification.Title }}
-                    </h6>
-                    <p class="mb-1 small message">
+                  <div class="notification-content flex-grow-1 me-3">
+                    <div class="d-flex align-items-center gap-2">
+                      <h6 class="notification-title mb-1">
+                        {{ notification.Title }}
+                      </h6>
+                      <!-- Unread indicator -->
+                      @if (!notification.IsRead) {
+                        <div class="unread-indicator">
+                          <div class="bg-primary rounded-circle"></div>
+                        </div>
+                      }
+                    </div>
+                    <p class="notification-message">
                       {{ notification.Message }}
                     </p>
-                    <small class="text-muted">
-                      {{ notification.CreatedAt | date : "MMMM d, y" }}
+                    <small class="notification-date">
+                      {{ notification.CreatedAt | date : "MMM d, y 'at' h:mm a" }}
                     </small>
                   </div>
                 </div>
               </li>
               } @empty {
-              <li class="dropdown-item text-center py-2 text-muted">
-                No Notifications Found
+              <li class="dropdown-item no-notifications">
+                <div class="d-flex flex-column align-items-center">
+                  <i class="fas fa-bell-slash mb-2" style="font-size: 1.5rem; color: #adb5bd;"></i>
+                  <span>No Notifications Found</span>
+                </div>
               </li>
               }
-              <li class="dropdown-item text-center py-1">
+              @if (notifications.length > 0) {
+              <li class="dropdown-item show-all-notifications">
                 <a
-                  class="main-text-Color d-flex align-items-center justify-content-center gap-1"
+                  class="d-flex align-items-center justify-content-center gap-1"
                   [routerLink]="['/client/notifications']"
-                  >Show notifications
-                  <i class="fa-solid fa-arrow-right-to-bracket"></i
-                ></a>
+                  (click)="isNotificationsDropDownOpen = false"
+                >
+                  <span>View All Notifications</span>
+                  <i class="fas fa-arrow-right"></i>
+                </a>
               </li>
+              }
             </ul>
           </div>
         </div>

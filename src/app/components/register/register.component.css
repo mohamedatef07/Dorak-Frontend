@@ -1,0 +1,415 @@
+.register-container {
+    min-height: 100vh;
+    background: none;
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    padding: 0;
+}
+
+/* Left column: illustration (1/3) - Fixed */
+.left-illustration-col {
+  background: #e8f0fe;
+  flex: 1 1 33.333%;
+  max-width: 33.333%;
+  min-width: 0;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  overflow: hidden;
+}
+
+/* Right column: registration form (2/3) - Scrollable */
+.right-register-col {
+  background: var(--text-color-Light);
+  flex: 1 1 66.667%;
+  max-width: 66.667%;
+  min-width: 0;
+  min-height: 100vh;
+  margin-left: 33.333%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 20px 0;
+  overflow-y: auto;
+}
+
+.right-register-col .register-form-container {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  min-height: 0;
+  padding: 20px 40px;
+}
+
+.register-form-container {
+    background: white;
+    padding: 20px 40px;
+    border-radius: var(--card-radius);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    max-width: 700px;
+    width: 100%;
+}
+
+/* Logo Section */
+.logo-section {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.logo-icon {
+    width: 40px;
+    height: 40px;
+    background: var(--main-bg-color-Light);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 20px;
+}
+
+.logo-text {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    color: var(--text-color-Light);
+    font-size: 24px;
+}
+
+.welcome-title {
+    text-align: center !important;
+    font-family: var(--font-heading);
+    font-size: var(--font-page-header);
+    font-weight: 700;
+    color: var(--text-color-Light);
+    margin-bottom: 8px;
+}
+
+.welcome-subtitle {
+    color: #666;
+    font-size: 16px;
+    margin-bottom: 0;
+}
+
+/* Stepper Styling */
+::ng-deep .p-steps {
+    width: 100%;
+    margin-bottom: 30px;
+    margin-right: 50px !important;
+
+}
+
+::ng-deep .p-steps .p-steps-item .p-menuitem-link {
+    background: transparent;
+    border: none;
+    border-radius: 50%;
+    width: 2.5rem;
+    height: 2.5rem;
+    line-height: 2.5rem;
+    text-align: center;
+    margin: 0 1rem;
+    transition: var(--transition);
+}
+
+::ng-deep .p-steps .p-steps-item .p-menuitem-link .p-steps-number {
+    background: #e9ecef;
+    margin-right: 50px !important;
+
+    color: #6c757d;
+    border-radius: 50%;
+    width: 2.5rem;
+    height: 2.5rem;
+    line-height: 2.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+::ng-deep .p-steps .p-steps-item.p-highlight .p-menuitem-link .p-steps-number {
+    background: var(--main-bg-color-Light);
+    color: white;
+}
+
+::ng-deep .p-steps .p-steps-item.p-highlight .p-menuitem-link {
+    background: var(--main-bg-color-Light);
+}
+
+::ng-deep .p-steps .p-steps-item .p-menuitem-link .p-steps-title {
+    display: none;
+}
+
+/* Step Content */
+.step-content {
+    min-height: 350px;
+    width: 100%;
+    padding: 0 10px;
+}
+
+.step-panel {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Form Elements */
+.field {
+    margin-bottom: 25px;
+    width: 100%;
+}
+
+/* Make form fields wider */
+.field .form-control,
+.field p-dropdown,
+.field p-calendar,
+.field p-inputtextarea {
+    width: 100%;
+    min-width: 100%;
+}
+
+.form-label {
+    font-weight: 500;
+    color: var(--text-color-Light);
+    margin-bottom: 8px;
+    display: block;
+}
+
+.form-control {
+    width: 100%;
+    height: 50px;
+    border: 1px solid #e0e0e0;
+    border-radius: var(--border-radius);
+    padding: 0 16px;
+    font-size: var(--font-p);
+    transition: var(--transition);
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--main-bg-color-Light);
+    box-shadow: 0 0 0 0.2rem rgba(42, 111, 151, 0.25);
+}
+
+/* Role-specific Content */
+.role-specific-content h4 {
+    color: var(--text-color-Light);
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+/* No Role Message */
+.no-role-message {
+    padding: 40px 20px;
+    text-align: center;
+    min-height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.no-role-message .text-warning {
+    color: #ffc107 !important;
+}
+
+.no-role-message .text-muted {
+    color: #6c757d !important;
+}
+
+/* Step Navigation */
+.step-navigation {
+    margin-top: 30px;
+}
+
+/* Sign In Section */
+.signin-section {
+    margin-top: 30px;
+}
+
+.signin-text {
+    color: #666;
+    font-size: 14px;
+}
+
+.signin-link {
+    color: var(--main-bg-color-Light);
+    text-decoration: none;
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.signin-link:hover {
+    color: var(--hover-text-Light);
+    text-decoration: underline;
+}
+
+/* Right Side - Illustration */
+.illustration-container {
+    background: white;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.illustration-wrapper {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+/* Responsive Design */
+@media (max-width: 991.98px) {
+    .left-illustration-col {
+        position: relative;
+        max-width: 100%;
+        flex-basis: 100%;
+        height: auto;
+        min-height: 200px;
+    }
+    
+    .right-register-col {
+        max-width: 100%;
+        flex-basis: 100%;
+        margin-left: 0;
+        min-height: unset;
+    }
+}
+
+@media (max-width: 576px) {
+    .register-form-container {
+        padding: 20px;
+    }
+
+    .welcome-title {
+        font-size: 24px;
+    }
+
+    .logo-text {
+        font-size: 20px;
+    }
+
+    .step-content {
+        min-height: 250px;
+    }
+}
+
+/* Animation Effects */
+.register-form-container {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Hover Effects */
+.form-control:hover {
+    border-color: var(--main-bg-color-Light);
+}
+
+/* PrimeNG Calendar Styling */
+::ng-deep .p-calendar {
+    width: 100%;
+}
+
+::ng-deep .p-calendar .p-inputtext {
+    width: 100%;
+    height: 50px;
+    border: 1px solid #e0e0e0;
+    border-radius: var(--border-radius);
+    padding: 0 16px;
+    font-size: var(--font-p);
+    transition: var(--transition);
+}
+
+::ng-deep .p-calendar .p-inputtext:focus {
+    outline: none;
+    border-color: var(--main-bg-color-Light);
+    box-shadow: 0 0 0 0.2rem rgba(42, 111, 151, 0.25);
+}
+
+/* PrimeNG Dropdown Styling */
+::ng-deep .p-dropdown {
+  width: 100%;
+}
+
+/* Custom Specialization Input Styling */
+.custom-specialization-input {
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+::ng-deep .p-dropdown .p-dropdown-label {
+    height: 50px;
+    border: 1px solid #e0e0e0;
+    border-radius: var(--border-radius);
+    padding: 0 16px;
+    font-size: var(--font-p);
+    transition: var(--transition);
+}
+
+::ng-deep .p-dropdown:not(.p-disabled):hover .p-dropdown-label {
+    border-color: var(--main-bg-color-Light);
+}
+
+::ng-deep .p-dropdown.p-focus .p-dropdown-label {
+    border-color: var(--main-bg-color-Light);
+    box-shadow: 0 0 0 0.2rem rgba(42, 111, 151, 0.25);
+}
+
+/* PrimeNG Textarea Styling */
+::ng-deep .p-inputtextarea {
+    width: 100%;
+    border: 1px solid #e0e0e0;
+    border-radius: var(--border-radius);
+    padding: 12px 16px;
+    font-size: var(--font-p);
+    transition: var(--transition);
+    resize: vertical;
+}
+
+::ng-deep .p-inputtextarea:focus {
+    outline: none;
+    border-color: var(--main-bg-color-Light);
+    box-shadow: 0 0 0 0.2rem rgba(42, 111, 151, 0.25);
+}

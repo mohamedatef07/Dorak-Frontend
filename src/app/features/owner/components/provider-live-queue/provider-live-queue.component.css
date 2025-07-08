@@ -1,7 +1,3 @@
-.container {
-  padding: 20px;
-  position: relative;
-}
 
 .header {
   display: flex;
@@ -11,8 +7,15 @@
 }
 
 .header h2 {
-  font-size: 24px;
-  color: #333;
+  font-size: 2rem;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    padding: 15px;
+    color: #fff;
+    background-color: var(--main-bg-color-Light);
+    width: fit-content;
+    border-radius: var(--border-radius);
+    font-weight: 600;
 }
 
 .header-actions button {
@@ -22,18 +25,6 @@
   margin-left: 10px;
 }
 
-.settings-btn {
-  background-color: white !important;
-  padding: 7px 13px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.settings-btn > * {
-  color: #000;
-  font-size: 25px;
-}
 
 .add-btn {
   background-color: white !important;
@@ -56,12 +47,10 @@
   border-radius: 5px;
   cursor: pointer;
   font-size: 14px;
+  font-weight: 600;
   display: inline-block;
 }
 
-.end-shift-btn:hover {
-  background-color: #c82333;
-}
 
 .custom-popup {
   position: fixed;
@@ -109,13 +98,15 @@
   gap: 10px;
   margin-bottom: 20px;
   flex-wrap: wrap;
-  padding: 10px;
+  padding: 20px;
   background-color: #e9ecef;
   border-radius: 8px;
+  justify-content: center;
+  background-color: #fff;
 }
 
 .stat-button {
-  background-color: #007bff;
+  background-color: var(--main-bg-color-Light);
   color: white;
   border: none;
   padding: 10px 20px;
@@ -129,100 +120,247 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.stat-button:hover {
-  background-color: #0056b3;
-}
 
-/* Queue List */
+/* Queue List - Updated to match the image */
 .queue-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
   gap: 20px;
+  max-width: 100%;
+  margin-bottom: 2rem;
 }
 
+/* Queue Card - Enhanced for better UI */
 .queue-card {
+  background-color: #fff;
+  border-radius: var(--card-radius);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  padding: 20px;
+  border: 1px solid rgba(97, 165, 194, 0.2); /* Subtle border using btn-bg */
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.queue-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Queue Number - Modernized styling */
+.queue-number {
+  position: absolute;
+  top: 10px;
+  left: 30px;
+  font-size: 16px;
+  font-weight: 600;
+      background-color: var(--main-bg-color-Light);
+    color: white;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-family: var(--font-heading);
+  text-align: center;
+  min-width: 40px;
+  transition: background-color 0.3s ease;
+}
+
+
+
+/* Queue Details - Improved layout */
+.queue-details {
+  flex-grow: 1;
+  padding: 10px;
+}
+
+/* Client Name - Emphasized styling */
+.client-name {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-primary);
+  /* margin-bottom: 12px; */
+  margin-top: 40px;
+  line-height: 1.4;
+}
+
+/* Client Info - Cleaner and more structured */
+.client-info {
+      font-size: var(--font-p);
+    color: var(--text-primary);
+  line-height: 1.8;
+  gap: 15px;
+    display: flex
+;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+.client-info span {
   display: flex;
   align-items: center;
-  padding: 15px;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  gap: 8px;
 }
 
-.queue-number {
+.client-info span::before {
+  content: '\2022'; /* Bullet point for visual hierarchy */
+  color: var(--btn-bg);
   font-size: 18px;
-  font-weight: bold;
-  color: #333;
-  margin-right: 15px;
 }
 
-.queue-details {
-  flex: 1;
+/* Queue Status - Modern dropdown and status indicator */
+.queue-status {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
 }
 
-.client-name {
-  font-size: 16px;
-  font-weight: bold;
-  color: #333;
+.queue-status span {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  min-width: 100px;
+  text-align: center;
+  transition: background-color 0.3s ease;
 }
 
-.client-info {
-  font-size: 14px;
+.queue-status .InProgress {
+  background-color: #ef382663; /* Using alert-color */
+  color: #EF3826;
+}
+
+.queue-status .Waiting {
+  background-color: #6226ef47; /* Using btn-bg */
+  color: #6226EF;
+}
+
+.queue-status .NotChecked {
+  background-color: rgba(0, 0, 0, 0.05);
   color: #666;
 }
 
-.queue-status {
+.queue-status select {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(97, 165, 194, 0.3);
+  background-color: #fff;
+  font-size: var(--font-p);
+  font-family: var(--font-body);
+  cursor: pointer;
+  min-width: 120px;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.queue-status select:focus {
+  outline: none;
+  border-color: var(--btn-bg);
+  box-shadow: 0 0 0 2px rgba(97, 165, 194, 0.2);
+}
+
+/* Additional Fees Input - Streamlined and modern */
+.additional-fees-input {
+  margin-top: 12px;
+  padding: 12px;
+  background-color: rgba(97, 165, 194, 0.05);
+  border-radius: 8px;
+  border: 1px solid rgba(97, 165, 194, 0.2);
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.queue-status span {
-  padding: 5px 10px;
-  border-radius: 12px;
-  font-size: 12px;
-  font-weight: bold;
-  text-transform: uppercase;
-}
-
-.queue-status .InProgress {
-  background-color: #ffcccb;
-  color: #d32f2f;
-}
-
-.queue-status .Waiting {
-  background-color: #e6e6fa;
-  color: #6a5acd;
-}
-
-.queue-status .NotChecked {
-  background-color: #d3d3d3;
-  color: #555;
-}
-
-.queue-status select {
-  padding: 5px;
-  border-radius: 5px;
-  border: 1px solid #ddd;
-  cursor: pointer;
-}
-
-/* Additional Fees Input Styling */
-.additional-fees-input {
-  margin-left: 10px;
-}
-
 .additional-fees-input label {
-  font-size: 14px;
-  color: #333;
-  margin-right: 5px;
+  font-size: var(--font-p);
+  color: var(--text-primary);
+  font-weight: 500;
+  margin: 0;
 }
 
 .additional-fees-input input {
-  padding: 5px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 14px;
+  padding: 8px 12px;
+  border: 1px solid rgba(97, 165, 194, 0.3);
+  border-radius: 6px;
+  font-size: var(--font-p);
   width: 100px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
+
+.additional-fees-input input:focus {
+  outline: none;
+  border-color: var(--btn-bg);
+  box-shadow: 0 0 0 2px rgba(97, 165, 194, 0.2);
+}
+
+/* Dark Mode Support */
+body[data-theme="dark"] .queue-card {
+  background-color: #023e68;
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+body[data-theme="dark"] .queue-number {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--text-dark);
+}
+
+body[data-theme="dark"] .queue-card:hover .queue-number {
+  background-color: var(--btn-bg);
+  color: var(--btn-text);
+}
+
+body[data-theme="dark"] .client-name {
+  color: var(--text-dark);
+}
+
+body[data-theme="dark"] .client-info {
+  color: var(--text-dark);
+}
+
+body[data-theme="dark"] .client-info span::before {
+  color: var(--btn-bg);
+}
+
+body[data-theme="dark"] .queue-status select {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: var(--text-dark);
+}
+
+body[data-theme="dark"] .queue-status .InProgress {
+  background-color: rgba(243, 156, 18, 0.3);
+  color: var(--alert-color);
+}
+
+body[data-theme="dark"] .queue-status .Waiting {
+  background-color: rgba(97, 165, 194, 0.3);
+  color: var(--btn-bg);
+}
+
+body[data-theme="dark"] .queue-status .NotChecked {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.5);
+}
+
+body[data-theme="dark"] .additional-fees-input {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+body[data-theme="dark"] .additional-fees-input label {
+  color: var(--text-dark);
+}
+
+body[data-theme="dark"] .additional-fees-input input {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: var(--text-dark);
+}
+

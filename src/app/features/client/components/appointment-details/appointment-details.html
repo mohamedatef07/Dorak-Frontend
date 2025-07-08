@@ -103,7 +103,9 @@
     <button
       pRipple
       class="btn btn-danger"
+      [disabled]="isCancelButtonDisabled()"
       (click)="clientCancelAppointment(appointment.appointmentId, $event)"
+      [title]="isCancelButtonDisabled() ? 'Cannot cancel appointment within 2 days of scheduled date' : 'Cancel appointment'"
     >
       <i class="fa-solid fa-xmark me-2"></i> Cancel Appointment
     </button>

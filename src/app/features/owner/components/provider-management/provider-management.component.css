@@ -7,6 +7,7 @@
   background-color: var(--main-bg-color-Light);
   width: fit-content;
   border-radius: var(--border-radius);
+      font-weight: 600;
 }
 
 .filter {
@@ -142,12 +143,14 @@ tr:last-child td {
   cursor: not-allowed;
 }
 
+
 .status-online {
   padding: 0.45rem 0.85rem;;
   border-radius: var(--border-radius);
   background-color: var(--active-bg);
   color: var(--active-text);
   font-weight: bold;
+  font-size: 14px;
 
 }
 .status-offline {
@@ -156,6 +159,7 @@ tr:last-child td {
   background-color: var(--error-bg);
   color: var(--error-text);
   font-weight: bold;
+  font-size: 14px;
 }
 
 /* Keep popup and error styles from previous version for completeness */
