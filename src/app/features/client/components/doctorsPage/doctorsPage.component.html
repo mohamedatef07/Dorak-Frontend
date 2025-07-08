@@ -7,14 +7,18 @@
         <div class="input-group">
           <!-- Specialty Dropdown -->
           <div class="dropdown">
-            <button
+            <!-- <button
               class="specialty-dropdown dropdown-toggle btn btn-outline-secondary"
               type="button"
               data-bs-toggle="dropdown"
             >
-              {{ filterModel.Specialization || "Specialty" }}
-            </button>
-            <ul class="dropdown-menu">
+              {{
+                selectedSpecializations.length > 0
+                  ? selectedSpecializations[0]
+                  : "Specialty"
+              }}
+            </button> -->
+            <!-- <ul class="dropdown-menu">
               <li>
                 <a class="dropdown-item" (click)="onSpecializationChange('')"
                   >All</a
@@ -25,35 +29,34 @@
                   s
                 }}</a>
               </li>
-            </ul>
+            </ul> -->
+            <p-floatlabel class="w-full md:w-80" variant="on"><p-multiselect id="Specialization" [(ngModel)]="selectedSpecializations" [options]="specialties" optionLabel="name" filter  class="w-full" /><label for="Specialization">Specialization</label></p-floatlabel>
           </div>
-
           <!-- Search Input -->
           <input
             type="text"
             [(ngModel)]="searchText"
             class="search-input form-control ms-2"
             placeholder="Search by Name"
+            (input)="applyFilters()"
           />
-
           <!-- Search Button -->
-          <button
+          <!-- <button
             class="search-button btn btn-primary ms-2"
             type="button"
             (click)="applyFilters()"
           >
             Search <i class="fas fa-search ms-1"></i>
-          </button>
+          </button> -->
         </div>
       </div>
     </div>
   </div>
-
   <div class="row">
     <!-- Filters Sidebar -->
     <div class="col-lg-3 col-md-4">
       <div class="filter-panel">
-        <h5 class="mb-3 fs-6">Filters</h5>
+        <p class="mb-3 fs-6">Filters</p>
         <!-- Title Filter -->
         <div class="mb-3">
           <label class="fw-bold fs-5">Title</label>
@@ -104,58 +107,74 @@
         <!-- Rate Filter -->
         <div class="mb-3">
           <label class="fw-bold">Rate</label>
-          <input
-            type="number"
-            class="form-control"
-            placeholder="Min Rate"
-            [(ngModel)]="filterModel.MinRate"
-            min="0"
-          />
-          <input
-            type="number"
-            class="form-control mt-1"
-            placeholder="Max Rate"
-            [(ngModel)]="filterModel.MaxRate"
-            min="0"
-          />
+          <div class="mt-1">
+            <label class="form-check-label">Min Rate</label>
+            <input
+              type="number"
+              class="form-control"
+              placeholder="Min Rate"
+              [(ngModel)]="selectedMinRate"
+              (input)="applyFilters()"
+              min="0"
+              max="5"
+            />
+          </div>
+          <div class="mt-1">
+            <label class="form-check-label">Max Rate</label>
+            <input
+              type="number"
+              class="form-control mt-1"
+              placeholder="Max Rate"
+              [(ngModel)]="selectedMaxRate"
+              (input)="applyFilters()"
+              min="0"
+              max="5"
+            />
+          </div>
         </div>
-
         <!-- Price Filter -->
         <div class="mb-3">
           <label class="fw-bold">Price</label>
-          <input
-            type="number"
-            class="form-control"
-            placeholder="Min Price"
-            [(ngModel)]="filterModel.MinPrice"
-            min="100"
-          />
-          <input
-            type="number"
-            class="form-control mt-1"
-            placeholder="Max Price"
-            [(ngModel)]="filterModel.MaxPrice"
-            min="2000"
-          />
+          <div class="mt-1">
+            <label class="form-check-label">Min Price</label>
+            <input
+              type="number"
+              class="form-control"
+              placeholder="Min Price"
+              [(ngModel)]="selectedMinPrice"
+              (input)="applyFilters()"
+              min="0"
+              max="10000"
+            />
+          </div>
+          <div class="mt-1">
+            <label class="form-check-label">Max Price</label>
+            <input
+              type="number"
+              class="form-control mt-1"
+              placeholder="Max Price"
+              [(ngModel)]="selectedMaxPrice"
+              (input)="applyFilters()"
+              max="10000"
+              min="0"
+            />
+          </div>
         </div>
-
         <!-- Date Filter -->
         <div class="mb-3">
           <label class="fw-bold">Available Date</label>
           <input
             type="date"
             class="form-control"
-            [(ngModel)]="filterModel.AvailableDate"
+            [(ngModel)]="selectedAvailableDate"
+            (input)="applyFilters()"
           />
         </div>
       </div>
     </div>
     <!-- Doctor listings -->
-    <div class="col-lg-9 col-md-8">
-      <h4 class="content-title">All Specialties</h4>
-      <p class="text-muted mb-4">
-        <small>{{ filteredDoctors.length }} doctors</small>
-      </p>
+    <div class="col-lg-9 col-md-8 bg-white main-padding main-radius">
+      <p class="main-text-Color fw-bold fs-6 mb-4">{{ filteredDoctors.length }} doctors</p>
       <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
         @for (doc of doctors; track $index) {
         <div class="col">
@@ -168,7 +187,12 @@
                 class="doctor-photo-img"
               />
               }@else{
-                <p-avatar icon="pi pi-user" class="mr-2" size="xlarge" shape="square" />
+              <p-avatar
+                icon="pi pi-user"
+                class="mr-2"
+                size="xlarge"
+                shape="square"
+              />
               }
             </div>
             <div class="doctor-photo-card-body">
@@ -182,7 +206,7 @@
               </div>
               <div class="doctor-detail">
                 <i class="fa-regular fa-clock detail-icon"></i>
-                {{ doc.EstimatedDuration }}
+                {{ doc.EstimatedDuration }} Minutes
               </div>
               <div class="doctor-detail">
                 <i class="fa-solid fa-location-dot detail-icon"></i>

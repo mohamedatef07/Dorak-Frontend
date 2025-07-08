@@ -15,6 +15,9 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { buildDoctorFilter } from '../../../../utils/DoctorFilterBuilder';
 import { AvatarModule } from 'primeng/avatar';
 import { RatingModule } from 'primeng/rating';
+import { MessageService } from 'primeng/api';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 @Component({
   selector: 'app-doctorsPage',
@@ -30,6 +33,8 @@ import { RatingModule } from 'primeng/rating';
     CheckboxModule,
     AvatarModule,
     RatingModule,
+    FloatLabelModule,
+    MultiSelectModule,
   ],
 })
 export class DoctorsPageComponent implements OnInit {
@@ -45,6 +50,12 @@ export class DoctorsPageComponent implements OnInit {
   selectedGenders: number[] = [];
   selectedCities: string[] = [];
   selectedSpecializations: string[] = [];
+  selectedMinRate: number | null = null;
+  selectedMaxRate: number | null = null;
+  selectedMinPrice: number | null = null;
+  selectedMaxPrice: number | null = null;
+  selectedAvailableDate: Date | null = null;
+
   specialties: string[] = [
     'Cardiology',
     'Dermatology',
@@ -65,22 +76,15 @@ export class DoctorsPageComponent implements OnInit {
     )
     .map(([key, value]) => ({ value: value as number, label: key }));
 
-  filterModel: any = {
-    MinRate: undefined,
-    MaxRate: undefined,
-    MinPrice: undefined,
-    MaxPrice: undefined,
-    AvailableDate: undefined,
-  };
 
   constructor(
     private cardDoctorService: ClientService,
-    private router: Router
+    private router: Router,
+    private messageService: MessageService
   ) {}
 
   goToDetails(Id: number | undefined): void {
     if (!Id) {
-      console.error('Invalid doctor ID');
       return;
     }
     this.router.navigate(['client/doctor-details', Id]);
@@ -91,14 +95,17 @@ export class DoctorsPageComponent implements OnInit {
   }
 
   getAllDoctors(filter: Partial<IDoctorFilter> = {}): void {
-    debugger;
     this.cardDoctorService.getAllDoctorsCards(filter).subscribe({
       next: (res) => {
         this.doctors = [...res.Data];
         this.filteredDoctors = [...this.doctors];
       },
       error: (err) => {
-        console.error('Error loading doctors:', err);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Failed to load doctors',
+        });
       },
     });
   }
@@ -115,16 +122,6 @@ export class DoctorsPageComponent implements OnInit {
     this.applyFilters();
   }
 
-  onCityChange(event: any): void {
-    const value = event.target.value;
-    if (event.target.checked) {
-      if (!this.selectedCities.includes(value)) this.selectedCities.push(value);
-    } else {
-      this.selectedCities = this.selectedCities.filter((c) => c !== value);
-    }
-    this.applyFilters();
-  }
-
   onGenderChange(event: any): void {
     const value = Number(event.target.value);
     if (event.target.checked) {
@@ -132,6 +129,15 @@ export class DoctorsPageComponent implements OnInit {
         this.selectedGenders.push(value);
     } else {
       this.selectedGenders = this.selectedGenders.filter((g) => g !== value);
+    }
+    this.applyFilters();
+  }
+  onCityChange(event: any): void {
+    const value = event.target.value;
+    if (event.target.checked) {
+      if (!this.selectedCities.includes(value)) this.selectedCities.push(value);
+    } else {
+      this.selectedCities = this.selectedCities.filter((c) => c !== value);
     }
     this.applyFilters();
   }
@@ -155,12 +161,12 @@ export class DoctorsPageComponent implements OnInit {
       Cities: this.selectedCities,
       Specializations: this.selectedSpecializations,
       SearchText: this.searchText,
-      MinRate: this.filterModel.MinRate,
-      MaxRate: this.filterModel.MaxRate,
-      MinPrice: this.filterModel.MinPrice,
-      MaxPrice: this.filterModel.MaxPrice,
-      AvailableDate: this.filterModel.AvailableDate
-        ? new Date(this.filterModel.AvailableDate).toISOString().split('T')[0]
+      MinRate: this.selectedMinRate ?? undefined,
+      MaxRate: this.selectedMaxRate ?? undefined,
+      MinPrice: this.selectedMinPrice ?? undefined,
+      MaxPrice: this.selectedMaxPrice ?? undefined,
+      AvailableDate: this.selectedAvailableDate
+        ? new Date(this.selectedAvailableDate).toISOString().split('T')[0]
         : undefined,
     };
     this.getAllDoctors(filter);
