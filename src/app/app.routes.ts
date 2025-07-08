@@ -23,7 +23,6 @@ import { ScheduleComponent } from './features/provider/components/schedule/sched
 import { PatientQueueComponent } from './features/provider/components/patient-queue/patient-queue.component';
 import { ReportsComponent } from './features/provider/components/reports/reports.component';
 import { DashboardComponent } from './features/provider/components/dashboard/dashboard.component';
-import { ReviewComponent } from './features/landingpage/components/review/review.component';
 import { DoctorsPageComponent } from './features/client/components/doctorsPage/doctorsPage.component';
 import { ProviderProfileComponent } from './features/provider/components/provider-profile/provider-profile.component';
 import { ManageOperatorsComponent } from './features/owner/components/ManageOperators/ManageOperators.component';
@@ -49,6 +48,8 @@ import { ClientSettingsComponent } from './features/client/components/client-set
 import { ClientNotificationsComponent } from './features/client/components/client-notifications/client-notifications.component';
 import { RescheduleAssignmentComponent } from './features/owner/components/reschedule-assignment/reschedule-assignment.component';
 import { AppointmentsHistoryComponent } from './features/client/components/appointments-history/appointments-history.component';
+import { HeaderComponent } from './features/landingpage/components/header/header.component';
+import { HeroComponent } from './features/landingpage/components/Hero/Hero.component';
 
 export const routes: Routes = [
   {
@@ -289,8 +290,11 @@ export const routes: Routes = [
     path: 'home',
     component: LandingPageLayoutComponent,
     children: [
+      {path:'header',component:HeaderComponent},
+      {path:'hero',component:HeroComponent}
+
       // { path: 'doctors', component: DoctorsLandingPageComponent },
-      { path: 'review', component: ReviewComponent },
+      // { path: 'review', component: ReviewComponent },
       // { path: 'certification', component: CertificationsComponent },
       // { path: 'register', component: LandingPageRegisterComponent },
     ],

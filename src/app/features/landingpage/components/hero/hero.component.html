@@ -1,45 +1,131 @@
-<section class="hero-section">
-  <div class="container">
-    <div class="row align-items-center">
-      <div class="col-lg-6">
-        <h1 class="hero-title">Modern Healthcare Queuing System</h1>
-        <p class="hero-subtitle">
-          Skip the waiting room. Book appointments online and get real-time updates.
-        </p>
+<section class="hero-bg min-vh-100 d-flex align-items-center position-relative overflow-hidden" style="padding-top: 80px;">
+  <div class="hero-pattern"></div>
 
-        <div class="value-propositions mb-4">
-          <div class="value-prop">
-            <i class="fas fa-user-check value-icon"></i>
-            <div>
-              <h3>For Patients</h3>
-              <p>Book appointments online, receive real-time updates, and skip the waiting room.</p>
-            </div>
-          </div>
-          <div class="value-prop mt-3">
-            <i class="fas fa-user-md value-icon"></i>
-            <div>
-              <h3>For Doctors</h3>
-              <p>Manage your patient queue efficiently, reduce no-shows, and optimize your schedule.</p>
-            </div>
-          </div>
-          <div class="value-prop mt-3">
-            <i class="fas fa-hospital value-icon"></i>
-            <div>
-              <h3>For Medical Centers</h3>
-              <p>Streamline patient flow, minimize wait times, and enhance operational efficiency.</p>
-            </div>
+  <div class="floating-element bg-primary opacity-25" style="width: 320px; height: 320px; top: -160px; right: -160px;"></div>
+  <div class="floating-element bg-success opacity-25" style="width: 320px; height: 320px; bottom: -160px; left: -160px;"></div>
+  <div class="floating-element bg-warning opacity-10" style="width: 384px; height: 384px; top: 50%; left: 50%; transform: translate(-50%, -50%);"></div>
+
+  <div class="container position-relative">
+    <div class="row align-items-center g-5">
+      <!-- Left Column -->
+      <div class="col-lg-6">
+        <!-- Badge -->
+        <div class="d-inline-flex align-items-center glass px-3 py-2 rounded-pill border mb-4">
+          <!-- <lucide-icon [name]="checkCircleIcon.name" class="text-success me-2" size="16"></lucide-icon> -->
+          <span class="small fw-medium text-success">{{ content.badge }}</span>
+        </div>
+
+        <!-- Title + Subtitle -->
+        <div class="mb-4">
+          <h1 class="display-4 fw-bold text-dark mb-4 lh-sm">
+            {{ content.title }}
+          </h1>
+          <p class="fs-5 text-muted mb-4 lh-base">
+            {{ content.subtitle }}
+          </p>
+        </div>
+
+        <!-- Features -->
+        <div class="d-flex flex-wrap gap-2 mb-4">
+          <div *ngFor="let feature of content.features" class="d-flex align-items-center glass px-3 py-2 rounded-pill border">
+            <!-- <lucide-icon [name]="checkCircleIcon.name" class="text-success me-2" size="16"></lucide-icon> -->
+            <span class="small fw-medium text-dark">{{ feature }}</span>
           </div>
         </div>
 
-        <div class="hero-buttons">
-          <a routerLink="/appointments" class="btn btn-primary btn-lg">
-            <i class="fas fa-calendar-check me-2"></i> Book an Appointment
-          </a>
+        <!-- CTA Buttons -->
+        <div class="d-flex flex-column flex-sm-row gap-3 mb-5">
+          <button class="btn btn-primary btn-lg d-flex align-items-center justify-content-center gap-2">
+            <span>{{ content.cta1 }}</span>
+            <!-- <lucide-icon [name]="arrowRightIcon.name" size="20"></lucide-icon> -->
+          </button>
+          <button class="btn btn-secondary btn-lg d-flex align-items-center justify-content-center gap-2">
+            <!-- <lucide-icon [name]="playIcon.name" size="20"></lucide-icon> -->
+            <span>{{ content.cta2 }}</span>
+          </button>
+        </div>
+
+        <!-- Stats -->
+        <div class="row g-3">
+          <div *ngFor="let stat of content.stats" class="col-4">
+            <div class="text-center p-3 glass rounded-3 border">
+              <div class="d-flex justify-content-center mb-2">
+                <!-- <lucide-icon [name]="stat.icon.name" class="text-primary" size="24"></lucide-icon> -->
+              </div>
+              <div class="h4 fw-bold text-dark mb-1">{{ stat.number }}</div>
+              <div class="small text-muted fw-medium">{{ stat.label }}</div>
+            </div>
+          </div>
         </div>
       </div>
 
+      <!-- Right Column -->
       <div class="col-lg-6">
-        <img src="/images/hero-image.png" alt="Medical Illustration" class="img-fluid hero-image" />
+        <div class="card card-glass position-relative">
+          <div class="card-body p-4">
+            <div class="d-flex align-items-center justify-content-between mb-4">
+              <h5 class="card-title mb-0 fw-semibold">Live Queue Dashboard</h5>
+              <div class="d-flex align-items-center gap-2">
+                <div class="bg-success rounded-circle animate-pulse-slow" style="width: 12px; height: 12px;"></div>
+                <span class="small text-muted fw-medium">Live Updates</span>
+              </div>
+            </div>
+
+            <!-- Queue Items -->
+            <div class="d-grid gap-3 mb-4">
+              <div *ngFor="let item of queueItems"
+                   [class]="'queue-item d-flex align-items-center justify-content-between p-3 ' + (item.status === 'current' ? 'current' : 'bg-white')">
+                <div class="d-flex align-items-center gap-3">
+                  <div
+                    [class]="'icon-container text-white fw-semibold ' + (item.status === 'current' ? 'bg-success' : '')"
+                    [style]="item.status !== 'current' ? 'background: var(--primary-gradient)' : ''"
+                  >
+                    {{ item.id }}
+                  </div>
+                  <div>
+                    <div class="fw-medium text-dark">{{ item.name }}</div>
+                    <div class="small text-muted">{{ item.doctor }}</div>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                  <!-- <lucide-icon [name]="clockIcon.name" class="text-muted" size="16"></lucide-icon> -->
+                  <span class="small text-muted fw-medium">{{ item.time }}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Statistics -->
+            <div class="row g-3">
+              <div class="col-6">
+                <div class="p-3 rounded-3 border" style="background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);">
+                  <div class="d-flex align-items-center justify-content-between">
+                    <div class="d-flex align-items-center gap-2">
+                      <!-- <lucide-icon [name]="usersIcon.name" class="text-primary" size="20"></lucide-icon> -->
+                      <span class="fw-medium text-dark"> Waiting</span>
+                    </div>
+                    <span class="h4 fw-bold text-primary mb-0">3</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="p-3 rounded-3 border" style="background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);">
+                  <div class="d-flex align-items-center justify-content-between">
+                    <div class="d-flex align-items-center gap-2">
+                      <!-- <lucide-icon [name]="checkCircleIcon.name" class="text-success" size="20"></lucide-icon> -->
+                      <span class="fw-medium text-dark">Completed</span>
+                    </div>
+                    <span class="h4 fw-bold text-success mb-0">2</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Floating Elements -->
+          <div class="position-absolute bg-warning rounded-circle animate-bounce-slow" style="width: 32px; height: 32px; top: -16px; right: -16px;"></div>
+          <div class="position-absolute bg-danger rounded-circle animate-pulse-slow" style="width: 24px; height: 24px; bottom: -12px; left: -12px;"></div>
+          <div class="position-absolute bg-info rounded-circle" style="width: 16px; height: 16px; top: 50%; right: -8px; animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;"></div>
+        </div>
       </div>
     </div>
   </div>
