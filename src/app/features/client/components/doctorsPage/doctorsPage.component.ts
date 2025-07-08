@@ -18,6 +18,7 @@ import { RatingModule } from 'primeng/rating';
 import { MessageService } from 'primeng/api';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { DatePickerModule } from 'primeng/datepicker';
 
 @Component({
   selector: 'app-doctorsPage',
@@ -35,16 +36,21 @@ import { MultiSelectModule } from 'primeng/multiselect';
     RatingModule,
     FloatLabelModule,
     MultiSelectModule,
+    DatePickerModule,
   ],
 })
 export class DoctorsPageComponent implements OnInit {
   doctors: IDoctorCard[] = [];
   filteredDoctors: IDoctorCard[] = [];
-
+  currentPage: number = 1;
+  pageSize: number = 6;
+  totalRecords: number = 0;
+  totalPages: number = 0;
   searchText: string = '';
   specialty: string = '';
   city: string = '';
   fullImagePath: string = `${environment.apiUrl}`;
+  imageLoadFailedMap: { [id: number]: boolean } = {};
 
   selectedTitles: number[] = [];
   selectedGenders: number[] = [];
@@ -57,7 +63,7 @@ export class DoctorsPageComponent implements OnInit {
   selectedAvailableDate: Date | null = null;
 
   specialties: string[] = [
-    'Cardiology',
+    'Cardiologist',
     'Dermatology',
     'Neurology',
     'Pediatrics',
@@ -75,7 +81,6 @@ export class DoctorsPageComponent implements OnInit {
       ([key, value]) => typeof value === 'number' && value !== GenderType.None
     )
     .map(([key, value]) => ({ value: value as number, label: key }));
-
 
   constructor(
     private cardDoctorService: ClientService,
@@ -95,19 +100,25 @@ export class DoctorsPageComponent implements OnInit {
   }
 
   getAllDoctors(filter: Partial<IDoctorFilter> = {}): void {
-    this.cardDoctorService.getAllDoctorsCards(filter).subscribe({
-      next: (res) => {
-        this.doctors = [...res.Data];
-        this.filteredDoctors = [...this.doctors];
-      },
-      error: (err) => {
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'Failed to load doctors',
-        });
-      },
-    });
+    this.cardDoctorService
+      .getAllDoctorsCards(filter, this.currentPage, this.pageSize)
+      .subscribe({
+        next: (res) => {
+          this.doctors = [...res.Data];
+          this.filteredDoctors = [...this.doctors];
+          this.totalRecords = res.TotalRecords;
+          this.currentPage = res.CurrentPage;
+          this.pageSize = res.PageSize;
+          this.totalPages = res.TotalPages;
+        },
+        error: (err) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Failed to load doctors',
+          });
+        },
+      });
   }
 
   onTitleChange(event: any): void {
@@ -142,15 +153,8 @@ export class DoctorsPageComponent implements OnInit {
     this.applyFilters();
   }
 
-  onSpecializationChange(specialization: string): void {
-    if (
-      specialization &&
-      !this.selectedSpecializations.includes(specialization)
-    ) {
-      this.selectedSpecializations = [specialization];
-    } else {
-      this.selectedSpecializations = [];
-    }
+  onSpecializationChange(selectedSpecializations: string[]): void {
+    this.selectedSpecializations = selectedSpecializations; // This will allow handling multiple selected specializations
     this.applyFilters();
   }
 
@@ -174,5 +178,53 @@ export class DoctorsPageComponent implements OnInit {
 
   trackByIndex(index: number, item: any): number {
     return index;
+  }
+
+  resetFilters(): void {
+    this.selectedTitles = [];
+    this.selectedGenders = [];
+    this.selectedCities = [];
+    this.selectedSpecializations = [];
+    this.selectedMinRate = null;
+    this.selectedMaxRate = null;
+    this.selectedMinPrice = null;
+    this.selectedMaxPrice = null;
+    this.selectedAvailableDate = null;
+    this.searchText = '';
+    this.applyFilters();
+  }
+  nextPage() {
+    this.currentPage++;
+    this.getAllDoctors();
+  }
+
+  previousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.getAllDoctors();
+    }
+  }
+
+  get canGoNext(): boolean {
+    return this.currentPage * this.pageSize < this.totalRecords;
+  }
+
+  get canGoPrevious(): boolean {
+    return this.currentPage > 1;
+  }
+
+  get startRecord(): number {
+    return (this.currentPage - 1) * this.pageSize + 1;
+  }
+
+  get endRecord(): number {
+    const end = this.currentPage * this.pageSize;
+    return end > this.totalRecords ? this.totalRecords : end;
+  }
+  onImageError(event: Event, doctorId: number) {
+    this.imageLoadFailedMap[doctorId] = true;
+  }
+  hasImageLoadFailed(doctorId: number): boolean {
+    return !!this.imageLoadFailedMap[doctorId];
   }
 }
