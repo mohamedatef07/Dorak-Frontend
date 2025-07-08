@@ -1,62 +1,12 @@
 <app-nav-bar></app-nav-bar>
-<div class="container doctors-page-container pb-3">
-  <!-- Search bar with dropdowns -->
-  <div class="search-container">
-    <div class="row w-100">
-      <div class="col-12">
-        <div class="input-group">
-          <!-- Specialty Dropdown -->
-          <div class="dropdown">
-            <!-- <button
-              class="specialty-dropdown dropdown-toggle btn btn-outline-secondary"
-              type="button"
-              data-bs-toggle="dropdown"
-            >
-              {{
-                selectedSpecializations.length > 0
-                  ? selectedSpecializations[0]
-                  : "Specialty"
-              }}
-            </button> -->
-            <!-- <ul class="dropdown-menu">
-              <li>
-                <a class="dropdown-item" (click)="onSpecializationChange('')"
-                  >All</a
-                >
-              </li>
-              <li *ngFor="let s of specialties">
-                <a class="dropdown-item" (click)="onSpecializationChange(s)">{{
-                  s
-                }}</a>
-              </li>
-            </ul> -->
-            <p-floatlabel class="w-full md:w-80" variant="on"><p-multiselect id="Specialization" [(ngModel)]="selectedSpecializations" [options]="specialties" optionLabel="name" filter  class="w-full" /><label for="Specialization">Specialization</label></p-floatlabel>
-          </div>
-          <!-- Search Input -->
-          <input
-            type="text"
-            [(ngModel)]="searchText"
-            class="search-input form-control ms-2"
-            placeholder="Search by Name"
-            (input)="applyFilters()"
-          />
-          <!-- Search Button -->
-          <!-- <button
-            class="search-button btn btn-primary ms-2"
-            type="button"
-            (click)="applyFilters()"
-          >
-            Search <i class="fas fa-search ms-1"></i>
-          </button> -->
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="row">
+<div class="container doctors-page-container">
+  <div class="d-flex gap-3 my-4">
     <!-- Filters Sidebar -->
-    <div class="col-lg-3 col-md-4">
+    <div class="col-3">
       <div class="filter-panel">
-        <p class="mb-3 fs-6">Filters</p>
+        <div class="title text-center">
+          <p class="mb-3 fs-5">Filters</p>
+        </div>
         <!-- Title Filter -->
         <div class="mb-3">
           <label class="fw-bold fs-5">Title</label>
@@ -97,6 +47,7 @@
               <input
                 class="form-check-input"
                 type="checkbox"
+                [checked]="selectedCities.includes(city)"
                 [value]="city"
                 (change)="onCityChange($event)"
               />
@@ -163,67 +114,137 @@
         <!-- Date Filter -->
         <div class="mb-3">
           <label class="fw-bold">Available Date</label>
-          <input
-            type="date"
-            class="form-control"
+          <p-datepicker
+            [iconDisplay]="'input'"
+            [showIcon]="true"
+            dateFormat="yy-mm-dd"
             [(ngModel)]="selectedAvailableDate"
-            (input)="applyFilters()"
-          />
+            [showButtonBar]="true"
+            [showTime]="false"
+            [placeholder]="'Select Date'"
+            (onSelect)="applyFilters()"
+          ></p-datepicker>
+        </div>
+        <div class="mb-3">
+          <button
+            class="btn bg-white fw-bold reset-button"
+            (click)="resetFilters()"
+          >
+            Reset Filters
+          </button>
         </div>
       </div>
     </div>
     <!-- Doctor listings -->
-    <div class="col-lg-9 col-md-8 bg-white main-padding main-radius">
-      <p class="main-text-Color fw-bold fs-6 mb-4">{{ filteredDoctors.length }} doctors</p>
-      <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
-        @for (doc of doctors; track $index) {
-        <div class="col">
-          <div class="doctor-photo-card">
-            <div class="doctor-photo-wrapper">
-              @if(doc.Image){
-              <img
-                [src]="`${fullImagePath}${doc.Image}`"
-                alt="Doctor Image"
-                class="doctor-photo-img"
-              />
-              }@else{
-              <p-avatar
-                icon="pi pi-user"
-                class="mr-2"
-                size="xlarge"
-                shape="square"
-              />
-              }
+    <div
+      class="d-flex flex-column justify-content-between col-9 bg-white main-padding main-radius"
+    >
+      <div class="doctors-list">
+        <h1 class="main-text-Color">Doctors</h1>
+        <div class="search-container w-100">
+          <div class="d-flex justify-content-between w-100 main-radius p-2">
+            <!-- Specialty Dropdown -->
+            <div class="multi-select-container">
+              <p-floatlabel class="w-full md:w-80" variant="on"
+                ><p-multiselect
+                  id="Specialization"
+                  [(ngModel)]="selectedSpecializations"
+                  [options]="specialties"
+                  (onChange)="onSpecializationChange($event.value)"
+                  filter
+                  class="w-full"
+                /><label for="Specialization"
+                  >Specialization</label
+                ></p-floatlabel
+              >
             </div>
-            <div class="doctor-photo-card-body">
-              <div class="doctor-name">{{ doc.FullName }}</div>
-              <div class="doctor-stars">
-                <p-rating [ngModel]="doc.Rate" [readonly]="true"></p-rating>
-              </div>
-              <div class="doctor-detail">
-                <i class="fa fa-user-md detail-icon"></i>
-                {{ doc.Specialization }}
-              </div>
-              <div class="doctor-detail">
-                <i class="fa-regular fa-clock detail-icon"></i>
-                {{ doc.EstimatedDuration }} Minutes
-              </div>
-              <div class="doctor-detail">
-                <i class="fa-solid fa-location-dot detail-icon"></i>
-                {{ doc.City }}
-              </div>
-              <div class="doctor-detail">
-                <i class="fa-solid fa-money-bill detail-icon"></i>
-                {{ doc.Price }} EGP
-              </div>
+            <!-- Search Input -->
+            <div class="search-input-container">
+              <input
+                type="text"
+                [(ngModel)]="searchText"
+                class="search-input form-control ms-2 main-radius"
+                placeholder="Search by Name"
+                (input)="applyFilters()"
+              />
             </div>
-            <button class="photo-book-button" (click)="goToDetails(doc.id)">
-              Book now
-            </button>
           </div>
         </div>
-        }
+        <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
+          @for (doc of doctors; track $index) {
+          <div class="col">
+            <div class="doctor-photo-card">
+              <div class="doctor-photo-wrapper">
+                @if(doc.Image && !hasImageLoadFailed(doc.id)){
+                <img
+                  [src]="`${fullImagePath}${doc.Image}`"
+                  alt="Doctor Image"
+                  class="doctor-photo-img"
+                  (error)="onImageError($event, doc.id)"
+                />
+                } @else {
+                <p-avatar
+                  icon="pi pi-user"
+                  class="mr-2"
+                  size="xlarge"
+                  shape="square"
+                  class="w-100 h-100"
+                />
+                }
+              </div>
+              <div class="doctor-photo-card-body">
+                <div class="doctor-name">{{ doc.FullName }}</div>
+                <div class="doctor-stars">
+                  <p-rating [ngModel]="doc.Rate" [readonly]="true"></p-rating>
+                </div>
+                <div class="doctor-detail">
+                  <i class="fa fa-user-md detail-icon"></i>
+                  {{ doc.Specialization }}
+                </div>
+                <div class="doctor-detail">
+                  <i class="fa-regular fa-clock detail-icon"></i>
+                  {{ doc.EstimatedDuration }} Minutes
+                </div>
+                <div class="doctor-detail">
+                  <i class="fa-solid fa-location-dot detail-icon"></i>
+                  {{ doc.City }}
+                </div>
+                <div class="doctor-detail">
+                  <i class="fa-solid fa-money-bill detail-icon"></i>
+                  {{ doc.Price }} EGP
+                </div>
+              </div>
+              <button class="photo-book-button" (click)="goToDetails(doc.id)">
+                Book now
+              </button>
+            </div>
+          </div>
+          } @empty{
+          <div class="text-muted text-center">No doctors found.</div>
+          }
+        </div>
       </div>
+      @if(doctors.length > 0){
+      <div class="d-flex justify-content-center align-items-center gap-2 mt-4">
+        <button
+          class="btn main-btn-bg"
+          (click)="previousPage()"
+          [disabled]="!canGoPrevious"
+        >
+          Previous
+        </button>
+        <span class="current-page"
+          >Page {{ currentPage }} of {{ totalPages }}</span
+        >
+        <button
+          class="btn main-btn-bg"
+          (click)="nextPage()"
+          [disabled]="!canGoNext"
+        >
+          Next
+        </button>
+      </div>
+      }
     </div>
   </div>
 </div>

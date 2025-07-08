@@ -25,7 +25,7 @@ export class NavBarComponent implements OnInit {
   router = inject(Router);
   notificationService = inject(NotificationService);
   unreadCount = 0;
-  notifications!: Array<INotification>;
+  notifications: Array<INotification> = [];
   isDropDownOpen = false;
   isNotificationsDropDownOpen = false;
   UserImage!: string;
