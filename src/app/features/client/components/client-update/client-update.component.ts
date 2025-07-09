@@ -4,11 +4,12 @@ import { ClientService } from '../../services/client.service';
 import { environment } from '../../../../../environments/environment';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { Avatar } from "primeng/avatar";
 
 @Component({
   selector: 'app-client-update',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, Avatar],
   templateUrl: './client-update.component.html',
   styleUrls: ['./client-update.component.css']
 })
@@ -18,6 +19,15 @@ export class ClientUpdateComponent implements OnInit {
   currentImageName: string = '';
   successMessage: string | null = null;
 
+  imageLoadFailedMap: { [key: string]: boolean } = {};
+
+onImageError(event: Event, key: string): void {
+  this.imageLoadFailedMap[key] = true;
+}
+
+hasImageLoadFailed(key: string): boolean {
+  return !!this.imageLoadFailedMap[key];
+}
   constructor(
     private fb: FormBuilder,
     private _clientService: ClientService,

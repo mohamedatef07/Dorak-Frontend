@@ -1,198 +1,258 @@
 <app-nav-bar></app-nav-bar>
-<div class="container doctors-page-container pb-3">
-  <!-- Search bar with dropdowns -->
-  <div class="search-container">
-    <div class="row w-100">
-      <div class="col-12">
-        <div class="input-group">
-          <!-- Specialty Dropdown -->
-          <div class="dropdown">
-            <button
-              class="specialty-dropdown dropdown-toggle btn btn-outline-secondary"
-              type="button"
-              data-bs-toggle="dropdown"
-            >
-              {{ filterModel.Specialization || "Specialty" }}
-            </button>
-            <ul class="dropdown-menu">
-              <li>
-                <a class="dropdown-item" (click)="onSpecializationChange('')"
-                  >All</a
-                >
-              </li>
-              <li *ngFor="let s of specialties">
-                <a class="dropdown-item" (click)="onSpecializationChange(s)">{{
-                  s
-                }}</a>
-              </li>
-            </ul>
-          </div>
-
-          <!-- Search Input -->
-          <input
-            type="text"
-            [(ngModel)]="searchText"
-            class="search-input form-control ms-2"
-            placeholder="Search by Name"
-          />
-
-          <!-- Search Button -->
-          <button
-            class="search-button btn btn-primary ms-2"
-            type="button"
-            (click)="searchDoctors()"
-          >
-            Search <i class="fas fa-search ms-1"></i>
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
+<div class="container doctors-page-container">
+  <div class="d-flex justify-content-between my-4">
     <!-- Filters Sidebar -->
-    <div class="col-lg-3 col-md-4">
-      <div class="filter-panel">
-        <h5 class="mb-3 fs-6">Filters</h5>
+    <div class="filter-panel-container">
+      <div class="filter-panel main-padding main-radius">
+        <div class="title text-center w-100">
+          <span
+          class="d-flex align-items-center justify-content-center gap-2"
+          >
+            <i class="fa fa-filter fa-2x" aria-hidden="true"></i>
+            <span
+              class="mb-0"
+              >Filters</span
+            >
+          </span>
+        </div>
         <!-- Title Filter -->
         <div class="mb-3">
-          <label class="fw-bold fs-5">Title</label>
-          @for(title of titles; track $index) {
+          <label class="fw-bold fs-5 filter-label">Title</label>
+          <div *ngFor="let title of titles">
             <div class="form-check">
               <input
                 class="form-check-input"
                 type="checkbox"
-                [value]="title"
+                [value]="title.value"
+                [checked]="selectedTitles.includes(title.value)"
                 (change)="onTitleChange($event)"
               />
-              <label class="form-check-label">{{ title }}</label>
+              <label class="form-check-label">{{ title.label }}</label>
             </div>
-          }
+          </div>
         </div>
         <!-- Gender Filter -->
         <div class="mb-3">
-          <label class="fw-bold fs-5">Gender</label>
-          @for(gender of genders; track $index) {
+          <label class="fw-bold fs-5 filter-label">Gender</label>
+          <div *ngFor="let gender of genders">
             <div class="form-check">
               <input
                 class="form-check-input"
                 type="checkbox"
-                [value]="gender"
+                [value]="gender.value"
+                [checked]="selectedGenders.includes(gender.value)"
                 (change)="onGenderChange($event)"
               />
-              <label class="form-check-label">{{ gender }}</label>
+              <label class="form-check-label">{{ gender.label }}</label>
             </div>
-          }
+          </div>
         </div>
         <!-- City Filter -->
         <div class="mb-3">
-          <label class="fw-bold fs-5">City</label>
-          <div *ngFor="let c of cities">
+          <label class="fw-bold fs-5 filter-label">City</label>
+          <div *ngFor="let city of cities">
             <div class="form-check">
               <input
                 class="form-check-input"
                 type="checkbox"
-                [value]="c"
+                [checked]="selectedCities.includes(city)"
+                [value]="city"
                 (change)="onCityChange($event)"
               />
-              <label class="form-check-label">{{ c }}</label>
+              <label class="form-check-label">{{ city }}</label>
             </div>
           </div>
         </div>
         <!-- Rate Filter -->
         <div class="mb-3">
-          <label class="fw-bold">Rate</label>
-          <input
-            type="number"
-            class="form-control"
-            placeholder="Min Rate"
-            [(ngModel)]="filterModel.MinRate"
-            min="0"
-          />
-          <input
-            type="number"
-            class="form-control mt-1"
-            placeholder="Max Rate"
-            [(ngModel)]="filterModel.MaxRate"
-            min="0"
-          />
+          <label class="fw-bold filter-label">Rate</label>
+          <div class="mt-1">
+            <label class="form-check-label">Min Rate</label>
+            <input
+              type="number"
+              class="form-control"
+              placeholder="Min Rate"
+              [(ngModel)]="selectedMinRate"
+              (input)="applyFilters()"
+              min="0"
+              max="5"
+            />
+          </div>
+          <div class="mt-1">
+            <label class="form-check-label">Max Rate</label>
+            <input
+              type="number"
+              class="form-control mt-1"
+              placeholder="Max Rate"
+              [(ngModel)]="selectedMaxRate"
+              (input)="applyFilters()"
+              min="0"
+              max="5"
+            />
+          </div>
         </div>
-
         <!-- Price Filter -->
         <div class="mb-3">
-          <label class="fw-bold">Price</label>
-          <input
-            type="number"
-            class="form-control"
-            placeholder="Min Price"
-            [(ngModel)]="filterModel.MinPrice"
-            min="100"
-          />
-          <input
-            type="number"
-            class="form-control mt-1"
-            placeholder="Max Price"
-            [(ngModel)]="filterModel.MaxPrice"
-            min="2000"
-          />
+          <label class="fw-bold filter-label">Price</label>
+          <div class="mt-1">
+            <label class="form-check-label">Min Price</label>
+            <input
+              type="number"
+              class="form-control"
+              placeholder="Min Price"
+              [(ngModel)]="selectedMinPrice"
+              (input)="applyFilters()"
+              min="0"
+              max="10000"
+            />
+          </div>
+          <div class="mt-1">
+            <label class="form-check-label">Max Price</label>
+            <input
+              type="number"
+              class="form-control mt-1"
+              placeholder="Max Price"
+              [(ngModel)]="selectedMaxPrice"
+              (input)="applyFilters()"
+              max="10000"
+              min="0"
+            />
+          </div>
         </div>
-
         <!-- Date Filter -->
         <div class="mb-3">
-          <label class="fw-bold">Available Date</label>
-          <input
-            type="date"
-            class="form-control"
-            [(ngModel)]="filterModel.AvailableDate"
-          />
+          <label class="fw-bold filter-label">Available Date</label>
+          <p-datepicker
+            [iconDisplay]="'input'"
+            [showIcon]="true"
+            dateFormat="yy-mm-dd"
+            [(ngModel)]="selectedAvailableDate"
+            [showButtonBar]="true"
+            [showTime]="false"
+            [placeholder]="'Select Date'"
+            (onSelect)="applyFilters()"
+          ></p-datepicker>
+        </div>
+        <div class="mb-3">
+          <button
+            class="btn bg-white fw-bold reset-button"
+            (click)="resetFilters()"
+          >
+            Reset Filters
+          </button>
         </div>
       </div>
     </div>
-
     <!-- Doctor listings -->
-    <div class="col-lg-9 col-md-8">
-      <h4 class="content-title">All Specialties</h4>
-      <p class="text-muted mb-4">
-        <small>{{ filteredDoctors.length }} doctors</small>
-      </p>
-
-      <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
-        <div class="col" *ngFor="let doc of doctors">
-          <div class="doctor-card">
-            <img
-              *ngIf="fullImagePath"
-              [src]="fullImagePath"
-              alt="Doctor Image"
-              class="img-thumbnail"
-            />
-
-            <div class="card-body">
-              <div class="doctor-name">{{ doc.FullName }}</div>
-              <div class="doctor-specialty">{{ doc.Specialization }}</div>
-              <div class="features">
-                <div class="feature">
-                  <i class="fa-solid fa-star feature-icon"></i> {{ doc.Rate }}
-                </div>
-                <div class="feature">
-                  <i class="fa-regular fa-clock feature-icon"></i>
-                  {{ doc.EstimatedDuration }}
-                </div>
-                <div class="feature">
-                  <i class="fa-solid fa-dollar-sign feature-icon"></i>
-                  {{ doc.Price }}
-                </div>
-                <div class="feature">
-                  <i class="fa-solid fa-location-dot feature-icon"></i>
-                  {{ doc.City }}
-                </div>
-              </div>
-              <button class="book-button" (click)="goToDetails(doc.id)">
-                BOOK NOW
-              </button>
+    <div
+      class="doctors-list-container d-flex flex-column justify-content-between bg-white main-padding main-radius"
+    >
+      <div class="doctors-list">
+        <h1 class="main-text-Color">Doctors</h1>
+        <div class="search-container w-100">
+          <div class="d-flex justify-content-between w-100 main-radius p-2">
+            <!-- Specialty Dropdown -->
+            <div class="multi-select-container">
+              <p-floatlabel class="w-full md:w-80" variant="on"
+                ><p-multiselect
+                  id="Specialization"
+                  [(ngModel)]="selectedSpecializations"
+                  [options]="specialties"
+                  (onChange)="onSpecializationChange($event.value)"
+                  filter
+                  class="w-full"
+                /><label for="Specialization"
+                  >Specialization</label
+                ></p-floatlabel
+              >
+            </div>
+            <!-- Search Input -->
+            <div class="search-input-container">
+              <input
+                type="text"
+                [(ngModel)]="searchText"
+                class="search-input form-control ms-2 main-radius"
+                placeholder="Search by Name"
+                (input)="applyFilters()"
+              />
             </div>
           </div>
         </div>
+        <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
+          @for (doc of doctors; track $index) {
+          <div class="col">
+            <div class="doctor-photo-card">
+              <div class="doctor-photo-wrapper">
+                @if(doc.Image && !hasImageLoadFailed(doc.id)){
+                <img
+                  [src]="`${fullImagePath}${doc.Image}`"
+                  alt="Doctor Image"
+                  class="doctor-photo-img"
+                  (error)="onImageError($event, doc.id)"
+                />
+                } @else {
+                <p-avatar
+                  icon="pi pi-user"
+                  class="mr-2"
+                  size="xlarge"
+                  shape="square"
+                  class="w-100 h-100"
+                />
+                }
+              </div>
+              <div class="doctor-photo-card-body">
+                <div class="doctor-name">{{ doc.FullName }}</div>
+                <div class="doctor-stars">
+                  <p-rating [ngModel]="doc.Rate" [readonly]="true"></p-rating>
+                </div>
+                <div class="doctor-detail">
+                  <i class="fa fa-user-md detail-icon"></i>
+                  {{ doc.Specialization }}
+                </div>
+                <div class="doctor-detail">
+                  <i class="fa-regular fa-clock detail-icon"></i>
+                  {{ doc.EstimatedDuration }} Minutes
+                </div>
+                <div class="doctor-detail">
+                  <i class="fa-solid fa-location-dot detail-icon"></i>
+                  {{ doc.City }}
+                </div>
+                <div class="doctor-detail">
+                  <i class="fa-solid fa-money-bill detail-icon"></i>
+                  {{ doc.Price }} EGP
+                </div>
+              </div>
+              <button class="photo-book-button" (click)="goToDetails(doc.id)">
+                Book now
+              </button>
+            </div>
+          </div>
+          } @empty{
+          <div class="text-muted text-center fs-5">No doctors found.</div>
+          }
+        </div>
       </div>
+      @if(doctors.length > 0){
+      <div class="d-flex justify-content-center align-items-center gap-2 mt-4">
+        <button
+          class="btn main-btn-bg"
+          (click)="previousPage()"
+          [disabled]="!canGoPrevious"
+        >
+          Previous
+        </button>
+        <span class="current-page"
+          >Page {{ currentPage }} of {{ totalPages }}</span
+        >
+        <button
+          class="btn main-btn-bg"
+          (click)="nextPage()"
+          [disabled]="!canGoNext"
+        >
+          Next
+        </button>
+      </div>
+      }
     </div>
   </div>
 </div>

@@ -12,67 +12,84 @@ import { DoctorTitle } from '../../../../Enums/DoctorTitle.enum';
 import { GenderType } from '../../../../Enums/GenderType.enum';
 import { SelectModule } from 'primeng/select';
 import { CheckboxModule } from 'primeng/checkbox';
+import { buildDoctorFilter } from '../../../../utils/DoctorFilterBuilder';
+import { AvatarModule } from 'primeng/avatar';
+import { RatingModule } from 'primeng/rating';
+import { MessageService } from 'primeng/api';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { DatePickerModule } from 'primeng/datepicker';
 
 @Component({
   selector: 'app-doctorsPage',
   standalone: true,
   templateUrl: './doctorsPage.component.html',
   styleUrls: ['./doctorsPage.component.css'],
-  imports: [CommonModule, FormsModule, ClientFooterComponent, NavBarComponent,SelectModule, CheckboxModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ClientFooterComponent,
+    NavBarComponent,
+    SelectModule,
+    CheckboxModule,
+    AvatarModule,
+    RatingModule,
+    FloatLabelModule,
+    MultiSelectModule,
+    DatePickerModule,
+  ],
 })
 export class DoctorsPageComponent implements OnInit {
   doctors: IDoctorCard[] = [];
   filteredDoctors: IDoctorCard[] = [];
-
+  currentPage: number = 1;
+  pageSize: number = 6;
+  totalRecords: number = 0;
+  totalPages: number = 0;
   searchText: string = '';
   specialty: string = '';
   city: string = '';
+  fullImagePath: string = `${environment.apiUrl}`;
+  imageLoadFailedMap: { [id: number]: boolean } = {};
 
-  fullImagePath: string = '';
-  selectedTitles: string[] = [];
-  selectedGenders: string[] = [];
+  selectedTitles: number[] = [];
+  selectedGenders: number[] = [];
+  selectedCities: string[] = [];
+  selectedSpecializations: string[] = [];
+  selectedMinRate: number | null = null;
+  selectedMaxRate: number | null = null;
+  selectedMinPrice: number | null = null;
+  selectedMaxPrice: number | null = null;
+  selectedAvailableDate: Date | null = null;
 
   specialties: string[] = [
-    'Cardiology',
+    'Cardiologist',
     'Dermatology',
     'Neurology',
     'Pediatrics',
   ];
   cities: string[] = ['naser city', 'Giza', 'Alexandria', 'Aswan'];
 
+  titles: Array<{ value: number; label: string }> = Object.entries(DoctorTitle)
+    .filter(
+      ([key, value]) => typeof value === 'number' && value !== DoctorTitle.None
+    )
+    .map(([key, value]) => ({ value: value as number, label: key }));
 
-
-  titles: Array<string> = Object.values(DoctorTitle).filter(
-    (value) => typeof value === 'string' && value !== 'None'
-  ) as string[];
-
-  genders : Array<string> = Object.values(GenderType).filter(
-    (value) => typeof value === 'string' && value !== 'None'
-  ) as string[];
-
-  filterModel: IDoctorFilter = {
-    Title: undefined,
-    Gender: undefined,
-    City: undefined,
-    SearchText: undefined,
-    Specialization: undefined,
-    MinRate: undefined,
-    MaxRate: undefined,
-    MinPrice: undefined,
-    MaxPrice: undefined,
-    AvailableDate: undefined,
-  };
-
-
+  genders: Array<{ value: number; label: string }> = Object.entries(GenderType)
+    .filter(
+      ([key, value]) => typeof value === 'number' && value !== GenderType.None
+    )
+    .map(([key, value]) => ({ value: value as number, label: key }));
 
   constructor(
     private cardDoctorService: ClientService,
-    private router: Router
+    private router: Router,
+    private messageService: MessageService
   ) {}
 
   goToDetails(Id: number | undefined): void {
     if (!Id) {
-      console.error('Invalid doctor ID');
       return;
     }
     this.router.navigate(['client/doctor-details', Id]);
@@ -82,72 +99,132 @@ export class DoctorsPageComponent implements OnInit {
     this.getAllDoctors();
   }
 
-  getAllDoctors(filter?: Partial<IDoctorFilter>): void {
-    this.cardDoctorService.getAllDoctorsCards(filter).subscribe({
-      next: (res) => {
-        this.doctors = [...res.Data];
-        if (this.doctors[0]?.Image) {
-          this.fullImagePath = `${environment.apiUrl}${this.doctors[0].Image}`;
-        }
-        this.filteredDoctors = [...this.doctors];
-      },
-      error: (err) => {
-        console.error('Error loading doctors:', err);
-      },
-    });
+  getAllDoctors(filter: Partial<IDoctorFilter> = {}): void {
+    this.cardDoctorService
+      .getAllDoctorsCards(filter, this.currentPage, this.pageSize)
+      .subscribe({
+        next: (res) => {
+          this.doctors = [...res.Data];
+          this.filteredDoctors = [...this.doctors];
+          this.totalRecords = res.TotalRecords;
+          this.currentPage = res.CurrentPage;
+          this.pageSize = res.PageSize;
+          this.totalPages = res.TotalPages;
+        },
+        error: (err) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Failed to load doctors',
+          });
+        },
+      });
   }
 
   onTitleChange(event: any): void {
     const value = Number(event.target.value);
-    this.filterModel.Title = event.target.checked ? value : undefined;
-    this.applyFilters();
-  }
-
-  onCityChange(event: any): void {
-    const value = event.target.value;
-    this.filterModel.City = event.target.checked ? value : undefined;
+    if (event.target.checked) {
+      if (!this.selectedTitles.includes(value)) {
+        this.selectedTitles.push(value);
+      }
+    } else {
+      this.selectedTitles = this.selectedTitles.filter((t) => t !== value);
+    }
     this.applyFilters();
   }
 
   onGenderChange(event: any): void {
     const value = Number(event.target.value);
-    this.filterModel.Gender = value;
+    if (event.target.checked) {
+      if (!this.selectedGenders.includes(value))
+        this.selectedGenders.push(value);
+    } else {
+      this.selectedGenders = this.selectedGenders.filter((g) => g !== value);
+    }
+    this.applyFilters();
+  }
+  onCityChange(event: any): void {
+    const value = event.target.value;
+    if (event.target.checked) {
+      if (!this.selectedCities.includes(value)) this.selectedCities.push(value);
+    } else {
+      this.selectedCities = this.selectedCities.filter((c) => c !== value);
+    }
     this.applyFilters();
   }
 
-  onSpecializationChange(specialization: string): void {
-    this.filterModel.Specialization = specialization || undefined;
+  onSpecializationChange(selectedSpecializations: string[]): void {
+    this.selectedSpecializations = selectedSpecializations; // This will allow handling multiple selected specializations
     this.applyFilters();
   }
 
   applyFilters(): void {
-    // Clean up the filter model by removing undefined values
-    const cleanFilter: Partial<IDoctorFilter> = {};
-    Object.entries(this.filterModel).forEach(([key, value]) => {
-      if (value !== undefined && value !== '') {
-        cleanFilter[key as keyof IDoctorFilter] = value;
-      }
-    });
-
-    // If there are no filters, get all doctors
-    if (Object.keys(cleanFilter).length === 0) {
-      this.getAllDoctors();
-      return;
-    }
-
-    this.getAllDoctors(cleanFilter);
+    const filter = {
+      Titles: this.selectedTitles,
+      Genders: this.selectedGenders,
+      Cities: this.selectedCities,
+      Specializations: this.selectedSpecializations,
+      SearchText: this.searchText,
+      MinRate: this.selectedMinRate ?? undefined,
+      MaxRate: this.selectedMaxRate ?? undefined,
+      MinPrice: this.selectedMinPrice ?? undefined,
+      MaxPrice: this.selectedMaxPrice ?? undefined,
+      AvailableDate: this.selectedAvailableDate
+        ? new Date(this.selectedAvailableDate).toISOString().split('T')[0]
+        : undefined,
+    };
+    this.getAllDoctors(filter);
   }
 
-  searchDoctors(): void {
-    this.filterModel.SearchText = this.searchText;
-    this.filterModel.City = this.city || undefined;
-    this.filterModel.Specialization = this.specialty || undefined;
+  trackByIndex(index: number, item: any): number {
+    return index;
+  }
 
-    this.applyFilters();
-
-    // Reset search inputs after applying
+  resetFilters(): void {
+    this.selectedTitles = [];
+    this.selectedGenders = [];
+    this.selectedCities = [];
+    this.selectedSpecializations = [];
+    this.selectedMinRate = null;
+    this.selectedMaxRate = null;
+    this.selectedMinPrice = null;
+    this.selectedMaxPrice = null;
+    this.selectedAvailableDate = null;
     this.searchText = '';
-    this.city = '';
-    this.specialty = '';
+    this.applyFilters();
+  }
+  nextPage() {
+    this.currentPage++;
+    this.getAllDoctors();
+  }
+
+  previousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.getAllDoctors();
+    }
+  }
+
+  get canGoNext(): boolean {
+    return this.currentPage * this.pageSize < this.totalRecords;
+  }
+
+  get canGoPrevious(): boolean {
+    return this.currentPage > 1;
+  }
+
+  get startRecord(): number {
+    return (this.currentPage - 1) * this.pageSize + 1;
+  }
+
+  get endRecord(): number {
+    const end = this.currentPage * this.pageSize;
+    return end > this.totalRecords ? this.totalRecords : end;
+  }
+  onImageError(event: Event, doctorId: number) {
+    this.imageLoadFailedMap[doctorId] = true;
+  }
+  hasImageLoadFailed(doctorId: number): boolean {
+    return !!this.imageLoadFailedMap[doctorId];
   }
 }

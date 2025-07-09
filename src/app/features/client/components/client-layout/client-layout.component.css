@@ -5,6 +5,10 @@
 }
 .primary-content {
   background-color: #fcfeff;
-  padding: 2.5rem
+  padding: 2.5rem;
+  width: 75%;
 }
-
+.sidebar-container {
+  width: 23%;
+  height: fit-content;
+}

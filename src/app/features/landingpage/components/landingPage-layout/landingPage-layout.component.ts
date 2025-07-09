@@ -1,7 +1,8 @@
+import { HeroComponent } from './../hero/hero.component';
 import { Component, OnInit } from '@angular/core';
 import { CtaComponent } from '../cta/cta.component';
 import { FeaturesComponent } from '../Features/Features.component';
-import { HeroComponent } from '../Hero/Hero.component';
+
 import { HeaderComponent } from '../header/header.component';
 import { HowITWorkComponent } from '../HowITWork/HowITWork.component';
 import { StatesComponent } from '../states/states.component';

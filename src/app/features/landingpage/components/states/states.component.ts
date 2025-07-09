@@ -16,7 +16,6 @@ import {
   templateUrl: './states.component.html',
   styleUrls: ['./states.component.css',
          '..//../../../styles/general.css'
-
   ]
 })
 export class StatesComponent  {
