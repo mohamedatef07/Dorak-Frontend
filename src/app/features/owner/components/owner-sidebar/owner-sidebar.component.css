@@ -1,42 +1,53 @@
 @import "primeicons/primeicons.css";
 
-:host ::ng-deep .pi-desktop:before,
-:host ::ng-deep .pi-users:before,
-:host ::ng-deep .pi-calendar:before,
-:host ::ng-deep .pi-cog:before,
-:host ::ng-deep .pi-chart-bar:before,
-:host ::ng-deep .pi-user-plus:before {
+::ng-deep .pi-desktop:before,
+::ng-deep .pi-users:before,
+::ng-deep .pi-calendar:before,
+::ng-deep .pi-cog:before,
+::ng-deep .pi-chart-bar:before,
+::ng-deep .pi-user-plus:before {
   color: var(--text-color-Light);
   font-size: 18px;
   margin: 0 10px;
 }
 
-:host ::ng-deep .p-panelmenu-panel,
-:host ::ng-deep .p-panelmenu-panel:first-child:host ::ng-deep .p-panelmenu-panel:last-child {
+
+::ng-deep .p-panelmenu-panel,
+::ng-deep .p-panelmenu-panel:first-child,
+::ng-deep .p-panelmenu-panel:last-child {
   color: var(--text-color-Light);
+  /* background: transparent !important; */
+  /* border: transparent none !important; */
   font-size: 0.875rem;
   font-weight: 600;
   border-radius: 15px 0 0 15px;
   margin-bottom: 10px;
-
 }
 
-:host ::ng-deep .p-panelmenu-item-label {
+/* ::ng-deep .p-panelmenu-panel:nth-child(1) {
+  padding-left: 25px  !important;
+} */
+
+::ng-deep .p-panelmenu-item-label {
   display: contents;
   color: var(--text-color-Light);
   font-size: 0.75rem;
 }
 
-:host ::ng-deep .side-bar ul li a {
+::ng-deep .side-bar ul li a {
   padding: 5px 20px;
 }
 
-:host ::ng-deep .p-panelmenu-submenu .fa-user-doctor,
-:host ::ng-deep .p-panelmenu-submenu .fa-calendar-days,
-:host ::ng-deep .p-panelmenu-submenu .fa-magnifying-glass,
-:host ::ng-deep .p-panelmenu-submenu .fa-user-plus {
+::ng-deep .p-panelmenu-submenu .fa-user-doctor,
+::ng-deep .p-panelmenu-submenu .fa-calendar-days,
+::ng-deep .p-panelmenu-submenu .fa-magnifying-glass,
+::ng-deep .p-panelmenu-submenu .fa-user-plus {
   margin-left: 10px;
   color: var(--text-color-Light);
   font-size: 18px;
+}
+
+::ng-deep .p-panelmenu .p-panelmenu-content .p-panelmenu-submenu .p-menuitem-link {
+  padding-left: 2.5rem !important;
 }
 

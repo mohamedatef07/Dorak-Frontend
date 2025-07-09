@@ -10,6 +10,8 @@ import { DropdownModule } from 'primeng/dropdown';
 import { CalendarModule } from 'primeng/calendar';
 import { InputTextarea } from 'primeng/inputtextarea';
 import { ToastModule } from 'primeng/toast';
+import { AuthService } from '../../services/auth.service';
+import { GenderType } from '../../Enums/GenderType.enum';
 
 interface RegistrationData {
   // First page data
@@ -29,7 +31,7 @@ interface RegistrationData {
   governorate: string;
   country: string;
   birthDate: Date;
-  image: string;
+  image: File | null;
   
   // Provider-specific fields
   specialization: string;
@@ -88,7 +90,7 @@ export class RegisterComponent {
     governorate: '',
     country: '',
     birthDate: new Date(),
-    image: '',
+    image: null,
     
     // Provider-specific fields
     specialization: '',
@@ -162,7 +164,8 @@ export class RegisterComponent {
 
   constructor(
     private router: Router,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private authService: AuthService
   ) {}
 
   nextStep(): void {
@@ -193,10 +196,16 @@ export class RegisterComponent {
   isStep1Valid(): boolean {
     return (
       this.registrationData.username.trim() !== '' &&
+      this.registrationData.username.length >= 8 &&
       this.registrationData.email.trim() !== '' &&
+      this.registrationData.email.length >= 6 &&
+      this.isValidEmail(this.registrationData.email) &&
       this.registrationData.phoneNumber.trim() !== '' &&
+      this.registrationData.phoneNumber.length >= 8 &&
       this.registrationData.password.trim() !== '' &&
+      this.registrationData.password.length >= 8 &&
       this.registrationData.confirmPassword.trim() !== '' &&
+      this.registrationData.confirmPassword.length >= 8 &&
       this.registrationData.password === this.registrationData.confirmPassword &&
       this.registrationData.role !== ''
     );
@@ -253,21 +262,112 @@ export class RegisterComponent {
 
     this.isLoading = true;
 
-    // Simulate API call
-    setTimeout(() => {
-      this.isLoading = false;
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Registration Successful',
-        detail: 'Your account has been created successfully!',
-        life: 3000,
-      });
+    // Create FormData for file upload
+    const formData = new FormData();
+    
+    // Add all the registration data to FormData
+    formData.append('UserName', this.registrationData.username);
+    formData.append('Email', this.registrationData.email);
+    formData.append('PhoneNumber', this.registrationData.phoneNumber);
+    formData.append('Password', this.registrationData.password);
+    formData.append('ConfirmPassword', this.registrationData.confirmPassword);
+    formData.append('Role', this.registrationData.role);
+    
+    // Common fields
+    formData.append('FirstName', this.registrationData.firstName);
+    formData.append('LastName', this.registrationData.lastName);
+    formData.append('Gender', this.registrationData.gender === 'Male' ? GenderType.Male.toString() : GenderType.Female.toString());
+    
+    // Format date for C# DateOnly
+    if (this.registrationData.birthDate) {
+      const formattedDate = this.formatDateForAPI(this.registrationData.birthDate);
+      formData.append('BirthDate', formattedDate);
+    }
+    
+    // Address fields
+    formData.append('Street', this.registrationData.street);
+    formData.append('City', this.registrationData.city);
+    formData.append('Governorate', this.registrationData.governorate);
+    formData.append('Country', this.registrationData.country);
+    
+    // Image file
+    if (this.registrationData.image) {
+      formData.append('Image', this.registrationData.image);
+    }
+    
+    // Provider-specific fields (only if role is Provider)
+    if (this.registrationData.role === 'Provider') {
+      formData.append('Specialization', this.registrationData.specialization);
+      formData.append('Bio', this.registrationData.bio);
+      formData.append('ExperienceYears', this.registrationData.experienceYears.toString());
+      formData.append('ProviderType', this.registrationData.providerType.toString());
+      formData.append('LicenseNumber', this.registrationData.licenseNumber);
+      formData.append('EstimatedDuration', this.registrationData.estimatedDuration.toString());
+      formData.append('Rate', this.registrationData.rate.toString());
+    }
 
-      // Navigate to login after successful registration
-      setTimeout(() => {
-        this.router.navigate(['/login']);
-      }, 2000);
-    }, 2000);
+    this.authService.register(formData).subscribe({
+      next: (response) => {
+        this.isLoading = false;
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Registration Successful',
+          detail: response.Message || 'Your account has been created successfully!',
+          life: 5000,
+        });
+
+        // Navigate to login after successful registration
+        setTimeout(() => {
+          this.router.navigate(['/login']);
+        }, 2000);
+      },
+      error: (err) => {
+        this.isLoading = false;
+        
+        // Handle different types of errors
+        let errorMessage = 'Registration failed. Please try again.';
+        
+        if (err.status === 400) {
+          if (err.error?.Errors) {
+            // Handle validation errors from the API
+            const validationErrors = err.error.Errors;
+            const errorDetails = Object.keys(validationErrors)
+              .map(key => validationErrors[key])
+              .flat()
+              .join(', ');
+            errorMessage = `Validation errors: ${errorDetails}`;
+          } else if (err.error?.Message) {
+            errorMessage = err.error.Message;
+          } else if (err.error?.message) {
+            errorMessage = err.error.message;
+          } else if (typeof err.error === 'string') {
+            errorMessage = err.error;
+          } else {
+            errorMessage = 'Please check your input and try again.';
+          }
+        } else if (err.status === 409) {
+          errorMessage = 'Username or email already exists. Please choose different credentials.';
+        } else if (err.status === 0 || err.status === 500) {
+          errorMessage = 'Server error. Please try again later.';
+        } else if (err.error?.message) {
+          errorMessage = err.error.message;
+        }
+        
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Registration Failed',
+          detail: errorMessage,
+          life: 5000,
+        });
+      },
+    });
+  }
+
+  private formatDateForAPI(date: Date): string {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
   }
 
   togglePasswordVisibility(): void {
@@ -287,5 +387,22 @@ export class RegisterComponent {
   onCustomSpecializationInput(): void {
     // When user types in custom input, keep the dropdown showing "Custom"
     this.selectedSpecialization = 'Custom';
+  }
+
+  private isValidEmail(email: string): boolean {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  }
+
+  onFileSelected(event: any): void {
+    const file = event.target.files[0];
+    if (file) {
+      this.registrationData.image = file;
+    }
+  }
+
+  ngOnDestroy(): void {
+    // Cleanup to prevent memory leaks and calendar errors
+    this.isLoading = false;
   }
 }

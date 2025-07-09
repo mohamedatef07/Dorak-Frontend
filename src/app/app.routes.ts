@@ -3,7 +3,6 @@ import { Routes } from '@angular/router';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
-import { ClientRegisterComponent } from './components/client-register/client-register.component';
 import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
 import { ProviderManagementComponent } from './features/owner/components/provider-management/provider-management.component';
 import { AddProviderComponent } from './features/owner/components/add-provider/add-provider.component';
@@ -51,7 +50,7 @@ import { RoleGuard } from './guards/role.guard';
 import { AuthGuard } from './guards/auth.guard';
 import { HeaderComponent } from './features/landingpage/components/header/header.component';
 import { HeroComponent } from './features/landingpage/components/hero/hero.component';
-
+import { CenterRegisterComponent } from './components/CenterRegister/CenterRegister.component';
 
 export const routes: Routes = [
   {
@@ -324,13 +323,9 @@ export const routes: Routes = [
     ],
     title: 'Home',
   },
-  { path: 'login', component: LoginComponent, title: 'Login' },
-  { path: 'register', component: RegisterComponent, title: 'Register' },
-  {
-    path: 'client-register',
-    component: ClientRegisterComponent,
-    title: 'Client Register',
-  },
+  { path: 'login', component: LoginComponent, title: 'Login', data: { animation: 'login' } },
+  { path: 'register', component: RegisterComponent, title: 'Register', data: { animation: 'register' } },
+  { path: 'center-register', component: CenterRegisterComponent, title: 'Register Center', data: { animation: 'centerRegister' } },
   {
     path: 'unauthorized',
     component: UnauthorizedComponent,

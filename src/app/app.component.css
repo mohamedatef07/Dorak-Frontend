@@ -1,0 +1,32 @@
+/* Route Animation Styles */
+:host {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Ensure the router outlet container takes full width and height */
+div[class*="routeAnimations"] {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+/* Prevent horizontal scrollbar during animations */
+body {
+  overflow-x: hidden;
+}
+
+/* Ensure components take full viewport */
+app-login,
+app-register {
+  display: block;
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* Default router outlet styling for non-animated routes */
+router-outlet + * {
+  display: block;
+  width: 100%;
+}

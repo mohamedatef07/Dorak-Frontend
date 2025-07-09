@@ -5,6 +5,9 @@
     align-items: stretch;
     justify-content: center;
     padding: 0;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
   }
   
   /* Left column: full white background */
@@ -113,6 +116,74 @@
     outline: none;
     border-color: var(--main-bg-color-Light);
     box-shadow: 0 0 0 0.2rem rgba(42, 111, 151, 0.25);
+  }
+
+  .form-control.ng-invalid.ng-touched {
+    border-color: #dc3545;
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+  }
+
+  .form-control.ng-valid.ng-touched {
+    border-color: #28a745;
+    box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+  }
+
+  /* Error Message Styling */
+  .text-danger small {
+    font-size: 12px;
+    font-weight: 500;
+    display: block;
+    margin-top: 4px;
+    animation: fadeIn 0.3s ease-in;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-5px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Password Input Container */
+  .password-input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .password-toggle-btn {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #666;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 4px;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .password-toggle-btn:hover {
+    color: var(--main-bg-color-Light);
+    background-color: rgba(42, 111, 151, 0.1);
+  }
+
+  .password-toggle-btn:focus {
+    outline: none;
+    color: var(--main-bg-color-Light);
+  }
+
+  .password-toggle-btn i {
+    font-size: 16px;
   }
   
   /* Form Options */
@@ -518,5 +589,13 @@
     }
     50% {
       transform: translateY(-10px);
+    }
+  }
+
+  /* Responsive Academy Section - Move to left side for screens 1920px or less */
+  @media (max-width: 1920px) {
+    .academy-section {
+      right: auto;
+      left: 30px;
     }
   }
