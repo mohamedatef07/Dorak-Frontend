@@ -56,6 +56,7 @@ export class appointmentDetails implements OnInit {
     Rate: 0,
     Image: '',
   };
+  imageLoadFailedMap: { [key: string]: boolean } = {};
 
   ngOnInit(): void {
     const param = this.activatedRoute.snapshot.paramMap.get('appointmentId');
@@ -141,4 +142,11 @@ export class appointmentDetails implements OnInit {
     // Disable if appointment is less than 2 days away
     return daysDifference <= 2;
   }
+  onImageError(event: Event, key: string): void {
+  this.imageLoadFailedMap[key] = true;
+}
+
+hasImageLoadFailed(key: string): boolean {
+  return !!this.imageLoadFailedMap[key];
+}
 }
