@@ -147,7 +147,23 @@
         </div>
         <div class="profile-img me-4">
           <a [routerLink]="['/client/client-profile']">
-            <img [src]="UserImage" alt="" />
+            
+            @if (UserImage && !hasImageLoadFailed('user-profile')) {
+              <img
+                [src]="UserImage"
+                alt="User Image"
+                class="rounded-circle"
+                style="width: 40px; height: 40px;"
+                (error)="onImageError($event, 'user-profile')"
+              />
+            } @else {
+              <p-avatar
+                icon="pi pi-user"
+                shape="circle"
+                size="large"
+                class="w-100 h-100"
+              ></p-avatar>
+            }
           </a>
         </div>
       </div>
