@@ -8,9 +8,9 @@
           <ul
             class="d-flex justify-content-center align-items-center gap-5 m-0"
           >
-            <li><a href="#">Contact Us</a></li>
-            <li><a href="#">Help - Support</a></li>
-            <li><a href="#">Terms and Conditions</a></li>
+            <li><a [routerLink]= "['/contact-us']" [routerLinkActive]="['router-link-active']" >Contact Us</a></li> 
+            <li><a [routerLink]="['/Help-Support']" [routerLinkActive]="['router-link-active']">Help - Support</a></li>
+            <li><a [routerLink]="['/terms-conditions']" [routerLinkActive]="['router-link-active']">Terms and Conditions</a></li>
           </ul>
         </div>
       </div>
