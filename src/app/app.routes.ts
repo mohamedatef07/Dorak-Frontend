@@ -50,6 +50,7 @@ import { RoleGuard } from './guards/role.guard';
 import { AuthGuard } from './guards/auth.guard';
 import { HeaderComponent } from './features/landingpage/components/header/header.component';
 import { HeroComponent } from './features/landingpage/components/Hero/Hero.component';
+import { CenterRegisterComponent } from './components/CenterRegister/CenterRegister.component';
 
 export const routes: Routes = [
   {
