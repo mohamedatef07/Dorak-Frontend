@@ -9,6 +9,7 @@ import { ClientTypeEnumValuePipe } from '../../../../pipes/ClientTypeEnumValue.p
 import { QueueAppointmentStatusEnumValuePipe } from '../../../../pipes/QueueAppointmentStatusEnumValue.pipe';
 import { FormsModule } from '@angular/forms';
 import { ClientType } from '../../../../Enums/ClientType.enum';
+import { UpdateQueueStatusSRService } from '../../../../services/signalR Services/updateQueueStatusSR.service';
 
 @Component({
   selector: 'app-patient-queue-table',
@@ -25,6 +26,7 @@ import { ClientType } from '../../../../Enums/ClientType.enum';
 export class PatientQueueTableComponent implements OnInit {
   providerServices = inject(ProviderService);
   messageServices = inject(MessageService);
+  updateQueueSignalR = inject(UpdateQueueStatusSRService);
   QueueAppointmentStatus = QueueAppointmentStatus;
   allQueueEntries: Array<IQueueEntries> = [];
   filteredQueueEntries: Array<IQueueEntries> = [];
@@ -71,6 +73,14 @@ export class PatientQueueTableComponent implements OnInit {
 
   ngOnInit() {
     this.loadQueues();
+    this.updateQueueSignalR.updatedProviderQueue.subscribe((updatedQueue) => {
+      
+      console.log("asdasdasd");
+      console.log(updatedQueue);
+    this.allQueueEntries = updatedQueue;
+    this.currentPage = 1;
+    this.updateDisplayedEntries();
+  });
   }
   ngOnChanges(changes: SimpleChanges) {
     if (changes['searchText'] || changes['patientStatus'] || changes['patientType']) {
