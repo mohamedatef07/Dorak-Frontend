@@ -1,8 +1,10 @@
+import { AuthService } from './../auth.service';
 import { Injectable } from '@angular/core';
 import * as signalR from '@microsoft/signalr';
 import { Subject } from 'rxjs';
 import { IClientLiveQueue } from '../../features/client/models/IClientLiveQueue';
 import { environment } from '../../../environments/environment';
+import { IQueueEntries } from '../../features/provider/models/IQueueEntries';
 
 @Injectable({
   providedIn: 'root',
@@ -11,19 +13,24 @@ export class UpdateQueueStatusSRService {
   private hubConnection: signalR.HubConnection | null = null;
   private LiveQueueListSubject = new Subject<Array<IClientLiveQueue>>();
   public updatedLiveQueuesList = this.LiveQueueListSubject.asObservable();
+  private ProviderQueueSubject = new Subject<Array<IQueueEntries>>();
+  public updatedProviderQueue = this.ProviderQueueSubject.asObservable();
   public queueStatusUpdate = new Subject<{
     liveQueueId: number;
     newStatus: string;
   }>();
 
-  constructor() {
+  constructor(private authService: AuthService) {
     this.startConnection();
     this.registerOnServerEvents();
   }
 
   private startConnection() {
+    const token = this.authService.getAuthToken();
     this.hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl(`${environment.apiUrl}/queueHub`)
+      .withUrl(`${environment.apiUrl}/queueHub`, {
+        accessTokenFactory: () => token
+      })
       .withAutomaticReconnect()
       .build();
 
@@ -39,7 +46,7 @@ export class UpdateQueueStatusSRService {
 
     this.hubConnection.onreconnected(() => {
       console.log('SignalR reconnected');
-      this.registerOnServerEvents();
+      //this.registerOnServerEvents();
     });
     this.hubConnection.onclose(() =>
       console.log('SignalR connection closed, attempting to reconnect...')
@@ -58,6 +65,13 @@ export class UpdateQueueStatusSRService {
         console.log('Live Queue Updated:', lres);
         this.LiveQueueListSubject.next(lres);
       });
+      this.hubConnection.on(
+        'ProviderQueueUpdated',
+        (queueEntries: Array<IQueueEntries>) => {
+          console.log('Provider queue updated:', queueEntries);
+          this.ProviderQueueSubject.next(queueEntries);
+        }
+      );
     } else {
       console.warn(
         'SignalR connection not established, cannot register events.'
@@ -76,7 +90,9 @@ export class UpdateQueueStatusSRService {
       // Retry connection or handle it
       this.reconnectIfNeeded();
       setTimeout(() => {
-        if (this.hubConnection?.state === signalR.HubConnectionState.Connected) {
+        if (
+          this.hubConnection?.state === signalR.HubConnectionState.Connected
+        ) {
           this.joinShiftGroup(shiftId); // Retry joining after reconnection
         }
       }, 1000); // Retry after 1 second
@@ -128,5 +144,6 @@ export class UpdateQueueStatusSRService {
 
     this.LiveQueueListSubject.complete();
     this.queueStatusUpdate.complete();
+    this.ProviderQueueSubject.complete();
   }
 }
