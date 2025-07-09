@@ -156,3 +156,281 @@
     padding: 16px 4px;
   }
 }
+
+/* Card/Panel Enhancements */
+.center-register-form-card {
+  background: var(--bg-color-Light);
+  padding: 40px 32px 32px 32px;
+  border-radius: 24px;
+  box-shadow: 0 8px 32px rgba(42, 111, 151, 0.10);
+  max-width: 540px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+/* Stepper Enhancements */
+.custom-stepper .p-steps .p-steps-item .p-menuitem-link {
+  background: var(--bg-color-Light);
+  border-radius: 12px;
+  transition: background 0.3s;
+}
+.custom-stepper .p-steps .p-steps-item.p-highlight .p-menuitem-link {
+  background: var(--main-bg-color-Light);
+  color: var(--button-text-color-Light);
+  box-shadow: 0 2px 8px rgba(42, 111, 151, 0.10);
+}
+.custom-stepper .p-steps .p-steps-item .p-steps-number {
+  background: var(--main-bg-color-Light);
+  color: var(--button-text-color-Light);
+  font-weight: bold;
+  font-size: 1.1rem;
+  border-radius: 50%;
+  width: 2.2rem;
+  height: 2.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.custom-stepper .p-steps .p-steps-item .p-steps-title {
+  color: var(--text-color-Light);
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+/* Section Titles & Descriptions */
+.step-title {
+  color: var(--main-bg-color-Light);
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+.step-desc {
+  color: #666;
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Field Grouping & Spacing */
+.step-panel form .field {
+  margin-bottom: 1.5rem;
+}
+
+/* Navigation Buttons */
+.step-navigation {
+  width: 100%;
+  background: var(--bg-color-Light);
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(42, 111, 151, 0.08);
+  padding: 1rem 0.5rem;
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+}
+
+.p-button-primary, .p-button-success {
+  background: var(--main-bg-color-Light) !important;
+  color: var(--button-text-color-Light) !important;
+  border: none !important;
+  border-radius: 8px !important;
+  font-size: 1.1rem !important;
+  font-weight: 600 !important;
+  padding: 0.75rem 2rem !important;
+  box-shadow: 0 2px 8px rgba(42, 111, 151, 0.10) !important;
+  transition: background 0.2s;
+}
+.p-button-primary:disabled, .p-button-success:disabled {
+  background: #b5c9d6 !important;
+  color: #fff !important;
+}
+.p-button-secondary {
+  background: #e0e0e0 !important;
+  color: var(--main-bg-color-Light) !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  padding: 0.75rem 2rem !important;
+}
+
+/* Spinner inside button */
+.pi-spinner {
+  font-size: 1.2rem;
+  margin-left: 0.5rem;
+}
+
+/* Responsive Tweaks */
+@media (max-width: 576px) {
+  .center-register-form-card {
+    padding: 18px 6px 18px 6px;
+    max-width: 100%;
+    border-radius: 12px;
+  }
+  .step-title {
+    font-size: 1.1rem;
+  }
+  .step-navigation {
+    padding: 0.5rem 0.2rem;
+    border-radius: 8px;
+  }
+  .p-button-primary, .p-button-success, .p-button-secondary {
+    width: 100% !important;
+    padding: 0.75rem 0 !important;
+    font-size: 1rem !important;
+  }
+  .ms-auto.d-flex.gap-2 {
+    flex-direction: column;
+    gap: 0.5rem !important;
+  }
+}
+
+/* Field focus and error states */
+.form-control:focus {
+  border-color: var(--main-bg-color-Light);
+  box-shadow: 0 0 0 0.2rem rgba(42, 111, 151, 0.10);
+}
+.text-danger small {
+  color: var(--error-text);
+}
+
+/* Two-column layout container */
+.center-register-2col-container {
+  width: 100vw;
+  min-height: 100vh;
+  background: var(--bg-color-Light);
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: center;
+}
+
+/* Illustration box (left, 1/3) */
+.register-illustration-box {
+  background: var(--text-color-Light);
+  min-width: 0;
+  flex: 1 1 0%;
+  padding: 0 2vw;
+  color: var(--text-dark);
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+.register-illustration-img {
+  max-width: 80%;
+  height: auto;
+  margin-bottom: 2rem;
+}
+.illustration-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 0.5rem;
+}
+.illustration-desc {
+  font-size: 1.1rem;
+  color: #e0e0e0;
+  margin-bottom: 0;
+}
+
+/* Form box (right, 2/3) */
+.register-form-box {
+  background-color: #ecf0f1;
+  flex: 2 1 0%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  padding: 0 2vw;
+}
+.center-register-form-card {
+  width: 65%;
+  min-width: 320px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Responsive: stack columns on mobile */
+@media (max-width: 991.98px) {
+  .center-register-2col-container {
+    flex-direction: column;
+    min-height: unset;
+  }
+  .register-illustration-box {
+    display: none !important;
+  }
+  .register-form-box {
+    flex: unset;
+    width: 100vw;
+    padding: 0 0.5rem;
+    min-height: 100vh;
+    justify-content: flex-start;
+  }
+  .center-register-form-card {
+    width: 100% !important;
+    min-width: 0;
+    max-width: 100vw;
+    border-radius: 12px;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+}
+
+/* Adjust form width for 60-70% of its box */
+@media (min-width: 992px) {
+  .center-register-form-card {
+    width: 65% !important;
+    min-width: 320px;
+    max-width: 600px;
+  }
+  .register-form-box {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  .register-form-box.step-3-active {
+    padding: 700px 0 100px 0;
+  }
+}
+
+/* Make illustration box pinned on desktop */
+@media (min-width: 992px) {
+  .center-register-2col-container {
+    height: 100vh;
+    overflow: hidden;
+  }
+  .register-illustration-box {
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    min-height: 100vh;
+    max-height: 100vh;
+    overflow: hidden;
+    z-index: 2;
+  }
+  .register-form-box {
+    height: 100vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    /* margin-top: 3.5rem; */
+    /* margin-bottom: 2.5rem; */
+  }
+}
+
+/* On mobile, revert to normal */
+@media (max-width: 991.98px) {
+  .center-register-2col-container {
+    height: auto;
+    overflow: visible;
+  }
+  .register-form-box {
+    height: auto;
+    overflow: visible;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+}
