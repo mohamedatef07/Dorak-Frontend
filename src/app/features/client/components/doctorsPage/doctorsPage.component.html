@@ -1,15 +1,23 @@
 <app-nav-bar></app-nav-bar>
 <div class="container doctors-page-container">
-  <div class="d-flex gap-3 my-4">
+  <div class="d-flex justify-content-between my-4">
     <!-- Filters Sidebar -->
-    <div class="col-3">
-      <div class="filter-panel">
-        <div class="title text-center">
-          <p class="mb-3 fs-5">Filters</p>
+    <div class="filter-panel-container">
+      <div class="filter-panel main-padding main-radius">
+        <div class="title text-center w-100">
+          <span
+          class="d-flex align-items-center justify-content-center gap-2"
+          >
+            <i class="fa fa-filter fa-2x" aria-hidden="true"></i>
+            <span
+              class="mb-0"
+              >Filters</span
+            >
+          </span>
         </div>
         <!-- Title Filter -->
         <div class="mb-3">
-          <label class="fw-bold fs-5">Title</label>
+          <label class="fw-bold fs-5 filter-label">Title</label>
           <div *ngFor="let title of titles">
             <div class="form-check">
               <input
@@ -25,7 +33,7 @@
         </div>
         <!-- Gender Filter -->
         <div class="mb-3">
-          <label class="fw-bold fs-5">Gender</label>
+          <label class="fw-bold fs-5 filter-label">Gender</label>
           <div *ngFor="let gender of genders">
             <div class="form-check">
               <input
@@ -41,7 +49,7 @@
         </div>
         <!-- City Filter -->
         <div class="mb-3">
-          <label class="fw-bold fs-5">City</label>
+          <label class="fw-bold fs-5 filter-label">City</label>
           <div *ngFor="let city of cities">
             <div class="form-check">
               <input
@@ -57,7 +65,7 @@
         </div>
         <!-- Rate Filter -->
         <div class="mb-3">
-          <label class="fw-bold">Rate</label>
+          <label class="fw-bold filter-label">Rate</label>
           <div class="mt-1">
             <label class="form-check-label">Min Rate</label>
             <input
@@ -85,7 +93,7 @@
         </div>
         <!-- Price Filter -->
         <div class="mb-3">
-          <label class="fw-bold">Price</label>
+          <label class="fw-bold filter-label">Price</label>
           <div class="mt-1">
             <label class="form-check-label">Min Price</label>
             <input
@@ -113,7 +121,7 @@
         </div>
         <!-- Date Filter -->
         <div class="mb-3">
-          <label class="fw-bold">Available Date</label>
+          <label class="fw-bold filter-label">Available Date</label>
           <p-datepicker
             [iconDisplay]="'input'"
             [showIcon]="true"
@@ -137,7 +145,7 @@
     </div>
     <!-- Doctor listings -->
     <div
-      class="d-flex flex-column justify-content-between col-9 bg-white main-padding main-radius"
+      class="doctors-list-container d-flex flex-column justify-content-between bg-white main-padding main-radius"
     >
       <div class="doctors-list">
         <h1 class="main-text-Color">Doctors</h1>
@@ -220,7 +228,7 @@
             </div>
           </div>
           } @empty{
-          <div class="text-muted text-center">No doctors found.</div>
+          <div class="text-muted text-center fs-5">No doctors found.</div>
           }
         </div>
       </div>

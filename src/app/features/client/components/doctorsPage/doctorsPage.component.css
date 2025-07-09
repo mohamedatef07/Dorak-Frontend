@@ -19,7 +19,7 @@
   font-weight: 500;
   border-radius: var(--border-radius) 0 0 var(--border-radius);
   padding: 0.75rem 1.25rem;
-  margin: 0; /* تأكدي مفيش margin داخلي */
+  margin: 0;
 }
 
 .city-dropdown {
@@ -29,63 +29,116 @@
 
 .search-input {
   border: none;
-  background-color: var(--bg-color-Light);
+  background-color: #eaf6fd;
   padding: 0.75rem 1.25rem;
 }
 
-.search-button {
-  background-color: var(--button-bg-color-Light);
-  color: white;
-  border: none;
-  border-radius: 0 var(--border-radius) var(--border-radius) 0;
-  padding: 0.75rem 1.5rem;
-  transition: var(--transition);
+/* Sidebar (filter-panel) custom styles to match screenshot */
+.filter-panel-container {
+  width: 23%;
 }
-
-.search-button:hover {
-  background-color: var(--text-color-Light);
-  color: white;
-}
-
-/* Filter panel */
-
 .filter-panel {
-  background-color: var(--button-bg-color-Light);
-  color: white;
-  border-radius: 12px;
-  padding: 1.5rem;
+  background: #f6fbfd;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.07);
+  color: #2d6fa1;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
-.filter-panel label,
-.filter-panel h5,
+.filter-panel .title span span {
+  color: #2d6fa1;
+  font-weight: 700;
+  font-size: 1.7rem !important;
+  margin-bottom: 0;
+  text-align: center;
+}
+
+.filter-label {
+  font-size: 1.2rem !important;
+  font-weight: 700 !important;
+  color: #2d6fa1 !important;
+}
+
 .filter-panel .form-check-label {
-  color: white !important;
+  color: #2d6fa1 !important;
+  font-weight: 600;
+  text-align: left;
 }
 
-.filter-panel .form-check-input:checked::before {
-  color: #bde7ff;
-  font-weight: bold;
+.filter-panel .form-check {
   display: flex;
   align-items: center;
-  justify-content: center;
-  height: 100%;
+  gap: 0.5rem;
+  margin-bottom: 0.3rem;
+}
+
+.filter-panel .form-check-input {
+  margin-left: 0;
+  margin-right: 0.5rem;
+}
+
+.filter-panel .form-check-input:checked {
+  background-color: #2d6fa1;
+  border-color: #2d6fa1;
+}
+
+.filter-panel .form-check-input:focus {
+  box-shadow: 0 0 0 0.2rem rgba(45, 111, 161, 0.15);
 }
 
 .filter-panel .form-check-input:checked + .form-check-label {
-  font-weight: bold;
+  font-weight: 700;
 }
 
-.filter-panel button {
-  background-color: rgb(85, 135, 205);
-  width: 90%;
+.filter-panel input.form-control {
+  background: #eaf6fd;
+  border: 1px solid #bde7ff;
+  color: #2d3a4a;
+  font-weight: 500;
+  text-align: left;
+}
+
+.filter-panel .mb-3 {
+  width: 100%;
+}
+
+.filter-panel .form-control {
+  margin-bottom: 0.5rem;
+}
+
+.filter-panel button.reset-button {
+  background: #2d6fa1 !important;
+  color: #fff !important;
+  border-radius: 18px;
+  font-weight: 600;
+  border: none;
+  box-shadow: 0 2px 8px rgba(45, 111, 161, 0.07);
+  transition: background 0.2s, color 0.2s;
+  text-align: left;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  width: fit-content;
+}
+
+/* Style the datepicker input like other inputs */
+.filter-panel ::ng-deep .p-datepicker input.p-inputtext {
+  background: #eaf6fd !important;
+  border: 1px solid #bde7ff !important;
+  color: #2d3a4a !important;
+  font-weight: 500 !important;
+  border-radius: 6px !important;
 }
 
 /* Doctor cards */
+.doctors-list-container {
+  width: 75%;
+}
 .content-title {
   color: var(--text-color-Light);
   font-weight: 600;
 }
-
 .doctor-card {
   background-color: white;
   border-radius: var(--border-radius);
@@ -387,10 +440,6 @@
 }
 .search-icon-container {
   background-color: var(--bg-color-Light);
-}
-.reset-button {
-  color: var(--button-bg-color-Light) !important;
-  width: fit-content !important;
 }
 
 ::ng-deep .p-multiselect {
