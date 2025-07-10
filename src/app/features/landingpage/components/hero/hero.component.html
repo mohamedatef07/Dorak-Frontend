@@ -1,216 +1,224 @@
-<div class="min-vh-100">
-  <!-- Hero Section -->
-  <section class="hero-section d-flex align-items-center py-5">
-    <div class="container">
-      <div class="row align-items-center g-5">
-        <!-- Text -->
-        <div class="col-lg-6">
-          <h1 class="display-3 fw-bold text-dark mb-4 lh-1">
-            Say Goodbye to <span class="text-primary-custom">Long Waits!</span>
-          </h1>
-          <p class="fs-5 text-muted mb-4 lh-base">
-            Transform your waiting experience with our intelligent queuing management system. 
-            Reduce crowding, improve customer satisfaction, and optimize your operations.
-          </p>
-          <div class="d-flex flex-column flex-sm-row gap-3">
-            <button class="btn btn-primary-custom d-flex align-items-center justify-content-center gap-2">
-              Get Started
-              <fa-icon [icon]="faArrowRight" size="sm"></fa-icon>
-            </button>
-            <button class="btn btn-outline-primary-custom">
-              Book a Demo
-            </button>
-          </div>
-        </div>
-
-        <!-- Ticket Demo -->
-        <div class="col-lg-6">
-          <div class="d-flex justify-content-center">
-            <div class="ticket-demo p-4 mx-auto">
-              <div class="text-center mb-4">
-                <div class="bg-primary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3" style="width: 80px; height: 80px;">
-                  <span class="fs-2 fw-bold text-primary-custom">A47</span>
+ <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Say Goodbye to <span class="highlight">Long Waits!</span></h1>
+                    <p>Transform your waiting experience with our intelligent queuing management system. Reduce crowding, improve customer satisfaction, and optimize your operations.</p>
+                    <div class="cta-buttons">
+                        <a href="#" class="btn btn-primary">Get Started →</a>
+                        <a href="#" class="btn btn-secondary">Book a Demo</a>
+                    </div>
                 </div>
-                <h3 class="fs-5 fw-semibold text-dark">Your Ticket Number</h3>
-                <p class="text-muted mb-0">Estimated wait: 8 minutes</p>
-              </div>
-              <div class="vstack gap-2">
-                <div class="d-flex justify-content-between align-items-center small">
-                  <span class="text-muted">Now Serving:</span>
-                  <span class="fw-semibold text-dark">A45</span>
+                <div class="ticket-widget">
+                    <div class="ticket-number">A47</div>
+                    <div class="ticket-info">
+                        <h3>Your Ticket Number</h3>
+                        <div class="ticket-details">
+                            <div class="detail-row">
+                                <span>Estimated wait:</span>
+                                <span>8 minutes</span>
+                            </div>
+                            <div class="detail-row">
+                                <span>Now Serving:</span>
+                                <span>A45</span>
+                            </div>
+                            <div class="detail-row">
+                                <span>People ahead:</span>
+                                <span>2</span>
+                            </div>
+                        </div>
+                        <div class="status-badge">
+                            ✓ SMS notifications enabled
+                        </div>
+                    </div>
                 </div>
-                <div class="d-flex justify-content-between align-items-center small">
-                  <span class="text-muted">People ahead:</span>
-                  <span class="fw-semibold text-dark">2</span>
-                </div>
-                <div class="bg-success bg-opacity-10 text-success px-3 py-2 rounded small text-center">
-                  ✓ SMS notifications enabled
-                </div>
-              </div>
             </div>
-          </div>
         </div>
+    </section>
 
-      </div>
-    </div>
-  </section>
-
-  <!-- Why Choose Us -->
-  <section class="py-5 bg-white">
-    <div class="container">
-      <div class="text-center mb-5">
-        <h2 class="display-5 fw-bold text-dark mb-3">Why Choose Our System?</h2>
-        <p class="fs-5 text-muted mx-auto" style="max-width: 600px;">
-          Experience the future of queue management with features designed for efficiency and customer satisfaction.
-        </p>
-      </div>
-      <div class="row g-4">
-        <div class="col-md-6 col-lg-4" *ngFor="let feature of features">
-          <div class="card feature-card bg-light-custom h-100 p-4 shadow-sm">
-            <div class="feature-icon-bg">
-              <fa-icon [icon]="feature.icon" size="lg" class="text-primary-custom"></fa-icon>
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>Why Choose Our System?</h2>
+                <p>Experience the future of queue management with features designed for efficiency and customer satisfaction.</p>
             </div>
-            <h3 class="fs-5 fw-semibold text-dark mb-3">{{ feature.title }}</h3>
-            <p class="text-muted lh-base mb-0">{{ feature.description }}</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- How It Works -->
-  <section class="py-5 bg-light-custom">
-    <div class="container">
-      <div class="text-center mb-5">
-        <h2 class="display-5 fw-bold text-dark mb-3">How It Works</h2>
-        <p class="fs-5 text-muted mx-auto" style="max-width: 600px;">
-          Simple, efficient, and user-friendly. Get started in three easy steps.
-        </p>
-      </div>
-      <div class="row g-5">
-        <div class="col-md-4 text-center">
-          <div class="step-number">1</div>
-          <div class="card step-card bg-white p-4 shadow-sm mb-4">
-            <fa-icon [icon]="faMobileAlt" size="3x" class="text-primary-custom mx-auto mb-3"></fa-icon>
-            <h3 class="fs-5 fw-semibold text-dark mb-2">Take a Digital Ticket</h3>
-            <p class="text-muted mb-0">Customer gets a ticket via kiosk, mobile app, or web portal</p>
-          </div>
-        </div>
-        <div class="col-md-4 text-center">
-          <div class="step-number">2</div>
-          <div class="card step-card bg-white p-4 shadow-sm mb-4">
-            <fa-icon [icon]="faClock" size="3x" class="text-primary-custom mx-auto mb-3"></fa-icon>
-            <h3 class="fs-5 fw-semibold text-dark mb-2">Smart Notifications</h3>
-            <p class="text-muted mb-0">System sends alerts when their turn is approaching</p>
-          </div>
-        </div>
-        <div class="col-md-4 text-center">
-          <div class="step-number">3</div>
-          <div class="card step-card bg-white p-4 shadow-sm mb-4">
-            <fa-icon [icon]="faUsers" size="3x" class="text-primary-custom mx-auto mb-3"></fa-icon>
-            <h3 class="fs-5 fw-semibold text-dark mb-2">Skip the Crowd</h3>
-            <p class="text-muted mb-0">Customer arrives just in time, no more waiting in lines</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!-- Industries We Serve -->
-  <section class="py-5 bg-white">
-    <div class="container">
-      <div class="text-center mb-5">
-        <h2 class="display-5 fw-bold text-dark mb-3">Industries We Serve</h2>
-        <p class="fs-5 text-muted mx-auto" style="max-width: 600px;">
-          Our flexible system adapts to various industries and business needs.
-        </p>
-      </div>
-      <div class="row g-4">
-        <div class="col-6 col-md-4 col-lg-2" *ngFor="let industry of industries">
-          <div class="card industry-card bg-light-custom text-center p-4 shadow-sm">
-            <fa-icon [icon]="industry.icon" size="3x" class="industry-icon mx-auto mb-3" [ngClass]="industry.color"></fa-icon>
-            <h3 class="fs-6 fw-semibold text-dark mb-0">{{ industry.name }}</h3>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FAQ Section -->
-  <section class="py-5 bg-light-custom">
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-lg-8">
-          <div class="text-center mb-5">
-            <h2 class="display-5 fw-bold text-dark mb-3">Frequently Asked Questions</h2>
-            <p class="fs-5 text-muted">
-              Get answers to common questions about our queuing management system.
-            </p>
-          </div>
-          <div class="vstack gap-3">
-            <div class="card shadow-sm" *ngFor="let faq of faqs; let i = index">
-              <button
-                (click)="toggleFAQ(i)"
-                class="faq-button d-flex justify-content-between align-items-center"
-              >
-                <h3 class="fs-6 fw-semibold text-dark mb-0">{{ faq.question }}</h3>
-                <fa-icon [icon]="openFAQ === i ? faChevronUp : faChevronDown" class="text-muted" size="sm"></fa-icon>
-              </button>
-              <div *ngIf="openFAQ === i" class="collapse-content px-3 pb-3">
-                <p class="text-muted lh-base mb-0">{{ faq.answer }}</p>
-              </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">⏰</div>
+                    <h3>Smart Queue Alerts</h3>
+                    <p>Get notified when your turn is approaching with intelligent time predictions.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Time-saving Experience</h3>
+                    <p>Eliminate physical waiting lines and optimize your valuable time.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🏢</div>
+                    <h3>Multi-branch Support</h3>
+                    <p>Manage queues across multiple locations from a single dashboard.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">✅</div>
+                    <h3>Instant Setup</h3>
+                    <p>Get your queuing system up and running in minutes, not hours.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>Real-time Screens</h3>
+                    <p>Digital displays show current queue status and estimated wait times.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌐</div>
+                    <h3>Multi-language Interface</h3>
+                    <p>Support for Arabic, English, and other languages for diverse customers.</p>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Final CTA Section -->
-  <section class="cta-section py-5">
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-lg-8 text-center">
-          <h2 class="display-4 fw-bold text-white mb-4">
-            Ready to Organize Your Waiting Area?
-          </h2>
-          <p class="fs-5 text-white-50 mb-4 mx-auto" style="max-width: 600px;">
-            Join thousands of businesses that have transformed their customer experience with our queuing management system.
-          </p>
-          <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center">
-            <button class="btn btn-white-custom d-flex align-items-center justify-content-center gap-2">
-              Request a Free Demo
-              <fa-icon [icon]="faArrowRight" size="sm"></fa-icon>
-            </button>
-            <button class="btn btn-outline-white-custom">
-              Contact Sales
-            </button>
-          </div>
+    <!-- How It Works Section -->
+    <section class="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <h2>How It Works</h2>
+                <p>Simple, efficient, and user-friendly. Get started in three easy steps.</p>
+            </div>
+            <div class="steps-container">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-icon">📱</div>
+                    <h3>Take a Digital Ticket</h3>
+                    <p>Customer gets a ticket via kiosk, mobile app, or web portal</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-icon">🔔</div>
+                    <h3>Smart Notifications</h3>
+                    <p>System sends alerts when their turn is approaching</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-icon">👥</div>
+                    <h3>Skip the Crowd</h3>
+                    <p>Customer arrives just in time, no more waiting in lines</p>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Footer -->
-  <footer class="bg-dark text-white py-5">
-    <div class="container">
-      <div class="text-center">
-        <div class="d-flex align-items-center justify-content-center gap-2 mb-3">
-          <fa-icon [icon]="faUsers" size="lg" class="text-primary"></fa-icon>
-          <span class="fs-3 fw-bold">QueueFlow</span>
+    <!-- Industries Section -->
+    <section class="industries">
+        <div class="container">
+            <div class="section-header">
+                <h2>Industries We Serve</h2>
+                <p>Our flexible system adapts to various industries and business needs.</p>
+            </div>
+            <div class="industries-grid">
+                <div class="industry-card">
+                    <div class="industry-icon" style="color: #e53e3e;">🏥</div>
+                    <h3>Hospitals</h3>
+                </div>
+                <div class="industry-card">
+                    <div class="industry-icon" style="color: #38a169;">🏛️</div>
+                    <h3>Banks</h3>
+                </div>
+                <div class="industry-card">
+                    <div class="industry-icon" style="color: #3182ce;">🏢</div>
+                    <h3>Government</h3>
+                </div>
+                <div class="industry-card">
+                    <div class="industry-icon" style="color: #805ad5;">📞</div>
+                    <h3>Telecom</h3>
+                </div>
+                <div class="industry-card">
+                    <div class="industry-icon" style="color: #00b5d8;">🩺</div>
+                    <h3>Clinics</h3>
+                </div>
+                <div class="industry-card">
+                    <div class="industry-icon" style="color: #d69e2e;">🎓</div>
+                    <h3>Universities</h3>
+                </div>
+            </div>
         </div>
-        <p class="text-muted mb-4">
-          The smart way to manage queues and improve customer experience.
-        </p>
-        <div class="d-flex justify-content-center gap-4 small text-muted mb-4">
-          <a href="#" class="text-muted text-decoration-none">Privacy Policy</a>
-          <a href="#" class="text-muted text-decoration-none">Terms of Service</a>
-          <a href="#" class="text-muted text-decoration-none">Support</a>
-          <a href="#" class="text-muted text-decoration-none">Contact</a>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq">
+        <div class="container">
+            <div class="section-header">
+                <h2>Frequently Asked Questions</h2>
+                <p>Get answers to common questions about our queuing management system.</p>
+            </div>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Does it support Arabic and English?</span>
+                        <span class="faq-arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Yes, our system supports multiple languages including Arabic and English to cater to diverse customer needs.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Can I use it without internet?</span>
+                        <span class="faq-arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        The system requires internet connection for real-time updates and notifications, but basic functionality can work offline.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Is there a mobile app?</span>
+                        <span class="faq-arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Yes, we provide mobile apps for both iOS and Android platforms for customers to get tickets and receive notifications.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>How quickly can we set it up?</span>
+                        <span class="faq-arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Our system can be set up and running within minutes to hours, depending on your specific requirements and customizations.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>What hardware do we need?</span>
+                        <span class="faq-arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Basic setup requires a computer or tablet for management and optional digital displays for queue status. We provide all necessary hardware recommendations.
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="pt-4 border-top border-secondary text-muted small">
-          © 2024 QueueFlow. All rights reserved.
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>Ready to Organize Your Waiting Area?</h2>
+            <p>Join thousands of businesses that have transformed their customer experience with our queuing management system.</p>
+            <div class="cta-buttons-center">
+                <a href="#" class="btn btn-primary">Request a Free Demo →</a>
+                <a href="#" class="btn btn-secondary">Contact Sales</a>
+            </div>
         </div>
-      </div>
-    </div>
-  </footer>
-</div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-brand">
+                <div class="footer-icon">👥</div>
+                <h3>QueueFlow</h3>
+            </div>
+        </div>
+    </footer>
