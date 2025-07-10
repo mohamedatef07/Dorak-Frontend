@@ -74,6 +74,11 @@ export class OwnerSidebarComponent implements OnInit {
       icon: 'pi pi-chart-bar',
       routerLink: '/provider/reports',
     },
+    {
+      label: 'Assign Service To Provider Center',
+      icon: 'pi pi-link',
+      routerLink: '/owner/assign-service-to-provider-center',
+    },
   ];
 
   private providerItems: MenuItem[] = [
