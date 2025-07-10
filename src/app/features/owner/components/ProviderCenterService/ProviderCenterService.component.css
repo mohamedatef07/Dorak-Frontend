@@ -1,0 +1,152 @@
+.container {
+  max-width: 900px;
+}
+.table {
+  background: #fff;
+}
+
+.center-shifts .table {
+  border-radius: 2rem !important;
+  background: #fff;
+  width: 100%;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+
+.center-shifts .table thead tr,
+.center-shifts .table tbody tr {
+  text-align: center;
+}
+
+.center-shifts .table thead tr th {
+  padding: 1rem 0;
+  background-color: var(--main-bg-color-Light);
+  color: #fff;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.center-shifts .table tbody tr td {
+  padding: 1rem 0;
+  color: var(--text-color-Light);
+  background-color: #fff;
+  font-size: 1rem;
+}
+
+.page-title {
+  font-size: 1.6rem;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  padding: 15px;
+  color: #fff;
+  background-color: var(--main-bg-color-Light);
+  width: fit-content;
+  border-radius: var(--border-radius);
+  font-weight: 600;
+}
+
+.details-btn {
+  background-color: var(--main-bg-color-Light);
+  color: #fff !important;
+  border-radius: 0.5rem;
+  padding: 0.4rem 1.2rem;
+  font-size: 0.95rem;
+  border: none;
+  transition: background 0.2s;
+}
+.details-btn:hover {
+  background-color: var(--hover-bg-Light);
+  color: var(--hover-text-Light) !important;
+}
+
+/* Search and Filter Styling */
+.search-filter-container {
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: var(--border-radius);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  margin-bottom: 1.5rem;
+}
+
+.search-filter-container input,
+.search-filter-container select {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.search-filter-container input:focus,
+.search-filter-container select:focus {
+  outline: none;
+  border-color: var(--main-bg-color-Light);
+  box-shadow: 0 0 0 3px rgba(41, 128, 185, 0.1);
+}
+
+.search-filter-container input {
+  min-width: 300px;
+}
+
+.search-filter-container select {
+  min-width: 250px;
+}
+
+.ClearFilters {
+  font-size: 0.85rem;
+  padding: 0.75rem 1.5rem;
+  background-color: var(--main-bg-color-Light);
+  color: var(--button-text-color-Light);
+  border-radius: var(--border-radius);
+  border: 1px var(--main-bg-color-Light) solid;
+  transition: var(--transition);
+  font-weight: 500;
+}
+
+.ClearFilters:hover {
+  background-color: var(--hover-bg-Light);
+  color: var(--hover-text-Light);
+  border: 1px var(--hover-border-Light) solid;
+}
+
+.pagination-container {
+  display: flex;
+  align-items: center;
+}
+
+.showing-text {
+  color: var(--text-color-Light);
+  font-size: 0.95rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--border-radius);
+  margin-right: 0.625rem;
+}
+
+.pagination-buttons {
+  display: flex;
+  align-items: center;
+}
+
+.pagination-btn {
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 1px solid var(--button-bg-color-Light);
+  background-color: var(--button-bg-color-Light);
+  color: var(--button-text-color-Light);
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+  border-radius: 0.5rem;
+}
+.pagination-btn:hover {
+  background-color: var(--hover-bg-Light);
+  color: var(--hover-text-Light);
+  border: 1px var(--hover-border-Light) solid;
+}
+.pagination-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+} 

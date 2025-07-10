@@ -10,3 +10,59 @@ button[disabled] {
   opacity: 0.7;
   cursor: not-allowed;
 }
+
+.assign-service-container {
+  max-width: 600px;
+  margin: 40px auto;
+}
+
+.page-title {
+  font-size: 1.6rem;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  padding: 15px;
+  color: #fff;
+  background-color: var(--main-bg-color-Light);
+  width: fit-content;
+  border-radius: var(--border-radius);
+  font-weight: 600;
+}
+
+.assign-service-card {
+  background: #fff;
+  border-radius: 1.5rem;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  padding: 2.5rem 2rem 2rem 2rem;
+}
+
+.assign-clear-btn {
+  font-size: 0.85rem;
+  padding: 0.75rem 1.5rem;
+  background-color: var(--main-bg-color-Light);
+  color: var(--button-text-color-Light);
+  border-radius: var(--border-radius);
+  border: 1px var(--main-bg-color-Light) solid;
+  transition: var(--transition);
+  font-weight: 500;
+}
+.assign-clear-btn:hover {
+  background-color: var(--hover-bg-Light);
+  color: var(--hover-text-Light);
+  border: 1px var(--hover-border-Light) solid;
+}
+
+.assign-submit-btn {
+  font-size: 1rem;
+  padding: 0.75rem 2rem;
+  background-color: var(--button-bg-color-Light);
+  color: var(--button-text-color-Light);
+  border-radius: var(--border-radius);
+  border: 1px var(--button-bg-color-Light) solid;
+  transition: var(--transition);
+  font-weight: 600;
+}
+.assign-submit-btn:hover {
+  background-color: var(--hover-bg-Light);
+  color: var(--hover-text-Light);
+  border: 1px var(--hover-border-Light) solid;
+}
