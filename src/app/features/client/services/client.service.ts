@@ -135,7 +135,7 @@ export class ClientService {
     userId: string
   ): Observable<ApiResponse<IClientProfile>> {
     return this.httpClient.get<ApiResponse<IClientProfile>>(
-      `${environment.apiUrl}/api/client/profile-all-appointment/${userId}`
+      `${environment.apiUrl}/api/client/profile/${userId}`
     );
   }
 
