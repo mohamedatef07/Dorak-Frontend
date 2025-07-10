@@ -252,19 +252,27 @@
   border-radius: 8px;
   padding: 10px 14px;
   position: absolute;
-  z-index: 9999; /* Increase z-index for tooltip */
+  z-index: 2;
   left: 50%;
   top: 32px;
   transform: translateX(-50%);
   font-size: 1.01rem;
-  pointer-events: auto; /* Allow pointer events on tooltip */
+  pointer-events: auto;
   transition: opacity 0.2s;
   box-shadow: 0 2px 12px rgba(0,0,0,0.22);
   line-height: 1.5;
+  display: flex;
+  flex-direction: column;
 }
 
-.assignment-dot:hover .custom-tooltip,
-.assignment-dot:focus .custom-tooltip {
+.shift-details {
+  background-color: #f9f9f9;
+  border: 2px solid #e0e0e0;
+  border-radius: 5px;
+  padding: 8px;
+}
+
+.assignment-dot:hover .custom-tooltip {
   visibility: visible;
   opacity: 1;
   pointer-events: auto;

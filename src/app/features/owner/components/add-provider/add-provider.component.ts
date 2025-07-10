@@ -32,7 +32,37 @@ import { ProviderType } from '../../../../Enums/ProviderType.enum';
 })
 export class AddProviderComponent implements OnInit {
   model: IRegistrationViewModel = this.createEmptyModel();
-  specializations: string[] = ['Cardiology', 'Pediatrics', 'Orthopedics'];
+  specializations: string[] = ['Cardiologist',
+    'Dermatologist',
+    'Endocrinologist',
+    'Gastroenterologist',
+    'General Practitioner',
+    'Geriatrician',
+    'Hematologist',
+    'Infectious Disease Specialist',
+    'Internal Medicine',
+    'Nephrologist',
+    'Neurologist',
+    'Obstetrician/Gynecologist (OB/GYN)',
+    'Oncologist',
+    'Ophthalmologist',
+    'Orthopedic Surgeon',
+    'Otolaryngologist (ENT)',
+    'Pediatrician',
+    'Plastic Surgeon',
+    'Psychiatrist',
+    'Pulmonologist',
+    'Radiologist',
+    'Rheumatologist',
+    'Surgeon',
+    'Urologist',
+    'Allergist/Immunologist',
+    'Anesthesiologist',
+    'Pathologist',
+    'Sports Medicine Specialist',
+    'Family Medicine',
+    'Occupational Medicine',
+    'Emergency Medicine'];
   providerTypes: { value: ProviderType; label: string }[] = [
     { value: ProviderType.None, label: 'None' },
     { value: ProviderType.Temporary, label: 'Temporary' },

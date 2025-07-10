@@ -68,7 +68,6 @@ export const routes: Routes = [
         path: 'center-shifts',
         component: CenterShiftsComponent,
         title: 'Center Shifts',
-        data: { expectedRole: ['Admin'] },
       },
       {
         path: 'manage-operators',
@@ -92,7 +91,6 @@ export const routes: Routes = [
         path: 'provider-management',
         component: ProviderManagementComponent,
         title: 'Provider Management',
-        data: { expectedRole: ['Admin'] },
       },
       {
         path: 'add-provider',
