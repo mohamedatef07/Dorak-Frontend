@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ClientService } from '../../services/client.service';
-import { NgIf } from '@angular/common';
+
 
 @Component({
   selector: 'app-Change-Password',
-  imports: [ReactiveFormsModule,NgIf],
+  imports: [ReactiveFormsModule],
   templateUrl: './Change-Password.component.html',
   styleUrls: ['./Change-Password.component.css']
 })

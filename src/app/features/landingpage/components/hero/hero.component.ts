@@ -1,4 +1,4 @@
-import { NgClass, NgStyle } from '@angular/common';
+import { NgFor } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
   ArrowRight,
@@ -11,7 +11,7 @@ import {
 
 @Component({
   selector: 'app-Hero',
-  imports:[NgClass],
+  imports:[NgFor],
   templateUrl: './Hero.component.html',
   styleUrls: ['./Hero.component.css',
          '..//../../../styles/general.css'

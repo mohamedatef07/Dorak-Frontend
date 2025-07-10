@@ -1,4 +1,4 @@
-import { CommonModule, NgClass, NgFor } from '@angular/common';
+import { CommonModule} from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
   Calendar,
@@ -13,7 +13,7 @@ import {
 
 @Component({
   selector: 'app-Features',
-  imports:[NgClass,CommonModule],
+  imports:[CommonModule],
   templateUrl: './Features.component.html',
   styleUrls: ['./Features.component.css',
          '..//../../../styles/general.css'
