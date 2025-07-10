@@ -2,15 +2,34 @@
   <h2>Assign Service to Provider Center</h2>
   <form [formGroup]="assignForm" (ngSubmit)="onSubmit()">
     <div class="mb-3">
-      <label for="ProviderId" class="form-label">Provider ID</label>
-      <input type="text" id="ProviderId" class="form-control" formControlName="ProviderId" required />
+      <label for="ProviderId" class="form-label">Provider</label>
+      <p-dropdown
+        id="ProviderId"
+        formControlName="ProviderId"
+        [options]="providers"
+        optionLabel="FullName"
+        optionValue="Id"
+        placeholder="Select a provider"
+        [showClear]="true"
+        [filter]="true"
+        [virtualScroll]="true"
+        [style]="{width: '100%'}"
+      ></p-dropdown>
     </div>
     <div class="mb-3">
       <label for="ServiceId" class="form-label">Service</label>
-      <select id="ServiceId" class="form-select" formControlName="ServiceId" required>
-        <option value="" disabled selected>Select a service</option>
-        <option *ngFor="let service of services" [value]="service.ServiceId">{{ service.ServiceName }}</option>
-      </select>
+      <p-dropdown
+        id="ServiceId"
+        formControlName="ServiceId"
+        [options]="services"
+        optionLabel="ServiceName"
+        optionValue="ServiceId"
+        placeholder="Select a service"
+        [showClear]="true"
+        [filter]="true"
+        [virtualScroll]="true"
+        [style]="{width: '100%'}"
+      ></p-dropdown>
     </div>
     <div class="mb-3">
       <label for="CenterId" class="form-label">Center ID</label>
