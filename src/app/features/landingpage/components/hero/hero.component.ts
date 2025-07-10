@@ -1,58 +1,117 @@
 import { NgClass, NgStyle } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import {
-  ArrowRight,
-  Play,
-  Clock,
-  Users,
-  CheckCircle,
-  Zap
-} from 'lucide-angular';
+import { faClock, faZap, faBuilding, faCheckCircle,faCity, faBolt,faGlobe,faDesktop, faArrowRight, faChevronDown, faChevronUp, faHospital, faLandmark, faGraduationCap, faPhone, faStethoscope } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faMobileAlt } from '@fortawesome/free-solid-svg-icons';
+import { faUsers } from '@fortawesome/free-solid-svg-icons';
+
+
 
 @Component({
   selector: 'app-Hero',
-  imports:[NgClass],
   templateUrl: './Hero.component.html',
+   imports: [
+    FontAwesomeModule 
+  ],
   styleUrls: ['./Hero.component.css',
          '..//../../../styles/general.css'
 
   ]
 })
-export class HeroComponent {
+export class HeroComponent  {
 
- arrowRightIcon = ArrowRight;
-  playIcon = Play;
-  clockIcon = Clock;
-  usersIcon = Users;
-  checkCircleIcon = CheckCircle;
-  zapIcon = Zap;
+    // Icons
+  faArrowRight = faArrowRight;
+  faChevronDown = faChevronDown;
+  faChevronUp = faChevronUp;
+  faClock = faClock;
+  faUsers = faUsers;
+  faBuilding = faBuilding;
+  faBolt = faBolt;
+  faDesktop = faDesktop;
+  faGlobe = faGlobe;
+  faMobileAlt = faMobileAlt;
+  faCheckCircle = faCheckCircle;
+  faHospital = faHospital;
+  faLandmark = faLandmark;
+  faGraduationCap = faGraduationCap;
+  faPhone = faPhone;
+  faStethoscope = faStethoscope;
+  faCity = faCity;
 
-  content = {
-    badge: 'Trusted by 500+ Medical Centers',
-    title: 'Transform Your Medical Center with Smart Queue Management',
-    subtitle: 'Reduce wait times by 50%, boost patient satisfaction, and streamline your entire appointment process with our intelligent queue management system.',
-    cta1: 'Start Free Trial',
-    cta2: 'Watch Demo',
-    stats: [
-      { number: '50%', label: 'Less Wait Time', icon: Clock },
-      { number: '10,000+', label: 'Happy Patients', icon: Users },
-      { number: '99.9%', label: 'Uptime', icon: Zap }
-    ],
-    features: [
-      'Real-time notifications',
-      'Doctor scheduling',
-      'Patient management',
-      'Analytics dashboard',
-      'Mobile app included',
-      'HIPAA compliant'
-    ]
-  };
+  // FAQs toggle
+  openFAQ: number | null = null;
 
-  queueItems = [
-    { id: 1, name: 'Ahmed Ali', doctor: 'Dr. Sarah', time: '5 min', status: 'current' },
-    { id: 2, name: 'Fatima Hassan', doctor: 'Dr. Ahmed', time: '12 min', status: 'waiting' },
-    { id: 3, name: 'Omar Khaled', doctor: 'Dr. Sarah', time: '18 min', status: 'waiting' },
-    { id: 4, name: 'Layla Mohamed', doctor: 'Dr. Ahmed', time: '25 min', status: 'waiting' }
+  toggleFAQ(index: number): void {
+    this.openFAQ = this.openFAQ === index ? null : index;
+  }
+
+  // Features
+  features = [
+    {
+      icon: this.faClock,
+      title: 'Smart Queue Alerts',
+      description: 'Get notified when your turn is approaching with intelligent time predictions.'
+    },
+    {
+      icon: this.faBolt,
+      title: 'Time-saving Experience',
+      description: 'Eliminate physical waiting lines and optimize your valuable time.'
+    },
+    {
+      icon: this.faBuilding,
+      title: 'Multi-branch Support',
+      description: 'Manage queues across multiple locations from a single dashboard.'
+    },
+    {
+      icon: this.faCheckCircle,
+      title: 'Instant Setup',
+      description: 'Get your queuing system up and running in minutes, not hours.'
+    },
+    {
+      icon: this.faDesktop,
+      title: 'Real-time Screens',
+      description: 'Digital displays show current queue status and estimated wait times.'
+    },
+    {
+      icon: this.faGlobe,
+      title: 'Multi-language Interface',
+      description: 'Support for Arabic, English, and other languages for diverse customers.'
+    }
+  ];
+
+  // Industries
+  industries = [
+    { icon: this.faHospital, name: 'Hospitals', color: 'text-danger' },
+    { icon: this.faLandmark, name: 'Banks', color: 'text-success' },
+    { icon: this.faCity, name: 'Government', color: 'text-primary' },
+    { icon: this.faPhone, name: 'Telecom', color: 'text-purple' },
+    { icon: this.faStethoscope, name: 'Clinics', color: 'text-info' },
+    { icon: this.faGraduationCap, name: 'Universities', color: 'text-warning' }
+  ];
+
+  // FAQs
+  faqs = [
+    {
+      question: 'Does it support Arabic and English?',
+      answer: 'Yes, our system supports multiple languages including Arabic and English, with easy language switching for both staff and customers.'
+    },
+    {
+      question: 'Can I use it without internet?',
+      answer: 'The system can work offline for basic queue management, but internet connectivity is required for advanced features like SMS notifications and remote monitoring.'
+    },
+    {
+      question: 'Is there a mobile app?',
+      answer: 'Yes, we provide both iOS and Android mobile apps for customers to join queues remotely and receive notifications.'
+    },
+    {
+      question: 'How quickly can we set it up?',
+      answer: 'Our system can be set up within 30 minutes. We provide complete installation support and training for your staff.'
+    },
+    {
+      question: 'What hardware do we need?',
+      answer: 'You only need a computer or tablet for the admin panel and optional display screens. We can recommend compatible hardware based on your needs.'
+    }
   ];
 
 }
