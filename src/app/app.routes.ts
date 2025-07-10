@@ -57,6 +57,7 @@ import { HelpSupportComponent } from './components/Help-Support/Help-Support.com
 import { TermsConditionsComponent } from './components/Terms-Conditions/Terms-Conditions.component';
 import { CenterRegisterCodeComponent } from './components/CenterRegisterCode/CenterRegisterCode.component';
 import { CenterRegisterCodeGuard } from './guards/center-register-code.guard';
+import { ProviderCenterServiceComponent } from './features/owner/components/ProviderCenterService/ProviderCenterService.component';
 
 export const routes: Routes = [
   {
@@ -169,6 +170,12 @@ export const routes: Routes = [
         component: CreateAppointmentComponent,
         title: 'Create Appointment',
         data: { expectedRole: ['Admin'] },
+      },
+      {
+        path: 'provider-center-services',
+        component: ProviderCenterServiceComponent,
+        title: 'Provider Center Services',
+        data: { expectedRole: ['Admin', 'Operator'] },
       },
     ],
   },
