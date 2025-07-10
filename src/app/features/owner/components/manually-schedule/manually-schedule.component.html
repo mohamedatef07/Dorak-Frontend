@@ -23,8 +23,8 @@
 <div *ngIf="provider && !isLoading && !errorMessage" class="schedule-container modern-card">
 
   <div class="provider-info-modern">
-    <!-- <span class="doctor-name">Doctor Name: {{ provider.FirstName || 'Unknown' }} {{ provider.LastName || '' }}</span> -->
-    <!-- <span class="doctor-specialty">Specialization: {{ provider.Specialization || 'N/A' }}</span> -->
+    <span class="doctor-name">Doctor Name: {{ provider.FirstName || 'Unknown' }} {{ provider.LastName || '' }}</span>
+     <span class="doctor-specialty">Specialization: {{ provider.Specialization || 'N/A' }}</span>
   </div>
 
   <div class="navigation-buttons">
@@ -76,7 +76,6 @@
         <div formArrayName="Shifts">
           <div *ngFor="let shift of shifts.controls; let i = index" [formGroupName]="i" class="shift-card">
             <div class="shift-card-header">
-              <span class="shift-label">Shift {{ i + 1 }}</span>
               <button type="button" class="btn btn-danger btn-remove-shift" (click)="removeShift(i)"
                 *ngIf="shifts.length > 1"
                 aria-label="Remove Shift">
@@ -114,7 +113,7 @@
     </div>
 
     <div class="actions">
-      <button type="button" class="btn-primary" (click)="onSubmit()"
+      <button type="button" class="save-btn" (click)="onSubmit()"
         [disabled]="scheduleForm.invalid || isLoading">Submit</button>
     </div>
   </form>

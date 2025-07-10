@@ -154,7 +154,7 @@ export class RescheduleAssignmentComponent implements OnInit {
     const shifts = this.getShifts(assignmentIndex);
     const dateToAssign = this.dateOptions.length > 0 ? this.dateOptions[shifts.length % this.dateOptions.length] : null;
     shifts.push(this.createShiftGroup(dateToAssign));
-    this.cdr.detectChanges(); // Ensure the new shift is rendered
+    this.cdr.detectChanges();
   }
 
   removeShift(assignmentIndex: number, shiftIndex: number): void {
@@ -230,7 +230,6 @@ export class RescheduleAssignmentComponent implements OnInit {
       shifts.controls.forEach((shift, j) => {
         const dateControl = shift.get('Date');
         if (dateControl && this.dateOptions.length > 0) {
-          // Only set the date if it's not already set by user selection
           if (!dateControl.value) {
             dateControl.setValue(this.dateOptions[j % this.dateOptions.length]);
           }
@@ -257,7 +256,7 @@ export class RescheduleAssignmentComponent implements OnInit {
     const start = new Date(startDate);
     if (isNaN(start.getTime())) return dates;
     const endDate = new Date(start);
-    endDate.setDate(start.getDate() + 27); // 28-day period
+    endDate.setDate(start.getDate() + 27);
     let currentDate = new Date(start);
     while (currentDate <= endDate) {
       const dayOfWeek = currentDate.getDay();
@@ -320,7 +319,7 @@ export class RescheduleAssignmentComponent implements OnInit {
             OperatorId: this.operatorId,
           };
         });
-        console.log('Submitting shifts:', shifts); // Debug log
+        console.log('Submitting shifts:', shifts);
       }
 
       return {

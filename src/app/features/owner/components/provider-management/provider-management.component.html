@@ -76,10 +76,12 @@
         <td>
           <div style="display: flex; gap: 0.75rem; justify-content: center;">
             <button class="view-doc-profile me-1" (click)="viewProfile(row.ProviderId || '')">View Profile</button>
-            <button class="view-doc-profile me-1"
+            <button class="view-doc-profile me-1" [ngClass]="{'hide-button': userRole === 'Operator'}"
               (click)="navigateToScheduleOptions(row.ProviderId || '')">Schedule</button>
-            <button class="view-doc-profile me-1" (click)="reschedule(row.ProviderId || '')">Reschedule</button>
-            <button class="view-doc-profile" (click)="deleteProvider(row.ProviderId || '')">Delete</button>
+            <button class="view-doc-profile me-1" [ngClass]="{'hide-button': userRole === 'Operator'}"
+              (click)="reschedule(row.ProviderId || '')">Reschedule</button>
+            <button class="view-doc-profile" [ngClass]="{'hide-button': userRole === 'Operator'}"
+              (click)="deleteProvider(row.ProviderId || '')">Delete</button>
           </div>
         </td>
       </tr>

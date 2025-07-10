@@ -11,6 +11,10 @@
   margin: 0 10px;
 }
 
+:host ::ng-deep .p-panelmenu {
+  margin-right: 24px;
+}
+
 :host ::ng-deep .p-panelmenu-panel,
 :host ::ng-deep .p-panelmenu-panel:first-child:host ::ng-deep .p-panelmenu-panel:last-child {
   color: var(--text-color-Light);
@@ -39,4 +43,3 @@
   color: var(--text-color-Light);
   font-size: 18px;
 }
-

@@ -13,6 +13,7 @@
   width: 96%;
   display: flex;
   justify-content: space-between;
+
 }
 
 .page-container .view-doc-profile {
@@ -140,6 +141,7 @@ mat-header-cell {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   max-height: 350px;
   overflow: hidden;
+  margin-bottom: 1rem !important;
 }
 
 table {

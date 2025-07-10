@@ -26,14 +26,13 @@ import { AuthService } from '../../../../services/auth.service';
 })
 export class ProviderLiveQueueComponent implements OnInit {
   liveQueues: IProviderLiveQueueViewModel[] = [];
-
-  // providerId: string = 'bc5edf66-098d-4fdd-82ed-44cdb6b208fa';
-  centerId: number = 3;
+  centerId = 0;
+  // centerId: number = 3;
   shiftId: number = 0;
   pageNumber: number = 1;
   pageSize: number = 16;
   totalItems: number = 0;
-  providerName: string = 'Loading...';
+  providerName: string = '';
   stats = {
     total: 0,
     normal: 0,
@@ -57,39 +56,19 @@ export class ProviderLiveQueueComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // this.centerId = this.authService.getCenterId();
+    this.centerId = this.authService.getCenterId();
     this.route.paramMap.subscribe(params => {
       this.shiftId = +params.get('shiftId')!;
-      // this.loadProviderName();
       this.loadLiveQueues();
     });
     this.subscribeToQueueUpdates();
     this.checkSignalRConnection();
   }
 
-  // loadProviderName(): void {
-  //   this.apiService.getProviderById(this.providerId).subscribe({
-  //     next: (response: ApiResponse<IProviderViewModel>) => {
-  //       if (response.Status === 200 && response.Data) {
-  //         const provider = response.Data;
-  //         this.providerName = `Dr. ${provider.FirstName} ${provider.LastName} Patients`;
-  //       } else {
-  //         console.error('Failed to load provider name:', response.Message);
-  //         this.providerName = 'Unknown Provider';
-  //       }
-  //     },
-  //     error: (error) => {
-  //       console.error('Error fetching provider name:', error);
-  //       this.providerName = 'Unknown Provider';
-  //     },
-  //   });
-  // }
-
   loadLiveQueues(): void {
     this.liveQueues = [];
     this.apiService
       .getProviderLiveQueues(
-        // this.providerId,
         this.centerId,
         this.shiftId,
         this.pageNumber,
@@ -115,12 +94,16 @@ export class ProviderLiveQueueComponent implements OnInit {
               Status: this.mapStatus(item.Status),
               PhoneNumber: item.PhoneNumber,
               CurrentQueuePosition: item.CurrentQueuePosition,
+              ProviderName: item.ProviderName,
               AvailableStatuses: (item.AvailableStatuses || [])
                 .filter(
                   (status: number) => status !== QueueAppointmentStatus.None
                 )
                 .map((status: number) => this.mapStatus(status)),
             }));
+            this.providerName = this.liveQueues.length > 0
+            ? this.liveQueues[0].ProviderName
+            : '';
             this.totalItems = response.Data.Total;
             this.calculateStats();
           } else {

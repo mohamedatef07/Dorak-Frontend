@@ -319,8 +319,6 @@ body[data-theme="dark"] .modern-loading {
   padding: 0.8rem 0.75rem;
   background-color: var(--button-bg-color-Light);
   color: var(--button-text-color-Light);
-  border-radius: var(--border-radius);
-  border: 1px var(--hover-border-Light) solid;
   transition: var(--transition);
   margin: 0 2px;
   text-align: center;
@@ -334,8 +332,6 @@ body[data-theme="dark"] .modern-loading {
   padding: 0.8rem 0.75rem;
   background-color: var(--button-bg-color-Light);
   color: var(--button-text-color-Light);
-  border-radius: var(--border-radius);
-  border: 1px var(--hover-border-Light) solid;
   transition: var(--transition);
   margin: 0 2px;
   text-align: center;
@@ -343,6 +339,25 @@ body[data-theme="dark"] .modern-loading {
   font-weight: 600;
   width: 100px;
 }
+
+.options-btn.active {
+  background-color: #2a6f97b5;
+}
+
+.save-btn  {
+    font-size: 1rem;
+    padding: .8rem 0.75rem;
+    background-color: var(--button-bg-color-Light);
+    color: var(--button-text-color-Light);
+    transition: var(--transition);
+    margin: 0 2px;
+    text-align: center;
+    cursor: pointer;
+    font-weight: 600;
+    width: 100px;
+    border-radius: var(--border-radius) ;
+  }
+
 
 .btn-danger {
   background: var(--alert-color);
@@ -409,7 +424,6 @@ body[data-theme="dark"] .shift-card {
 }
 
 .shift-header-content {
-  display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
@@ -428,7 +442,6 @@ body[data-theme="dark"] .shift-label {
 }
 
 .shift-fields-header {
-  display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 12px;

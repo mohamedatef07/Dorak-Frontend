@@ -1,5 +1,3 @@
-
-
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -10,6 +8,7 @@ import { ApiService } from '../../../../services/api.service';
 import { ApiResponse } from '../../../../types/ApiResponse';
 import { IShift } from '../../../../types/IShift';
 import { environment } from '../../../../../environments/environment';
+import { AuthService } from '../../../../services/auth.service';
 
 
 @Component({
@@ -24,7 +23,7 @@ export class CenterProviderProfileComponent implements OnInit {
   errorMessage: string = '';
   isLoading: boolean = false;
   viewDate: Date = new Date();
-  centerId: number = 3;
+  centerId: number = 0;
   assignments: { startDate: Date; endDate: Date }[] = [];
   daysInMonth: { date: Date | null; hasAssignment: boolean; shifts: { startTime: string; endTime: string }[] }[] = [];
 
@@ -34,10 +33,12 @@ export class CenterProviderProfileComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private apiService: ApiService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
+    this.centerId = this.authService.getCenterId();
     const id = this.route.snapshot.paramMap.get('id');
     if (id && id.trim() !== '') {
       this.providerId = id;

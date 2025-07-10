@@ -2,6 +2,8 @@
   border-radius: 2rem !important;
 }
 
+
+
 .center-shifts .table thead tr,
 .center-shifts .table tbody tr {
   text-align: center;
@@ -10,23 +12,35 @@
 .center-shifts .table thead tr th {
   padding: 1rem 0;
   background-color: var(--main-bg-color-Light);
-  color: var(--side-bar-text-color-Light);
+  color: #fff;
+}
+
+.page-title {
+ font-size: 1.6rem;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  padding: 15px;
+  color: #fff;
+  background-color: var(--main-bg-color-Light);
+  width: fit-content;
+  border-radius: var(--border-radius);
+  font-weight: 600;
 }
 
 .center-shifts .table tbody tr td {
   padding: 1rem 0;
   color: var(--text-color-Light);
-  background-color: #f9f9fb;
+  background-color: #fff;
 }
 
 .start-btn {
   background-color: #28a645 !important;
-  color: #edf1f2 !important;
+  color: #fff !important;
 }
 
 .cancel-btn {
   background-color: #db3545 !important;
-  color: #edf1f2 !important;
+  color: #fff !important;
 }
 
 .isStarted {
@@ -35,5 +49,5 @@
 
 .details-btn {
   background-color: var(--main-bg-color-Light);
-  color: white;
+  color: #fff !important
 }

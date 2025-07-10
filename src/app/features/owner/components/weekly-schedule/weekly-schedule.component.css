@@ -342,13 +342,26 @@ body[data-theme="dark"] .modern-loading {
 }
 
 /* Buttons */
-.btn-primary {
-     font-size: 1rem;
+
+.save-btn  {
+    font-size: 1rem;
     padding: .8rem 0.75rem;
     background-color: var(--button-bg-color-Light);
     color: var(--button-text-color-Light);
-    border-radius: var(--border-radius);
-    border: 1px var(--hover-border-Light) solid;
+    transition: var(--transition);
+    margin: 0 2px;
+    text-align: center;
+    cursor: pointer;
+    font-weight: 600;
+    width: 100px;
+    border-radius: var(--border-radius) ;
+  }
+
+.btn-primary {
+    font-size: 1rem;
+    padding: .8rem 0.75rem;
+    background-color: var(--button-bg-color-Light);
+    color: var(--button-text-color-Light);
     transition: var(--transition);
     margin: 0 2px;
     text-align: center;
@@ -358,12 +371,10 @@ body[data-theme="dark"] .modern-loading {
 }
 
 .btn-secondary {
-   font-size: 1rem;
+    font-size: 1rem;
     padding: .8rem 0.75rem;
-    background-color: var(--button-bg-color-Light);
+    background-color: #2a6f97b5;
     color: var(--button-text-color-Light);
-    border-radius: var(--border-radius);
-    border: 1px var(--hover-border-Light) solid;
     transition: var(--transition);
     margin: 0 2px;
     text-align: center;

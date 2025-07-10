@@ -227,3 +227,6 @@ tr:last-child td {
   font-size: var(--font-p);
 }
 
+.hide-button {
+  display: none;
+}

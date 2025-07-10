@@ -27,8 +27,8 @@
   </div>
 
   <div class="navigation-buttons">
-    <button class="btn-secondary" (click)="toggleMode()" [ngClass]="{'active': !isWeeklyMode}">Manually</button>
-    <button class="btn-primary" (click)="toggleMode()" [ngClass]="{'active': isWeeklyMode}">Weekly</button>
+    <button class="btn-secondary options-btn" (click)="toggleMode()" [ngClass]="{'active': !isWeeklyMode}">Manually</button>
+    <button class="btn-primary options-btn" (click)="toggleMode()" [ngClass]="{'active': isWeeklyMode}">Weekly</button>
   </div>
 
   <form [formGroup]="scheduleForm" class="schedule-form">
@@ -72,7 +72,6 @@
           <div *ngFor="let assignment of assignmentsArray.controls; let i = index" [formGroupName]="i" class="shift-card">
             <div class="shift-card-header">
               <div class="shift-header-content">
-                <span class="shift-label" *ngIf="isWeeklyMode">Assignment {{ i + 1 }}</span>
                 <button type="button" class="btn btn-danger btn-remove-shift" (click)="removeAssignment(i)" *ngIf="isWeeklyMode && assignmentsArray.length > 1">
                   Remove
                 </button>
@@ -93,7 +92,6 @@
               <div formArrayName="Shifts" *ngFor="let shift of getShifts(i).controls; let j = index">
                 <div [formGroupName]="j" class="shift-fields">
                   <div class="shift-fields-header" *ngIf="!isWeeklyMode">
-                    <span class="shift-label-inner">Shift {{ j + 1 }}</span>
                     <button type="button" class="btn btn-danger btn-remove-shift" (click)="removeShift(i, j)" *ngIf="!isWeeklyMode && getShifts(i).length > 1">
                       Remove
                     </button>
@@ -132,7 +130,7 @@
     </div>
 
     <div class="actions">
-      <button type="button" class="btn-primary" (click)="onSubmit()" [disabled]="scheduleForm.invalid || isLoading">
+      <button type="button" class="save-btn" (click)="onSubmit()" [disabled]="scheduleForm.invalid || isLoading">
         Reschedule
       </button>
     </div>

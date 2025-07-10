@@ -55,7 +55,7 @@ export const routes: Routes = [
   {
     path: 'owner',
     component: OwnerLayoutComponent,
-    // canActivate: [AuthGuard, RoleGuard],
+    canActivate: [AuthGuard, RoleGuard],
     data: { expectedRole: ['Admin', 'Operator'] },
     children: [
       {
@@ -85,7 +85,6 @@ export const routes: Routes = [
         path: 'provider-management',
         component: ProviderManagementComponent,
         title: 'Provider Management',
-        data: { expectedRole: ['Admin'] },
       },
       {
         path: 'add-provider',

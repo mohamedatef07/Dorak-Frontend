@@ -23,8 +23,7 @@ export class CenterShiftsTableComponent {
   srService = inject(UpdateShiftsListSRService);
   route = inject(Router);
   centerShifts: Array<ICenterShifts> = [];
-  // centerId = this.authServices.getCenterId();
-  centerId = 3;
+  centerId = this.authServices.getCenterId();
   ShiftType = ShiftType;
 
   ngOnInit() {
@@ -57,10 +56,10 @@ export class CenterShiftsTableComponent {
   }
   startShift(shift: ICenterShifts) {
     const shiftDate = new Date(shift.ShiftDate + ' ' + shift.StartTime);
-    // if (
-    //   shiftDate <= new Date() &&
-    //   shiftDate.getDate() === new Date().getDate()
-    // )
+    if (
+      shiftDate <= new Date() &&
+      shiftDate.getDate() === new Date().getDate()
+    )
     {
       this.ownerServices.startShift(shift.ShiftId).subscribe({
         next: (res) => {
@@ -77,14 +76,14 @@ export class CenterShiftsTableComponent {
         },
       });
     }
-    // else {
-    //   this.messageServices.add({
-    //     severity: 'info',
-    //     summary: 'info',
-    //     detail: `This shift isn't ready to start just yet. Please wait for its scheduled time.`,
-    //     life: 4000,
-    //   });
-    // }
+    else {
+      this.messageServices.add({
+        severity: 'info',
+        summary: 'info',
+        detail: `This shift isn't ready to start just yet. Please wait for its scheduled time.`,
+        life: 4000,
+      });
+    }
   }
   cancelShift(shiftId: number, event: Event) {
     this.confirmService.confirm({
