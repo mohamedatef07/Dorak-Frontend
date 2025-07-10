@@ -12,6 +12,7 @@ import { InputTextarea } from 'primeng/inputtextarea';
 import { ToastModule } from 'primeng/toast';
 import { AuthService } from '../../services/auth.service';
 import { GenderType } from '../../Enums/GenderType.enum';
+import { DoctorTitle } from '../../Enums/DoctorTitle.enum';
 
 interface RegistrationData {
   // First page data
@@ -38,7 +39,7 @@ interface RegistrationData {
   bio: string;
   experienceYears: number;
   licenseNumber: string;
-  providerTitle: string;
+  providerTitle: DoctorTitle | undefined;
   providerType: number;
   estimatedDuration: number;
   rate: number;
@@ -72,6 +73,9 @@ export class RegisterComponent {
   isLoading: boolean = false;
   showPassword: boolean = false;
 
+  DoctorTitle = DoctorTitle;
+  doctorTitles = Object.values(DoctorTitle).filter(value => typeof value === 'number' && value !== DoctorTitle.None);
+
   registrationData: RegistrationData = {
     // First page data
     username: '',
@@ -97,7 +101,7 @@ export class RegisterComponent {
     bio: '',
     experienceYears: 0,
     licenseNumber: '',
-    providerTitle: '',
+    providerTitle: undefined as any,
     providerType: 2,
     estimatedDuration: 0,
     rate: 0,
@@ -237,7 +241,7 @@ export class RegisterComponent {
           this.registrationData.bio.trim() !== '' &&
           this.registrationData.experienceYears > 0 &&
           this.registrationData.licenseNumber.trim() !== '' &&
-          this.registrationData.providerTitle.trim() !== '' &&
+          this.registrationData.providerTitle !== undefined &&
           this.registrationData.estimatedDuration > 0
         );
       default:
@@ -302,6 +306,7 @@ export class RegisterComponent {
       formData.append('ExperienceYears', this.registrationData.experienceYears.toString());
       formData.append('ProviderType', this.registrationData.providerType.toString());
       formData.append('LicenseNumber', this.registrationData.licenseNumber);
+      formData.append('ProviderTitle', this.registrationData.providerTitle?.toString() || '');
       formData.append('EstimatedDuration', this.registrationData.estimatedDuration.toString());
       formData.append('Rate', this.registrationData.rate.toString());
     }

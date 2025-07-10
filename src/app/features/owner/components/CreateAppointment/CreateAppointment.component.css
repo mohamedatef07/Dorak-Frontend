@@ -71,17 +71,25 @@ td {
 tr:last-child td {
     border-bottom: none;
 }
-
+.ClearFilters{
+    font-size: 0.75rem;
+    padding: 0.5rem 0.75rem;
+    background-color: var(--main-bg-color-Light);
+    color: var(--button-text-color-Light);
+    border-radius: var(--border-radius);
+    border: 1px var(--main-bg-color-Light) solid;
+    transition: var(--transition) ;
+}
 .view-doc-profile{
     font-size: 0.75rem;
     padding: 0.5rem 0.75rem;
-    background-color: var(--button-bg-color-Light);
+    background-color: #e84e3c;
     color: var(--button-text-color-Light);
     border-radius: var(--border-radius);
-    border: 1px var(--hover-border-Light) solid;
+    border: 1px #e84e3c solid;
     transition: var(--transition) ;
 }
-.view-doc-profile:hover{
+.view-doc-profile:hover,.ClearFilters:hover{
     font-size: 0.75rem;
     padding: 0.5rem 0.75rem;
     background-color: var(--hover-bg-Light);

@@ -1,0 +1,10 @@
+<div class="center-register-code-outer d-flex justify-content-center align-items-center" style="min-height: 100vh; min-width: 100vw;">
+    <div class="center-register-code-container text-center p-4 rounded shadow">
+        <h2 class="mb-4">Enter Center Registration Code</h2>
+        <form (ngSubmit)="submitCode()">
+            <input type="text" [(ngModel)]="code" name="code" placeholder="Enter code" required class="form-control mb-3 mx-auto" style="max-width: 250px;" />
+            <button type="submit" class="Submit-btn w-50">Submit</button>
+        </form>
+        <div *ngIf="error" class="text-danger mt-3">{{ error }}</div>
+    </div>
+</div>

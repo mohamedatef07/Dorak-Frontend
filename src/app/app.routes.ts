@@ -54,6 +54,8 @@ import { CenterRegisterComponent } from './components/CenterRegister/CenterRegis
 import { ContactUsComponent } from './components/Contact-Us/Contact-Us.component';
 import { HelpSupportComponent } from './components/Help-Support/Help-Support.component';
 import { TermsConditionsComponent } from './components/Terms-Conditions/Terms-Conditions.component';
+import { CenterRegisterCodeComponent } from './components/CenterRegisterCode/CenterRegisterCode.component';
+import { CenterRegisterCodeGuard } from './guards/center-register-code.guard';
 
 export const routes: Routes = [
   {
@@ -328,7 +330,12 @@ export const routes: Routes = [
   },
   { path: 'login', component: LoginComponent, title: 'Login', data: { animation: 'login' } },
   { path: 'register', component: RegisterComponent, title: 'Register', data: { animation: 'register' } },
-  { path: 'center-register', component: CenterRegisterComponent, title: 'Register Center', data: { animation: 'centerRegister' } },
+  { path: 'center-code', component: CenterRegisterCodeComponent },
+  {
+    path: 'center-register',
+    component: CenterRegisterComponent,
+    canActivate: [CenterRegisterCodeGuard]
+  },
   {
     path: 'unauthorized',
     component: UnauthorizedComponent,
