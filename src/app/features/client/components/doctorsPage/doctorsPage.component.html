@@ -5,14 +5,9 @@
     <div class="filter-panel-container">
       <div class="filter-panel main-padding main-radius">
         <div class="title text-center w-100">
-          <span
-          class="d-flex align-items-center justify-content-center gap-2"
-          >
+          <span class="d-flex align-items-center justify-content-center gap-2">
             <i class="fa fa-filter fa-2x" aria-hidden="true"></i>
-            <span
-              class="mb-0"
-              >Filters</span
-            >
+            <span class="mb-0">Filters</span>
           </span>
         </div>
         <!-- Title Filter -->
@@ -47,22 +42,6 @@
             </div>
           </div>
         </div>
-        <!-- City Filter -->
-        <div class="mb-3">
-          <label class="fw-bold fs-5 filter-label">City</label>
-          <div *ngFor="let city of cities">
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                [checked]="selectedCities.includes(city)"
-                [value]="city"
-                (change)="onCityChange($event)"
-              />
-              <label class="form-check-label">{{ city }}</label>
-            </div>
-          </div>
-        </div>
         <!-- Rate Filter -->
         <div class="mb-3">
           <label class="fw-bold filter-label">Rate</label>
@@ -74,8 +53,8 @@
               placeholder="Min Rate"
               [(ngModel)]="selectedMinRate"
               (input)="applyFilters()"
-              min="0"
-              max="5"
+              [min]="minRateValue"
+              [max]="maxRateValue"
             />
           </div>
           <div class="mt-1">
@@ -86,8 +65,8 @@
               placeholder="Max Rate"
               [(ngModel)]="selectedMaxRate"
               (input)="applyFilters()"
-              min="0"
-              max="5"
+              [min]="minRateValue"
+              [max]="maxRateValue"
             />
           </div>
         </div>
@@ -102,8 +81,8 @@
               placeholder="Min Price"
               [(ngModel)]="selectedMinPrice"
               (input)="applyFilters()"
-              min="0"
-              max="10000"
+              [min]="minPriceValue"
+              [max]="maxPriceValue"
             />
           </div>
           <div class="mt-1">
@@ -114,8 +93,8 @@
               placeholder="Max Price"
               [(ngModel)]="selectedMaxPrice"
               (input)="applyFilters()"
-              max="10000"
-              min="0"
+              [min]="minPriceValue"
+              [max]="maxPriceValue"
             />
           </div>
         </div>
@@ -145,19 +124,32 @@
     </div>
     <!-- Doctor listings -->
     <div
-      class="doctors-list-container d-flex flex-column justify-content-between bg-white main-padding main-radius"
+      class="doctors-list-container d-flex flex-column justify-content-between bg-white p-5 main-radius"
     >
       <div class="doctors-list">
-        <h1 class="main-text-Color">Doctors</h1>
+        <h1 class="main-text-Color fw-bold">Doctors</h1>
         <div class="search-container w-100">
           <div class="d-flex justify-content-between w-100 main-radius p-2">
-            <!-- Specialty Dropdown -->
+            <!-- City Dropdown -->
             <div class="multi-select-container">
+              <p-floatlabel class="w-full md:w-80" variant="on"
+                ><p-multiselect
+                  id="cities"
+                  [(ngModel)]="selectedCities"
+                  [options]="cities"
+                  (onChange)="onCityChange($event.value)"
+                  filter
+                  class="w-full"
+                /><label for="cities">City</label></p-floatlabel
+              >
+            </div>
+            <!-- Specialization Dropdown -->
+            <div class="multi-select-container ms-2">
               <p-floatlabel class="w-full md:w-80" variant="on"
                 ><p-multiselect
                   id="Specialization"
                   [(ngModel)]="selectedSpecializations"
-                  [options]="specialties"
+                  [options]="specializations"
                   (onChange)="onSpecializationChange($event.value)"
                   filter
                   class="w-full"
@@ -178,7 +170,7 @@
             </div>
           </div>
         </div>
-        <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
+        <div class="row pt-4 row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
           @for (doc of doctors; track $index) {
           <div class="col">
             <div class="doctor-photo-card">
@@ -228,7 +220,9 @@
             </div>
           </div>
           } @empty{
-          <div class="text-muted text-center fs-5">No doctors found.</div>
+          <div class="no-doctors-found-container">
+            <div class="text-muted fs-5">No doctors found.</div>
+          </div>
           }
         </div>
       </div>

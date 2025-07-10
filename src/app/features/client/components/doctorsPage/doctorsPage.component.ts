@@ -51,6 +51,10 @@ export class DoctorsPageComponent implements OnInit {
   city: string = '';
   fullImagePath: string = `${environment.apiUrl}`;
   imageLoadFailedMap: { [id: number]: boolean } = {};
+  maxPriceValue = 10000;
+  minPriceValue = 0;
+  maxRateValue = 5;
+  minRateValue = 0;
 
   selectedTitles: number[] = [];
   selectedGenders: number[] = [];
@@ -62,13 +66,8 @@ export class DoctorsPageComponent implements OnInit {
   selectedMaxPrice: number | null = null;
   selectedAvailableDate: Date | null = null;
 
-  specialties: string[] = [
-    'Cardiologist',
-    'Dermatology',
-    'Neurology',
-    'Pediatrics',
-  ];
-  cities: string[] = ['naser city', 'Giza', 'Alexandria', 'Aswan'];
+  specializations: string[] = [];
+  cities: string[] = [];
 
   titles: Array<{ value: number; label: string }> = Object.entries(DoctorTitle)
     .filter(
@@ -83,7 +82,7 @@ export class DoctorsPageComponent implements OnInit {
     .map(([key, value]) => ({ value: value as number, label: key }));
 
   constructor(
-    private cardDoctorService: ClientService,
+    private doctorServices: ClientService,
     private router: Router,
     private messageService: MessageService
   ) {}
@@ -97,10 +96,16 @@ export class DoctorsPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllDoctors();
+    this.doctorServices.GetAllCitiesAndSpecializations().subscribe({
+      next: (res) => {
+        this.cities = res.Data.Cities;
+        this.specializations = res.Data.Specializations;
+      },
+    });
   }
 
   getAllDoctors(filter: Partial<IDoctorFilter> = {}): void {
-    this.cardDoctorService
+    this.doctorServices
       .getAllDoctorsCards(filter, this.currentPage, this.pageSize)
       .subscribe({
         next: (res) => {
@@ -110,13 +115,6 @@ export class DoctorsPageComponent implements OnInit {
           this.currentPage = res.CurrentPage;
           this.pageSize = res.PageSize;
           this.totalPages = res.TotalPages;
-        },
-        error: (err) => {
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Error',
-            detail: 'Failed to load doctors',
-          });
         },
       });
   }
@@ -143,13 +141,8 @@ export class DoctorsPageComponent implements OnInit {
     }
     this.applyFilters();
   }
-  onCityChange(event: any): void {
-    const value = event.target.value;
-    if (event.target.checked) {
-      if (!this.selectedCities.includes(value)) this.selectedCities.push(value);
-    } else {
-      this.selectedCities = this.selectedCities.filter((c) => c !== value);
-    }
+  onCityChange(selectedCities: string[]): void {
+    this.selectedCities = selectedCities;
     this.applyFilters();
   }
 
@@ -159,6 +152,38 @@ export class DoctorsPageComponent implements OnInit {
   }
 
   applyFilters(): void {
+    if (this.selectedMinRate !== null) {
+      if (this.selectedMinRate > this.maxRateValue) {
+        this.selectedMinRate = this.maxRateValue;
+      }
+      if (this.selectedMinRate < this.minRateValue) {
+        this.selectedMinRate = this.minRateValue;
+      }
+    }
+    if (this.selectedMaxRate !== null) {
+      if (this.selectedMaxRate < this.minRateValue) {
+        this.selectedMaxRate = this.minRateValue;
+      }
+      if (this.selectedMaxRate > this.maxRateValue) {
+        this.selectedMaxRate = this.maxRateValue;
+      }
+    }
+    if (this.selectedMinPrice !== null) {
+      if (this.selectedMinPrice > this.maxPriceValue) {
+        this.selectedMinPrice = this.maxPriceValue;
+      }
+      if (this.selectedMinPrice < this.minPriceValue) {
+        this.selectedMinPrice = this.minPriceValue;
+      }
+    }
+    if (this.selectedMaxPrice !== null) {
+      if (this.selectedMaxPrice < this.minPriceValue) {
+        this.selectedMaxPrice = this.minPriceValue;
+      }
+      if (this.selectedMaxPrice > this.maxPriceValue) {
+        this.selectedMaxPrice = this.maxPriceValue;
+      }
+    }
     const filter = {
       Titles: this.selectedTitles,
       Genders: this.selectedGenders,
