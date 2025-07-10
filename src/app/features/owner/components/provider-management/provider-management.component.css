@@ -1,5 +1,5 @@
 .page-title {
-  font-size: 2rem;
+  font-size: 1.6rem;
   margin-bottom: 20px;
   margin-top: 20px;
   padding: 15px;
@@ -7,7 +7,7 @@
   background-color: var(--main-bg-color-Light);
   width: fit-content;
   border-radius: var(--border-radius);
-      font-weight: 600;
+  font-weight: 600;
 }
 
 .filter {
@@ -227,3 +227,6 @@ tr:last-child td {
   font-size: var(--font-p);
 }
 
+.hide-button {
+  display: none;
+}

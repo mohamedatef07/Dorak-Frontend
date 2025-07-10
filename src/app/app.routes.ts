@@ -66,7 +66,6 @@ export const routes: Routes = [
         path: 'center-shifts',
         component: CenterShiftsComponent,
         title: 'Center Shifts',
-        data: { expectedRole: ['Admin'] },
       },
       {
         path: 'manage-operators',
@@ -90,7 +89,6 @@ export const routes: Routes = [
         path: 'provider-management',
         component: ProviderManagementComponent,
         title: 'Provider Management',
-        data: { expectedRole: ['Admin'] },
       },
       {
         path: 'add-provider',
@@ -326,9 +324,8 @@ export const routes: Routes = [
     ],
     title: 'Home',
   },
-  { path: 'login', component: LoginComponent, title: 'Login', data: { animation: 'login' } },
-  { path: 'register', component: RegisterComponent, title: 'Register', data: { animation: 'register' } },
-  { path: 'center-register', component: CenterRegisterComponent, title: 'Register Center', data: { animation: 'centerRegister' } },
+  { path: 'login', component: LoginComponent, title: 'Login' },
+  { path: 'register', component: RegisterComponent, title: 'Register' },
   {
     path: 'unauthorized',
     component: UnauthorizedComponent,
