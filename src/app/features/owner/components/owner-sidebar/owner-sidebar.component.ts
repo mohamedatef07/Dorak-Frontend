@@ -55,13 +55,18 @@ export class OwnerSidebarComponent implements OnInit {
     {
       label: 'Manage Operators',
       icon: 'pi pi-cog',
-      routerLink: 'manage-operators',
       items: [
+        {
+          label: 'View Operators',
+          icon: 'pi pi-user',
+          routerLink: 'manage-operators',
+        },
         {
           label: 'Add Operator',
           icon: 'pi pi-user-plus',
           routerLink: 'add-operator',
         },
+
       ],
     },
     {

@@ -1,0 +1,228 @@
+<div class="contact-us-container">
+  <p-toast></p-toast>
+  
+  <!-- Hero Section -->
+  <div class="hero-section">
+    <div class="container">
+      <div class="hero-content text-center">
+        <h1 class="hero-title">Contact Us</h1>
+        <p class="hero-subtitle">Get in touch with our team for support, inquiries, or partnership opportunities</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="container">
+      <div class="row">
+        <!-- Contact Form Section -->
+        <div class="col-lg-8 mb-5">
+          <div class="contact-form-card">
+            <h2 class="section-title">Send us a Message</h2>
+            <p class="section-desc mb-4">Fill out the form below and we'll get back to you as soon as possible.</p>
+            
+            <form (ngSubmit)="onSubmit()" #contactFormRef="ngForm">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="name" class="form-label">Full Name *</label>
+                  <input 
+                    type="text" 
+                    pInputText 
+                    id="name" 
+                    name="Name" 
+                    [(ngModel)]="contactForm.Name" 
+                    class="form-control" 
+                    required 
+                    #nameInput="ngModel"
+                  />
+                  <div *ngIf="nameInput.invalid && nameInput.touched" class="text-danger mt-1">
+                    <small>Full name is required</small>
+                  </div>
+                </div>
+                
+                <div class="col-md-6 mb-3">
+                  <label for="email" class="form-label">Email Address *</label>
+                  <input 
+                    type="email" 
+                    pInputText 
+                    id="email" 
+                    name="Email" 
+                    [(ngModel)]="contactForm.Email" 
+                    class="form-control" 
+                    required 
+                    #emailInput="ngModel"
+                  />
+                  <div *ngIf="emailInput.invalid && emailInput.touched" class="text-danger mt-1">
+                    <small *ngIf="emailInput.errors?.['required']">Email is required</small>
+                    <small *ngIf="emailInput.errors?.['email']">Please enter a valid email address</small>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="phone" class="form-label">Phone Number</label>
+                  <input 
+                    type="tel" 
+                    pInputText 
+                    id="phone" 
+                    name="Phone" 
+                    [(ngModel)]="contactForm.Phone" 
+                    class="form-control"
+                  />
+                </div>
+                
+                <div class="col-md-6 mb-3">
+                  <label for="centerName" class="form-label">Medical Center Name</label>
+                  <input 
+                    type="text" 
+                    pInputText 
+                    id="centerName" 
+                    name="CenterName" 
+                    [(ngModel)]="contactForm.CenterName" 
+                    class="form-control"
+                    placeholder="If applicable"
+                  />
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="inquiryType" class="form-label">Inquiry Type</label>
+                  <p-dropdown 
+                    id="inquiryType" 
+                    name="InquiryType" 
+                    [options]="inquiryTypes" 
+                    [(ngModel)]="contactForm.InquiryType" 
+                    placeholder="Select inquiry type" 
+                    class="w-100"
+                    #inquiryTypeInput="ngModel"
+                  ></p-dropdown>
+                </div>
+                
+                <div class="col-md-6 mb-3">
+                  <label for="subject" class="form-label">Subject</label>
+                  <input 
+                    type="text" 
+                    pInputText 
+                    id="subject" 
+                    name="Subject" 
+                    [(ngModel)]="contactForm.Subject" 
+                    class="form-control"
+                    #subjectInput="ngModel"
+                  />
+                </div>
+              </div>
+
+              <div class="mb-4">
+                <label for="message" class="form-label">Message *</label>
+                <textarea 
+                  pInputTextarea 
+                  id="message" 
+                  name="Message" 
+                  [(ngModel)]="contactForm.Message" 
+                  class="form-control" 
+                  rows="5" 
+                  required 
+                  #messageInput="ngModel"
+                  placeholder="Please describe your inquiry in detail..."
+                ></textarea>
+                <div *ngIf="messageInput.invalid && messageInput.touched" class="text-danger mt-1">
+                  <small>Message is required</small>
+                </div>
+              </div>
+
+              <div class="row justify-content-center">
+                <div class="col-md-8 col-lg-6">
+                  <button 
+                    pButton 
+                    type="submit" 
+                    label="Send Message" 
+                    icon="pi pi-send" 
+                    class="p-button-primary w-100" 
+                    [disabled]="isLoading || !isFormValid()"
+                  >
+                    <span *ngIf="isLoading" class="pi pi-spin pi-spinner ms-2"></span>
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Contact Information Section -->
+        <div class="col-lg-4">
+          <div class="contact-info-section">
+            <h2 class="section-title">Get in Touch</h2>
+            <p class="section-desc mb-4">We're here to help you with any questions about our queue management system.</p>
+            
+            <!-- Contact Cards -->
+            <div class="contact-card mb-4">
+              <div class="contact-card-icon">
+                <i class="pi pi-envelope"></i>
+              </div>
+              <div class="contact-card-content">
+                <h3>Email Support</h3>
+                <p>{{ contactInfo.email }}</p>
+                <button pButton type="button" label="Send Email" icon="pi pi-external-link" class="p-button-text p-button-sm" (click)="onEmailClick()"></button>
+              </div>
+            </div>
+
+            <div class="contact-card mb-4">
+              <div class="contact-card-icon">
+                <i class="pi pi-phone"></i>
+              </div>
+              <div class="contact-card-content">
+                <h3>Phone Support</h3>
+                <p>{{ contactInfo.phone }}</p>
+                <button pButton type="button" label="Call Now" icon="pi pi-external-link" class="p-button-text p-button-sm" (click)="onPhoneClick()"></button>
+              </div>
+            </div>
+
+            <div class="contact-card mb-4">
+              <div class="contact-card-icon">
+                <i class="pi pi-map-marker"></i>
+              </div>
+              <div class="contact-card-content">
+                <h3>Office Address</h3>
+                <p>{{ contactInfo.address }}</p>
+              </div>
+            </div>
+
+            <div class="contact-card mb-4">
+              <div class="contact-card-icon">
+                <i class="pi pi-clock"></i>
+              </div>
+              <div class="contact-card-content">
+                <h3>Business Hours</h3>
+                <p>{{ contactInfo.businessHours }}</p>
+                <small class="text-success">{{ contactInfo.emergencySupport }}</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="contact-footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <h3>Dorak Queue Management</h3>
+          <p>Revolutionizing healthcare queue management with cutting-edge technology</p>
+        </div>
+        <div class="col-md-6 text-md-end">
+          <div class="footer-links">
+            <a [routerLink]="['/Help-Support']" class="footer-link">Help & Support</a>
+            <a [routerLink]="['/terms-conditions']" class="footer-link">Terms & Conditions</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 Dorak. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+</div>

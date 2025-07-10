@@ -28,7 +28,15 @@ export class ClientProfileComponent implements OnInit {
     Country: '',
   };
   userid: string = '';
+imageLoadFailedMap: { [key: string]: boolean } = {};
 
+onImageError(event: Event, key: string): void {
+  this.imageLoadFailedMap[key] = true;
+}
+
+hasImageLoadFailed(key: string): boolean {
+  return !!this.imageLoadFailedMap[key];
+}
   profile: IClientUpdate | null = null;
   fullImagePath: string = '';
   clientServices = inject(ClientService);

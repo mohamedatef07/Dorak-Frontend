@@ -9,10 +9,11 @@ import { INotification } from '../../../../types/INotification';
 import { CommonModule } from '@angular/common';
 import { CookieService } from 'ngx-cookie-service';
 import { NotificationService } from '../../../../services/Notification.service';
+import { Avatar } from "primeng/avatar";
 
 @Component({
   selector: 'app-nav-bar',
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, Avatar],
   templateUrl: './navBar.component.html',
   styleUrls: ['./navBar.component.css'],
 })
@@ -25,10 +26,11 @@ export class NavBarComponent implements OnInit {
   router = inject(Router);
   notificationService = inject(NotificationService);
   unreadCount = 0;
-  notifications!: Array<INotification>;
+  notifications: Array<INotification> = [];
   isDropDownOpen = false;
   isNotificationsDropDownOpen = false;
   UserImage!: string;
+  imageLoadFailedMap: { [key: string]: boolean } = {};
 
   toggleDropDown(event: MouseEvent) {
     event.stopPropagation();
@@ -76,7 +78,8 @@ export class NavBarComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.UserImage = `${environment.apiUrl}${this.authServices.getUserImage()}`;
+    const imageFromToken = this.authServices.getUserImage();
+    this.UserImage = imageFromToken ? `${environment.apiUrl}${imageFromToken}` : '';
     this.loadNotifications();
     this.setupSignalRSubscriptions();
   }
@@ -149,4 +152,11 @@ export class NavBarComponent implements OnInit {
     this.notificationService.handleNotificationClick(notification, this.messageServices);
     this.updateUnreadCount();
   }
+  onImageError(event: Event, key: string) {
+  this.imageLoadFailedMap[key] = true;
+}
+
+hasImageLoadFailed(key: string): boolean {
+  return !!this.imageLoadFailedMap[key];
+}
 }

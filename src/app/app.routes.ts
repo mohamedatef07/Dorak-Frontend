@@ -49,7 +49,11 @@ import { AppointmentsHistoryComponent } from './features/client/components/appoi
 import { RoleGuard } from './guards/role.guard';
 import { AuthGuard } from './guards/auth.guard';
 import { HeaderComponent } from './features/landingpage/components/header/header.component';
-import { HeroComponent } from './features/landingpage/components/Hero/Hero.component';
+import { HeroComponent } from './features/landingpage/components/hero/hero.component';
+import { CenterRegisterComponent } from './components/CenterRegister/CenterRegister.component';
+import { ContactUsComponent } from './components/Contact-Us/Contact-Us.component';
+import { HelpSupportComponent } from './components/Help-Support/Help-Support.component';
+import { TermsConditionsComponent } from './components/Terms-Conditions/Terms-Conditions.component';
 
 export const routes: Routes = [
   {
@@ -327,5 +331,8 @@ export const routes: Routes = [
     component: UnauthorizedComponent,
     title: 'Unauthorized',
   },
+  { path: 'contact-us', component: ContactUsComponent, title: 'Contact Us' },
+  { path: 'Help-Support', component: HelpSupportComponent, title: 'Help | Support' },
+  { path: 'terms-conditions', component: TermsConditionsComponent, title: 'Terms & Conditions' },
   { path: '**', component: NotFoundComponent, title: 'Not Found' },
 ];

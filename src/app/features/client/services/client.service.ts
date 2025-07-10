@@ -1,5 +1,4 @@
-import { IDoctorCard } from './../models/iDoctorcard';
-
+import { IDoctorCard } from './../models/IDoctorCard';
 import { ICheckoutRequest } from '../models/ICheckoutRequest';
 import { ApiResponse } from './../../../types/ApiResponse';
 import { HttpClient, HttpParams } from '@angular/common/http';
@@ -24,6 +23,7 @@ import { IClientInfoForLiveQueue } from '../models/IClientInfoForLiveQueue';
 import { IClientUpdate } from '../models/IClientUpdate';
 import { IGeneralAppointmentStatistics } from '../models/IGeneralAppointmentStatistics';
 import { PaginationApiResponse } from '../../../types/PaginationApiResponse';
+import { ICitiesAndSpecializations } from '../models/ICitiesAndSpecializations';
 
 @Injectable({
   providedIn: 'root',
@@ -38,15 +38,30 @@ export class ClientService {
    * Get all doctors, or filter/search if filter is provided.
    * @param filter Optional filter/search object
    */
-  getAllDoctorsCards(filter?: Partial<IDoctorFilter>): Observable<ApiResponse<Array<IDoctorCard>>> {
+  getAllDoctorsCards(
+    filter: Partial<IDoctorFilter> = {},
+    pageNumber: number,
+    pageSize: number
+  ): Observable<PaginationApiResponse<Array<IDoctorCard>>> {
     if (!filter || Object.keys(filter).length === 0) {
-      return this.httpClient.get<ApiResponse<Array<IDoctorCard>>>(
-        `${environment.apiUrl}/API/Client/provider-cards`
+      return this.httpClient.post<PaginationApiResponse<Array<IDoctorCard>>>(
+        `${environment.apiUrl}/api/Client/provider-cards`,
+        filter || {},
+        {
+          params: new HttpParams()
+            .set('pageNumber', pageNumber)
+            .set('pageSize', pageSize),
+        }
       );
     } else {
-      return this.httpClient.post<ApiResponse<Array<IDoctorCard>>>(
+      return this.httpClient.post<PaginationApiResponse<Array<IDoctorCard>>>(
         `${environment.apiUrl}/api/Client/provider-cards`,
-        filter
+        filter,
+        {
+          params: new HttpParams()
+            .set('pageNumber', pageNumber)
+            .set('pageSize', pageSize),
+        }
       );
     }
   }
@@ -221,6 +236,14 @@ export class ClientService {
   ): Observable<PaginationApiResponse<IClientAppointmentCard[]>> {
     return this.httpClient.get<PaginationApiResponse<IClientAppointmentCard[]>>(
       `${environment.apiUrl}/api/client/appointments-history/${userId}?pageNumber=${pageNumber}&pageSize=${pageSize}`
+    );
+  }
+
+  GetAllCitiesAndSpecializations(): Observable<
+    ApiResponse<ICitiesAndSpecializations>
+  > {
+    return this.httpClient.get<ApiResponse<ICitiesAndSpecializations>>(
+      `${environment.apiUrl}/api/client/all-cities-specializations`
     );
   }
 }

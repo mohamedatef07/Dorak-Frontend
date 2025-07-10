@@ -1,80 +1,130 @@
-<div class="container px-0 m-0">
-  <p class="fw-bold m-0">Profile</p>
-  <!-- Profile Header -->
-  <div class="d-flex flex-column flex-md-row align-items-center mb-4 gap-3">
-    <p-avatar image="{{ client.Image }}" shape="circle" class="avatar">
-    </p-avatar>
-    <div class="text-center text-md-start">
-      <h5 class="fw-bold mb-1">{{ client.Name }}</h5>
-      <p class="mb-0">Contact: {{ client.Phone }}</p>
-      <p class="mb-0">Email Address: {{ client.Email }}</p>
+
+  <div
+    class="d-flex flex-column flex-md-row align-items-center justify-content-between gap-4 py-4 border-bottom mb-4 bg-white rounded-4 shadow-sm"
+  >
+    <div class="d-flex align-items-center gap-4 flex-grow-1 py-2 px-4">
+      <div>
+        @if (client.Image && !hasImageLoadFailed('client-profile')) {
+        <img
+          [src]="client.Image"
+          alt="Profile Picture"
+          class="rounded-circle shadow img-profile"
+
+          (error)="onImageError($event, 'client-profile')"
+        />
+        } @else {
+        <p-avatar
+          icon="pi pi-user"
+          shape="circle"
+          size="xlarge"
+          class="shadow img-profile"
+
+        ></p-avatar>
+        }
+      </div>
+      <div class="text-center text-md-start">
+        <h4 class="fw-bold mb-2">{{ client.Name }}</h4>
+        <div class="mb-1 text-muted">
+          <i class="fas fa-phone-alt me-2"></i>{{ client.Phone }}
+        </div>
+        <div class="mb-2 text-muted">
+          <i class="fas fa-envelope me-2"></i>{{ client.Email }}
+        </div>
+      </div>
+    </div>
+    <div class="mt-3 mt-md-0 px-4 py-2">
+      <a
+        [routerLink]="['/client/settings/client-edit-profile']"
+        class="btn btn-primary px-4 main-btn-bg"
+      >
+        <i class="fas fa-edit me-2"></i>Edit Profile
+      </a>
     </div>
   </div>
-  <div class="w-100 mb-3" style="text-align: end">
-    <a
-      [routerLink]="['/client/settings/client-edit-profile']"
-      class="btn btn-info btn-cust"
-      >Edit Profile</a
+  <!-- Divider -->
+  <hr class="my-4" />
+  <!-- Personal Information Card -->
+  <div class="card shadow-sm mb-4 border-0 rounded-4 py-2 px-3">
+    <div
+      class="card-header bg-white border-0 d-flex align-items-center gap-2 rounded-top-4"
     >
-  </div>
-  <!-- Personal Information -->
-  <div class="card profile-card">
-    <div class="section-header">
-      <h3 class="section-title">Personal information</h3>
+      <i class="fas fa-user" style="color: #2a6f97; font-size: 1.6rem"></i>
+      <span class="fw-semibold fs-5">Personal Information</span>
     </div>
-    <div class="section-content">
-      <div class="row">
+    <div class="card-body">
+      <div class="row g-4">
         <div class="col-md-6">
-          <div class="info-row">
-            <div class="info-label">First Name</div>
-            <div class="info-value">{{ profile?.FirstName }}</div>
+          <div class="mb-2">
+            <div class="text-muted small">
+              <i class="fas fa-id-badge me-2"></i>First Name
+            </div>
+            <div class="fw-semibold fs-6">{{ profile?.FirstName }}</div>
           </div>
-          <div class="info-row">
-            <div class="info-label">Email address</div>
-            <div class="info-value">{{ client.Email }}</div>
+          <div class="mb-2">
+            <div class="text-muted small">
+              <i class="fas fa-envelope me-2"></i>Email Address
+            </div>
+            <div class="fw-semibold fs-6">{{ client.Email }}</div>
           </div>
         </div>
         <div class="col-md-6">
-          <div class="info-row">
-            <div class="info-label">Last Name</div>
-            <div class="info-value">{{ profile?.LastName }}</div>
+          <div class="mb-2">
+            <div class="text-muted small">
+              <i class="fas fa-id-badge me-2"></i>Last Name
+            </div>
+            <div class="fw-semibold fs-6">{{ profile?.LastName }}</div>
           </div>
-          <div class="info-row">
-            <div class="info-label">Phone</div>
-            <div class="info-value">{{ profile?.Phone }}</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- Address Information -->
-  <div class="card profile-card">
-    <div class="section-header">
-      <h3 class="section-title">Address</h3>
-    </div>
-    <div class="section-content">
-      <div class="row">
-        <div class="col-md-6">
-          <div class="info-row">
-            <div class="info-label">Country</div>
-            <div class="info-value">{{ client.Country }}</div>
-          </div>
-          <div class="info-row">
-            <div class="info-label">Governorate</div>
-            <div class="info-value">{{ client.Governorate }}</div>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="info-row">
-            <div class="info-label">City</div>
-            <div class="info-value">{{ client.City }}</div>
-          </div>
-          <div class="info-row">
-            <div class="info-label">Street</div>
-            <div class="info-value">{{ client.Street }}</div>
+          <div class="mb-2">
+            <div class="text-muted small">
+              <i class="fas fa-phone me-2"></i>Phone
+            </div>
+            <div class="fw-semibold fs-6">{{ profile?.Phone }}</div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+  <!-- Address Information Card -->
+  <div class="card shadow-sm  border-0 rounded-4 py-2 px-3">
+    <div
+      class="card-header bg-white border-0 d-flex align-items-center gap-2 rounded-top-4"
+    >
+      <i
+        class="fas fa-map-marker-alt"
+        style="color: #2a6f97; font-size: 1.6rem"
+      ></i>
+      <span class="fw-semibold fs-5">Address</span>
+    </div>
+    <div class="card-body">
+      <div class="row g-4">
+        <div class="col-md-6">
+          <div class="mb-2">
+            <div class="text-muted small">
+              <i class="fas fa-flag me-2"></i>Country
+            </div>
+            <div class="fw-semibold fs-6">{{ client.Country }}</div>
+          </div>
+          <div class="mb-2">
+            <div class="text-muted small">
+              <i class="fas fa-map me-2"></i>Governorate
+            </div>
+            <div class="fw-semibold fs-6">{{ client.Governorate }}</div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-2">
+            <div class="text-muted small">
+              <i class="fas fa-city me-2"></i>City
+            </div>
+            <div class="fw-semibold fs-6">{{ client.City }}</div>
+          </div>
+          <div class="mb-2">
+            <div class="text-muted small">
+              <i class="fas fa-road me-2"></i>Street
+            </div>
+            <div class="fw-semibold fs-6">{{ client.Street }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

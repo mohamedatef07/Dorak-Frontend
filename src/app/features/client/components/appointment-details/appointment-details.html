@@ -2,12 +2,21 @@
   <div class="row align-items-center mb-4">
     <div class="col-auto">
       <div class="doctor-image-container">
-        <img
-          *ngIf="fullImagePath"
-          [src]="fullImagePath"
-          alt="Provider Image"
-          class="doctor-image"
-        />
+                @if (fullImagePath && !hasImageLoadFailed('doctor-avatar')) {
+          <img
+            [src]="fullImagePath"
+            alt="Provider Image"
+            class="doctor-image"
+            (error)="onImageError($event, 'doctor-avatar')"
+          />
+        }@else {
+          <p-avatar
+            icon="pi pi-user"
+            shape="circle"
+            size="xlarge"
+            class="doctor-image"
+          ></p-avatar>
+        }
       </div>
     </div>
     <div class="col">
