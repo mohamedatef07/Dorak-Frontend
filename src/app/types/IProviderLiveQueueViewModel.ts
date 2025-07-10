@@ -12,4 +12,5 @@ export interface IProviderLiveQueueViewModel {
   PhoneNumber: string;
   CurrentQueuePosition: number | null;
   AvailableStatuses: QueueAppointmentStatus[];
+  ProviderName: string
 }

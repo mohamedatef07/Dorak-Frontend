@@ -9,7 +9,7 @@ import { IProviderViewModel } from '../../../../types/IProviderViewModel';
 import { ApiService } from '../../../../services/api.service';
 import { ApiResponse } from '../../../../types/ApiResponse';
 import { IShift } from '../../../../types/IShift';
-import { environment } from '../../../../../environments/environment'; // Adjust path as needed
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-provider-profile',
@@ -49,12 +49,11 @@ export class ProviderProfilesComponent implements OnInit {
     }
   }
 
-  // Method to get the full image URL
   getImageUrl(imagePath: string | null): string {
     if (!imagePath) {
-      return 'https://via.placeholder.com/150'; // Fallback placeholder
+      return 'https://via.placeholder.com/150';
     }
-    // Prepend backend base URL to the image path
+
     return `${environment.apiUrl}${imagePath}`;
   }
 
