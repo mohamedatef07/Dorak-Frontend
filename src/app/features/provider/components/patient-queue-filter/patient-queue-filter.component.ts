@@ -15,10 +15,10 @@ export class PatientQueueFilterComponent implements OnInit {
   @Output() filterPatientTypeChanged = new EventEmitter();
   @Output() filterPatientStatusChanged = new EventEmitter();
   PatientTypes: Array<string> = Object.values(ClientType).filter(
-    (value) => typeof value === 'string' && value !== 'none'
+    (value) => typeof value === 'string' && value !== 'None'
   ) as string[];
   PatientStatus: Array<string> = Object.values(QueueAppointmentStatus).filter(
-    (value) => typeof value === 'string' && value !== 'none'
+    (value) => typeof value === 'string' && value !== 'None'
   ) as string[];
 
   constructor() {}
