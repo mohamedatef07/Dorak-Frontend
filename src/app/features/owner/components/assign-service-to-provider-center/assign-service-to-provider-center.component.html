@@ -1,0 +1,50 @@
+<div class="container mt-4">
+  <h2>Assign Service to Provider Center</h2>
+  <form [formGroup]="assignForm" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+      <label for="ProviderId" class="form-label">Provider</label>
+      <p-dropdown
+        id="ProviderId"
+        formControlName="ProviderId"
+        [options]="providers"
+        optionLabel="FullName"
+        optionValue="Id"
+        placeholder="Select a provider"
+        [showClear]="true"
+        [filter]="true"
+        [virtualScroll]="true"
+        [style]="{width: '100%'}"
+      ></p-dropdown>
+    </div>
+    <div class="mb-3">
+      <label for="ServiceId" class="form-label">Service</label>
+      <p-dropdown
+        id="ServiceId"
+        formControlName="ServiceId"
+        [options]="services"
+        optionLabel="ServiceName"
+        optionValue="ServiceId"
+        placeholder="Select a service"
+        [showClear]="true"
+        [filter]="true"
+        [virtualScroll]="true"
+        [style]="{width: '100%'}"
+      ></p-dropdown>
+    </div>
+    <div class="mb-3">
+      <label for="CenterId" class="form-label">Center ID</label>
+      <input type="number" id="CenterId" class="form-control" formControlName="CenterId" required />
+    </div>
+    <div class="mb-3">
+      <label for="Price" class="form-label">Price</label>
+      <input type="number" id="Price" class="form-control" formControlName="Price" required min="0" />
+    </div>
+    <div class="mb-3">
+      <label for="Priority" class="form-label">Priority</label>
+      <input type="number" id="Priority" class="form-control" formControlName="Priority" required min="1" />
+    </div>
+    <button type="submit" class="btn btn-primary" [disabled]="loading">Assign Service</button>
+  </form>
+  <div *ngIf="successMessage" class="alert alert-success mt-3">{{ successMessage }}</div>
+  <div *ngIf="errorMessage" class="alert alert-danger mt-3">{{ errorMessage }}</div>
+</div>

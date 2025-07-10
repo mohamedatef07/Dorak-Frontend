@@ -26,7 +26,7 @@ import { AuthService } from '../../../../services/auth.service';
 })
 export class ProviderLiveQueueComponent implements OnInit {
   liveQueues: IProviderLiveQueueViewModel[] = [];
-  centerId = 0;
+  centerId:number = 0;
   // centerId: number = 3;
   shiftId: number = 0;
   pageNumber: number = 1;

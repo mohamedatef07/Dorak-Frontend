@@ -1,4 +1,5 @@
 import { ProviderNotificationsComponent } from './features/provider/components/provider-notifications/provider-notifications.component';
+import { AssignServiceToProviderCenterComponent } from './features/owner/components/assign-service-to-provider-center/assign-service-to-provider-center.component';
 import { Routes } from '@angular/router';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { LoginComponent } from './components/login/login.component';
@@ -68,6 +69,12 @@ export const routes: Routes = [
         path: 'center-shifts',
         component: CenterShiftsComponent,
         title: 'Center Shifts',
+      },
+      {
+        path: 'assign-service-to-provider-center',
+        component: AssignServiceToProviderCenterComponent,
+        title: 'Assign Service To Provider Center',
+        data: { expectedRole: ['Admin'] },
       },
       {
         path: 'manage-operators',
