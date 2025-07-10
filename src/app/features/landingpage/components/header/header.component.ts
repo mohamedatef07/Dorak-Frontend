@@ -1,4 +1,4 @@
-import { CommonModule, NgIf } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { LucideAngularModule, Menu, X, Stethoscope, Globe, ChevronDown } from 'lucide-angular';
 
@@ -6,7 +6,7 @@ import { LucideAngularModule, Menu, X, Stethoscope, Globe, ChevronDown } from 'l
 
 @Component({
   selector: 'app-header',
-  imports:[CommonModule,NgIf],
+  imports:[CommonModule],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css',
 
