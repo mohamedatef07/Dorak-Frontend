@@ -55,6 +55,7 @@ import { CenterRegisterComponent } from './components/CenterRegister/CenterRegis
 import { ContactUsComponent } from './components/Contact-Us/Contact-Us.component';
 import { HelpSupportComponent } from './components/Help-Support/Help-Support.component';
 import { TermsConditionsComponent } from './components/Terms-Conditions/Terms-Conditions.component';
+import { ClientReviewsComponent } from './features/client/components/client-reviews/client-reviews.component';
 
 export const routes: Routes = [
   {
@@ -266,6 +267,11 @@ export const routes: Routes = [
         path: 'client-wallet',
         component: ClientWalletComponent,
         title: 'Client Wallet',
+      },
+      {
+        path: 'all-reviews',
+        component: ClientReviewsComponent,
+        title: 'All Reviews',
       },
       {
         path: 'settings',

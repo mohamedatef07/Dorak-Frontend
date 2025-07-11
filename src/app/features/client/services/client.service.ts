@@ -24,6 +24,7 @@ import { IClientUpdate } from '../models/IClientUpdate';
 import { IGeneralAppointmentStatistics } from '../models/IGeneralAppointmentStatistics';
 import { PaginationApiResponse } from '../../../types/PaginationApiResponse';
 import { ICitiesAndSpecializations } from '../models/ICitiesAndSpecializations';
+import { IClientReview } from '../models/IClientReview';
 
 @Injectable({
   providedIn: 'root',
@@ -244,6 +245,15 @@ export class ClientService {
   > {
     return this.httpClient.get<ApiResponse<ICitiesAndSpecializations>>(
       `${environment.apiUrl}/api/client/all-cities-specializations`
+    );
+  }
+  getClientReviews(
+    userId: string,
+    pageNumber: number,
+    pageSize: number
+  ): Observable<PaginationApiResponse<IClientReview[]>> {
+    return this.httpClient.get<PaginationApiResponse<IClientReview[]>>(
+      `${environment.apiUrl}/api/client/client-reviews/?clientId=${userId}&pageNumber=${pageNumber}&pageSize=${pageSize}`
     );
   }
 }
