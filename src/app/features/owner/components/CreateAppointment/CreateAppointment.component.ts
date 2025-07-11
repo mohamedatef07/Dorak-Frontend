@@ -25,6 +25,8 @@ import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { TimeStringToDatePipe } from "../../../../pipes/TimeStringToDate.pipe";
+import { AppointmentType } from '../../../../Enums/AppointmentType.enum';
+import { ClientType } from '../../../../Enums/ClientType.enum';
 declare var bootstrap: any;
 
 @Component({
@@ -319,14 +321,31 @@ export class CreateAppointmentComponent implements OnInit {
 
     const raw = this.CreateAppointmentForm.getRawValue();
 
+    // Determine AppointmentType and clientType based on selectedService
+    let appointmentType = AppointmentType.Normal;
+    let clientType = ClientType.Normal;
+    if (this.selectedService) {
+      const serviceName = this.selectedService.ServiceName?.toLowerCase();
+      if (serviceName === 'urgent') {
+        appointmentType = AppointmentType.Urgent;
+        clientType = ClientType.Urgent;
+      } else if (serviceName === 'normal') {
+        appointmentType = AppointmentType.Normal;
+        clientType = ClientType.Normal;
+      } else if (serviceName === 'consultation') {
+        appointmentType = AppointmentType.Normal; // as per your rule
+        clientType = ClientType.Consultation;
+      }
+    }
+
     const appointmentData: ICreateAppointment = {
       FirstName: raw.FirstName,
       LastName: raw.LastName,
       ContactInfo: raw.ContactInfo,
       AppointmentDate: this.selectedShiftRecord.ShiftDate,
-      AppointmentType: 1,
+      AppointmentType: appointmentType,
       AppointmentStatus: 1,
-      clientType: 1,
+      clientType: clientType,
       OperatorId: this.OperatorId,
       ProviderId: this.selectedShiftRecord.ProviderId,
       CenterId: this.CenterId,
