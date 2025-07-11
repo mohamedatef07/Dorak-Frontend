@@ -2,20 +2,20 @@
   <div class="row align-items-center mb-4">
     <div class="col-auto">
       <div class="doctor-image-container">
-                @if (fullImagePath && !hasImageLoadFailed('doctor-avatar')) {
-          <img
-            [src]="fullImagePath"
-            alt="Provider Image"
-            class="doctor-image"
-            (error)="onImageError($event, 'doctor-avatar')"
-          />
+        @if (fullImagePath && !hasImageLoadFailed('doctor-avatar')) {
+        <img
+          [src]="fullImagePath"
+          alt="Provider Image"
+          class="doctor-image"
+          (error)="onImageError($event, 'doctor-avatar')"
+        />
         }@else {
-          <p-avatar
-            icon="pi pi-user"
-            shape="circle"
-            size="xlarge"
-            class="doctor-image"
-          ></p-avatar>
+        <p-avatar
+          icon="pi pi-user"
+          shape="circle"
+          size="xlarge"
+          class="doctor-image"
+        ></p-avatar>
         }
       </div>
     </div>
@@ -98,7 +98,8 @@
       <i class="fas fa-eye me-2"></i>
       Checkout
     </a>
-    } @else{
+    } @else if((appointment.AppointmentStatus | AppointmentStatusEnumValue) !==
+    'Completed'){
     <a
       [routerLink]="appointment.IsLive ? ['/client/client-live-queue', appointment.appointmentId, appointment.ShiftId] : null"
       [state]="{ doctorMainInfo: doctorMainInfo }"
@@ -108,7 +109,8 @@
     >
       <i class="fa-solid fa-users-line me-2"></i> Go to Live Queue
     </a>
-    }
+    } @if((appointment.AppointmentStatus | AppointmentStatusEnumValue) !==
+    'Completed'){
     <button
       pRipple
       class="btn btn-danger"
@@ -118,5 +120,14 @@
     >
       <i class="fa-solid fa-xmark me-2"></i> Cancel Appointment
     </button>
+    } @if((appointment.AppointmentStatus | AppointmentStatusEnumValue) ===
+    'Completed'){
+    <a
+      class="btn btn-success d-flex align-items-center"
+      [routerLink]="['/client/add-review', appointment.ProviderId]"
+    >
+      <i class="pi pi-star me-2"></i> Add Review
+    </a>
+    }
   </div>
 </div>

@@ -221,7 +221,6 @@ body {
 
 .sidebar {
   padding: 2.5rem 0;
-  height: calc(100vh - 90px);
   overflow-y: auto;
   position: sticky;
   top: 90px;

@@ -58,6 +58,7 @@ import { ClientReviewsComponent } from './features/client/components/client-revi
 import { CenterRegisterCodeComponent } from './components/CenterRegisterCode/CenterRegisterCode.component';
 import { CenterRegisterCodeGuard } from './guards/center-register-code.guard';
 import { ProviderCenterServiceComponent } from './features/owner/components/ProviderCenterService/ProviderCenterService.component';
+import { AddReviewComponent } from './features/client/components/add-review/add-review.component';
 
 export const routes: Routes = [
   {
@@ -303,6 +304,11 @@ export const routes: Routes = [
         component: ClientNotificationsComponent,
         title: 'Notifications',
       },
+      {
+        path: 'add-review/:providerId',
+        component: AddReviewComponent,
+        title: 'Add Review',
+      },
     ],
   },
   {
@@ -310,14 +316,14 @@ export const routes: Routes = [
     component: DoctorsPageComponent,
     title: 'Doctors',
     canActivate: [AuthGuard, RoleGuard],
-    data: { expectedRole: ['Client'] }
+    data: { expectedRole: ['Client'] },
   },
   {
     path: 'client/doctor-details/:id',
     component: DoctorDetailsComponent,
     title: 'Doctor Details',
     canActivate: [AuthGuard, RoleGuard],
-    data: { expectedRole: ['Client'] }
+    data: { expectedRole: ['Client'] },
   },
   {
     path: 'client/checkout',
@@ -339,13 +345,23 @@ export const routes: Routes = [
   //   ],
   //   title: 'Home',
   // },
-  { path: 'login', component: LoginComponent, title: 'Login', data: { animation: 'login' } },
-  { path: 'register', component: RegisterComponent, title: 'Register', data: { animation: 'register' } },
+  {
+    path: 'login',
+    component: LoginComponent,
+    title: 'Login',
+    data: { animation: 'login' },
+  },
+  {
+    path: 'register',
+    component: RegisterComponent,
+    title: 'Register',
+    data: { animation: 'register' },
+  },
   { path: 'center-code', component: CenterRegisterCodeComponent },
   {
     path: 'center-register',
     component: CenterRegisterComponent,
-    canActivate: [CenterRegisterCodeGuard]
+    canActivate: [CenterRegisterCodeGuard],
   },
   {
     path: 'unauthorized',
@@ -353,7 +369,15 @@ export const routes: Routes = [
     title: 'Unauthorized',
   },
   { path: 'contact-us', component: ContactUsComponent, title: 'Contact Us' },
-  { path: 'Help-Support', component: HelpSupportComponent, title: 'Help | Support' },
-  { path: 'terms-conditions', component: TermsConditionsComponent, title: 'Terms & Conditions' },
+  {
+    path: 'Help-Support',
+    component: HelpSupportComponent,
+    title: 'Help | Support',
+  },
+  {
+    path: 'terms-conditions',
+    component: TermsConditionsComponent,
+    title: 'Terms & Conditions',
+  },
   { path: '**', component: NotFoundComponent, title: 'Not Found' },
 ];
