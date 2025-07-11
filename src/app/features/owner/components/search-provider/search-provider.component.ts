@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterLink, RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -24,7 +24,6 @@ import { AuthService } from '../../../../services/auth.service';
     CommonModule,
     FormsModule,
     RouterModule,
-    RouterLink,
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
@@ -40,7 +39,37 @@ export class SearchProviderComponent implements OnInit, AfterViewInit {
   @ViewChild('tableElement') tableElement: ElementRef | undefined;
 
   providers: IProviderViewModel[] = [];
-  specializations: string[] = ['Cardiology', 'Pediatrics', 'Orthopedics'];
+  specializations: string[] = ['Cardiologist',
+    'Dermatologist',
+    'Endocrinologist',
+    'Gastroenterologist',
+    'General Practitioner',
+    'Geriatrician',
+    'Hematologist',
+    'Infectious Disease Specialist',
+    'Internal Medicine',
+    'Nephrologist',
+    'Neurologist',
+    'Obstetrician/Gynecologist (OB/GYN)',
+    'Oncologist',
+    'Ophthalmologist',
+    'Orthopedic Surgeon',
+    'Otolaryngologist (ENT)',
+    'Pediatrician',
+    'Plastic Surgeon',
+    'Psychiatrist',
+    'Pulmonologist',
+    'Radiologist',
+    'Rheumatologist',
+    'Surgeon',
+    'Urologist',
+    'Allergist/Immunologist',
+    'Anesthesiologist',
+    'Pathologist',
+    'Sports Medicine Specialist',
+    'Family Medicine',
+    'Occupational Medicine',
+    'Emergency Medicine'];
 
   totalItems: number = 0;
   pageSize: number = 9;
@@ -49,6 +78,8 @@ export class SearchProviderComponent implements OnInit, AfterViewInit {
   searchText: string = '';
   sortFilter: string = '';
   centerId: number = 0;
+  // centerId: number = 3;
+
 
   errorMessage: string = '';
   isLoading: boolean = false;
@@ -58,7 +89,7 @@ export class SearchProviderComponent implements OnInit, AfterViewInit {
     private apiService: ApiService,
     private router: Router,
     private cdr: ChangeDetectorRef,
-    private authService: AuthService // Inject AuthService
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {

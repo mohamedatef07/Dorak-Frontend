@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterLink, RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -25,7 +25,6 @@ import { AuthService } from '../../../../services/auth.service';
     CommonModule,
     FormsModule,
     RouterModule,
-    RouterLink,
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
@@ -39,7 +38,37 @@ export class ProviderManagementComponent implements OnInit, AfterViewInit {
   dataSource: MatTableDataSource<IProviderViewModel> = new MatTableDataSource<IProviderViewModel>([]);
 
   providers: IProviderViewModel[] = [];
-  specializations: string[] = ['Cardiology', 'Pediatrics', 'Orthopedics', 'Internal Medicine'];
+  specializations: string[] = ['Cardiologist',
+    'Dermatologist',
+    'Endocrinologist',
+    'Gastroenterologist',
+    'General Practitioner',
+    'Geriatrician',
+    'Hematologist',
+    'Infectious Disease Specialist',
+    'Internal Medicine',
+    'Nephrologist',
+    'Neurologist',
+    'Obstetrician/Gynecologist (OB/GYN)',
+    'Oncologist',
+    'Ophthalmologist',
+    'Orthopedic Surgeon',
+    'Otolaryngologist (ENT)',
+    'Pediatrician',
+    'Plastic Surgeon',
+    'Psychiatrist',
+    'Pulmonologist',
+    'Radiologist',
+    'Rheumatologist',
+    'Surgeon',
+    'Urologist',
+    'Allergist/Immunologist',
+    'Anesthesiologist',
+    'Pathologist',
+    'Sports Medicine Specialist',
+    'Family Medicine',
+    'Occupational Medicine',
+    'Emergency Medicine'];
 
   totalItems: number = 0;
   pageSize: number = 9;
@@ -49,10 +78,12 @@ export class ProviderManagementComponent implements OnInit, AfterViewInit {
   dateFilter: string = '';
   statusFilter: string = '';
   specializationFilter: string = '';
-
+  userRole: string | null = null;
+  hideActionButtons: boolean = false;
   errorMessage: string = '';
   isLoading: boolean = false;
   centerId: number = 0;
+  // centerId: number = 3;
   showDeletePopup: boolean = false;
   selectedProviderId: string | null = null;
 
@@ -60,6 +91,8 @@ export class ProviderManagementComponent implements OnInit, AfterViewInit {
     Online: 0,
     Offline: 1,
   };
+
+
 
   @ViewChild('deletePopup') deletePopup!: ElementRef;
 
@@ -71,7 +104,9 @@ export class ProviderManagementComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit(): void {
+    this.userRole = this.authService.getUserRole();
     this.centerId = this.authService.getCenterId();
+    this.hideActionButtons = this.userRole === 'Operator';
     this.loadAllProviders();
   }
 
@@ -137,13 +172,13 @@ export class ProviderManagementComponent implements OnInit, AfterViewInit {
     this.isLoading = false;
     const providerMap = new Map<string, IProviderViewModel>();
     this.providers.forEach((provider) => {
-      const providerId = provider.ProviderId || `temp-${Math.random()}`; // Use a temporary ID for mapping
-      if (!providerMap.has(providerId) && provider.ProviderId && provider.ProviderId !== 'unknown') { // Only map if ProviderId is valid
+      const providerId = provider.ProviderId || `temp-${Math.random()}`;
+      if (!providerMap.has(providerId) && provider.ProviderId && provider.ProviderId !== 'unknown') {
         providerMap.set(providerId, provider);
       }
     });
 
-    this.providers = Array.from(providerMap.values()).filter(p => p.ProviderId && p.ProviderId !== 'unknown'); // Filter out 'unknown' ProviderId
+    this.providers = Array.from(providerMap.values()).filter(p => p.ProviderId && p.ProviderId !== 'unknown');
     this.totalItems = this.providers.length;
     this.applyFilters();
   }
@@ -151,7 +186,6 @@ export class ProviderManagementComponent implements OnInit, AfterViewInit {
   applyFilters(): void {
     let filteredProviders = [...this.providers];
 
-    // Sorting by Name
     if (this.sortFilter === 'Name') {
       filteredProviders.sort((a, b) => {
         const nameA = ((a.FirstName || '') + ' ' + (a.LastName || '')).trim().toLowerCase();
@@ -269,34 +303,32 @@ export class ProviderManagementComponent implements OnInit, AfterViewInit {
       this.handleError('Invalid or missing provider ID. Cannot delete.');
       return;
     }
-    this.selectedProviderId = providerId; // Set the provider to delete
-    this.showDeletePopup = true; // Show the custom pop-up instead of confirm
+    this.selectedProviderId = providerId;
+    this.showDeletePopup = true;
   }
 
   confirmDelete(): void {
     if (this.selectedProviderId && this.selectedProviderId !== 'unknown') {
-      console.log('Attempting to delete provider with ID:', this.selectedProviderId); // Debug log
       this.apiService.deleteProviderFromCenter(this.selectedProviderId, this.centerId).subscribe({
         next: (response: ApiResponse<string>) => {
           if (response.Status === 200) {
-            this.loadAllProviders(); // Reload the provider list after successful deletion
+            this.loadAllProviders();
           } else {
             this.handleError(response.Message || 'Failed to delete provider. Status: ' + response.Status);
-            console.log('Response Details:', response); // Log full response for debugging
+            console.log('Response Details:', response);
           }
         },
         error: (err) => {
           this.handleError('An error occurred while deleting the provider. Please try again later. (Status: ' + (err.status || 'Unknown') + ')');
-          console.error('Error Details:', err); // Log error details
         }
       });
-    } // If invalid, error is handled above
-    this.cancelDelete(); // Close the pop-up after action
+    }
+    this.cancelDelete();
   }
 
   cancelDelete(): void {
-    this.showDeletePopup = false; // Hide the pop-up
-    this.selectedProviderId = null; // Reset the selected provider
+    this.showDeletePopup = false;
+    this.selectedProviderId = null;
   }
 
  navigateToScheduleOptions(providerId: string | undefined): void {

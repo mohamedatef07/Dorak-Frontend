@@ -59,6 +59,7 @@ export class LoginComponent {
         this.cookie.set('role', res.Data.Roles[0]);
         this.isLoading = false;
         this.messageService.add({
+          key: 'main-toast',
           severity: 'success',
           summary: 'Login Successful',
           detail: 'Welcome back!',
@@ -68,23 +69,26 @@ export class LoginComponent {
       },
       error: (err) => {
         this.isLoading = false;
-        
+
         // Handle different types of errors
         let errorMessage = 'Login failed. Please try again.';
-        
+
         if (err.status === 401) {
-          errorMessage = 'Invalid username or password. Please check your credentials.';
+          errorMessage =
+            'Invalid username or password. Please check your credentials.';
         } else if (err.status === 404) {
           errorMessage = 'User not found. Please check your username or email.';
         } else if (err.status === 0 || err.status === 500) {
           errorMessage = 'Server error. Please try again later.';
         } else if (err.status === 403) {
-          errorMessage = 'Account is locked or disabled. Please contact support.';
+          errorMessage =
+            'Account is locked or disabled. Please contact support.';
         } else if (err.error?.message) {
           errorMessage = err.error.message;
         }
-        
+
         this.messageService.add({
+          key: 'main-toast',
           severity: 'error',
           summary: 'Login Failed',
           detail: errorMessage,
@@ -93,8 +97,6 @@ export class LoginComponent {
       },
     });
   }
-
-
 
   onForgotPassword(): void {
     this.messageService.add({
@@ -121,6 +123,7 @@ export class LoginComponent {
     // Check if form is valid using Angular's built-in validation
     if (!this.email || !this.password) {
       this.messageService.add({
+        key: 'main-toast',
         severity: 'error',
         summary: 'Validation Error',
         detail: 'Please fill in all required fields',
@@ -128,10 +131,11 @@ export class LoginComponent {
       });
       return false;
     }
-    
+
     // Email/Username validation
     if (this.email.length < 8) {
       this.messageService.add({
+        key: 'main-toast',
         severity: 'error',
         summary: 'Validation Error',
         detail: 'Username or email must be at least 8 characters long',
@@ -139,10 +143,11 @@ export class LoginComponent {
       });
       return false;
     }
-    
+
     // Password validation
     if (this.password.length < 8) {
       this.messageService.add({
+        key: 'main-toast',
         severity: 'error',
         summary: 'Validation Error',
         detail: 'Password must be at least 8 characters long',
@@ -150,9 +155,10 @@ export class LoginComponent {
       });
       return false;
     }
-    
+
     if (this.password.indexOf(' ') >= 0) {
       this.messageService.add({
+        key: 'main-toast',
         severity: 'error',
         summary: 'Validation Error',
         detail: 'Password must not contain spaces',
@@ -160,12 +166,13 @@ export class LoginComponent {
       });
       return false;
     }
-    
+
     // Email format validation (if it looks like an email)
     if (this.email.includes('@')) {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(this.email)) {
         this.messageService.add({
+          key: 'main-toast',
           severity: 'error',
           summary: 'Validation Error',
           detail: 'Please enter a valid email address',
@@ -174,7 +181,6 @@ export class LoginComponent {
         return false;
       }
     }
-    
     return true;
   }
 }

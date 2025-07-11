@@ -80,7 +80,7 @@
                     <span class="custom-tooltip">
                       <ng-container *ngFor="let shift of day.shifts; let i = index">
                         <span class="shift-details">
-                          <strong>Shift {{ i + 1 }}</strong><br>
+                          <strong>Shift {{ i + 1 }} :</strong><br>
                           Start: {{ ('2000-01-01T' + shift.startTime) | date:'h:mm a' }}<br>
                           End: {{ ('2000-01-01T' + shift.endTime) | date:'h:mm a' }}
                         </span>

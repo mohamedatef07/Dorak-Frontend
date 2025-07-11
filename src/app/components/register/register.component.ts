@@ -21,7 +21,7 @@ interface RegistrationData {
   password: string;
   confirmPassword: string;
   role: string;
-  
+
   // Common fields for step 2
   firstName: string;
   lastName: string;
@@ -32,7 +32,7 @@ interface RegistrationData {
   country: string;
   birthDate: Date;
   image: File | null;
-  
+
   // Provider-specific fields
   specialization: string;
   bio: string;
@@ -80,7 +80,7 @@ export class RegisterComponent {
     password: '',
     confirmPassword: '',
     role: '',
-    
+
     // Common fields for step 2
     firstName: '',
     lastName: '',
@@ -91,7 +91,7 @@ export class RegisterComponent {
     country: '',
     birthDate: new Date(),
     image: null,
-    
+
     // Provider-specific fields
     specialization: '',
     bio: '',
@@ -137,7 +137,7 @@ export class RegisterComponent {
     'Family Medicine',
     'Occupational Medicine',
     'Emergency Medicine',
-    'Custom'
+    'Custom',
   ];
 
   showCustomSpecialization: boolean = false;
@@ -206,7 +206,8 @@ export class RegisterComponent {
       this.registrationData.password.length >= 8 &&
       this.registrationData.confirmPassword.trim() !== '' &&
       this.registrationData.confirmPassword.length >= 8 &&
-      this.registrationData.password === this.registrationData.confirmPassword &&
+      this.registrationData.password ===
+        this.registrationData.confirmPassword &&
       this.registrationData.role !== ''
     );
   }
@@ -215,7 +216,7 @@ export class RegisterComponent {
     if (!this.registrationData.role) return false;
 
     // Common validation for all roles
-    const commonFieldsValid = (
+    const commonFieldsValid =
       this.registrationData.firstName.trim() !== '' &&
       this.registrationData.lastName.trim() !== '' &&
       this.registrationData.gender.trim() !== '' &&
@@ -223,8 +224,7 @@ export class RegisterComponent {
       this.registrationData.city.trim() !== '' &&
       this.registrationData.governorate.trim() !== '' &&
       this.registrationData.country.trim() !== '' &&
-      this.registrationData.birthDate !== null
-    );
+      this.registrationData.birthDate !== null;
 
     if (!commonFieldsValid) return false;
 
@@ -247,6 +247,7 @@ export class RegisterComponent {
 
   showValidationError(): void {
     this.messageService.add({
+      key: 'main-toast',
       severity: 'error',
       summary: 'Validation Error',
       detail: 'Please fill in all required fields correctly',
@@ -264,7 +265,7 @@ export class RegisterComponent {
 
     // Create FormData for file upload
     const formData = new FormData();
-    
+
     // Add all the registration data to FormData
     formData.append('UserName', this.registrationData.username);
     formData.append('Email', this.registrationData.email);
@@ -272,37 +273,53 @@ export class RegisterComponent {
     formData.append('Password', this.registrationData.password);
     formData.append('ConfirmPassword', this.registrationData.confirmPassword);
     formData.append('Role', this.registrationData.role);
-    
+
     // Common fields
     formData.append('FirstName', this.registrationData.firstName);
     formData.append('LastName', this.registrationData.lastName);
-    formData.append('Gender', this.registrationData.gender === 'Male' ? GenderType.Male.toString() : GenderType.Female.toString());
-    
+    formData.append(
+      'Gender',
+      this.registrationData.gender === 'Male'
+        ? GenderType.Male.toString()
+        : GenderType.Female.toString()
+    );
+
     // Format date for C# DateOnly
     if (this.registrationData.birthDate) {
-      const formattedDate = this.formatDateForAPI(this.registrationData.birthDate);
+      const formattedDate = this.formatDateForAPI(
+        this.registrationData.birthDate
+      );
       formData.append('BirthDate', formattedDate);
     }
-    
+
     // Address fields
     formData.append('Street', this.registrationData.street);
     formData.append('City', this.registrationData.city);
     formData.append('Governorate', this.registrationData.governorate);
     formData.append('Country', this.registrationData.country);
-    
+
     // Image file
     if (this.registrationData.image) {
       formData.append('Image', this.registrationData.image);
     }
-    
+
     // Provider-specific fields (only if role is Provider)
     if (this.registrationData.role === 'Provider') {
       formData.append('Specialization', this.registrationData.specialization);
       formData.append('Bio', this.registrationData.bio);
-      formData.append('ExperienceYears', this.registrationData.experienceYears.toString());
-      formData.append('ProviderType', this.registrationData.providerType.toString());
+      formData.append(
+        'ExperienceYears',
+        this.registrationData.experienceYears.toString()
+      );
+      formData.append(
+        'ProviderType',
+        this.registrationData.providerType.toString()
+      );
       formData.append('LicenseNumber', this.registrationData.licenseNumber);
-      formData.append('EstimatedDuration', this.registrationData.estimatedDuration.toString());
+      formData.append(
+        'EstimatedDuration',
+        this.registrationData.estimatedDuration.toString()
+      );
       formData.append('Rate', this.registrationData.rate.toString());
     }
 
@@ -310,9 +327,11 @@ export class RegisterComponent {
       next: (response) => {
         this.isLoading = false;
         this.messageService.add({
+          key: 'main-toast',
           severity: 'success',
           summary: 'Registration Successful',
-          detail: response.Message || 'Your account has been created successfully!',
+          detail:
+            response.Message || 'Your account has been created successfully!',
           life: 5000,
         });
 
@@ -323,16 +342,14 @@ export class RegisterComponent {
       },
       error: (err) => {
         this.isLoading = false;
-        
         // Handle different types of errors
         let errorMessage = 'Registration failed. Please try again.';
-        
         if (err.status === 400) {
           if (err.error?.Errors) {
             // Handle validation errors from the API
             const validationErrors = err.error.Errors;
             const errorDetails = Object.keys(validationErrors)
-              .map(key => validationErrors[key])
+              .map((key) => validationErrors[key])
               .flat()
               .join(', ');
             errorMessage = `Validation errors: ${errorDetails}`;
@@ -346,14 +363,16 @@ export class RegisterComponent {
             errorMessage = 'Please check your input and try again.';
           }
         } else if (err.status === 409) {
-          errorMessage = 'Username or email already exists. Please choose different credentials.';
+          errorMessage =
+            'Username or email already exists. Please choose different credentials.';
         } else if (err.status === 0 || err.status === 500) {
           errorMessage = 'Server error. Please try again later.';
         } else if (err.error?.message) {
           errorMessage = err.error.message;
         }
-        
+
         this.messageService.add({
+          key: 'main-toast',
           severity: 'error',
           summary: 'Registration Failed',
           detail: errorMessage,

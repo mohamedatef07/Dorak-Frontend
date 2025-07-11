@@ -74,9 +74,6 @@ export class PatientQueueTableComponent implements OnInit {
   ngOnInit() {
     this.loadQueues();
     this.updateQueueSignalR.updatedProviderQueue.subscribe((updatedQueue) => {
-      
-      console.log("asdasdasd");
-      console.log(updatedQueue);
     this.allQueueEntries = updatedQueue;
     this.currentPage = 1;
     this.updateDisplayedEntries();

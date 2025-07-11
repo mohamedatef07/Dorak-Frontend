@@ -1,4 +1,5 @@
 import { ProviderNotificationsComponent } from './features/provider/components/provider-notifications/provider-notifications.component';
+import { AssignServiceToProviderCenterComponent } from './features/owner/components/assign-service-to-provider-center/assign-service-to-provider-center.component';
 import { Routes } from '@angular/router';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { LoginComponent } from './components/login/login.component';
@@ -50,6 +51,9 @@ import { RoleGuard } from './guards/role.guard';
 import { AuthGuard } from './guards/auth.guard';
 import { HeroComponent } from './features/landingpage/components/hero/hero.component';
 import { CenterRegisterComponent } from './components/CenterRegister/CenterRegister.component';
+import { ContactUsComponent } from './components/Contact-Us/Contact-Us.component';
+import { HelpSupportComponent } from './components/Help-Support/Help-Support.component';
+import { TermsConditionsComponent } from './components/Terms-Conditions/Terms-Conditions.component';
 
 export const routes: Routes = [
   {
@@ -62,6 +66,11 @@ export const routes: Routes = [
         path: 'center-shifts',
         component: CenterShiftsComponent,
         title: 'Center Shifts',
+      },
+      {
+        path: 'assign-service-to-provider-center',
+        component: AssignServiceToProviderCenterComponent,
+        title: 'Assign Service To Provider Center',
         data: { expectedRole: ['Admin'] },
       },
       {
@@ -86,7 +95,6 @@ export const routes: Routes = [
         path: 'provider-management',
         component: ProviderManagementComponent,
         title: 'Provider Management',
-        data: { expectedRole: ['Admin'] },
       },
       {
         path: 'add-provider',
@@ -316,13 +324,15 @@ export const routes: Routes = [
     ],
     title: 'Home',
   },
-  { path: 'login', component: LoginComponent, title: 'Login', data: { animation: 'login' } },
-  { path: 'register', component: RegisterComponent, title: 'Register', data: { animation: 'register' } },
-  { path: 'center-register', component: CenterRegisterComponent, title: 'Register Center', data: { animation: 'centerRegister' } },
+  { path: 'login', component: LoginComponent, title: 'Login' },
+  { path: 'register', component: RegisterComponent, title: 'Register' },
   {
     path: 'unauthorized',
     component: UnauthorizedComponent,
     title: 'Unauthorized',
   },
+  { path: 'contact-us', component: ContactUsComponent, title: 'Contact Us' },
+  { path: 'Help-Support', component: HelpSupportComponent, title: 'Help | Support' },
+  { path: 'terms-conditions', component: TermsConditionsComponent, title: 'Terms & Conditions' },
   { path: '**', component: NotFoundComponent, title: 'Not Found' },
 ];

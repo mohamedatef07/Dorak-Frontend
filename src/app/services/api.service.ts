@@ -15,6 +15,7 @@ import { IUpdateQueueStatusViewModel } from '../types/IUpdateQueueStatusViewMode
 import { GenderType } from '../Enums/GenderType.enum';
 import { IOperatorViewModel } from '../types/IOperatorViewModel';
 import { IShift } from '../types/IShift';
+import { IContactEmail } from '../types/IContactEmail';
 
 @Injectable({
   providedIn: 'root'
@@ -183,6 +184,19 @@ deleteProviderFromCenter(providerId: string, centerId: number): Observable<ApiRe
       map((response: ApiResponse<IOperatorViewModel>) => response),
       catchError((error) => {
         console.error('API error in endShift:', error);
+        throw error;
+      })
+    );
+  }
+
+  sendEmail(emailData: IContactEmail): Observable<ApiResponse<string>> {
+    return this.httpClient.post<ApiResponse<string>>(
+      `${environment.apiUrl}/api/Email/SendEmail`,
+      emailData
+    ).pipe(
+      map((response: ApiResponse<string>) => response),
+      catchError((error) => {
+        console.error('API error in sendEmail:', error);
         throw error;
       })
     );

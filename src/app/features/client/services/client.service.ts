@@ -23,6 +23,7 @@ import { IClientInfoForLiveQueue } from '../models/IClientInfoForLiveQueue';
 import { IClientUpdate } from '../models/IClientUpdate';
 import { IGeneralAppointmentStatistics } from '../models/IGeneralAppointmentStatistics';
 import { PaginationApiResponse } from '../../../types/PaginationApiResponse';
+import { ICitiesAndSpecializations } from '../models/ICitiesAndSpecializations';
 
 @Injectable({
   providedIn: 'root',
@@ -37,13 +38,19 @@ export class ClientService {
    * Get all doctors, or filter/search if filter is provided.
    * @param filter Optional filter/search object
    */
-  getAllDoctorsCards(filter: Partial<IDoctorFilter>={}, pageNumber: number, pageSize: number): Observable<PaginationApiResponse<Array<IDoctorCard>>> {
+  getAllDoctorsCards(
+    filter: Partial<IDoctorFilter> = {},
+    pageNumber: number,
+    pageSize: number
+  ): Observable<PaginationApiResponse<Array<IDoctorCard>>> {
     if (!filter || Object.keys(filter).length === 0) {
       return this.httpClient.post<PaginationApiResponse<Array<IDoctorCard>>>(
         `${environment.apiUrl}/api/Client/provider-cards`,
         filter || {},
         {
-          params: new HttpParams().set('pageNumber', pageNumber).set('pageSize', pageSize)
+          params: new HttpParams()
+            .set('pageNumber', pageNumber)
+            .set('pageSize', pageSize),
         }
       );
     } else {
@@ -51,12 +58,13 @@ export class ClientService {
         `${environment.apiUrl}/api/Client/provider-cards`,
         filter,
         {
-          params: new HttpParams().set('pageNumber', pageNumber).set('pageSize', pageSize)
+          params: new HttpParams()
+            .set('pageNumber', pageNumber)
+            .set('pageSize', pageSize),
         }
       );
     }
   }
-
 
   getDoctorsById(id: string | null): Observable<ApiResponse<any>> {
     return this.httpClient.get<ApiResponse<any>>(
@@ -228,6 +236,14 @@ export class ClientService {
   ): Observable<PaginationApiResponse<IClientAppointmentCard[]>> {
     return this.httpClient.get<PaginationApiResponse<IClientAppointmentCard[]>>(
       `${environment.apiUrl}/api/client/appointments-history/${userId}?pageNumber=${pageNumber}&pageSize=${pageSize}`
+    );
+  }
+
+  GetAllCitiesAndSpecializations(): Observable<
+    ApiResponse<ICitiesAndSpecializations>
+  > {
+    return this.httpClient.get<ApiResponse<ICitiesAndSpecializations>>(
+      `${environment.apiUrl}/api/client/all-cities-specializations`
     );
   }
 }
