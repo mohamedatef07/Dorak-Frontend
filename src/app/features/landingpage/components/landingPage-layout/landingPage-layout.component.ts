@@ -5,7 +5,8 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-landingPage-layout',
  standalone: true,
- imports:[HeroComponent],
+ imports:[HeroComp
+  onent],
   templateUrl: './landingPage-layout.component.html',
   styleUrls: ['./landingPage-layout.component.css']
 })
