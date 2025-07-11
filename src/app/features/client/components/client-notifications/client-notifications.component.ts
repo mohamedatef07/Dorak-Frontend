@@ -4,12 +4,13 @@ import { DatePipe, CommonModule } from '@angular/common';
 import { NotificationService } from '../../../../services/Notification.service';
 import { MessageService } from 'primeng/api';
 import { NotificationsSRService } from '../../../../services/signalR Services/notificationsSR.service';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-client-notifications',
   templateUrl: './client-notifications.component.html',
   styleUrls: ['./client-notifications.component.css'],
-  imports: [DatePipe, CommonModule],
+  imports: [DatePipe, CommonModule, ProgressSpinnerModule],
 })
 export class ClientNotificationsComponent implements OnInit {
   notificationService = inject(NotificationService);
@@ -21,6 +22,7 @@ export class ClientNotificationsComponent implements OnInit {
   totalPages: number = 0;
   srService = inject(NotificationsSRService);
   unreadCount = 0;
+  loading: boolean = false;
 
   constructor() {}
 
@@ -58,10 +60,12 @@ export class ClientNotificationsComponent implements OnInit {
   }
 
   loadNotifications() {
+    this.loading = true;
     this.notificationService
       .getNotifications(this.currentPage, this.pageSize)
       .subscribe({
         next: (res) => {
+
           const notificationsWithLocalStatus =
             this.notificationService.updateNotificationsWithLocalStatus(
               res.Data
@@ -71,7 +75,9 @@ export class ClientNotificationsComponent implements OnInit {
           this.currentPage = res.CurrentPage;
           this.pageSize = res.PageSize;
           this.totalPages = res.TotalPages;
+          this.loading = false;
           this.updateUnreadCount();
+
         },
         error: (err) => {
           this.messageService.add({
@@ -82,6 +88,7 @@ export class ClientNotificationsComponent implements OnInit {
               'The server is experiencing an issue, Please try again soon.',
             life: 4000,
           });
+          this.loading = false;
         },
       });
 

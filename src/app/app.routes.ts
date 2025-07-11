@@ -35,7 +35,6 @@ import { PersonalSettingComponent } from './features/provider/components/persona
 import { ProfessionalInformationComponent } from './features/provider/components/ProfessionalInformation/ProfessionalInformation.component';
 import { SecurityProfileComponent } from './features/provider/components/SecurityProfile/SecurityProfile.component';
 import { ProviderSettingComponent } from './features/provider/components/Provider-Setting/Provider-Setting.component';
-// import { LandingPageLayoutComponent } from './features/landingpage/components/landingPage-layout/landingPage-layout.component';
 import { CheckoutComponent } from './features/client/components/checkout/checkout.component';
 import { CenterShiftsComponent } from './features/owner/components/center-shifts/center-shifts.component';
 import { ChangePasswordComponent } from './features/client/components/Change-Password/Change-Password.component';
@@ -49,7 +48,7 @@ import { RescheduleAssignmentComponent } from './features/owner/components/resch
 import { AppointmentsHistoryComponent } from './features/client/components/appointments-history/appointments-history.component';
 import { RoleGuard } from './guards/role.guard';
 import { AuthGuard } from './guards/auth.guard';
-// import { HeroComponent } from './features/landingpage/components/hero/hero.component';
+import { HeroComponent } from './features/landingpage/components/hero/hero.component';
 import { CenterRegisterComponent } from './components/CenterRegister/CenterRegister.component';
 import { ContactUsComponent } from './components/Contact-Us/Contact-Us.component';
 import { HelpSupportComponent } from './components/Help-Support/Help-Support.component';
@@ -337,26 +336,13 @@ export const routes: Routes = [
 
   // ----------------------------------
 
-  // {
-  //   path: 'home',
-  //   component: LandingPageLayoutComponent,
-  //   children: [
-  //     {path:'hero',component:HeroComponent}
-  //   ],
-  //   title: 'Home',
-  // },
   {
-    path: 'login',
-    component: LoginComponent,
-    title: 'Login',
-    data: { animation: 'login' },
+    path: 'home',
+    component: HeroComponent,
+
   },
-  {
-    path: 'register',
-    component: RegisterComponent,
-    title: 'Register',
-    data: { animation: 'register' },
-  },
+  { path: 'login', component: LoginComponent, title: 'Login', data: { animation: 'login' } },
+  { path: 'register', component: RegisterComponent, title: 'Register', data: { animation: 'register' } },
   { path: 'center-code', component: CenterRegisterCodeComponent },
   {
     path: 'center-register',

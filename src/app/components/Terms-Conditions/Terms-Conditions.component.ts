@@ -76,6 +76,7 @@ export class TermsConditionsComponent implements OnInit, OnDestroy {
   lastUpdated = '';
   private dateSubscription?: Subscription;
   private termsHash = '';
+  public currentYear: number = new Date().getFullYear();
 
   constructor() { }
 

@@ -62,6 +62,8 @@ export class ContactUsComponent implements OnInit {
     emergencySupport: '24/7 Technical Support Available',
   };
 
+  public currentYear: number = new Date().getFullYear();
+
   constructor(
     private messageService: MessageService,
     private apiService: ApiService

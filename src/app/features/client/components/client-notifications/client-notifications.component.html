@@ -7,7 +7,12 @@
     Mark All as Read
   </button>
 </div>
-}
+} @if(loading) {
+<div class="loader-container">
+  <p-progressSpinner ariaLabel="loading" animationDuration=".5s">
+  </p-progressSpinner>
+</div>
+} @else {
 <div class="notifications-list p-3">
   @for(notification of notifications; track $index){
   <div
@@ -54,4 +59,4 @@
     Next
   </button>
 </div>
-}
+} }
