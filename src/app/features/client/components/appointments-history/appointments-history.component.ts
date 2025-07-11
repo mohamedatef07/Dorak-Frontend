@@ -11,6 +11,7 @@ import { RouterLink } from '@angular/router';
 import { environment } from '../../../../../environments/environment';
 import { AppointmentStatusEnumValuePipe } from '../../../../pipes/AppointmentStatusEnumValue.pipe';
 import { TimeStringToDatePipe } from '../../../../pipes/TimeStringToDate.pipe';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-appointments-history',
@@ -25,13 +26,14 @@ import { TimeStringToDatePipe } from '../../../../pipes/TimeStringToDate.pipe';
     RouterLink,
     TimeStringToDatePipe,
     AppointmentStatusEnumValuePipe,
+    ProgressSpinnerModule,
   ],
 })
 export class AppointmentsHistoryComponent implements OnInit {
   clientService = inject(ClientService);
   authService = inject(AuthService);
   messageService = inject(MessageService);
-
+  loading: boolean = false;
   AppointmentsHistory: IClientAppointmentCard[] = [];
   userId: string = '';
   fullImagePath: string = `${environment.apiUrl}`;
@@ -74,6 +76,7 @@ export class AppointmentsHistoryComponent implements OnInit {
     return end > this.totalRecords ? this.totalRecords : end;
   }
   loadAppointmentsHistory() {
+    this.loading = true;
     this.clientService
       .getAppointmentsHistory(this.userId, this.currentPage, this.pageSize)
       .subscribe({
@@ -83,8 +86,10 @@ export class AppointmentsHistoryComponent implements OnInit {
           this.currentPage = res.CurrentPage;
           this.pageSize = res.PageSize;
           this.totalPages = res.TotalPages;
+          this.loading = false;
         },
         error: (err) => {
+          this.loading = false;
           this.messageService.add({
             key: 'main-toast',
             severity: 'error',

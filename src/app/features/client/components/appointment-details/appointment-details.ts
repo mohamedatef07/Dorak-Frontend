@@ -17,6 +17,7 @@ import { AppointmentStatus } from '../../../../Enums/AppointmentStatus.enum';
 import { ICheckoutRequest } from '../../models/ICheckoutRequest';
 import { IDoctorMainInfo } from '../../models/IDoctorMainInfo';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { ProgressSpinnerModule } from "primeng/progressspinner";
 
 @Component({
   selector: 'app-appointment-details',
@@ -29,7 +30,8 @@ import { ConfirmationService, MessageService } from 'primeng/api';
     ClientTypeEnumValuePipe,
     RouterLink,
     TimeStringToDatePipe,
-  ],
+    ProgressSpinnerModule,
+],
   templateUrl: './appointment-details.html',
   styleUrls: ['./appointment-details.css'],
 })
@@ -48,7 +50,7 @@ export class appointmentDetails implements OnInit {
     ClientId: '',
     StripeToken: '',
   };
-
+  loading: boolean = false;
   doctorMainInfo: IDoctorMainInfo = {
     FullName: '',
     Specialization: '',
@@ -63,8 +65,11 @@ export class appointmentDetails implements OnInit {
     if (param) {
       this.appointmentId = +param;
 
+    this.loading = true;
+
       this.clientService.getAppointmentById(this.appointmentId).subscribe({
         next: (res) => {
+          this.loading = false;
           this.appointment = res.Data;
           if (
             this.appointment.AppointmentStatus === AppointmentStatus.Pending
@@ -89,7 +94,15 @@ export class appointmentDetails implements OnInit {
         },
 
         error: (err) => {
+          this.loading = false;
           console.error(err);
+          this.messageServices.add({
+            key: 'main-toast',
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Failed to load appointment details. Please try again later.',
+            life: 4000,
+          });
         },
       });
     }

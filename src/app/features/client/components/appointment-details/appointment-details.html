@@ -1,21 +1,27 @@
+@if(loading) {
+<div class="loader-container">
+  <p-progressSpinner ariaLabel="loading" animationDuration=".5s">
+  </p-progressSpinner>
+</div>
+} @else {
 <div class="content-wrapper">
   <div class="row align-items-center mb-4">
     <div class="col-auto">
       <div class="doctor-image-container">
-                @if (fullImagePath && !hasImageLoadFailed('doctor-avatar')) {
-          <img
-            [src]="fullImagePath"
-            alt="Provider Image"
-            class="doctor-image"
-            (error)="onImageError($event, 'doctor-avatar')"
-          />
+        @if (fullImagePath && !hasImageLoadFailed('doctor-avatar')) {
+        <img
+          [src]="fullImagePath"
+          alt="Provider Image"
+          class="doctor-image"
+          (error)="onImageError($event, 'doctor-avatar')"
+        />
         }@else {
-          <p-avatar
-            icon="pi pi-user"
-            shape="circle"
-            size="xlarge"
-            class="doctor-image"
-          ></p-avatar>
+        <p-avatar
+          icon="pi pi-user"
+          shape="circle"
+          size="xlarge"
+          class="doctor-image"
+        ></p-avatar>
         }
       </div>
     </div>
@@ -120,3 +126,4 @@
     </button>
   </div>
 </div>
+}

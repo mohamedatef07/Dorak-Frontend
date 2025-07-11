@@ -517,3 +517,19 @@
 ::ng-deep .p-carousel-viewport {
   height: 600px !important;
 }
+
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+}
+
+:host ::ng-deep .p-progress-spinner {
+  width: 50px;
+  height: 50px;
+}
+
+:host ::ng-deep .p-progress-spinner-circle {
+  stroke: var(--primary-color);
+}
