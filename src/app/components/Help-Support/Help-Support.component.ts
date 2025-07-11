@@ -34,6 +34,7 @@ export class HelpSupportComponent implements OnInit {
   searchQuery = '';
   selectedCategory = 'all';
   expandedItems: Set<number> = new Set();
+  public currentYear: number = new Date().getFullYear();
 
   // FAQ Categories
   categories = [
