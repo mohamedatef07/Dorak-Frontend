@@ -203,6 +203,7 @@ export class CenterRegisterComponent implements OnDestroy {
       next: (response) => {
         this.isLoading = false;
         this.messageService.add({
+          key: 'main-toast',
           severity: 'success',
           summary: 'Registration Successful',
           detail: response.Message || 'Center registered successfully!',
@@ -237,6 +238,7 @@ export class CenterRegisterComponent implements OnDestroy {
           errorMessage = err.error.message;
         }
         this.messageService.add({
+          key: 'main-toast',
           severity: 'error',
           summary: 'Registration Failed',
           detail: errorMessage,

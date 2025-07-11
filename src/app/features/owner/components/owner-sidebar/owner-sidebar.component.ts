@@ -48,6 +48,22 @@ export class OwnerSidebarComponent implements OnInit {
       ],
     },
     {
+      label: 'Manage Services',
+      icon: 'pi pi-briefcase',
+      items: [
+        {
+          label: 'View Services',
+          icon: 'pi pi-list',
+          routerLink: '/owner/provider-center-services',
+        },
+        {
+          label: 'Assign Service',
+          icon: 'pi pi-plus-circle',
+          routerLink: '/owner/assign-service-to-provider-center',
+        },
+      ],
+    },
+    {
       label: 'Manage Queues',
       icon: 'pi pi-calendar',
       routerLink: '/owner/center-shifts-table',
@@ -73,12 +89,7 @@ export class OwnerSidebarComponent implements OnInit {
       label: 'Analytics',
       icon: 'pi pi-chart-bar',
       routerLink: '/provider/reports',
-    },
-    {
-      label: 'Assign Service To Provider Center',
-      icon: 'pi pi-link',
-      routerLink: '/owner/assign-service-to-provider-center',
-    },
+    }
   ];
 
   private providerItems: MenuItem[] = [

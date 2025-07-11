@@ -1,50 +1,77 @@
-<div class="container mt-4">
-  <h2>Assign Service to Provider Center</h2>
-  <form [formGroup]="assignForm" (ngSubmit)="onSubmit()">
-    <div class="mb-3">
-      <label for="ProviderId" class="form-label">Provider</label>
-      <p-dropdown
-        id="ProviderId"
-        formControlName="ProviderId"
-        [options]="providers"
-        optionLabel="FullName"
-        optionValue="Id"
-        placeholder="Select a provider"
-        [showClear]="true"
-        [filter]="true"
-        [virtualScroll]="true"
-        [style]="{width: '100%'}"
-      ></p-dropdown>
+<div class="assign-service-container d-flex justify-content-start">
+  <div style="flex: 0 0 600px;">
+    <h1 class="page-title">Assign Service to Provider Center</h1>
+    <div class="assign-service-card">
+      <div *ngIf="successMessage" class="alert alert-success mt-3">{{ successMessage }}</div>
+      <div *ngIf="errorMessage" class="alert alert-danger mt-3">{{ errorMessage }}</div>
+      <form [formGroup]="assignForm" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+          <label for="ProviderId" class="form-label">Provider</label>
+          <p-autoComplete
+            inputId="providerAuto"
+            formControlName="ProviderId"
+            [suggestions]="filteredProviders"
+            (completeMethod)="filterProviders($event)"
+            field="FullName"
+            [dropdown]="true"
+            [forceSelection]="true"
+            placeholder="Search or select a provider"
+            [style]="{width: '100%'}">
+            <ng-template let-provider pTemplate="item">
+              <div>
+                <b>{{ provider.FullName }}</b>
+              </div>
+            </ng-template>
+          </p-autoComplete>
+          <div *ngIf="assignForm.get('ProviderId')?.invalid && (assignForm.get('ProviderId')?.dirty || assignForm.get('ProviderId')?.touched)" class="text-danger mt-1">
+            <div *ngIf="assignForm.get('ProviderId')?.errors?.['required']">Provider is required.</div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="ServiceId" class="form-label">Service</label>
+          <p-autoComplete
+            inputId="serviceAuto"
+            formControlName="ServiceId"
+            [suggestions]="filteredServices"
+            (completeMethod)="filterServices($event)"
+            field="ServiceName"
+            [dropdown]="true"
+            [forceSelection]="true"
+            placeholder="Search or select a service"
+            [style]="{width: '100%'}">
+            <ng-template let-service pTemplate="item">
+              <div>
+                <b>{{ service.ServiceName }}</b>
+                <span *ngIf="service.Description">- {{ service.Description }}</span>
+              </div>
+            </ng-template>
+          </p-autoComplete>
+          <div *ngIf="assignForm.get('ServiceId')?.invalid && (assignForm.get('ServiceId')?.dirty || assignForm.get('ServiceId')?.touched)" class="text-danger mt-1">
+            <div *ngIf="assignForm.get('ServiceId')?.errors?.['required']">Service is required.</div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="Price" class="form-label">Price</label>
+          <input type="number" id="Price" class="form-control" formControlName="Price" min="0" />
+          <div *ngIf="assignForm.get('Price')?.invalid && (assignForm.get('Price')?.dirty || assignForm.get('Price')?.touched)" class="text-danger mt-1">
+            <div *ngIf="assignForm.get('Price')?.errors?.['required']">Price is required.</div>
+            <div *ngIf="assignForm.get('Price')?.errors?.['min']">Price must be greater than 0.</div>
+          </div>
+        </div>
+
+        <input type="hidden" formControlName="CenterId" />
+        <input type="hidden" formControlName="Priority" />
+
+        <div class="d-flex justify-content-between align-items-center mt-4">
+          <button type="button" class="ClearFilters assign-clear-btn" (click)="clearForm()">Clear</button>
+          <button type="submit" class="btn assign-submit-btn" [disabled]="loading || assignForm.invalid">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            {{ loading ? 'Assigning...' : 'Assign Service' }}
+          </button>
+        </div>
+      </form>
     </div>
-    <div class="mb-3">
-      <label for="ServiceId" class="form-label">Service</label>
-      <p-dropdown
-        id="ServiceId"
-        formControlName="ServiceId"
-        [options]="services"
-        optionLabel="ServiceName"
-        optionValue="ServiceId"
-        placeholder="Select a service"
-        [showClear]="true"
-        [filter]="true"
-        [virtualScroll]="true"
-        [style]="{width: '100%'}"
-      ></p-dropdown>
-    </div>
-    <div class="mb-3">
-      <label for="CenterId" class="form-label">Center ID</label>
-      <input type="number" id="CenterId" class="form-control" formControlName="CenterId" required />
-    </div>
-    <div class="mb-3">
-      <label for="Price" class="form-label">Price</label>
-      <input type="number" id="Price" class="form-control" formControlName="Price" required min="0" />
-    </div>
-    <div class="mb-3">
-      <label for="Priority" class="form-label">Priority</label>
-      <input type="number" id="Priority" class="form-control" formControlName="Priority" required min="1" />
-    </div>
-    <button type="submit" class="btn btn-primary" [disabled]="loading">Assign Service</button>
-  </form>
-  <div *ngIf="successMessage" class="alert alert-success mt-3">{{ successMessage }}</div>
-  <div *ngIf="errorMessage" class="alert alert-danger mt-3">{{ errorMessage }}</div>
+  </div>
 </div>
