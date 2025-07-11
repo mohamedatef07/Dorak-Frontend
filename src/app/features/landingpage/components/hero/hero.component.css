@@ -168,35 +168,50 @@
 
         /* Features Section */
 
+/* تخصيص اللون للنص */
 .text-dark {
-  color:#133c66 !important;
+  color: #133c66 !important;
 }
 
-.feature-icon-bg fa-icon {
-  color:#133c66 !important;
+/* تخصيص اللون للأيقونات */
+.features-icon-bg fa-icon {
+  color: #133c66 !important;
 }
 
-.feature-card {
+/* تأثير عند التمرير فوق الـ Card */
+.features-card {
   transition: transform 0.3s ease;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.feature-card:hover {
+.features-card:hover {
   transform: translateY(-10px);
 }
 
+/* استخدام Flexbox داخل الـ Row لتوزيع الأعمدة بشكل صحيح */
 .row {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-between;  /* تأكيد توزيع الأعمدة بالتساوي */
+  gap: 20px; /* المسافة بين الأعمدة */
 }
 
+/* تخصيص الأعمدة لتكون 3 بجانب بعض في الشاشات الكبيرة */
 .col-md-4 {
-  flex: 1 0 32%;
-  margin-bottom: 30px;
+  flex: 1 0 32%; /* كل عمود يأخذ 32% من العرض */
+  margin-bottom: 30px; /* مسافة بين الأعمدة */
 }
 
-.feature-icon-bg {
+/* تخصيص الأعمدة على الشاشات الصغيرة */
+@media (max-width: 767px) {
+  .col-12 {
+    flex: 1 0 100%; /* الأعمدة تأخذ 100% من العرض في الشاشات الصغيرة */
+    margin-bottom: 20px; /* تباعد بين الأعمدة */
+  }
+}
+
+/* تخصيص الأيقونات داخل الـ Card */
+.features-icon-bg {
   margin-bottom: 15px;
   display: flex;
   justify-content: center;
@@ -206,6 +221,7 @@
   width: 60px;
   height: 60px;
 }
+
 
 
         /* How It Works Section */
@@ -311,49 +327,19 @@
         }
 
         /* FAQ Section */
-        .faq {
-            background: white;
-            padding: 100px 0;
-        }
 
-        .faq-container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
+         .faq-button {
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  padding: 1rem 1.5rem;
+  transition: background-color 0.3s ease;
+}
 
-        .faq-item {
-            background: #f8fafc;
-            border-radius: 15px;
-            margin-bottom: 20px;
-            overflow: hidden;
-            border: 1px solid rgba(0,0,0,0.05);
-        }
-
-        .faq-question {
-            padding: 25px;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: 600;
-            color: #2d3748;
-            transition: all 0.3s ease;
-        }
-
-        .faq-question:hover {
-            background: #e2e8f0;
-        }
-
-        .faq-arrow {
-            font-size: 1.2rem;
-            transition: transform 0.3s ease;
-        }
-
-        .faq-answer {
-            padding: 0 25px 25px;
-            color: #718096;
-            display: none;
-        }
+.faq-button:hover {
+  background-color: #f8f9fa;
+}
 
         /* CTA Section */
         .cta {
@@ -414,6 +400,7 @@
             font-size: 18px;
         }
 
+        
         /* Responsive Design */
         @media (max-width: 768px) {
             .hero-content {

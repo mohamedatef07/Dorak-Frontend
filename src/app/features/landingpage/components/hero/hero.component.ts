@@ -17,7 +17,7 @@ import { faUsers } from '@fortawesome/free-solid-svg-icons';
   NgFor
   ],
   styleUrls: ['./Hero.component.css',
-         '..//../../../styles/general.css'
+
 
   ]
 })
@@ -76,11 +76,7 @@ export class HeroComponent  {
       title: 'Real-time Screens',
       description: 'Digital displays show current queue status and estimated wait times.'
     },
-    {
-      icon: this.faGlobe,
-      title: 'Multi-language Interface',
-      description: 'Support for Arabic, English, and other languages for diverse customers.'
-    }
+
   ];
 
   // Industries
@@ -95,21 +91,15 @@ export class HeroComponent  {
 
   // FAQs
   faqs = [
-    {
-      question: 'Does it support Arabic and English?',
-      answer: 'Yes, our system supports multiple languages including Arabic and English, with easy language switching for both staff and customers.'
-    },
+
     {
       question: 'Can I use it without internet?',
-      answer: 'The system can work offline for basic queue management, but internet connectivity is required for advanced features like SMS notifications and remote monitoring.'
+      answer: 'No, the system cannot operate completely without the internet. An electronic connection is required to enable some advanced features, such as notifications, remote monitoring, and custom data updates.'
     },
-    {
-      question: 'Is there a mobile app?',
-      answer: 'Yes, we provide both iOS and Android mobile apps for customers to join queues remotely and receive notifications.'
-    },
+
     {
       question: 'How quickly can we set it up?',
-      answer: 'Our system can be set up within 30 minutes. We provide complete installation support and training for your staff.'
+      answer: 'Our system can be set up within 2 days. We provide complete installation support and training for your staff.'
     },
     {
       question: 'What hardware do we need?',
