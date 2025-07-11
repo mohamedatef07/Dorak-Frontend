@@ -33,7 +33,7 @@ export class AppointmentsHistoryComponent implements OnInit {
   messageService = inject(MessageService);
 
   AppointmentsHistory: IClientAppointmentCard[] = [];
-  userid: string = '';
+  userId: string = '';
   fullImagePath: string = `${environment.apiUrl}`;
   currentPage: number = 1;
   pageSize: number = 10;
@@ -42,7 +42,7 @@ export class AppointmentsHistoryComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    this.userid = this.authService.getUserId();
+    this.userId = this.authService.getUserId();
     this.loadAppointmentsHistory();
   }
   nextPage() {
@@ -75,7 +75,7 @@ export class AppointmentsHistoryComponent implements OnInit {
   }
   loadAppointmentsHistory() {
     this.clientService
-      .getAppointmentsHistory(this.userid, this.currentPage, this.pageSize)
+      .getAppointmentsHistory(this.userId, this.currentPage, this.pageSize)
       .subscribe({
         next: (res) => {
           this.AppointmentsHistory = [...res.Data];
