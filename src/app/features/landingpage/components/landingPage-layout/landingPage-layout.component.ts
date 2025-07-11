@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { HeroComponent } from '../hero/Hero.component';
+import { HeroComponent } from '../hero/hero.component';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 
 @Component({
-  selector: 'app-landingPage-layout',
+  selector: 'app-landingPage-layout', 
  standalone: true,
- imports:[HeroComponent],
+ imports:[CommonModule,RouterModule,HeroComponent],
   templateUrl: './landingPage-layout.component.html',
   styleUrls: ['./landingPage-layout.component.css']
 })

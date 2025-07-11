@@ -1,22 +1,19 @@
 import { NgClass, NgStyle, CommonModule, NgFor } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { faClock, faZap, faBuilding, faCheckCircle,faCity, faBolt,faGlobe,faDesktop, faArrowRight, faChevronDown, faChevronUp, faHospital, faLandmark, faGraduationCap, faPhone, faStethoscope } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faMobileAlt } from '@fortawesome/free-solid-svg-icons';
 import { faUsers } from '@fortawesome/free-solid-svg-icons';
 
 
-
 @Component({
-  selector: 'app-Hero',
+  selector: 'app-hero',
    standalone: true,
-  templateUrl: './Hero.component.html',
+  templateUrl: './hero.component.html',
    imports: [
-    FontAwesomeModule ,
-  CommonModule,
-  NgFor
-  ],
-  styleUrls: ['./Hero.component.css',
+    CommonModule,
+    NgFor
+],
+  styleUrls: ['./hero.component.css',
 
 
   ]

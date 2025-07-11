@@ -48,7 +48,7 @@
       <div *ngFor="let feature of features" class="col-12 col-md-4">
         <div class="card features-card bg-light-custom h-100 p-4 shadow-sm">
           <div class="features-icon-bg">
-            <fa-icon [icon]="feature.icon" size="lg" class="text-primary-custom"></fa-icon>
+            <!-- <fa-icon [icon]="feature.icon" size="lg" class="text-primary-custom"></fa-icon> -->
           </div>
           <h3 class="fs-5 fw-semibold text-dark mb-3">{{ feature.title }}</h3>
           <p class="text-muted lh-base mb-0">{{ feature.description }}</p>
@@ -141,10 +141,10 @@
           </div>
           <div class="vstack gap-3">
             <div *ngFor="let faq of faqs; let i = index" class="card shadow-sm">
-              <button (click)="toggleFAQ(i)" class="faq-button d-flex justify-content-between align-items-center">
+              <!-- <button (click)="toggleFAQ(i)" class="faq-button d-flex justify-content-between align-items-center">
                 <h3 class="fs-6 fw-semibold text-dark mb-0">{{ faq.question }}</h3>
                 <fa-icon [icon]="openFAQ === i ? faChevronUp : faChevronDown" size="lg" class="text-muted"></fa-icon>
-              </button>
+              </button> -->
               <div class="collapse" [class.show]="openFAQ === i">
                 <div class="collapse-content px-3 pb-3">
                   <p class="text-muted lh-base mb-0">{{ faq.answer }}</p>
