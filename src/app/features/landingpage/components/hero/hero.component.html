@@ -37,46 +37,28 @@
     </section>
 
     <!-- Features Section -->
-    <section class="features">
-        <div class="container">
-            <div class="section-header">
-                <h2>Why Choose Our System?</h2>
-                <p>Experience the future of queue management with features designed for efficiency and customer satisfaction.</p>
-            </div>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">⏰</div>
-                    <h3>Smart Queue Alerts</h3>
-                    <p>Get notified when your turn is approaching with intelligent time predictions.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">⚡</div>
-                    <h3>Time-saving Experience</h3>
-                    <p>Eliminate physical waiting lines and optimize your valuable time.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🏢</div>
-                    <h3>Multi-branch Support</h3>
-                    <p>Manage queues across multiple locations from a single dashboard.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">✅</div>
-                    <h3>Instant Setup</h3>
-                    <p>Get your queuing system up and running in minutes, not hours.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📱</div>
-                    <h3>Real-time Screens</h3>
-                    <p>Digital displays show current queue status and estimated wait times.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🌐</div>
-                    <h3>Multi-language Interface</h3>
-                    <p>Support for Arabic, English, and other languages for diverse customers.</p>
-                </div>
-            </div>
+<section class="py-5 bg-white">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="display-5 fw-bold text-dark mb-3">Why Choose Our System?</h2>
+      <p class="fs-5 text-muted mx-auto" style="max-width: 600px;">
+        Experience the future of queue management with features designed for efficiency and customer satisfaction.
+      </p>
+    </div>
+    <div class="row g-4">
+      <!-- باستخدام col-12 على الشاشات الصغيرة و col-md-4 على الشاشات الكبيرة -->
+      <div *ngFor="let feature of features" class="col-12 col-md-4">
+        <div class="card feature-card bg-light-custom h-100 p-4 shadow-sm">
+          <div class="feature-icon-bg">
+            <fa-icon [icon]="feature.icon" size="lg" class="text-primary-custom"></fa-icon>
+          </div>
+          <h3 class="fs-5 fw-semibold text-dark mb-3">{{ feature.title }}</h3>
+          <p class="text-muted lh-base mb-0">{{ feature.description }}</p>
         </div>
-    </section>
+      </div>
+    </div>
+  </div>
+</section>
 
     <!-- How It Works Section -->
     <section class="how-it-works">
@@ -145,61 +127,33 @@
     </section>
 
     <!-- FAQ Section -->
-    <section class="faq">
-        <div class="container">
-            <div class="section-header">
-                <h2>Frequently Asked Questions</h2>
-                <p>Get answers to common questions about our queuing management system.</p>
+ <section class="py-5 bg-light-custom">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="text-center mb-5">
+            <h2 class="display-5 fw-bold text-dark mb-3">Frequently Asked Questions</h2>
+            <p class="fs-5 text-muted">
+              Get answers to common questions about our queuing management system.
+            </p>
+          </div>
+          <div class="vstack gap-3">
+            <div *ngFor="let faq of faqs; let i = index" class="card shadow-sm">
+              <button (click)="toggleFAQ(i)" class="faq-button d-flex justify-content-between align-items-center">
+                <h3 class="fs-6 fw-semibold text-dark mb-0">{{ faq.question }}</h3>
+                <fa-icon [icon]="openFAQ === i ? faChevronUp : faChevronDown" size="lg" class="text-muted"></fa-icon>
+              </button>
+              <div class="collapse" [class.show]="openFAQ === i">
+                <div class="collapse-content px-3 pb-3">
+                  <p class="text-muted lh-base mb-0">{{ faq.answer }}</p>
+                </div>
+              </div>
             </div>
-            <div class="faq-container">
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
-                        <span>Does it support Arabic and English?</span>
-                        <span class="faq-arrow">▼</span>
-                    </div>
-                    <div class="faq-answer">
-                        Yes, our system supports multiple languages including Arabic and English to cater to diverse customer needs.
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
-                        <span>Can I use it without internet?</span>
-                        <span class="faq-arrow">▼</span>
-                    </div>
-                    <div class="faq-answer">
-                        The system requires internet connection for real-time updates and notifications, but basic functionality can work offline.
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
-                        <span>Is there a mobile app?</span>
-                        <span class="faq-arrow">▼</span>
-                    </div>
-                    <div class="faq-answer">
-                        Yes, we provide mobile apps for both iOS and Android platforms for customers to get tickets and receive notifications.
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
-                        <span>How quickly can we set it up?</span>
-                        <span class="faq-arrow">▼</span>
-                    </div>
-                    <div class="faq-answer">
-                        Our system can be set up and running within minutes to hours, depending on your specific requirements and customizations.
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
-                        <span>What hardware do we need?</span>
-                        <span class="faq-arrow">▼</span>
-                    </div>
-                    <div class="faq-answer">
-                        Basic setup requires a computer or tablet for management and optional digital displays for queue status. We provide all necessary hardware recommendations.
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
     <!-- CTA Section -->
     <section class="cta">
