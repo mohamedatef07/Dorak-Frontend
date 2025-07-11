@@ -6,13 +6,12 @@ import {
   Validators,
 } from '@angular/forms';
 import { ProviderService } from '../../services/provider.service';
-import { NgIf } from '@angular/common';
 import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-SecurityProfile',
   templateUrl: './SecurityProfile.component.html',
-  imports: [ReactiveFormsModule, NgIf],
+  imports: [ReactiveFormsModule],
   styleUrls: ['./SecurityProfile.component.css'],
 })
 export class SecurityProfileComponent implements OnInit {

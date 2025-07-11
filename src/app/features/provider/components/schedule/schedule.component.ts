@@ -63,6 +63,7 @@ export class ScheduleComponent implements OnInit {
             this.shiftDetails.EndTime.toString()
           );
           this.messageServices.add({
+            key: 'main-toast',
             severity: 'info',
             summary: 'Shift Details',
             detail: `
@@ -81,6 +82,7 @@ export class ScheduleComponent implements OnInit {
       },
       error: (err) => {
         this.messageServices.add({
+          key: 'main-toast',
           severity: 'error',
           summary: 'Error',
           detail: 'The server is experiencing an issue, Please try again soon.',
@@ -107,6 +109,7 @@ export class ScheduleComponent implements OnInit {
       },
       error: (err) => {
         this.messageServices.add({
+          key: 'main-toast',
           severity: 'error',
           summary: 'Error',
           detail: 'The server is experiencing an issue, Please try again soon.',

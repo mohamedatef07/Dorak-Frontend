@@ -9,3 +9,6 @@
   background-color: var(--bg-color-Light);
   border-radius: var(--border-radius) 0 0 var(--border-radius);
 }
+.side-bar ul .sidebar-item:not(.active-link) .sidebar-link {
+  color: #edf1f2 !important;
+}

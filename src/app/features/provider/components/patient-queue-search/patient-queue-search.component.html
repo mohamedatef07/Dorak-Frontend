@@ -14,7 +14,6 @@
         />
       </svg>
     </div>
-    <input [(ngModel)]="searchValue" type="text" placeholder="Type Here" />
+    <input [(ngModel)]="searchValue" type="text" placeholder="Type Here" (input)="onSearchClick()" /> 
   </div>
-  <button class="search-btn pe-3 ps-3 fw-semibold" type="button" (click)="onSearchClick()">Search</button>
 </div>

@@ -6,12 +6,11 @@ import {
   Validators,
 } from '@angular/forms';
 import { ProviderService } from '../../services/provider.service';
-import { NgIf } from '@angular/common';
 import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-ProfessionalInformation',
-  imports: [ReactiveFormsModule, NgIf],
+  imports: [ReactiveFormsModule],
 
   templateUrl: './ProfessionalInformation.component.html',
   styleUrls: ['./ProfessionalInformation.component.css'],

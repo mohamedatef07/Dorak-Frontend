@@ -8,6 +8,7 @@ import { ICreateAppointment } from '../models/ICreateAppointment';
 import { IShiftsTable } from '../models/IShiftsTable';
 import { ICenterShifts } from '../models/ICenterShifts';
 import { AuthService } from '../../../services/auth.service';
+import { PaginationApiResponse } from '../../../types/PaginationApiResponse';
 
 @Injectable({
   providedIn: 'root',
@@ -51,10 +52,12 @@ export class OwnerService {
   }
 
   getAllCenterShifts(
-    centerId: number
-  ): Observable<ApiResponse<Array<ICenterShifts>>> {
-    return this.httpClient.get<ApiResponse<Array<ICenterShifts>>>(
-      `${environment.apiUrl}/api/shift/get-all-center-shifts/?centerId=${centerId}`
+    centerId: number,
+    pageNumber: number = 1,
+    pageSize: number = 10
+  ): Observable<PaginationApiResponse<ICenterShifts[]>> {
+    return this.httpClient.get<PaginationApiResponse<ICenterShifts[]>>(
+      `${environment.apiUrl}/api/shift/get-all-center-shifts/?centerId=${centerId}&pageNumber=${pageNumber}&pageSize=${pageSize}`
     );
   }
 

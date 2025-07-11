@@ -13,7 +13,6 @@ import { MessageService } from 'primeng/api';
 import { FormsModule } from '@angular/forms';
 import { IClientWalletProfile } from '../../models/IClientWalletProfile';
 import { AuthService } from '../../../../services/auth.service';
-import { Avatar } from 'primeng/avatar';
 import { environment } from '../../../../../environments/environment';
 
 @Component({
@@ -28,7 +27,7 @@ import { environment } from '../../../../../environments/environment';
     InputNumberModule,
     MessageModule,
     ToastModule,
-    Avatar,
+
   ],
   templateUrl: './ClientWallet.component.html',
   styleUrls: ['./ClientWallet.component.css'],
