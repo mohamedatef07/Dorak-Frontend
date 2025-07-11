@@ -25,24 +25,25 @@ export class CenterShiftsTableComponent {
   centerShifts: Array<ICenterShifts> = [];
   centerId = this.authServices.getCenterId();
   ShiftType = ShiftType;
+    currentPage: number = 1;
+  pageSize: number = 10;
+  totalRecords: number = 0;
+  totalPages: number = 0;
 
   ngOnInit() {
-    this.ownerServices.getAllCenterShifts(this.centerId).subscribe({
-      next: (res) => {
-        this.centerShifts = [...res.Data];
-      },
-      error: (err) => {
-        this.messageServices.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'The server is experiencing an issue, Please try again soon.',
-          life: 4000,
-        });
-      },
-    });
+    this.loadCenterShifts();
     this.srService.updatedShiftsList.subscribe({
-      next: (updatedList) => {
-        this.centerShifts = [...updatedList];
+      next: (PaginationupdatedList) => {
+        this.centerShifts = [...PaginationupdatedList.Data];
+        this.totalRecords = PaginationupdatedList.TotalRecords;
+        this.totalPages = PaginationupdatedList.TotalPages;
+        if (this.currentPage > this.totalPages) {
+          this.currentPage = this.totalPages;
+        }
+        if (this.currentPage < 1) {
+          this.currentPage = 1;
+        }
+
       },
       error: (err) => {
         this.messageServices.add({
@@ -111,5 +112,51 @@ export class CenterShiftsTableComponent {
     } else if (shiftStatus === ShiftType.Completed) {
       this.route.navigate(['owner/shift-details', shiftId]);
     }
+  }
+
+  loadCenterShifts() {
+    this.ownerServices.getAllCenterShifts(this.centerId, this.currentPage, this.pageSize).subscribe({
+      next: (res) => {
+        this.centerShifts = [...res.Data];
+        this.totalRecords = res.TotalRecords;
+        this.totalPages = res.TotalPages;
+      },
+      error: (err) => {
+        this.messageServices.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'The server is experiencing an issue, Please try again soon.',
+          life: 4000,
+        });
+      },
+    });
+  }
+  nextPage() {
+    this.currentPage++;
+    this.loadCenterShifts();
+  }
+
+  previousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.loadCenterShifts();
+    }
+  }
+
+  get canGoNext(): boolean {
+    return this.currentPage * this.pageSize < this.totalRecords;
+  }
+
+  get canGoPrevious(): boolean {
+    return this.currentPage > 1;
+  }
+
+  get startRecord(): number {
+    return (this.currentPage - 1) * this.pageSize + 1;
+  }
+
+  get endRecord(): number {
+    const end = this.currentPage * this.pageSize;
+    return end > this.totalRecords ? this.totalRecords : end;
   }
 }
