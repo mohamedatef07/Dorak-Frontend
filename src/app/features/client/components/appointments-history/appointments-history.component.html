@@ -7,6 +7,14 @@
         Appointments History
       </h4>
     </div>
+        @if(loading) {
+    <div class="loader-container">
+      <p-progressSpinner
+        ariaLabel="loading"
+        animationDuration=".5s">
+      </p-progressSpinner>
+    </div>
+    } @else {
     <div class="appointment-section d-flex flex-column gap-3">
       @for (appointment of AppointmentsHistory; track $index) {
       <div class="appointment-card history-appointment">
@@ -82,6 +90,7 @@
       <div class="text-muted text-center">No appointment history found.</div>
       }
     </div>
+  }
     @if(AppointmentsHistory.length > 0){
     <div class="d-flex justify-content-center align-items-center gap-2 mt-4">
       <button class="btn main-btn-bg" (click)="previousPage()" [disabled]="!canGoPrevious">Previous</button>
