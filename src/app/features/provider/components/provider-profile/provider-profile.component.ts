@@ -5,6 +5,7 @@ import { ProviderService } from '../../services/provider.service';
 import { GenderType } from '../../../../Enums/GenderType.enum';
 import { environment } from '../../../../../environments/environment';
 import { DatePipe } from '@angular/common';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-provider-profile',
@@ -18,18 +19,28 @@ export class ProviderProfileComponent implements OnInit {
   genderEnum = GenderType;
   fullImagePath: string = '';
 
-  constructor(private ProviderProfileService: ProviderService) {}
+  constructor(
+    private ProviderProfileService: ProviderService,
+    private messageServices: MessageService
+  ) {}
 
   getProviderProfile(): void {
     this.ProviderProfileService.getProviderProfile().subscribe({
       next: (res) => {
         this.profile = res.Data;
-
         if (this.profile?.Image) {
           this.fullImagePath = `${environment.apiUrl}${this.profile.Image}`;
         }
       },
-      error: (err) => console.error('Error loading profile:', err),
+      error: (err) => {
+        this.messageServices.add({
+          key: 'main-toast',
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Error loading profile',
+          life: 4000,
+        });
+      },
     });
   }
 

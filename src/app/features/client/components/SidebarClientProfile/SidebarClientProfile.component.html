@@ -54,6 +54,18 @@
       </div>
       <div class="sidebar-item">
         <a
+          [routerLink]="['/client/all-reviews']"
+          [routerLinkActive]="['active-link']"
+          class="sidebar-link"
+        >
+          <div class="sidebar-icon">
+            <i class="fas fa-star"></i>
+          </div>
+          <span>Reviews</span>
+        </a>
+      </div>
+      <div class="sidebar-item">
+        <a
           [routerLink]="['/client/client-wallet']"
           [routerLinkActive]="['active-link']"
           class="sidebar-link"

@@ -20,7 +20,7 @@
     <div
       class="notifications-and-dropdown d-flex justify-content-center align-items-center"
     >
-      <div class="display-mode d-flex me-4">
+      <!-- <div class="display-mode d-flex me-4">
         <button type="button" class="dark-mode">
           <svg
             width="18"
@@ -53,9 +53,9 @@
             />
           </svg>
         </button>
-      </div>
+      </div> -->
       <div class="profile-notifications d-flex gap-4">
-        <div class="notifications">
+        <div class="notifications pe-4">
           <div
             class="dropdown d-flex position-relative"
             (click)="toggleNotificationsDropDown($event)"
@@ -147,7 +147,6 @@
         </div>
         <div class="profile-img me-4">
           <a [routerLink]="['/client/client-profile']">
-            
             @if (UserImage && !hasImageLoadFailed('user-profile')) {
               <img
                 [src]="UserImage"
@@ -237,7 +236,7 @@
                 </svg></div
             ></a>
           </li>
-          <li>
+          <!-- <li>
             <a class="dropdown-item" href="#">
               Language
               <div class="lang-btns d-flex">
@@ -245,7 +244,7 @@
                 <button type="button">En</button>
               </div></a
             >
-          </li>
+          </li> -->
           <li (click)="handelLogout()">
             <a class="dropdown-item">
               Logout
