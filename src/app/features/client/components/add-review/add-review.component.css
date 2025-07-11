@@ -1,0 +1,41 @@
+.add-review-container {
+  background-color: #edf1f2;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  padding: 2rem 1.5rem;
+  margin-top: 3rem;
+}
+
+.form-control {
+  border-radius: 12px;
+  border: 1px solid #d1d5db;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  resize: vertical;
+}
+.btn.main-btn-bg {
+  background-color: #2a6f97;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 0.75rem 0;
+  font-size: 1rem;
+  transition: background 0.2s;
+}
+.doctor-image {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+#review {
+  max-height: 200px;
+}
+::ng-deep .star .p-rating-icon {
+  width: 1.5rem !important;
+  height: 1.5rem !important;
+}
+::ng-deep .p-rating-icon {
+  width: 2rem !important;
+  height: 2rem !important;
+}
