@@ -35,7 +35,6 @@ import { PersonalSettingComponent } from './features/provider/components/persona
 import { ProfessionalInformationComponent } from './features/provider/components/ProfessionalInformation/ProfessionalInformation.component';
 import { SecurityProfileComponent } from './features/provider/components/SecurityProfile/SecurityProfile.component';
 import { ProviderSettingComponent } from './features/provider/components/Provider-Setting/Provider-Setting.component';
-import { LandingPageLayoutComponent } from './features/landingpage/components/landingPage-layout/landingPage-layout.component';
 import { CheckoutComponent } from './features/client/components/checkout/checkout.component';
 import { CenterShiftsComponent } from './features/owner/components/center-shifts/center-shifts.component';
 import { ChangePasswordComponent } from './features/client/components/Change-Password/Change-Password.component';
@@ -333,11 +332,8 @@ export const routes: Routes = [
 
   {
     path: 'home',
-    component: LandingPageLayoutComponent,
-    children: [
-      {path:'hero',component:HeroComponent}
-    ],
-    title: 'Home',
+    component: HeroComponent,
+
   },
   { path: 'login', component: LoginComponent, title: 'Login', data: { animation: 'login' } },
   { path: 'register', component: RegisterComponent, title: 'Register', data: { animation: 'register' } },
