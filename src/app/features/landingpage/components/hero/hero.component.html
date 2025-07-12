@@ -1,132 +1,212 @@
-<section class="hero-bg min-vh-100 d-flex align-items-center position-relative overflow-hidden" style="padding-top: 80px;">
-  <div class="hero-pattern"></div>
-
-  <div class="floating-element bg-primary opacity-25" style="width: 320px; height: 320px; top: -160px; right: -160px;"></div>
-  <div class="floating-element bg-success opacity-25" style="width: 320px; height: 320px; bottom: -160px; left: -160px;"></div>
-  <div class="floating-element bg-warning opacity-10" style="width: 384px; height: 384px; top: 50%; left: 50%; transform: translate(-50%, -50%);"></div>
-
-  <div class="container position-relative">
-    <div class="row align-items-center g-5">
-      <!-- Left Column -->
-      <div class="col-lg-6">
-        <!-- Badge -->
-        <div class="d-inline-flex align-items-center glass px-3 py-2 rounded-pill border mb-4">
-          <!-- <lucide-icon [name]="checkCircleIcon.name" class="text-success me-2" size="16"></lucide-icon> -->
-          <span class="small fw-medium text-success">{{ content.badge }}</span>
-        </div>
-
-        <!-- Title + Subtitle -->
-        <div class="mb-4">
-          <h1 class="display-4 fw-bold text-dark mb-4 lh-sm">
-            {{ content.title }}
-          </h1>
-          <p class="fs-5 text-muted mb-4 lh-base">
-            {{ content.subtitle }}
-          </p>
-        </div>
-
-        <!-- Features -->
-        <div class="d-flex flex-wrap gap-2 mb-4">
-          <div *ngFor="let feature of content.features" class="d-flex align-items-center glass px-3 py-2 rounded-pill border">
-            <!-- <lucide-icon [name]="checkCircleIcon.name" class="text-success me-2" size="16"></lucide-icon> -->
-            <span class="small fw-medium text-dark">{{ feature }}</span>
-          </div>
-        </div>
-
-        <!-- CTA Buttons -->
-        <div class="d-flex flex-column flex-sm-row gap-3 mb-5">
-          <button class="btn btn-primary btn-lg d-flex align-items-center justify-content-center gap-2">
-            <span>{{ content.cta1 }}</span>
-            <!-- <lucide-icon [name]="arrowRightIcon.name" size="20"></lucide-icon> -->
-          </button>
-          <button class="btn btn-secondary btn-lg d-flex align-items-center justify-content-center gap-2">
-            <!-- <lucide-icon [name]="playIcon.name" size="20"></lucide-icon> -->
-            <span>{{ content.cta2 }}</span>
-          </button>
-        </div>
-
-        <!-- Stats -->
-        <div class="row g-3">
-          <div *ngFor="let stat of content.stats" class="col-4">
-            <div class="text-center p-3 glass rounded-3 border">
-              <div class="d-flex justify-content-center mb-2">
-                <!-- <lucide-icon [name]="stat.icon.name" class="text-primary" size="24"></lucide-icon> -->
-              </div>
-              <div class="h4 fw-bold text-dark mb-1">{{ stat.number }}</div>
-              <div class="small text-muted fw-medium">{{ stat.label }}</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Right Column -->
-      <div class="col-lg-6">
-        <div class="card card-glass position-relative">
-          <div class="card-body p-4">
-            <div class="d-flex align-items-center justify-content-between mb-4">
-              <h5 class="card-title mb-0 fw-semibold">Live Queue Dashboard</h5>
-              <div class="d-flex align-items-center gap-2">
-                <div class="bg-success rounded-circle animate-pulse-slow" style="width: 12px; height: 12px;"></div>
-                <span class="small text-muted fw-medium">Live Updates</span>
-              </div>
-            </div>
-
-            <!-- Queue Items -->
-            <div class="d-grid gap-3 mb-4">
-              <div *ngFor="let item of queueItems"
-                   [class]="'queue-item d-flex align-items-center justify-content-between p-3 ' + (item.status === 'current' ? 'current' : 'bg-white')">
-                <div class="d-flex align-items-center gap-3">
-                  <div
-                    [class]="'icon-container text-white fw-semibold ' + (item.status === 'current' ? 'bg-success' : '')"
-                    [style]="item.status !== 'current' ? 'background: var(--primary-gradient)' : ''"
-                  >
-                    {{ item.id }}
-                  </div>
-                  <div>
-                    <div class="fw-medium text-dark">{{ item.name }}</div>
-                    <div class="small text-muted">{{ item.doctor }}</div>
-                  </div>
-                </div>
-                <div class="d-flex align-items-center gap-2">
-                  <!-- <lucide-icon [name]="clockIcon.name" class="text-muted" size="16"></lucide-icon> -->
-                  <span class="small text-muted fw-medium">{{ item.time }}</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- Statistics -->
-            <div class="row g-3">
-              <div class="col-6">
-                <div class="p-3 rounded-3 border" style="background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);">
-                  <div class="d-flex align-items-center justify-content-between">
-                    <div class="d-flex align-items-center gap-2">
-                      <!-- <lucide-icon [name]="usersIcon.name" class="text-primary" size="20"></lucide-icon> -->
-                      <span class="fw-medium text-dark"> Waiting</span>
+ <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Say Goodbye to <span class="highlight">Long Waits!</span></h1>
+                    <p>Transform your waiting experience with our intelligent queuing management system. Reduce crowding, improve customer satisfaction, and optimize your operations.</p>
+                    <div class="cta-buttons">
+                        <a href="#" class="btn btn-primary">Login→</a>
                     </div>
-                    <span class="h4 fw-bold text-primary mb-0">3</span>
-                  </div>
                 </div>
-              </div>
-              <div class="col-6">
-                <div class="p-3 rounded-3 border" style="background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);">
-                  <div class="d-flex align-items-center justify-content-between">
-                    <div class="d-flex align-items-center gap-2">
-                      <!-- <lucide-icon [name]="checkCircleIcon.name" class="text-success" size="20"></lucide-icon> -->
-                      <span class="fw-medium text-dark">Completed</span>
+                <div class="ticket-widget">
+                    <div class="ticket-number">10</div>
+                    <div class="ticket-info">
+                        <h3>Your Number</h3>
+                        <div class="ticket-details">
+                            <div class="detail-row">
+                                <span>Estimated wait:</span>
+                                <span>60 minutes</span>
+                            </div>
+                            <div class="detail-row">
+                                <span>current</span>
+                                <span>5</span>
+                            </div>
+                            <div class="detail-row">
+                                <span>Completed</span>
+                                <span>4</span>
+                            </div>
+                        </div>
+                        <div class="status-badge">
+                            notifications enabled
+                        </div>
                     </div>
-                    <span class="h4 fw-bold text-success mb-0">2</span>
-                  </div>
                 </div>
-              </div> 
             </div>
-          </div>
+        </div>
+    </section>
 
-          <!-- Floating Elements -->
-          <div class="position-absolute bg-warning rounded-circle animate-bounce-slow" style="width: 32px; height: 32px; top: -16px; right: -16px;"></div>
-          <div class="position-absolute bg-danger rounded-circle animate-pulse-slow" style="width: 24px; height: 24px; bottom: -12px; left: -12px;"></div>
-          <div class="position-absolute bg-info rounded-circle" style="width: 16px; height: 16px; top: 50%; right: -8px; animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;"></div>
+    <!-- Features Section -->
+<section class="py-5 bg-white">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="display-5 fw-bold text-dark mb-3">Why Choose Our System?</h2>
+      <p class="fs-5 text-muted mx-auto" style="max-width: 600px;">
+        Experience the future of queue management with features designed for efficiency and customer satisfaction.
+      </p>
+    </div>
+    <div class="row g-4">
+      <div *ngFor="let feature of features" class="col-12 col-md-4">
+        <div class="card features-card bg-light-custom h-100 p-4 shadow-sm">
+          <div class="features-icon-bg">
+  <div style="font-size: 2rem;" class="step-icon">{{ feature.icon }}</div>
+          </div>
+          <h3 class="fs-5 fw-semibold text-dark mb-3">{{ feature.title }}</h3>
+          <p class="text-muted lh-base mb-0">{{ feature.description }}</p>
         </div>
       </div>
     </div>
   </div>
 </section>
+
+
+
+    <!-- How It Works Section -->
+    <section class="how-it-works">
+        <div class="container">
+             <div class="text-center mb-5">
+      <h2 class="display-5 fw-bold text-dark mb-3">How It Works?</h2>
+      <p class="fs-5 text-muted mx-auto" style="max-width: 600px;">
+        Simple, efficient, and user-friendly. Get started in three easy steps.</p>
+    </div>
+            <div class="steps-container">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-icon">📱</div>
+                    <h3>Take a Digital Ticket</h3>
+                    <p>Customer gets a ticket via kiosk, mobile app, or web portal</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-icon">🔔</div>
+                    <h3>Smart Notifications</h3>
+                    <p>System sends alerts when their turn is approaching</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-icon">👥</div>
+                    <h3>Skip the Crowd</h3>
+                    <p>Customer arrives just in time, no more waiting in lines</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Industries Section -->
+    <section class="industries">
+        <div class="container">
+                   <div class="text-center mb-5">
+      <h2 class="display-5 fw-bold text-dark mb-3">Industries We Serve</h2>
+      <p class="fs-5 text-muted mx-auto" style="max-width: 600px;">
+       Our flexible system adapts to various industries and business needs..</p>
+    </div>
+            <div class="industries-grid">
+                <div class="industry-card">
+                    <div class="industry-icon" style="color: #e53e3e;">🏥</div>
+                    <h3>Hospitals</h3>
+                </div>
+                <div class="industry-card">
+                    <div class="industry-icon" style="color: #38a169;">🏛️</div>
+                    <h3>Banks</h3>
+                </div>
+                <div class="industry-card">
+                    <div class="industry-icon" style="color: #3182ce;">🏢</div>
+                    <h3>Government</h3>
+                </div>
+                <div class="industry-card">
+                    <div class="industry-icon" style="color: #805ad5;">📞</div>
+                    <h3>Telecom</h3>
+                </div>
+                <div class="industry-card">
+                    <div class="industry-icon" style="color: #00b5d8;">🩺</div>
+                    <h3>Clinics</h3>
+                </div>
+                <div class="industry-card">
+                    <div class="industry-icon" style="color: #d69e2e;">🎓</div>
+                    <h3>Universities</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+ <section class="py-5 bg-light-custom">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="text-center mb-5">
+            <h2 class="display-5 fw-bold text-dark mb-3">Frequently Asked Questions</h2>
+            <p class="fs-5 text-muted">
+              Get answers to common questions about our queuing management system.
+            </p>
+          </div>
+          <div class="vstack gap-3">
+            <div *ngFor="let faq of faqs; let i = index" class="card shadow-sm">
+              <button (click)="toggleFAQ(i)" class="faq-button d-flex justify-content-between align-items-center w-100 bg-transparent border-0">
+  <h3 class="fs-6 fw-semibold text-dark mb-0">{{ faq.question }}</h3>
+
+  <ng-container *ngIf="openFAQ === i; else downArrow">
+    <!-- ⬆️ chevron-up -->
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+      viewBox="0 0 320 512" class="text-muted">
+      <path
+        d="M177 159.7L313.5 296c4.5 4.5 7 10.4 7 16.5s-2.5 12-7 16.5l-22.6 22.6c-4.5 4.5-10.4 7-16.5 7s-12-2.5-16.5-7L160 241.3 62 351.2c-4.5 4.5-10.4 7-16.5 7s-12-2.5-16.5-7L6.5 328.6C2.7 324.9 0 318.8 0 312.5s2.7-12.4 6.5-15.9L143 159.7z" />
+    </svg>
+  </ng-container>
+  <ng-template #downArrow>
+    <!-- ⬇️ chevron-down -->
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+      viewBox="0 0 320 512" class="text-muted">
+      <path
+        d="M143 352.3l-136.5-136C2.7 213.7 0 207.6 0 201.3c0-6.3 2.7-12.4 6.5-15.9l22.6-22.6c4.5-4.5 10.4-7 16.5-7s12 2.5 16.5 7L160 274.7 258 166.8c4.5-4.5 10.4-7 16.5-7s12 2.5 16.5 7l22.6 22.6c4.5 4.5 7 10.4 7 16.5s-2.5 12-7 16.5l-136 136c-4.5 4.5-10.4 7-16.5 7s-12-2.5-16.5-7z" />
+    </svg>
+  </ng-template>
+</button>
+
+              <div class="collapse" [class.show]="openFAQ === i">
+                <div class="collapse-content px-3 pb-3">
+                  <p class="text-muted lh-base mb-0">{{ faq.answer }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>Ready to Organize Your Waiting Area?</h2>
+            <p>Join thousands of businesses that have transformed their customer experience with our queuing management system.</p>
+            <div class="cta-buttons-center">
+                <a href="#" class="btn btn-primary">Register→</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+  <div class="container-fluid h-100 p-0">
+   <div class="row h-40 g-0" style="min-height: 30vh;">
+      <div class="col-12 col-md-4 d-flex align-items-center justify-content-center p-0 center-illustration-col">
+        <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" width="100" height="100" viewBox="0 0 567.01 492.18">
+          <defs>
+            <style>
+              .cls-1 {
+                fill: #e6ae38;
+              }
+              .cls-2 {
+                fill: #012a4a;
+              }
+            </style>
+          </defs>
+          <path class="cls-2" d="M1.01,3.46c0-.25-1.18-.8-.58-1.51L3.47.92c56.36,2.34,115-2.95,171.09,0,55.15,2.91,103.39,29.04,135.27,73.73,78.44,109.94,7.42,255.59-122.33,272.3l-186.98.02c-1.4-.17.5-1.28.5-1.5C1.01,231.47,1.41,117.46,1.01,3.46ZM77.01,73.96v154c31.16-4.1,54.56-28.74,74.96-50.5l-24.47-26.5c-.83-1.31-.83-2.69.52-3.49,30.07-9.36,60.89-16.4,91.98-21.5l-23.01,99.98c-3.62,2.53-15.37-15.67-17.9-18.35-.79-.84-.68-.92-2.06-.63-21.6,33.88-59.92,61.31-99.01,71l3.48.99c1.87.53,5.35-.33,7.34-.32,3.39.03,6.77.05,10.16.09,6.77.06,13.54.14,20.31.22,10.36.13,20.72.29,31.08.48,4.89.09,9.62.01,14.48-.28s9.66-1.45,14.37-1.45c121.55-17.91,118.84-191.41-1.74-203.72h-100.49Z"/>
+          <path class="cls-1" d="M449.66,300.61c-45.41,44.79-113.64-24.86-66.69-69.19,44.83-42.32,110.83,25.65,66.69,69.19Z"/>
+          <path class="cls-2" d="M161.79,380.24c70.03-7.99,93.12,80.98,32.9,106.9-52.4,22.55-105.19-35.14-72.08-83.08,8.45-12.24,24.32-22.12,39.19-23.81ZM171.68,400.35c-34.01-.62-47.6,46.16-19.2,64.64,19.65,12.78,43.97,2.51,50.82-19.22s-9.31-45.02-31.63-45.42Z"/>
+        </svg>
+      </div>
+   </div>
+</div>
+
+
+

@@ -1,0 +1,74 @@
+<h3 class="main-text-Color fw-bold mb-4">Add Review</h3>
+<div class="row align-items-center mb-4">
+  <div class="col-auto">
+    <div class="doctor-image-container">
+      <ng-container
+        *ngIf="!imageLoadFailed && fullImagePath; else avatarFallback"
+      >
+        <img
+          [src]="fullImagePath"
+          alt="Provider Image"
+          class="doctor-image"
+          (error)="onImageError()"
+        />
+      </ng-container>
+      <ng-template #avatarFallback>
+        <p-avatar
+          icon="pi pi-user"
+          shape="square"
+          size="xlarge"
+          class="doctor-image"
+        ></p-avatar>
+      </ng-template>
+    </div>
+  </div>
+  <div class="col">
+    <h2 class="doctor-name mb-1">{{ doctorInfo.FullName }}</h2>
+    <div class="doctor-specialty mb-2">
+      <i class="fas fa-user-md me-1"></i>
+      {{ doctorInfo.Specialization }}
+    </div>
+    <div class="rating-container mb-2">
+      <p-rating
+        class="star pt-2 pb-2"
+        [(ngModel)]="doctorInfo.Rate"
+        [readonly]="true"
+      ></p-rating>
+      <span class="rating-text ms-2">{{ doctorInfo.Rate }}</span>
+    </div>
+  </div>
+</div>
+<hr />
+<form (ngSubmit)="submitReview()" class="w-100">
+  <div class="mb-4 d-flex flex-column">
+    <label class="form-label fw-bold main-text-Color mb-2">Your Rating</label>
+    <p-rating
+      [(ngModel)]="rate"
+      name="rate"
+      [readonly]="submitting"
+      class="review-star"
+    ></p-rating>
+  </div>
+  <div class="mb-4">
+    <label for="review" class="form-label fw-bold main-text-Color mb-2"
+      >Review Description</label
+    >
+    <textarea
+      id="review"
+      name="review"
+      [(ngModel)]="review"
+      maxlength="250"
+      class="form-control main-radius w-75"
+      rows="4"
+      [readonly]="submitting"
+      placeholder="Write your review here..."
+    ></textarea>
+  </div>
+  <button
+    type="submit"
+    class="btn main-btn-bg px-4 fw-bold"
+    [disabled]="submitting"
+  >
+    {{ submitting ? "Submitting..." : "Submit Review" }}
+  </button>
+</form>

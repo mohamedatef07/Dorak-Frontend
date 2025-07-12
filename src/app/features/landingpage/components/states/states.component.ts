@@ -1,4 +1,4 @@
-import { NgClass, NgFor, NgIf } from '@angular/common';
+import { NgFor} from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
   LucideAngularModule,
@@ -12,7 +12,7 @@ import {
 
 @Component({
   selector: 'app-states',
-  imports:[NgIf,NgFor,NgClass],
+  imports:[NgFor],
   templateUrl: './states.component.html',
   styleUrls: ['./states.component.css',
          '..//../../../styles/general.css'

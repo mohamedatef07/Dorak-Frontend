@@ -24,6 +24,8 @@ import { IClientUpdate } from '../models/IClientUpdate';
 import { IGeneralAppointmentStatistics } from '../models/IGeneralAppointmentStatistics';
 import { PaginationApiResponse } from '../../../types/PaginationApiResponse';
 import { ICitiesAndSpecializations } from '../models/ICitiesAndSpecializations';
+import { IClientReview } from '../models/IClientReview';
+import { IAddReview } from '../models/IAddReview';
 
 @Injectable({
   providedIn: 'root',
@@ -34,10 +36,6 @@ export class ClientService {
 
   constructor() {}
 
-  /**
-   * Get all doctors, or filter/search if filter is provided.
-   * @param filter Optional filter/search object
-   */
   getAllDoctorsCards(
     filter: Partial<IDoctorFilter> = {},
     pageNumber: number,
@@ -135,7 +133,7 @@ export class ClientService {
     userId: string
   ): Observable<ApiResponse<IClientProfile>> {
     return this.httpClient.get<ApiResponse<IClientProfile>>(
-      `${environment.apiUrl}/api/client/profile-all-appointment/${userId}`
+      `${environment.apiUrl}/api/client/profile/${userId}`
     );
   }
 
@@ -157,7 +155,7 @@ export class ClientService {
     appointmentId: number
   ): Observable<ApiResponse<IAppointment>> {
     return this.httpClient.get<ApiResponse<IAppointment>>(
-      `${environment.apiUrl}/api/client/appointment/${appointmentId}`
+      `${environment.apiUrl}/api/client/appointment-details/${appointmentId}`
     );
   }
 
@@ -244,6 +242,32 @@ export class ClientService {
   > {
     return this.httpClient.get<ApiResponse<ICitiesAndSpecializations>>(
       `${environment.apiUrl}/api/client/all-cities-specializations`
+    );
+  }
+  getClientReviews(
+    userId: string,
+    pageNumber: number,
+    pageSize: number
+  ): Observable<PaginationApiResponse<IClientReview[]>> {
+    return this.httpClient.get<PaginationApiResponse<IClientReview[]>>(
+      `${environment.apiUrl}/api/client/client-reviews/?clientId=${userId}&pageNumber=${pageNumber}&pageSize=${pageSize}`
+    );
+  }
+  AddReview(review: IAddReview): Observable<boolean> {
+    return this.httpClient.post<boolean>(
+      `${environment.apiUrl}/api/client/add-review`,
+      review
+    );
+  }
+  deleteReview(reviewId: number): Observable<ApiResponse<boolean>> {
+    return this.httpClient.delete<ApiResponse<boolean>>(
+      `${environment.apiUrl}/api/client/delete-review/?reviewId=${reviewId}`
+    );
+  }
+  editReview(IReview: IClientReview): Observable<ApiResponse<IClientReview>> {
+    return this.httpClient.put<ApiResponse<IClientReview>>(
+      `${environment.apiUrl}/api/client/edit-review`,
+      IReview
     );
   }
 }

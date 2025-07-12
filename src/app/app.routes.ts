@@ -1,4 +1,5 @@
 import { ProviderNotificationsComponent } from './features/provider/components/provider-notifications/provider-notifications.component';
+import { AssignServiceToProviderCenterComponent } from './features/owner/components/assign-service-to-provider-center/assign-service-to-provider-center.component';
 import { Routes } from '@angular/router';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { LoginComponent } from './components/login/login.component';
@@ -34,7 +35,6 @@ import { PersonalSettingComponent } from './features/provider/components/persona
 import { ProfessionalInformationComponent } from './features/provider/components/ProfessionalInformation/ProfessionalInformation.component';
 import { SecurityProfileComponent } from './features/provider/components/SecurityProfile/SecurityProfile.component';
 import { ProviderSettingComponent } from './features/provider/components/Provider-Setting/Provider-Setting.component';
-import { LandingPageLayoutComponent } from './features/landingpage/components/landingPage-layout/landingPage-layout.component';
 import { CheckoutComponent } from './features/client/components/checkout/checkout.component';
 import { CenterShiftsComponent } from './features/owner/components/center-shifts/center-shifts.component';
 import { ChangePasswordComponent } from './features/client/components/Change-Password/Change-Password.component';
@@ -48,12 +48,16 @@ import { RescheduleAssignmentComponent } from './features/owner/components/resch
 import { AppointmentsHistoryComponent } from './features/client/components/appointments-history/appointments-history.component';
 import { RoleGuard } from './guards/role.guard';
 import { AuthGuard } from './guards/auth.guard';
-import { HeaderComponent } from './features/landingpage/components/header/header.component';
 import { HeroComponent } from './features/landingpage/components/hero/hero.component';
 import { CenterRegisterComponent } from './components/CenterRegister/CenterRegister.component';
 import { ContactUsComponent } from './components/Contact-Us/Contact-Us.component';
 import { HelpSupportComponent } from './components/Help-Support/Help-Support.component';
 import { TermsConditionsComponent } from './components/Terms-Conditions/Terms-Conditions.component';
+import { ClientReviewsComponent } from './features/client/components/client-reviews/client-reviews.component';
+import { CenterRegisterCodeComponent } from './components/CenterRegisterCode/CenterRegisterCode.component';
+import { CenterRegisterCodeGuard } from './guards/center-register-code.guard';
+import { ProviderCenterServiceComponent } from './features/owner/components/ProviderCenterService/ProviderCenterService.component';
+import { AddReviewComponent } from './features/client/components/add-review/add-review.component';
 
 export const routes: Routes = [
   {
@@ -66,6 +70,12 @@ export const routes: Routes = [
         path: 'center-shifts',
         component: CenterShiftsComponent,
         title: 'Center Shifts',
+      },
+      {
+        path: 'assign-service-to-provider-center',
+        component: AssignServiceToProviderCenterComponent,
+        title: 'Assign Service To Provider Center',
+        data: { expectedRole: ['Admin'] },
       },
       {
         path: 'manage-operators',
@@ -160,6 +170,12 @@ export const routes: Routes = [
         component: CreateAppointmentComponent,
         title: 'Create Appointment',
         data: { expectedRole: ['Admin'] },
+      },
+      {
+        path: 'provider-center-services',
+        component: ProviderCenterServiceComponent,
+        title: 'Provider Center Services',
+        data: { expectedRole: ['Admin', 'Operator'] },
       },
     ],
   },
@@ -261,6 +277,11 @@ export const routes: Routes = [
         title: 'Client Wallet',
       },
       {
+        path: 'all-reviews',
+        component: ClientReviewsComponent,
+        title: 'All Reviews',
+      },
+      {
         path: 'settings',
         component: ClientSettingsComponent,
         children: [
@@ -282,6 +303,11 @@ export const routes: Routes = [
         component: ClientNotificationsComponent,
         title: 'Notifications',
       },
+      {
+        path: 'add-review/:providerId',
+        component: AddReviewComponent,
+        title: 'Add Review',
+      },
     ],
   },
   {
@@ -289,14 +315,14 @@ export const routes: Routes = [
     component: DoctorsPageComponent,
     title: 'Doctors',
     canActivate: [AuthGuard, RoleGuard],
-    data: { expectedRole: ['Client'] }
+    data: { expectedRole: ['Client'] },
   },
   {
     path: 'client/doctor-details/:id',
     component: DoctorDetailsComponent,
     title: 'Doctor Details',
     canActivate: [AuthGuard, RoleGuard],
-    data: { expectedRole: ['Client'] }
+    data: { expectedRole: ['Client'] },
   },
   {
     path: 'client/checkout',
@@ -307,27 +333,32 @@ export const routes: Routes = [
 
   {
     path: 'home',
-    component: LandingPageLayoutComponent,
-    children: [
-      {path:'header',component:HeaderComponent},
-      {path:'hero',component:HeroComponent}
+    component: HeroComponent,
 
-      // { path: 'doctors', component: DoctorsLandingPageComponent },
-      // { path: 'review', component: ReviewComponent },
-      // { path: 'certification', component: CertificationsComponent },
-      // { path: 'register', component: LandingPageRegisterComponent },
-    ],
-    title: 'Home',
   },
-  { path: 'login', component: LoginComponent, title: 'Login' },
-  { path: 'register', component: RegisterComponent, title: 'Register' },
+  { path: 'login', component: LoginComponent, title: 'Login', data: { animation: 'login' } },
+  { path: 'register', component: RegisterComponent, title: 'Register', data: { animation: 'register' } },
+  { path: 'center-code', component: CenterRegisterCodeComponent },
+  {
+    path: 'center-register',
+    component: CenterRegisterComponent,
+    canActivate: [CenterRegisterCodeGuard],
+  },
   {
     path: 'unauthorized',
     component: UnauthorizedComponent,
     title: 'Unauthorized',
   },
   { path: 'contact-us', component: ContactUsComponent, title: 'Contact Us' },
-  { path: 'Help-Support', component: HelpSupportComponent, title: 'Help | Support' },
-  { path: 'terms-conditions', component: TermsConditionsComponent, title: 'Terms & Conditions' },
+  {
+    path: 'Help-Support',
+    component: HelpSupportComponent,
+    title: 'Help | Support',
+  },
+  {
+    path: 'terms-conditions',
+    component: TermsConditionsComponent,
+    title: 'Terms & Conditions',
+  },
   { path: '**', component: NotFoundComponent, title: 'Not Found' },
 ];

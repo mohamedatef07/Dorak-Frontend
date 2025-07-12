@@ -1,0 +1,61 @@
+<div class="reviews">
+  <h3 class="main-text-Color fw-bold">All Reviews</h3>
+  @if(reviews.length > 0){
+  <div class="row">
+    @for(review of reviews; track $index){
+    <div class="col-12 mb-4">
+      <div
+        class="review-container p-3 main-radius card h-100 d-flex flex-column"
+      >
+        <div class="review pb-1 pt-1 flex-grow-1">
+          <div
+            class="name-options d-flex justify-content-between align-items-center"
+          >
+            <h5 class="main-text-Color fw-bolder">
+              {{ review.ProviderName }}
+            </h5>
+            <div class=" flex justify-center">
+              <p-toast />
+              <p-splitbutton [model]="review.menuItems!" />
+            </div>
+          </div>
+          <p-rating
+            class="review-star pt-2 pb-2"
+            [(ngModel)]="review.Rate"
+            [readonly]="true"
+          ></p-rating>
+          <p class="review-description main-text-Color mb-1">
+            {{ review.Review }}
+          </p>
+        </div>
+        <div class="d-flex align-items-center justify-content-between pt-1">
+          <span class="text-muted">{{ review.Date | date : "MMMM d, y" }}</span>
+        </div>
+      </div>
+    </div>
+    } @empty {
+    <div class="text-center py-4">
+      <span class="text-muted">No reviews found.</span>
+    </div>
+    }
+  </div>
+  @if(reviews.length > 0){
+  <div class="d-flex justify-content-center align-items-center gap-2 mt-4">
+    <button
+      class="btn main-btn-bg"
+      (click)="previousPage()"
+      [disabled]="!canGoPrevious"
+    >
+      Previous
+    </button>
+    <span class="current-page">Page {{ currentPage }} of {{ totalPages }}</span>
+    <button
+      class="btn main-btn-bg"
+      (click)="nextPage()"
+      [disabled]="!canGoNext"
+    >
+      Next
+    </button>
+  </div>
+  } }
+</div>

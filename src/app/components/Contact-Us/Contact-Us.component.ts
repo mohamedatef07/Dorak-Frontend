@@ -24,12 +24,11 @@ import { IContactEmail } from '../../types/IContactEmail';
     InputTextModule,
     InputTextarea,
     DropdownModule,
-    ToastModule
+    ToastModule,
   ],
-  providers: [MessageService]
+  providers: [MessageService],
 })
 export class ContactUsComponent implements OnInit {
-  
   // Contact form data
   contactForm: IContactEmail = {
     Name: '',
@@ -38,7 +37,7 @@ export class ContactUsComponent implements OnInit {
     Subject: '',
     Message: '',
     CenterName: '',
-    InquiryType: ''
+    InquiryType: '',
   };
 
   // Inquiry type options
@@ -49,7 +48,7 @@ export class ContactUsComponent implements OnInit {
     { label: 'Partnership', value: 'partnership' },
     { label: 'Feature Request', value: 'feature' },
     { label: 'Bug Report', value: 'bug' },
-    { label: 'Other', value: 'other' }
+    { label: 'Other', value: 'other' },
   ];
 
   isLoading = false;
@@ -60,16 +59,17 @@ export class ContactUsComponent implements OnInit {
     phone: '(+20) 109 999 9999',
     address: 'ITI Aswan, Sahary City, Aswan, Egypt',
     businessHours: 'Sunday - Friday: 9:00 AM - 6:00 PM (UTC+02:00)',
-    emergencySupport: '24/7 Technical Support Available'
+    emergencySupport: '24/7 Technical Support Available',
   };
+
+  public currentYear: number = new Date().getFullYear();
 
   constructor(
     private messageService: MessageService,
     private apiService: ApiService
-  ) { }
+  ) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   // Form validation
   isFormValid(): boolean {
@@ -91,10 +91,11 @@ export class ContactUsComponent implements OnInit {
   onSubmit() {
     if (!this.isFormValid()) {
       this.messageService.add({
+        key: 'main-toast',
         severity: 'error',
         summary: 'Validation Error',
         detail: 'Please fill in all required fields correctly',
-        life: 3000
+        life: 4000,
       });
       return;
     }
@@ -109,11 +110,11 @@ export class ContactUsComponent implements OnInit {
       CenterName: this.contactForm.CenterName || undefined,
       InquiryType: this.contactForm.InquiryType,
       Subject: this.contactForm.Subject,
-      Message: this.contactForm.Message
+      Message: this.contactForm.Message,
     };
 
     // Remove undefined values
-    Object.keys(emailData).forEach(key => {
+    Object.keys(emailData).forEach((key) => {
       if (emailData[key as keyof IContactEmail] === undefined) {
         delete emailData[key as keyof IContactEmail];
       }
@@ -124,12 +125,14 @@ export class ContactUsComponent implements OnInit {
       next: (response) => {
         this.isLoading = false;
         this.messageService.add({
+          key: 'main-toast',
           severity: 'success',
           summary: 'Message Sent Successfully',
-          detail: 'Thank you for contacting us! We will get back to you within 24 hours.',
-          life: 5000
+          detail:
+            'Thank you for contacting us! We will get back to you within 24 hours.',
+          life: 4000,
         });
-        
+
         // Reset form
         this.contactForm = {
           Name: '',
@@ -138,14 +141,14 @@ export class ContactUsComponent implements OnInit {
           Subject: '',
           Message: '',
           CenterName: '',
-          InquiryType: ''
+          InquiryType: '',
         };
       },
       error: (error) => {
         this.isLoading = false;
-        
+
         let errorMessage = 'Failed to send message. Please try again.';
-        
+
         if (error.status === 400) {
           // Try to get more specific error message from the API response
           if (error.error?.message) {
@@ -162,14 +165,15 @@ export class ContactUsComponent implements OnInit {
         } else if (error.error?.message) {
           errorMessage = error.error.message;
         }
-        
+
         this.messageService.add({
+          key: 'main-toast',
           severity: 'error',
           summary: 'Message Failed',
           detail: errorMessage,
-          life: 5000
+          life: 4000,
         });
-      }
+      },
     });
   }
 

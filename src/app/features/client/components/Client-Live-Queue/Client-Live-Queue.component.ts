@@ -14,6 +14,7 @@ import { RatingModule } from 'primeng/rating';
 import { FormsModule } from '@angular/forms';
 import { AvatarModule } from 'primeng/avatar';
 import { CarouselModule } from 'primeng/carousel';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-Client-Live-Queue',
@@ -24,6 +25,7 @@ import { CarouselModule } from 'primeng/carousel';
     FormsModule,
     AvatarModule,
     CarouselModule,
+    ProgressSpinnerModule
   ],
   styleUrls: ['./Client-Live-Queue.component.css'],
 })
@@ -32,7 +34,7 @@ export class ClientLiveQueueComponent implements OnInit, OnDestroy {
   cAuthService = inject(AuthService);
   srService = inject(UpdateQueueStatusSRService);
   route = inject(ActivatedRoute);
-
+  loading: boolean = false;
   LiveQueues: IClientLiveQueue[] = [];
   appointmentId!: number;
   shiftId!: number;
@@ -56,6 +58,19 @@ export class ClientLiveQueueComponent implements OnInit, OnDestroy {
   estimatedTime = '';
 
   ngOnInit() {
+    this.loading = true; // Start loading when component initializes
+
+    // Create a counter to track completed async operations
+    let completedOperations = 0;
+    const totalOperations = 2; // We have 2 main API calls
+
+    const checkLoadingComplete = () => {
+      completedOperations++;
+      if (completedOperations === totalOperations) {
+        this.loading = false; // Stop loading when all operations are complete
+      }
+    };
+
     this.route.paramMap.subscribe((params) => {
       this.appointmentId = Number(params.get('appointmentId'));
       this.shiftId = Number(params.get('shiftId'));
@@ -63,9 +78,11 @@ export class ClientLiveQueueComponent implements OnInit, OnDestroy {
         next: (res) => {
           this.LiveQueues = res.Data;
           this.updateProgress();
+          checkLoadingComplete();
         },
         error: (err) => {
           console.error('Error fetching live queue data:', err);
+          checkLoadingComplete();
         },
       });
     });
@@ -81,9 +98,11 @@ export class ClientLiveQueueComponent implements OnInit, OnDestroy {
         if (this.shiftId) {
           this.srService.joinShiftGroup(this.shiftId);
         }
+        checkLoadingComplete();
       },
       error: (err) => {
         console.error('Error fetching client info:', err);
+        checkLoadingComplete();
       },
     });
 

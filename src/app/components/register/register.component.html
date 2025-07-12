@@ -401,9 +401,17 @@
                   <!-- Provider Title -->
                   <div class="field mb-3">
                     <label for="providerTitle" class="form-label">Provider Title</label>
-                    <input type="text" pInputText id="providerTitle" name="providerTitle" 
-                      [(ngModel)]="registrationData.providerTitle" placeholder="Enter your professional title" 
-                      class="form-control" required #providerTitleInput="ngModel" />
+                    <p-dropdown id="providerTitle" name="providerTitle"
+                      [options]="doctorTitles"
+                      [(ngModel)]="registrationData.providerTitle"
+                      [optionLabel]="'DoctorTitle'"
+                      [optionValue]="'DoctorTitle'"
+                      placeholder="Select your professional title"
+                      class="w-100" required #providerTitleInput="ngModel">
+                      <ng-template let-title pTemplate="item">
+                        {{ DoctorTitle[title] }}
+                      </ng-template>
+                    </p-dropdown>
                     <div *ngIf="providerTitleInput.invalid && providerTitleInput.touched" class="text-danger mt-1">
                       <small>Provider title is required</small>
                     </div>

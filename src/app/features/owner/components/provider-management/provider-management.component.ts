@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterLink, RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -25,7 +25,6 @@ import { AuthService } from '../../../../services/auth.service';
     CommonModule,
     FormsModule,
     RouterModule,
-    RouterLink,
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
@@ -108,6 +107,7 @@ export class ProviderManagementComponent implements OnInit, AfterViewInit {
     this.userRole = this.authService.getUserRole();
     this.centerId = this.authService.getCenterId();
     this.hideActionButtons = this.userRole === 'Operator';
+    console.log(this.centerId);
     this.loadAllProviders();
   }
 
@@ -152,7 +152,8 @@ export class ProviderManagementComponent implements OnInit, AfterViewInit {
             Status: provider.Status ?? 0
           }));
           this.providers.push(...newProviders);
-
+          console.log(this.providers);
+          
           const totalPages = Math.ceil((response.Data.Total || 0) / this.pageSize);
           if (page < totalPages) {
             this.fetchAllPages(page + 1);

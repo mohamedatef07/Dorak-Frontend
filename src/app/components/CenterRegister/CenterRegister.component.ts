@@ -8,7 +8,6 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
 import { CalendarModule } from 'primeng/calendar';
-import { InputTextarea } from 'primeng/inputtextarea';
 import { ToastModule } from 'primeng/toast';
 import { AuthService } from '../../services/auth.service';
 import { GenderType } from '../../Enums/GenderType.enum';
@@ -26,7 +25,6 @@ import { GenderType } from '../../Enums/GenderType.enum';
     InputTextModule,
     DropdownModule,
     CalendarModule,
-    InputTextarea,
     ToastModule,
     RouterModule,
   ],
@@ -205,6 +203,7 @@ export class CenterRegisterComponent implements OnDestroy {
       next: (response) => {
         this.isLoading = false;
         this.messageService.add({
+          key: 'main-toast',
           severity: 'success',
           summary: 'Registration Successful',
           detail: response.Message || 'Center registered successfully!',
@@ -239,6 +238,7 @@ export class CenterRegisterComponent implements OnDestroy {
           errorMessage = err.error.message;
         }
         this.messageService.add({
+          key: 'main-toast',
           severity: 'error',
           summary: 'Registration Failed',
           detail: errorMessage,

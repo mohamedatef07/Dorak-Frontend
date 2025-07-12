@@ -1,0 +1,43 @@
+.center-register-code-outer {
+  min-height: 100vh;
+  min-width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f8f9fa;
+}
+
+.center-register-code-container {
+  max-width: 400px;
+  width: 100%;
+  padding: 32px;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  text-align: center;
+}
+
+.center-register-code-container > div {
+  width: 100%;
+  max-width: 400px;
+  padding: 32px;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  text-align: center;
+  background: #fff;
+} 
+.Submit-btn{
+    background-color: var(--button-bg-color-Light) ;
+    border: 1px var(--button-bg-color-Light) solid;
+    color: var(--button-text-color-Light);
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius);
+    transition: var(--transition);
+}
+.Submit-btn:hover{
+    background-color: var(--button-text-color-Light);
+    border: 1px var(--button-bg-color-Light) solid;
+    color: var(--button-bg-color-Light);
+}

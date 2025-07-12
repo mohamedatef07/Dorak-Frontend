@@ -1,3 +1,4 @@
+import { PaginationApiResponse } from './../../types/PaginationApiResponse';
 import { Injectable } from '@angular/core';
 import * as signalR from '@microsoft/signalr';
 import { ICenterShifts } from '../../features/owner/models/ICenterShifts';
@@ -10,7 +11,7 @@ import { AuthService } from '../auth.service';
 })
 export class UpdateShiftsListSRService {
   private hubConnection: signalR.HubConnection | null = null;
-  private shiftListSubject = new Subject<Array<ICenterShifts>>();
+  private shiftListSubject = new Subject<PaginationApiResponse<Array<ICenterShifts>>>();
   public updatedShiftsList = this.shiftListSubject.asObservable();
 
   constructor(private authService: AuthService) {
@@ -41,7 +42,7 @@ export class UpdateShiftsListSRService {
     if (this.hubConnection) {
       this.hubConnection.on(
         'updateShiftsList',
-        (updatedList: Array<ICenterShifts>) => {
+        (updatedList: PaginationApiResponse<Array<ICenterShifts>>) => {
           this.shiftListSubject.next(updatedList);
         }
       );

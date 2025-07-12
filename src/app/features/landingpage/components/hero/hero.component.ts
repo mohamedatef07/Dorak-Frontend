@@ -1,58 +1,110 @@
-import { NgClass, NgStyle } from '@angular/common';
+import { NgClass, NgStyle, CommonModule, NgFor } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import {
-  ArrowRight,
-  Play,
-  Clock,
-  Users,
-  CheckCircle,
-  Zap
-} from 'lucide-angular';
+import { faClock, faZap, faBuilding, faCheckCircle,faCity, faBolt,faGlobe,faDesktop, faArrowRight, faChevronDown, faChevronUp, faHospital, faLandmark, faGraduationCap, faPhone, faStethoscope, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { faMobileAlt } from '@fortawesome/free-solid-svg-icons';
+import { faUsers } from '@fortawesome/free-solid-svg-icons'; 
+
 
 @Component({
-  selector: 'app-Hero',
-  imports:[NgClass],
-  templateUrl: './Hero.component.html',
-  styleUrls: ['./Hero.component.css',
-         '..//../../../styles/general.css'
+  selector: 'app-hero',
+   standalone: true,
+  templateUrl: './hero.component.html',
+   imports: [
+    CommonModule,
+    NgFor,
+],
+  styleUrls: ['./hero.component.css',
+
 
   ]
 })
-export class HeroComponent {
+export class HeroComponent  {
+faArrowRight = faArrowRight;
+  faChevronDown = faChevronDown;
+  faChevronUp = faChevronUp;
+  faClock = faClock;
+  faUsers = faUsers;
+  faBuilding = faBuilding;
+  faBolt = faBolt;
+  faDesktop = faDesktop;
+  faGlobe = faGlobe;
+  faMobileAlt = faMobileAlt;
+  faCheckCircle = faCheckCircle;
+  faHospital = faHospital;
+  faLandmark = faLandmark;
+  faGraduationCap = faGraduationCap;
+  faPhone = faPhone;
+  faStethoscope = faStethoscope;
+  faCity = faCity;
 
- arrowRightIcon = ArrowRight;
-  playIcon = Play;
-  clockIcon = Clock;
-  usersIcon = Users;
-  checkCircleIcon = CheckCircle;
-  zapIcon = Zap;
+  openFAQ: number | null = null;
 
-  content = {
-    badge: 'Trusted by 500+ Medical Centers',
-    title: 'Transform Your Medical Center with Smart Queue Management',
-    subtitle: 'Reduce wait times by 50%, boost patient satisfaction, and streamline your entire appointment process with our intelligent queue management system.',
-    cta1: 'Start Free Trial',
-    cta2: 'Watch Demo',
-    stats: [
-      { number: '50%', label: 'Less Wait Time', icon: Clock },
-      { number: '10,000+', label: 'Happy Patients', icon: Users },
-      { number: '99.9%', label: 'Uptime', icon: Zap }
-    ],
-    features: [
-      'Real-time notifications',
-      'Doctor scheduling',
-      'Patient management',
-      'Analytics dashboard',
-      'Mobile app included',
-      'HIPAA compliant'
-    ]
-  };
 
-  queueItems = [
-    { id: 1, name: 'Ahmed Ali', doctor: 'Dr. Sarah', time: '5 min', status: 'current' },
-    { id: 2, name: 'Fatima Hassan', doctor: 'Dr. Ahmed', time: '12 min', status: 'waiting' },
-    { id: 3, name: 'Omar Khaled', doctor: 'Dr. Sarah', time: '18 min', status: 'waiting' },
-    { id: 4, name: 'Layla Mohamed', doctor: 'Dr. Ahmed', time: '25 min', status: 'waiting' }
+features: { icon: string; title: string; description: string }[] = [];
+  industries: { icon: IconDefinition; name: string; color: string }[] = [];
+
+  constructor() {
+ this.features = [
+  {
+    icon: '🕒',
+    title: 'Smart Queue Alerts',
+    description: 'Get notified when your turn is approaching with intelligent time predictions.'
+  },
+  {
+    icon: '⚡',
+    title: 'Time-saving Experience',
+    description: 'Eliminate physical waiting lines and optimize your valuable time.'
+  },
+  {
+    icon: '🏢',
+    title: 'Multi-branch Support',
+    description: 'Manage queues across multiple locations from a single dashboard.'
+  },
+  {
+    icon: '✅',
+    title: 'Instant Setup',
+    description: 'Get your queuing system up and running in minutes, not hours.'
+  },
+  {
+    icon: '🖥️',
+    title: 'Real-time Screens',
+    description: 'Digital displays show current queue status and estimated wait times.'
+  }
+];
+
+
+    this.industries = [
+      { icon: this.faHospital, name: 'Hospitals', color: 'text-danger' },
+      { icon: this.faLandmark, name: 'Banks', color: 'text-success' },
+      { icon: this.faCity, name: 'Government', color: 'text-primary' },
+      { icon: this.faPhone, name: 'Telecom', color: 'text-purple' },
+      { icon: this.faStethoscope, name: 'Clinics', color: 'text-info' },
+      { icon: this.faGraduationCap, name: 'Universities', color: 'text-warning' }
+    ];
+  }
+
+  toggleFAQ(index: number): void {
+    this.openFAQ = this.openFAQ === index ? null : index;
+  }
+
+  // FAQs
+  faqs = [
+    {
+      question: 'Can I use it without internet?',
+      answer: 'No, the system cannot operate completely without the internet. An electronic connection is required to enable some advanced features, such as notifications, remote monitoring, and custom data updates.'
+    },
+    {
+      question: 'How quickly can we set it up?',
+      answer: 'Our system can be set up within 2 days. We provide complete installation support and training for your staff.'
+    },
+    {
+      question: 'What hardware do we need?',
+      answer: 'You only need a computer or tablet for the admin panel and optional display screens. We can recommend compatible hardware based on your needs.'
+    }
   ];
+  getIconClass(iconName: string): string {
+  return `fa-solid ${iconName}`;
+}
+
 
 }

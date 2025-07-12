@@ -16,8 +16,7 @@ import { MessageService } from 'primeng/api';
 import { TimeStringToDatePipe } from '../../../../pipes/TimeStringToDate.pipe';
 import { ICheckoutRequest } from '../../models/ICheckoutRequest';
 import { Router, ActivatedRoute } from '@angular/router';
-  import { Input } from '@angular/core';
-
+import { Input } from '@angular/core';
 
 @Component({
   selector: 'app-booking',
@@ -59,44 +58,45 @@ export class BookingComponent implements OnInit {
   userId!: string;
   EndDate!: Date;
 
-@Input() providerId!: string;
+  @Input() providerId!: string;
 
-getTotalAppointments(): number {
-  return this.originalBookings.length;
-}
- ngOnInit() {
-  this.userId = this.authServices.getUserId();
+  getTotalAppointments(): number {
+    return this.originalBookings.length;
+  }
+  ngOnInit() {
+    this.userId = this.authServices.getUserId();
 
-  this.clientServices.getDoctorBookingInfo(this.providerId).subscribe({
-    next: (res) => {
-      this.originalBookings = [...res.Data];
-      this.tempBookings = this.originalBookings;
-    },
-    error: (err) => {
-      this.messageServices.add({
-        severity: 'error',
-        summary: 'Error',
-        detail: 'The server is experiencing an issue, Please try again soon.',
-        life: 4000,
-      });
-    },
-  });
+    this.clientServices.getDoctorBookingInfo(this.providerId).subscribe({
+      next: (res) => {
+        this.originalBookings = [...res.Data];
+        this.tempBookings = this.originalBookings;
+      },
+      error: (err) => {
+        this.messageServices.add({
+          key: 'main-toast',
+          severity: 'error',
+          summary: 'Error',
+          detail: 'The server is experiencing an issue, Please try again soon.',
+          life: 4000,
+        });
+      },
+    });
 
-  this.clientServices.getDoctorCenterServices(this.providerId).subscribe({
-    next: (res) => {
-      this.centerServices = [...res.Data];
-    },
-    error: (err) => {
-      this.messageServices.add({
-        severity: 'error',
-        summary: 'Error',
-        detail: 'The server is experiencing an issue, Please try again soon.',
-        life: 4000,
-      });
-    },
-  });
-}
-
+    this.clientServices.getDoctorCenterServices(this.providerId).subscribe({
+      next: (res) => {
+        this.centerServices = [...res.Data];
+      },
+      error: (err) => {
+        this.messageServices.add({
+          key: 'main-toast',
+          severity: 'error',
+          summary: 'Error',
+          detail: 'The server is experiencing an issue, Please try again soon.',
+          life: 4000,
+        });
+      },
+    });
+  }
 
   showCenterServicesAndBookings() {
     this.originalBookings = this.tempBookings;
@@ -115,6 +115,7 @@ getTotalAppointments(): number {
   makeAppointment(appDate: Date, shiftId: number) {
     if (!this.selectedServiceId || !this.selectedCenterId) {
       this.messageServices.add({
+        key: 'main-toast',
         severity: 'error',
         summary: 'Error',
         detail: 'Booking incomplete: Please select a center and service.',
@@ -138,11 +139,12 @@ getTotalAppointments(): number {
         this.selectedCenterId = 0;
         this.selectedServiceId = 0;
         this.route.navigate(['/client/checkout'], {
-          state: { checkoutRequest: this.checkoutRequest }
+          state: { checkoutRequest: this.checkoutRequest },
         });
       },
       error: (err) => {
         this.messageServices.add({
+          key: 'main-toast',
           severity: 'error',
           summary: 'Error',
           detail: 'Failed to book appointment. Please try again later',
@@ -170,6 +172,7 @@ getTotalAppointments(): number {
       return;
     }
     this.messageServices.add({
+      key: 'main-toast',
       severity: 'error',
       summary: 'Error',
       detail: 'Please select a center first to open its location.',

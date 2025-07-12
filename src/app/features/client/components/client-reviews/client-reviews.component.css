@@ -1,0 +1,27 @@
+.review-container {
+  background-color: #edf1f2;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: box-shadow 0.2s;
+}
+.review-container:hover {
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
+}
+::ng-deep .review-star .p-rating-icon {
+  width: 1.2rem !important;
+}
+::ng-deep .p-button {
+  background: #2a6f96 !important;
+  border: none !important;
+  outline-color: none !important;
+  transition: none !important;
+  border-start-start-radius: var(--p-button-border-radius) !important;
+  border-end-start-radius: var(--p-button-border-radius) !important;
+}
+::ng-deep .p-splitbutton .p-icon {
+  color: white !important;
+}
+::ng-deep .p-splitbutton-button.p-button {
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+}

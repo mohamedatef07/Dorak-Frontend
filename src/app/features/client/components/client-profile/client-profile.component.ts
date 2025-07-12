@@ -10,8 +10,8 @@ import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-Client-Profile2',
   imports: [AvatarModule, RouterLink],
-  templateUrl: './Client-Profile.component.html',
-  styleUrls: ['./Client-Profile.component.css'],
+  templateUrl: './client-profile.component.html',
+  styleUrls: ['./client-profile.component.css'],
 })
 export class ClientProfileComponent implements OnInit {
   cAuthServices = inject(AuthService);
