@@ -20,7 +20,8 @@ import { AvatarModule } from 'primeng/avatar';
     FormsModule,
     RatingModule,
     AvatarModule,
-  , ProgressSpinnerModule,],
+    ProgressSpinnerModule,
+  ],
 })
 export class DoctorMainInfoComponent implements OnInit {
   clientServices = inject(ClientService);
