@@ -1,12 +1,12 @@
 <app-nav-bar></app-nav-bar>
 <div class="container checkout-container">
   <div class="row main-padding main-radius">
-    <h1 class="checkout-title">Checkout</h1>
+    <h1 class="checkout-title main-text-Color">Checkout</h1>
     <!-- Payment Methods -->
     <div class="col-lg-6 col-md-12">
       <div class="card">
         <div class="card-body">
-          <h5 class="section-title">Payment Methods</h5>
+          <h5 class="section-title main-text-Color">Payment Methods</h5>
           <div class="payment-option">
             <input
               type="radio"
@@ -21,7 +21,6 @@
             <label for="credit-card">Credit Card</label>
             <div class="payment-icon visa-icon">VISA</div>
           </div>
-
           <div class="payment-option">
             <input
               type="radio"
@@ -48,28 +47,25 @@
             <label for="easy-pay">Easy Pay</label>
             <div class="payment-icon paypal-icon">PP</div>
           </div>
-          <button class="btn continue-btn" (click)="clientCheckout()">
+          <button class="btn main-btn-bg continue-btn" (click)="clientCheckout()">
             Continue
           </button>
         </div>
       </div>
     </div>
-
     <!-- Billing Information -->
     <div class="col-lg-6 col-md-12">
       <div class="card">
         <div class="card-body">
           <div class="billing-title">
             <div class="billing-icon">i</div>
-            <h5 class="section-title mb-0">Billing Information</h5>
+            <h5 class="section-title mb-0 main-text-Color">Billing Information</h5>
           </div>
-
           <div class="billing-info">
             <div class="info-row">
-              <span class="info-label">Consultation Fees</span>
+              <span class="info-label">Appointment Fees</span>
               <span class="info-value">{{ checkoutRequest.Amount }}</span>
             </div>
-
             <div class="info-row">
               <span class="info-label">Total</span>
               <span class="info-value">{{ checkoutRequest.Amount }}</span>

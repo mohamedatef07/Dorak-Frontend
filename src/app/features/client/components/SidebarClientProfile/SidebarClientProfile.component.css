@@ -234,7 +234,7 @@ body {
   display: inline-block;
 }
 
-.user-avatar img {
+.user-avatar .user-img {
   width: 90px;
   height: 90px;
   object-fit: cover;

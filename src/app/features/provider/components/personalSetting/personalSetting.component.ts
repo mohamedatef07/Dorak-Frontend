@@ -1,21 +1,27 @@
 import { Component, inject, OnInit } from '@angular/core';
 import {
   FormBuilder,
-  FormControl,
   FormGroup,
-  NonNullableFormBuilder,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { ProviderService } from '../../services/provider.service';
-import { NgClass, NgIf } from '@angular/common';
-import { RouterLink, RouterLinkActive } from '@angular/router';
 import { environment } from '../../../../../environments/environment';
 import { MessageService } from 'primeng/api';
+import { AvatarModule } from 'primeng/avatar';
+import { CalendarModule } from 'primeng/calendar';
+import { DatePickerModule } from 'primeng/datepicker';
 
 @Component({
   selector: 'app-personalSetting',
-  imports: [ReactiveFormsModule, NgIf],
+  imports: [
+    ReactiveFormsModule,
+    AvatarModule,
+    CalendarModule,
+    DatePickerModule,
+    FormsModule,
+  ],
   templateUrl: './personalSetting.component.html',
   styleUrls: ['./personalSetting.component.css'],
 })
@@ -24,6 +30,7 @@ export class PersonalSettingComponent implements OnInit {
 
   personalForm!: FormGroup;
   imagePreview: string | null = null;
+  imageLoadFailed = false;
 
   constructor(
     private fb: FormBuilder,
@@ -33,21 +40,23 @@ export class PersonalSettingComponent implements OnInit {
   ngOnInit(): void {
     this._providerService.getProviderProfile().subscribe({
       next: (res) => {
-        console.log('Current profile:', res.Data);
         const nameParts = res.Data.FullName.trim().split(' ');
         const firstName = nameParts[0] || '';
         const lastName = nameParts.slice(1).join(' ') || '';
-        this.imagePreview = environment.apiUrl + res.Data.Image;
+        this.imagePreview = res.Data.Image
+          ? environment.apiUrl + res.Data.Image
+          : '';
         this.personalForm.patchValue({
           FirstName: firstName,
           LastName: lastName,
           email: res.Data.Email,
           phone: res.Data.Phone,
-          birthDate: res.Data.BirthDate,
+          birthDate: new Date(res.Data.BirthDate),
         });
       },
       error: (err) => {
         this.messageServices.add({
+          key: 'main-toast',
           severity: 'error',
           summary: 'Error',
           detail: 'The server is experiencing an issue, Please try again soon.',
@@ -72,9 +81,20 @@ export class PersonalSettingComponent implements OnInit {
       const reader = new FileReader();
       reader.onload = () => {
         this.imagePreview = reader.result as string;
+        this.imageLoadFailed = false; // Reset error state when new image is selected
       };
       reader.readAsDataURL(file);
     }
+  }
+
+  onImageError() {
+    this.imageLoadFailed = true;
+  }
+
+  onDateSelect() {
+    this.personalForm.patchValue({
+      birthDate: this.personalForm.value.birthDate,
+    });
   }
 
   onSubmit(): void {
@@ -89,7 +109,11 @@ export class PersonalSettingComponent implements OnInit {
       formData.append('Phone', this.personalForm.value.phone);
 
       const birthDate = this.personalForm.value.birthDate;
-      formData.append('BirthDate', birthDate);
+      if (birthDate instanceof Date) {
+        formData.append('BirthDate', birthDate.toISOString().split('T')[0]);
+      } else {
+        formData.append('BirthDate', birthDate);
+      }
 
       const image = this.personalForm.value.image;
       if (image instanceof File) {
@@ -98,6 +122,7 @@ export class PersonalSettingComponent implements OnInit {
       this._providerService.updateProfile(formData).subscribe({
         next: (res) => {
           this.messageServices.add({
+            key: 'main-toast',
             severity: 'success',
             summary: 'Success',
             detail: 'Profile updated successfully!',
@@ -106,6 +131,7 @@ export class PersonalSettingComponent implements OnInit {
         },
         error: (err) => {
           this.messageServices.add({
+            key: 'main-toast',
             severity: 'error',
             summary: 'Error',
             detail: 'Failed to update profile. Please try again.',
@@ -118,6 +144,7 @@ export class PersonalSettingComponent implements OnInit {
 
   onCancel() {
     this.personalForm.reset();
-    this.imagePreview = null;
+    this.imagePreview = this.imagePreview;
+    this.imageLoadFailed = false;
   }
 }

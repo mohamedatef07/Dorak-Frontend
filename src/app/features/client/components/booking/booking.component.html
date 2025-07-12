@@ -1,5 +1,5 @@
 <div
-  class="booking bg-white main-padding main-radius text-white d-flex flex-column gap-3"
+  class="booking bg-white main-padding main-radius text-white d-flex flex-column gap-3 pt-4"
 >
   <div class="info d-flex flex-column gap-3 pb-3">
     <div class="center-list main-bg text-center main-radius">
@@ -26,7 +26,7 @@
         class="w-full md:w-56"
       />
     </div>
-    <div class="service-info d-flex justify-content-between">
+    <div class="service-info d-flex justify-content-between pt-4 pb-2">
       <p class="fees main-text-Color fw-bold d-flex gap-3">
         Fees: <span>{{ price | currency : "EGP " : "symbol" : "1.2-2" }}</span>
       </p>
@@ -51,6 +51,7 @@
   <div class="book">
     <p class="main-text-Color text-center fw-bold">Choose your appointment</p>
     <p-carousel
+      *ngIf="originalBookings.length > 0"
       class="pcar"
       [value]="originalBookings"
       [numVisible]="1"
@@ -88,5 +89,8 @@
         </div>
       </ng-template>
     </p-carousel>
+  </div>
+  <div *ngIf="originalBookings.length === 0" class="text-center py-4">
+    <p class="text-muted fs-5">No shifts found</p>
   </div>
 </div>

@@ -106,7 +106,6 @@ export class NavBarComponent implements OnInit {
   setupSignalRSubscriptions() {
     this.srService.notificationsList.subscribe({
       next: (updatedNotifications) => {
-        // Use shared service to update notifications with local read status
         const updatedNotificationsWithLocalChanges = this.notificationService.updateNotificationsWithLocalStatus(updatedNotifications);
         this.notifications = [...updatedNotificationsWithLocalChanges].slice(0, 3);
         this.updateUnreadCount();

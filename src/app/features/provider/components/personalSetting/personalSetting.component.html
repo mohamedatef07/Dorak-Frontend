@@ -9,15 +9,24 @@
                 class="col-md-3 text-center d-flex flex-column justify-content-center align-items-center p-4"
               >
                 <div class="profile-image-container mb-3">
+                  @if(imagePreview && !imageLoadFailed){
                   <img
-                    *ngIf="imagePreview"
                     [src]="imagePreview"
                     alt="Profile Image"
+                    (error)="onImageError()"
                   />
+                  }@else {
+                  <p-avatar
+                    icon="pi pi-user"
+                    shape="circle"
+                    size="xlarge"
+                    class="profile-image"
+                  ></p-avatar>
+                  }
                 </div>
                 <button
                   type="button"
-                  class="btn upload-btn mt-2"
+                  class="btn main-btn-bg upload-btn mt-2"
                   (click)="fileInput.click()"
                 >
                   Upload
@@ -65,11 +74,15 @@
                 </div>
                 <div class="mb-3">
                   <label for="dob" class="form-label">Date of Birth</label>
-                  <input
-                    type="date"
-                    class="form-control"
+                  <p-datepicker
+                    [iconDisplay]="'input'"
+                    [showIcon]="true"
+                    dateFormat="yy-mm-dd"
+                    [showButtonBar]="true"
+                    [showTime]="false"
+                    (onSelect)="onDateSelect()"
                     formControlName="birthDate"
-                  />
+                  ></p-datepicker>
                 </div>
               </div>
             </div>

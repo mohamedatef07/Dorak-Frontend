@@ -3,17 +3,20 @@
   left: 0 !important;
   width: 100% !important;
 }
+.nav .container .dropdown #dropdown-list {
+  top: 150%;
+}
 #dropdown-list li .dropdown-item:last-child {
   cursor: pointer;
 }
 .nav .container .dropdown #notifications-dropdown-list {
   position: absolute;
-  top: 145%;
+  top: 150%;
   right: 0;
   border-radius: var(--border-radius);
   background-color: white;
   width: 28.1rem;
-  z-index: 1000;
+  z-index: 1000 !important;
   animation: slideDown 0.3s ease-out;
 }
 
@@ -94,12 +97,18 @@
 }
 
 .nav .container .profile-notifications .profile-img {
-  width: 3rem;
-  height: 3rem;
+  width: 3.2rem;
+  height: 3.2rem;
 }
 .nav .container .profile-notifications .profile-img a img {
-  width: 100%;
   border-radius: 50%;
+  width: 3.2rem;
+  height: 3.2rem;
+  object-fit: cover;
+}
+.user-img {
+  width: 3.2rem;
+  height: 3.2rem;
 }
 .reading-notification {
   background-color: #f8f9fa !important;

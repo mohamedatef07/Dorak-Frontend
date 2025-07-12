@@ -31,6 +31,12 @@ main .container .general-info .info-container .profile-image {
   border-radius: 50%;
 }
 
+/* PrimeNG Avatar styling to match profile image */
+.user-img {
+  width: 7.5rem;
+  height: 7.5rem;
+}
+
 /* Professional Information */
 main .container .professional-information > p {
   color: var(--text-color-Light);
