@@ -2,6 +2,8 @@ import { GenderType } from '../Enums/GenderType.enum';
 import { ProviderType } from '../Enums/ProviderType.enum';
 
 export class IRegistrationViewModel {
+    [key: string]: string | number | boolean | GenderType | ProviderType | null | undefined | Date;
+
   UserName: string = '';
   Email: string = '';
   PhoneNumber: string = '';
