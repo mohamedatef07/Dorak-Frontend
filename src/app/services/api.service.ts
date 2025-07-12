@@ -149,7 +149,6 @@ deleteProviderFromCenter(providerId: string, centerId: number): Observable<ApiRe
   }
 
   getProviderLiveQueues(
-    // providerId: string,
     centerId: number,
     shiftId: number,
     pageNumber: number = 1,
