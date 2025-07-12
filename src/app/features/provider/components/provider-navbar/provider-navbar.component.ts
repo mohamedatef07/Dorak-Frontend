@@ -10,10 +10,11 @@ import { environment } from '../../../../../environments/environment';
 import { Subscription } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { NotificationService } from '../../../../services/Notification.service';
+import { AvatarModule } from 'primeng/avatar';
 
 @Component({
   selector: 'app-provider-navbar',
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, AvatarModule],
   templateUrl: './provider-navbar.component.html',
   styleUrl: './provider-navbar.component.css',
 })
@@ -31,6 +32,7 @@ export class ProviderNavbarComponent {
   isDropDownOpen = false;
   isNotificationsDropDownOpen = false;
   UserImage!: string;
+  imageLoadFailedMap: { [key: string]: boolean } = {};
 
   toggleDropDown(event: MouseEvent) {
     event.stopPropagation();
@@ -73,8 +75,20 @@ export class ProviderNavbarComponent {
       },
     });
   }
+
+  onImageError(event: Event, key: string) {
+    this.imageLoadFailedMap[key] = true;
+  }
+
+  hasImageLoadFailed(key: string): boolean {
+    return !!this.imageLoadFailedMap[key];
+  }
+
   ngOnInit() {
-    this.UserImage = `${environment.apiUrl}${this.authServices.getUserImage()}`;
+    const imageFromToken = this.authServices.getUserImage();
+    this.UserImage = imageFromToken
+      ? `${environment.apiUrl}${imageFromToken}`
+      : '';
     this.notificationService.getNotifications(1, 3).subscribe({
       next: (res) => {
         this.notifications = [...res.Data];
@@ -83,7 +97,7 @@ export class ProviderNavbarComponent {
     this.notificationsListSubscription =
       this.srService.notificationsList.subscribe({
         next: (updatedNotifications) => {
-          this.notifications = [...updatedNotifications].slice(0,3);
+          this.notifications = [...updatedNotifications].slice(0, 3);
         },
         error: (err) => {
           this.messageServices.add({

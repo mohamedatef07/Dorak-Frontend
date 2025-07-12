@@ -1,4 +1,3 @@
-
 .settings-header {
   color: var(--text-color-Light);
   font-weight: bold;
@@ -27,6 +26,9 @@
   font-size: 20px;
   margin-bottom: 20px;
   font-weight: bold;
+}
+.nav {
+  z-index: 0 !important;
 }
 
 .settings-card {

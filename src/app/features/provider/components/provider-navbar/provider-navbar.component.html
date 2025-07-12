@@ -108,7 +108,20 @@
       </div>
       <div class="profile-img me-4">
         <a [routerLink]="['/provider/profile']">
-          <img [src]="UserImage" alt="" />
+          @if (UserImage && !hasImageLoadFailed('user-profile')) {
+            <img
+              [src]="UserImage"
+              alt="User Image"
+              (error)="onImageError($event, 'user-profile')"
+            />
+            } @else {
+            <p-avatar
+              icon="pi pi-user"
+              shape="circle"
+              size="large"
+              class="user-img"
+            ></p-avatar>
+            }
         </a>
       </div>
     </div>
