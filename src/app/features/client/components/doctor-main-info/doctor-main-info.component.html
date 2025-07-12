@@ -1,3 +1,9 @@
+@if(loading) {
+<div class="loader-container">
+  <p-progressSpinner ariaLabel="loading" animationDuration=".5s">
+  </p-progressSpinner>
+</div>
+} @else {
 <div
   class="main-info d-flex align-items-center bg-white main-radius main-padding"
 >
@@ -21,3 +27,4 @@
     </div>
   </div>
 </div>
+}
