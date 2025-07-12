@@ -23,9 +23,10 @@ export class CenterShiftsTableComponent {
   srService = inject(UpdateShiftsListSRService);
   route = inject(Router);
   centerShifts: Array<ICenterShifts> = [];
+  // centerId = 3;
   centerId = this.authServices.getCenterId();
   ShiftType = ShiftType;
-    currentPage: number = 1;
+  currentPage: number = 1;
   pageSize: number = 10;
   totalRecords: number = 0;
   totalPages: number = 0;

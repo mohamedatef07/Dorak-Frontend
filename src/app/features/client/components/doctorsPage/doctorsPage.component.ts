@@ -19,6 +19,8 @@ import { MessageService } from 'primeng/api';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { DatePickerModule } from 'primeng/datepicker';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+
 
 @Component({
   selector: 'app-doctorsPage',
@@ -37,6 +39,7 @@ import { DatePickerModule } from 'primeng/datepicker';
     FloatLabelModule,
     MultiSelectModule,
     DatePickerModule,
+    ProgressSpinnerModule,
   ],
 })
 export class DoctorsPageComponent implements OnInit {
@@ -56,6 +59,7 @@ export class DoctorsPageComponent implements OnInit {
   maxRateValue = 5;
   minRateValue = 0;
 
+  loading: boolean = false;
   selectedTitles: number[] = [];
   selectedGenders: number[] = [];
   selectedCities: string[] = [];
@@ -95,6 +99,7 @@ export class DoctorsPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loading = true;
     this.getAllDoctors();
     this.doctorServices.GetAllCitiesAndSpecializations().subscribe({
       next: (res) => {
@@ -109,12 +114,14 @@ export class DoctorsPageComponent implements OnInit {
       .getAllDoctorsCards(filter, this.currentPage, this.pageSize)
       .subscribe({
         next: (res) => {
+
           this.doctors = [...res.Data];
           this.filteredDoctors = [...this.doctors];
           this.totalRecords = res.TotalRecords;
           this.currentPage = res.CurrentPage;
           this.pageSize = res.PageSize;
           this.totalPages = res.TotalPages;
+          this.loading = false;
         },
       });
   }

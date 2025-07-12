@@ -69,6 +69,16 @@ body[data-theme="dark"] .modern-title {
   letter-spacing: 0.2px;
 }
 
+.provider-info-modern .doctor-specialty
+{
+  font-size: 1.2rem;
+    color: var(--text-primary);
+    margin-top: 16px;
+    margin-bottom: 16px;
+    font-weight: 600;
+    color: var(--button-bg-color-Light);
+}
+
 body[data-theme="dark"] .provider-info-modern .doctor-name {
   color: var(--text-dark);
 }

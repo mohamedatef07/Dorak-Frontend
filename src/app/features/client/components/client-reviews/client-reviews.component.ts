@@ -9,6 +9,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { MenuItem, MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { SplitButtonModule } from 'primeng/splitbutton';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-client-reviews',
@@ -22,6 +23,7 @@ import { SplitButtonModule } from 'primeng/splitbutton';
     DatePipe,
     SplitButtonModule,
     ToastModule,
+    ProgressSpinnerModule,
   ],
 })
 export class ClientReviewsComponent implements OnInit {
@@ -34,7 +36,7 @@ export class ClientReviewsComponent implements OnInit {
   pageSize: number = 10;
   totalRecords: number = 0;
   totalPages: number = 0;
-
+  loading: boolean = false;
 
   Edit(reviewId: number) {
     // this.clientService.deleteReview(reviewId).subscribe({
@@ -70,6 +72,7 @@ export class ClientReviewsComponent implements OnInit {
   }
 
   fetchReviews() {
+    this.loading = true;
     this.clientService
       .getClientReviews(this.userId, this.currentPage, this.pageSize)
       .subscribe({
@@ -108,6 +111,7 @@ export class ClientReviewsComponent implements OnInit {
             this.reviews = [];
             this.totalRecords = 0;
           }
+          this.loading = false;
         },
         error: (err) => {
           this.messageService.add({
@@ -117,6 +121,7 @@ export class ClientReviewsComponent implements OnInit {
             detail: 'Failed to fetch reviews',
             life: 4000,
           });
+          this.loading = false;
         },
       });
   }

@@ -58,6 +58,7 @@ import { CenterRegisterCodeComponent } from './components/CenterRegisterCode/Cen
 import { CenterRegisterCodeGuard } from './guards/center-register-code.guard';
 import { ProviderCenterServiceComponent } from './features/owner/components/ProviderCenterService/ProviderCenterService.component';
 import { AddReviewComponent } from './features/client/components/add-review/add-review.component';
+import { ProviderReviewsComponent } from './features/provider/components/provider-reviews/provider-reviews.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 
 export const routes: Routes = [
@@ -200,6 +201,11 @@ export const routes: Routes = [
       { path: 'schedule', component: ScheduleComponent, title: 'Schedule' },
       { path: 'reports', component: ReportsComponent, title: 'Reports' },
       {
+        path: 'reviews',
+        component: ProviderReviewsComponent,
+        title: 'Reviews',
+      },
+      {
         path: 'settings',
         component: ProviderSettingComponent,
         children: [
@@ -219,11 +225,11 @@ export const routes: Routes = [
             component: SecurityProfileComponent,
             title: 'Security Settings',
           },
-          {
-            path: 'system-preferences-settings',
-            component: SystemPreferencesSettingsComponent,
-            title: 'System Preferences Settings',
-          },
+          // {
+          //   path: 'system-preferences-settings',
+          //   component: SystemPreferencesSettingsComponent,
+          //   title: 'System Preferences Settings',
+          // },
         ],
       },
       {
@@ -331,19 +337,23 @@ export const routes: Routes = [
     canActivate: [AuthGuard, RoleGuard],
     data: { expectedRole: ['Client'] },
   },
-  // ----------------------------------
-
-  // canActivate: [AuthGuard, RoleGuard], data: { expectedRole: 'Client' }
-
-  // ----------------------------------
 
   {
     path: 'home',
     component: HeroComponent,
-
   },
-  { path: 'login', component: LoginComponent, title: 'Login', data: { animation: 'login' } },
-  { path: 'register', component: RegisterComponent, title: 'Register', data: { animation: 'register' } },
+  {
+    path: 'login',
+    component: LoginComponent,
+    title: 'Login',
+    data: { animation: 'login' },
+  },
+  {
+    path: 'register',
+    component: RegisterComponent,
+    title: 'Register',
+    data: { animation: 'register' },
+  },
   { path: 'center-code', component: CenterRegisterCodeComponent },
   {
     path: 'center-register',

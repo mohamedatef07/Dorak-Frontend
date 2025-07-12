@@ -1,6 +1,11 @@
 <div class="reviews">
   <h3 class="main-text-Color fw-bold">All Reviews</h3>
-  @if(reviews.length > 0){
+  @if(loading) {
+  <div class="loader-container">
+    <p-progressSpinner ariaLabel="loading" animationDuration=".5s">
+    </p-progressSpinner>
+  </div>
+  } @else { @if(reviews.length > 0){
   <div class="row">
     @for(review of reviews; track $index){
     <div class="col-12 mb-4">
@@ -14,7 +19,7 @@
             <h5 class="main-text-Color fw-bolder">
               {{ review.ProviderName }}
             </h5>
-            <div class=" flex justify-center">
+            <div class="flex justify-center">
               <p-toast />
               <p-splitbutton [model]="review.menuItems!" />
             </div>
@@ -57,5 +62,5 @@
       Next
     </button>
   </div>
-  } }
+  } } }
 </div>

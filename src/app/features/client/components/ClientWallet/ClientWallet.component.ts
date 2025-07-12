@@ -14,6 +14,7 @@ import { FormsModule } from '@angular/forms';
 import { IClientWalletProfile } from '../../models/IClientWalletProfile';
 import { AuthService } from '../../../../services/auth.service';
 import { environment } from '../../../../../environments/environment';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-ClientWallet',
@@ -27,7 +28,7 @@ import { environment } from '../../../../../environments/environment';
     InputNumberModule,
     MessageModule,
     ToastModule,
-
+    ProgressSpinnerModule
   ],
   templateUrl: './ClientWallet.component.html',
   styleUrls: ['./ClientWallet.component.css'],
@@ -44,6 +45,7 @@ export class ClientWalletComponent implements OnInit {
   selectedReturnMethod: 'vodafone' | 'bank' | null = null;
   bankAccountNumber: string = '';
   vodafoneNumber: string = '';
+  loading: boolean = false;
 
   // Transaction history (empty initially)
   transactions: ITransaction[] = [];
@@ -54,6 +56,8 @@ export class ClientWalletComponent implements OnInit {
   constructor(private messageService: MessageService) {}
 
   ngOnInit() {
+    this.loading = true;
+
     this.userid = this.cAuthServices.getUserId();
     this.loadBalance();
     this.loadTransactions();
@@ -62,6 +66,7 @@ export class ClientWalletComponent implements OnInit {
         this.clientWallet = res.Data;
         this.balance = this.clientWallet.Balance;
         this.clientWallet.Image = `${environment.apiUrl}${this.clientWallet.Image}`;
+        this.loading = false;
       },
       error: (err) => {
         console.error('Error while fetching client wallet profile:', err);
@@ -71,6 +76,7 @@ export class ClientWalletComponent implements OnInit {
           summary: 'Error',
           detail: 'Failed to load wallet profile. Please try again later.',
         });
+        this.loading = false;
       },
     });
   }

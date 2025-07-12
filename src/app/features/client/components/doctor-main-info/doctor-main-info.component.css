@@ -1,11 +1,28 @@
 .doctor-img {
   flex: 1;
 }
-.doctor-img img {
-  width: 10rem;
-  height: 10rem;
+.doctor-image {
+  width: 11rem;
+  height: 11rem;
   border-radius: 50%;
+  border: 5px solid #2a6f97;
+  object-fit: cover;
 }
 .personal-info {
-  flex: 2;
+  flex: 3;
+}
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+}
+
+:host ::ng-deep .p-progress-spinner {
+  width: 50px;
+  height: 50px;
+}
+
+:host ::ng-deep .p-progress-spinner-circle {
+  stroke: var(--primary-color);
 }

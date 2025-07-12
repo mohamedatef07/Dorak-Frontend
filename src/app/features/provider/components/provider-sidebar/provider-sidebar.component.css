@@ -1,5 +1,29 @@
-.side-bar ul .sidebar-item.active-link .sidebar-link div svg path {
+.side-bar
+  ul
+  .sidebar-item.active-link
+  .sidebar-link:not(:last-child)
+  div
+  svg
+  path {
   fill: #012a4a !important;
+}
+.side-bar
+  ul
+  .sidebar-item.active-link
+  .sidebar-link:last-child
+  div
+  svg
+  path:first-child {
+  fill: #012a4a !important;
+}
+.side-bar
+  ul
+  .sidebar-item.active-link
+  .sidebar-link:last-child
+  div
+  svg
+  path:not(:first-child) {
+  fill: #edf1f2 !important;
 }
 .side-bar ul .sidebar-item.active-link .sidebar-link {
   color: var(--text-color-Light);

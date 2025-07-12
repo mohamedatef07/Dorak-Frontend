@@ -8,14 +8,13 @@ import { CommonModule } from '@angular/common';
 import { IClientAppointmentCard } from '../../models/IClientAppointmentCard';
 import { IAppointment } from '../../models/IAppointment';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { routes } from '../../../../app.routes';
 import { IDoctorCard } from '../../models/IDoctorCard';
 import { environment } from '../../../../../environments/environment';
 import { TimeStringToDatePipe } from '../../../../pipes/TimeStringToDate.pipe';
 import { IGeneralAppointmentStatistics } from '../../models/IGeneralAppointmentStatistics';
 import { MessageService } from 'primeng/api';
 import { AppointmentStatusEnumValuePipe } from '../../../../pipes/AppointmentStatusEnumValue.pipe';
-import { AppointmentStatus } from '../../../../Enums/AppointmentStatus.enum';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-upcoming-appointments',
@@ -27,6 +26,7 @@ import { AppointmentStatus } from '../../../../Enums/AppointmentStatus.enum';
     RouterLink,
     TimeStringToDatePipe,
     AppointmentStatusEnumValuePipe,
+    ProgressSpinnerModule,
   ],
   templateUrl: './upcoming-appointments.component.html',
   styleUrls: ['./upcoming-appointments.component.css'],
@@ -49,12 +49,17 @@ export class UpcomingAppointmentsComponent implements OnInit {
   pageSize: number = 10;
   totalRecords: number = 0;
   totalPages: number = 0;
+  loading: boolean = false;
+  private pendingRequests: number = 0;
   constructor() {}
   ngOnInit() {
+    this.loading = true;
+    this.pendingRequests = 2;
     this.loadUpcomingAppointments();
     this.clientServices.getGeneralAppointmentStatistics().subscribe({
       next: (res) => {
         this.appointmentStatistics = res.Data;
+        this.decrementLoader();
       },
       error: (err) => {
         this.messageServices.add({
@@ -63,6 +68,7 @@ export class UpcomingAppointmentsComponent implements OnInit {
           detail: 'The server is experiencing an issue, Please try again soon.',
           life: 4000,
         });
+        this.decrementLoader();
       },
     });
     this.clientServices.getLastAppointment(this.userid).subscribe({
@@ -135,6 +141,7 @@ export class UpcomingAppointmentsComponent implements OnInit {
         this.currentPage = res.CurrentPage;
         this.pageSize = res.PageSize;
         this.totalPages = res.TotalPages;
+        this.decrementLoader();
       },
       error: (err) => {
         this.messageServices.add({
@@ -143,7 +150,14 @@ export class UpcomingAppointmentsComponent implements OnInit {
           detail: 'The server is experiencing an issue, Please try again soon.',
           life: 4000,
         });
+        this.decrementLoader();
       },
     });
+  }
+    private decrementLoader() {
+    this.pendingRequests--;
+    if (this.pendingRequests <= 0) {
+      this.loading = false;
+    }
   }
 }
