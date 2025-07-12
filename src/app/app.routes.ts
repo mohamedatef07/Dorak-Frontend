@@ -58,6 +58,7 @@ import { CenterRegisterCodeComponent } from './components/CenterRegisterCode/Cen
 import { CenterRegisterCodeGuard } from './guards/center-register-code.guard';
 import { ProviderCenterServiceComponent } from './features/owner/components/ProviderCenterService/ProviderCenterService.component';
 import { AddReviewComponent } from './features/client/components/add-review/add-review.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 
 export const routes: Routes = [
   {
@@ -364,6 +365,11 @@ export const routes: Routes = [
     path: 'terms-conditions',
     component: TermsConditionsComponent,
     title: 'Terms & Conditions',
+  },
+  { 
+    path: 'reset-password', 
+    component: ResetPasswordComponent, 
+    title: 'Reset Password' 
   },
   { path: '**', component: NotFoundComponent, title: 'Not Found' },
 ];

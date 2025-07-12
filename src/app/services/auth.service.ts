@@ -8,12 +8,17 @@ import { Observable } from 'rxjs';
 import { ILoginResponseData } from '../types/ILoginResponseData';
 import { CookieService } from 'ngx-cookie-service';
 import { IAddOperator } from '../features/owner/models/IAddOperator';
+import { IForgotPasswordRequest } from '../types/IForgotPasswordRequest';
+import { IResetPasswordRequest } from '../types/IResetPasswordRequest';
+import { Router } from '@angular/router';
+
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   cookie = inject(CookieService);
   httpClient = inject(HttpClient);
+  router = inject(Router);
   // private currentCenterId: number = 1;
 
   // setCenterId(centerId: number): void {
@@ -85,9 +90,25 @@ export class AuthService {
   }
   logOut() {
     this.cookie.delete('token');
+    this.cookie.delete('refreshToken');
+    this.cookie.delete('role');
     return this.httpClient.post<ApiResponse<null>>(
       `${environment.apiUrl}/api/account/signout`,
       {}
+    );
+  }
+
+  forgotPassword(request: IForgotPasswordRequest): Observable<ApiResponse<null>> {
+    return this.httpClient.post<ApiResponse<null>>(
+      `${environment.apiUrl}/api/Account/forgot-password`,
+      request
+    );
+  }
+
+  resetPassword(request: IResetPasswordRequest): Observable<ApiResponse<null>> {
+    return this.httpClient.post<ApiResponse<null>>(
+      `${environment.apiUrl}/api/Account/reset-password`,
+      request
     );
   }
 }

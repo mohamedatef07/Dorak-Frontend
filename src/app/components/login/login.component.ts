@@ -11,6 +11,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
 import { DividerModule } from 'primeng/divider';
 import { ToastModule } from 'primeng/toast';
+import { ForgotPasswordComponent } from '../forgot-password/forgot-password.component';
 
 @Component({
   selector: 'app-login',
@@ -27,6 +28,7 @@ import { ToastModule } from 'primeng/toast';
     DividerModule,
     ToastModule,
     RouterModule,
+    ForgotPasswordComponent
   ],
 })
 export class LoginComponent {
@@ -35,6 +37,7 @@ export class LoginComponent {
   keepLoggedIn: boolean = false;
   isLoading: boolean = false;
   showPassword: boolean = false;
+  showForgotPasswordDialog = false;
 
   constructor(
     private authService: AuthService,
@@ -45,6 +48,7 @@ export class LoginComponent {
   ) {}
 
   onLogin(): void {
+    debugger;
     if (!this.validateForm()) return;
     this.isLoading = true;
     const loginData = {
@@ -54,9 +58,11 @@ export class LoginComponent {
     };
     this.authService.logIn(loginData).subscribe({
       next: (res) => {
+        console.log(res.Data);
         this.cookie.set('token', res.Data.Token);
-        this.notificationsSR.startConnection();
+        this.cookie.set('refreshToken', res.Data.RefreshToken);
         this.cookie.set('role', res.Data.Roles[0]);
+        this.notificationsSR.startConnection();
         this.isLoading = false;
         this.messageService.add({
           key: 'main-toast',
@@ -99,12 +105,11 @@ export class LoginComponent {
   }
 
   onForgotPassword(): void {
-    this.messageService.add({
-      severity: 'info',
-      summary: 'Forgot Password',
-      detail: 'Password reset functionality would be implemented here',
-      life: 3000,
-    });
+    this.showForgotPasswordDialog = true;
+  }
+
+  onForgotPasswordClose(): void {
+    this.showForgotPasswordDialog = false;
   }
 
   onSignUp(): void {

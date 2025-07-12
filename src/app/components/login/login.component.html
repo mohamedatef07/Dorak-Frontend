@@ -285,3 +285,10 @@
     </div>
   </div>
 </div>
+
+<!-- Forgot Password Dialog -->
+<app-forgot-password 
+  [isDialog]="true"
+  [(visible)]="showForgotPasswordDialog"
+  (visibleChange)="onForgotPasswordClose()"
+></app-forgot-password>
