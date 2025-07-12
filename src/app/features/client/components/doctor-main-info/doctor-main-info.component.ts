@@ -6,13 +6,14 @@ import { RatingModule } from 'primeng/rating';
 import { MessageService } from 'primeng/api';
 import { CommonModule } from '@angular/common';
 import { environment } from '../../../../../environments/environment';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-doctor-main-info',
   standalone: true,
   templateUrl: './doctor-main-info.component.html',
   styleUrls: ['./doctor-main-info.component.css'],
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, RatingModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, RatingModule, ProgressSpinnerModule,],
 })
 export class DoctorMainInfoComponent implements OnInit {
   clientServices = inject(ClientService);
@@ -28,7 +29,9 @@ export class DoctorMainInfoComponent implements OnInit {
     Bio: '',
   };
 
+  loading: boolean = false;
   ngOnInit() {
+    this.loading = true;
     this.clientServices.getMainInfo(this.providerId).subscribe({
       next: (res) => {
         this.mainInfo = {
@@ -38,6 +41,7 @@ export class DoctorMainInfoComponent implements OnInit {
           Rate: res.Data.Rate,
           Bio: res.Data.Bio
         };
+        this.loading = false;
       },
       error: (err) => {
         this.messageServices.add({
@@ -46,6 +50,7 @@ export class DoctorMainInfoComponent implements OnInit {
           detail: 'The server is experiencing an issue, Please try again soon.',
           life: 4000,
         });
+        this.loading = false;
       },
     });
   }

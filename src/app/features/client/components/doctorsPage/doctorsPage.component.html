@@ -170,6 +170,12 @@
             </div>
           </div>
         </div>
+        @if(loading) {
+        <div class="loader-container">
+          <p-progressSpinner ariaLabel="loading" animationDuration=".5s">
+          </p-progressSpinner>
+        </div>
+        } @else {
         <div class="row pt-4 row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
           @for (doc of doctors; track $index) {
           <div class="col">
@@ -225,6 +231,7 @@
           </div>
           }
         </div>
+        }
       </div>
       @if(doctors.length > 0){
       <div class="d-flex justify-content-center align-items-center gap-2 mt-4">

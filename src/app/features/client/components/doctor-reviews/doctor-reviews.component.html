@@ -1,5 +1,15 @@
 <div class="reviews bg-white main-padding main-radius">
   <h3 class="text-center main-text-Color fw-bold">Reviews</h3>
+  @if(loading) {
+    <div class="loader-container">
+      <p-progressSpinner
+        ariaLabel="loading"
+        animationDuration=".5s">
+      </p-progressSpinner>
+    </div>
+  } @else if (reviews.length === 0) {
+    <p class="text-center main-text-Color">No reviews available.</p>
+  } @else {
   <p-carousel class="pcar" [value]="reviews" [numVisible]="3" [numScroll]="1">
     <ng-template let-review #item>
       <div class="review-container m-2 p-2 main-radius">
@@ -20,4 +30,5 @@
       </div>
     </ng-template>
   </p-carousel>
+}
 </div>
