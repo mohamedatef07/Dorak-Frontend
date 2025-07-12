@@ -41,7 +41,8 @@
 ::ng-deep .p-panelmenu-submenu .fa-user-doctor,
 ::ng-deep .p-panelmenu-submenu .fa-calendar-days,
 ::ng-deep .p-panelmenu-submenu .fa-magnifying-glass,
-::ng-deep .p-panelmenu-submenu .fa-user-plus {
+::ng-deep .p-panelmenu-submenu .fa-user-plus,
+::ng-deep .p-panelmenu-submenu .pi-user{
   margin-left: 10px;
   color: var(--text-color-Light);
   font-size: 18px;

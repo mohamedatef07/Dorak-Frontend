@@ -1,5 +1,3 @@
-
-
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -20,11 +18,13 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ApiService } from '../../../../services/api.service';
 import { ApiResponse } from '../../../../types/ApiResponse';
 import { IRescheduleAssignmentViewModel } from '../../../../types/IRescheduleAssignmentViewModel';
+import { IProviderViewModel } from '../../../../types/IProviderViewModel';
 import { IShiftViewModel } from '../../../../types/IShiftViewModel';
 import { AssignmentType } from '../../../../Enums/AssignmentType.enum';
 import { ShiftType } from '../../../../Enums/ShiftType.enum';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, map, catchError } from 'rxjs/operators';
 import { AuthService } from '../../../../services/auth.service';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-reschedule-assignment',
@@ -51,6 +51,9 @@ export class RescheduleAssignmentComponent implements OnInit {
   centerId: number = 0;
   operatorId: string = '0';
   providerId: string = '';
+  providerName: string = '';
+  providerSpecialization: string = '';
+
   daysOfWeek = [
     { value: 0, label: 'Sunday' },
     { value: 1, label: 'Monday' },
@@ -90,9 +93,31 @@ export class RescheduleAssignmentComponent implements OnInit {
         console.log('Retrieved providerId:', this.providerId);
         if (!this.providerId) {
           this.errorMessage = 'Provider ID not found.';
+          this.updateCalendar();
+          return of([]);
         }
-        this.updateCalendar();
-        return [];
+        return this.apiService.getProviderById(this.providerId).pipe(
+          map((response: ApiResponse<IProviderViewModel>) => {
+            if (response.Status === 200 && response.Data) {
+              this.providerName = response.Data.FirstName + " " + response.Data.LastName || 'Unknown Provider';
+              this.providerSpecialization = response.Data.Specialization || 'Unknown Specialization';
+              console.log('Provider details:', {
+                name: this.providerName,
+                specialization: this.providerSpecialization
+              });
+            } else {
+              this.errorMessage = response.Message || 'Failed to fetch provider details.';
+            }
+            this.updateCalendar();
+            return [];
+          }),
+          catchError(error => {
+            this.errorMessage = 'Error fetching provider details: ' + error.message;
+            console.error('API error:', error);
+            this.updateCalendar();
+            return of([]);
+          })
+        );
       })
     ).subscribe();
   }

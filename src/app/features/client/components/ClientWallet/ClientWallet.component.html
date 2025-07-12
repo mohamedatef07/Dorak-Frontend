@@ -1,5 +1,13 @@
 <div class="container px-0 m-0">
   <p class="fw-bold m-0 pb-2">Wallet</p>
+   @if(loading) {
+    <div class="loader-container">
+      <p-progressSpinner
+        ariaLabel="loading"
+        animationDuration=".5s">
+      </p-progressSpinner>
+    </div>
+    } @else {
   <div>
     <!-- Header Section -->
     <div class="d-flex gap-5">
@@ -120,6 +128,7 @@
       </div>
     </div>
   </div>
+}
   <!-- Return Fund Dialog -->
   <p-dialog
     header="Return Fund from Wallet"

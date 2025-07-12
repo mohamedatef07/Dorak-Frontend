@@ -6,16 +6,17 @@ import { IClientProfile } from '../../models/IClientProfile';
 import { AvatarModule } from 'primeng/avatar';
 import { AuthService } from '../../../../services/auth.service';
 import { RouterLink } from '@angular/router';
-
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 @Component({
   selector: 'app-Client-Profile2',
-  imports: [AvatarModule, RouterLink],
+  imports: [AvatarModule, RouterLink, ProgressSpinnerModule],
   templateUrl: './client-profile.component.html',
   styleUrls: ['./client-profile.component.css'],
 })
 export class ClientProfileComponent implements OnInit {
   cAuthServices = inject(AuthService);
-
+  loading: boolean = false;
+  private pendingRequests: number = 0;
   client: IClientProfile = {
     ID: '',
     Name: '',
@@ -50,8 +51,12 @@ hasImageLoadFailed(key: string): boolean {
         if (this.profile?.Image) {
           this.fullImagePath = `${environment.apiUrl}${this.profile.Image}`;
         }
+        this.decrementLoader();
       },
-      error: (err) => console.error('Error loading profile:', err),
+      error: (err) => {console.error('Error loading profile:', err)
+        this.decrementLoader();
+      },
+
     });
   }
 
@@ -64,10 +69,18 @@ hasImageLoadFailed(key: string): boolean {
       next: (res) => {
         this.client = res.Data;
         this.client.Image = environment.apiUrl + res.Data.Image;
+        this.decrementLoader();
       },
       error: (err) => {
         console.error('Error while fetching client profile:', err);
+        this.decrementLoader();
       },
     });
   }
+  private decrementLoader() {
+  this.pendingRequests--;
+  if (this.pendingRequests <= 0) {
+    this.loading = false;
+  }
+}
 }

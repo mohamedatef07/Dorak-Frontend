@@ -136,7 +136,7 @@ export class OwnerSidebarComponent implements OnInit {
   ngOnInit() {
     this.userRole = this.authService.getUserRole();
 
-    if (this.userRole === 'Admin') {
+    if (this.userRole !== 'Admin') {
       this.items = this.adminItems;
     } else {
       this.items = this.providerItems;

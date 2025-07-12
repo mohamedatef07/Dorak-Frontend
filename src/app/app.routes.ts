@@ -336,11 +336,6 @@ export const routes: Routes = [
     canActivate: [AuthGuard, RoleGuard],
     data: { expectedRole: ['Client'] },
   },
-  // ----------------------------------
-
-  // canActivate: [AuthGuard, RoleGuard], data: { expectedRole: 'Client' }
-
-  // ----------------------------------
 
   {
     path: 'home',

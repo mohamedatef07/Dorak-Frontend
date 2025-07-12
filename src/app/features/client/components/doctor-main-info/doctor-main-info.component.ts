@@ -6,6 +6,7 @@ import { RatingModule } from 'primeng/rating';
 import { MessageService } from 'primeng/api';
 import { CommonModule } from '@angular/common';
 import { environment } from '../../../../../environments/environment';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { AvatarModule } from 'primeng/avatar';
 
 @Component({
@@ -19,7 +20,7 @@ import { AvatarModule } from 'primeng/avatar';
     FormsModule,
     RatingModule,
     AvatarModule,
-  ],
+  , ProgressSpinnerModule,],
 })
 export class DoctorMainInfoComponent implements OnInit {
   clientServices = inject(ClientService);
@@ -38,7 +39,9 @@ export class DoctorMainInfoComponent implements OnInit {
   fullImagePath: string = '';
   imageLoadFailed = false;
 
+  loading: boolean = false;
   ngOnInit() {
+    this.loading = true;
     this.clientServices.getMainInfo(this.providerId).subscribe({
       next: (res) => {
         this.mainInfo = {
@@ -49,6 +52,7 @@ export class DoctorMainInfoComponent implements OnInit {
           Bio: res.Data.Bio,
         };
         this.fullImagePath = this.mainInfo.Image;
+        this.loading = false;
       },
       error: (err) => {
         this.messageServices.add({
@@ -58,6 +62,7 @@ export class DoctorMainInfoComponent implements OnInit {
           life: 4000,
         });
         this.imageLoadFailed = true;
+        this.loading = false;
       },
     });
   }

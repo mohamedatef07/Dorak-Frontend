@@ -1,3 +1,4 @@
+
 import { UpdateQueueStatusSRService } from '../../../../services/signalR Services/updateQueueStatusSR.service';
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -6,7 +7,6 @@ import { ApiService } from '../../../../services/api.service';
 import { ApiResponse } from '../../../../types/ApiResponse';
 import { IProviderLiveQueueViewModel } from '../../../../types/IProviderLiveQueueViewModel';
 import { IUpdateQueueStatusViewModel } from '../../../../types/IUpdateQueueStatusViewModel';
-import { IPaginationViewModel } from '../../../../types/IPaginationViewModel';
 import { ClientType } from '../../../../../app/Enums/ClientType.enum';
 import { QueueAppointmentStatus } from '../../../../../app/Enums/QueueAppointmentStatus.enum';
 import { IProviderViewModel } from '../../../../types/IProviderViewModel';
@@ -15,7 +15,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { IOperatorViewModel } from '../../../../types/IOperatorViewModel';
 import { AuthService } from '../../../../services/auth.service';
-
 
 @Component({
   selector: 'app-provider-live-queue',
@@ -26,12 +25,8 @@ import { AuthService } from '../../../../services/auth.service';
 })
 export class ProviderLiveQueueComponent implements OnInit {
   liveQueues: IProviderLiveQueueViewModel[] = [];
-  centerId:number = 0;
-  // centerId: number = 3;
+  centerId: number = 0;
   shiftId: number = 0;
-  pageNumber: number = 1;
-  pageSize: number = 16;
-  totalItems: number = 0;
   providerName: string = '';
   stats = {
     total: 0,
@@ -43,7 +38,7 @@ export class ProviderLiveQueueComponent implements OnInit {
   };
   showPopup: boolean = false;
   additionalFees: { [key: number]: number } = {};
-  QueueAppointmentStatus = QueueAppointmentStatus; // Expose enum for template
+  QueueAppointmentStatus = QueueAppointmentStatus;
 
   @ViewChild('successPopup') successPopup!: ElementRef;
 
@@ -68,22 +63,13 @@ export class ProviderLiveQueueComponent implements OnInit {
   loadLiveQueues(): void {
     this.liveQueues = [];
     this.apiService
-      .getProviderLiveQueues(
-        this.centerId,
-        this.shiftId,
-        this.pageNumber,
-        this.pageSize
-      )
+      .getProviderLiveQueues(this.centerId, this.shiftId)
       .subscribe({
-        next: (
-          response: ApiResponse<
-            IPaginationViewModel<IProviderLiveQueueViewModel>
-          >
-        ) => {
+        next: (response: ApiResponse<IProviderLiveQueueViewModel[]>) => {
           if (response.Status === 200 && response.Data) {
-            const normalizedData = Array.isArray(response.Data.Data)
-              ? { $values: response.Data.Data }
-              : response.Data.Data || { $values: [] };
+            const normalizedData = Array.isArray(response.Data)
+              ? { $values: response.Data }
+              : response.Data || { $values: [] };
             console.log('Normalized Data:', normalizedData);
             this.liveQueues = normalizedData.$values.map((item) => ({
               LiveQueueId: Number(item.LiveQueueId),
@@ -102,9 +88,8 @@ export class ProviderLiveQueueComponent implements OnInit {
                 .map((status: number) => this.mapStatus(status)),
             }));
             this.providerName = this.liveQueues.length > 0
-            ? this.liveQueues[0].ProviderName
-            : '';
-            this.totalItems = response.Data.Total;
+              ? this.liveQueues[0].ProviderName
+              : '';
             this.calculateStats();
           } else {
             console.error('Failed to load live queues:', response.Message);
@@ -159,7 +144,6 @@ export class ProviderLiveQueueComponent implements OnInit {
 
     const newStatus = this.stringToStatus(newStatusStr);
     let additionalFeesValue: number | undefined = this.additionalFees[liveQueue.LiveQueueId];
-
 
     const updateModel: IUpdateQueueStatusViewModel = {
       LiveQueueId: liveQueue.LiveQueueId,
