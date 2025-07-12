@@ -17,7 +17,7 @@ import { TimeStringToDatePipe } from '../../../../pipes/TimeStringToDate.pipe';
 import { ICheckoutRequest } from '../../models/ICheckoutRequest';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Input } from '@angular/core';
-
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 @Component({
   selector: 'app-booking',
   templateUrl: './booking.component.html',
@@ -30,6 +30,7 @@ import { Input } from '@angular/core';
     ToastModule,
     ButtonModule,
     TimeStringToDatePipe,
+    ProgressSpinnerModule,
   ],
 })
 export class BookingComponent implements OnInit {
@@ -38,7 +39,8 @@ export class BookingComponent implements OnInit {
   clientServices = inject(ClientService);
   authServices = inject(AuthService);
   messageServices = inject(MessageService);
-
+  loading: boolean = false;
+  private pendingRequests: number = 0;
   checkoutRequest: ICheckoutRequest = {
     AppointmentId: 0,
     ClientId: '',
@@ -64,12 +66,15 @@ export class BookingComponent implements OnInit {
     return this.originalBookings.length;
   }
   ngOnInit() {
+    this.loading = true;
+    this.pendingRequests = 2;
     this.userId = this.authServices.getUserId();
 
     this.clientServices.getDoctorBookingInfo(this.providerId).subscribe({
       next: (res) => {
         this.originalBookings = [...res.Data];
         this.tempBookings = this.originalBookings;
+        this.decrementLoader();
       },
       error: (err) => {
         this.messageServices.add({
@@ -79,12 +84,14 @@ export class BookingComponent implements OnInit {
           detail: 'The server is experiencing an issue, Please try again soon.',
           life: 4000,
         });
+        this.decrementLoader();
       },
     });
 
     this.clientServices.getDoctorCenterServices(this.providerId).subscribe({
       next: (res) => {
         this.centerServices = [...res.Data];
+        this.decrementLoader();
       },
       error: (err) => {
         this.messageServices.add({
@@ -94,6 +101,7 @@ export class BookingComponent implements OnInit {
           detail: 'The server is experiencing an issue, Please try again soon.',
           life: 4000,
         });
+        this.decrementLoader();
       },
     });
   }
@@ -179,5 +187,11 @@ export class BookingComponent implements OnInit {
       life: 4000,
     });
     return;
+  }
+  private decrementLoader() {
+    this.pendingRequests--;
+    if (this.pendingRequests <= 0) {
+      this.loading = false;
+    }
   }
 }
