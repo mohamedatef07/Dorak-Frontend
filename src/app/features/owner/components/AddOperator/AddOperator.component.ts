@@ -149,7 +149,7 @@ export class AddOperatorComponent implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(['../'], { relativeTo: this.router.routerState.root });
+    this.router.navigate(['owner/manage-operators']);
   }
 
 }

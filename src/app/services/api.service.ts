@@ -78,7 +78,7 @@ deleteProviderFromCenter(providerId: string, centerId: number): Observable<ApiRe
     return this.httpClient.post<ApiResponse<string>>(`${environment.apiUrl}/api/center/DeleteProviderFromCenter`, body).pipe(
       catchError(error => {
         console.error('API Error Response:', error);
-        throw error; // Re-throw to be handled by the subscriber
+        throw error;
       })
     );
   }
@@ -148,22 +148,21 @@ deleteProviderFromCenter(providerId: string, centerId: number): Observable<ApiRe
     return this.httpClient.get<ApiResponse<IShift[]>>(`${environment.apiUrl}/api/shift/get-all-shifts?date=${dateOnly}&providerId=${providerId}`);
   }
 
-  getProviderLiveQueues(
+    getProviderLiveQueues(
     centerId: number,
-    shiftId: number,
-    pageNumber: number = 1,
-    pageSize: number = 16
-  ): Observable<ApiResponse<IPaginationViewModel<IProviderLiveQueueViewModel>>> {
-    return this.httpClient.get<ApiResponse<IPaginationViewModel<IProviderLiveQueueViewModel>>>(
-      `${environment.apiUrl}/api/operator/GetProviderLiveQueues?centerId=${centerId}&shiftId=${shiftId}&pageNumber=${pageNumber}&pageSize=${pageSize}`
+    shiftId: number
+  ): Observable<ApiResponse<IProviderLiveQueueViewModel[]>> {
+    return this.httpClient.get<ApiResponse<IProviderLiveQueueViewModel[]>>(
+      `${environment.apiUrl}/api/operator/GetProviderLiveQueues?centerId=${centerId}&shiftId=${shiftId}`
     ).pipe(
-      map((response: ApiResponse<IPaginationViewModel<IProviderLiveQueueViewModel>>) => response),
+      map((response: ApiResponse<IProviderLiveQueueViewModel[]>) => response),
       catchError((error) => {
         console.error('API error in getProviderLiveQueues:', error);
         throw error;
       })
     );
   }
+
 
   updateLiveQueueStatus(model: IUpdateQueueStatusViewModel): Observable<ApiResponse<string>> {
     const url = `${environment.apiUrl}/api/operator/UpdateLiveQueueStatus`;

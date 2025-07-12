@@ -1,108 +1,7 @@
-<div class="add-provider-card">
-   <h2 class="page-title">Add Doctor</h2>
-<hr class="mb-4">
-  <form #providerForm="ngForm" (ngSubmit)="onSubmit()" class="form-layout">
-    <div class="form-columns">
-      <div class="left-column">
-        <div class="input-group">
-          <label for="userName">Username</label>
-          <input type="text" id="userName" name="userName" [(ngModel)]="model.UserName" class="form-control" required>
-        </div>
-        <div class="input-group">
-          <label for="firstName">First Name</label>
-          <input type="text" id="firstName" name="firstName" [(ngModel)]="model.FirstName" class="form-control" required>
-        </div>
-        <div class="input-group">
-          <label for="lastName">Last Name</label>
-          <input type="text" id="lastName" name="lastName" [(ngModel)]="model.LastName" class="form-control" required>
-        </div>
-        <div class="input-group">
-          <label for="email">Email</label>
-          <input type="email" id="email" name="email" [(ngModel)]="model.Email" class="form-control" required>
-        </div>
-        <div class="input-group">
-          <label for="phoneNumber">Phone Number</label>
-          <input type="text" id="phoneNumber" name="phoneNumber" [(ngModel)]="model.PhoneNumber" class="form-control" required>
-        </div>
-        <div class="input-group">
-          <label for="specialization">Specialization</label>
-          <select id="specialization" name="specialization" [(ngModel)]="model.Specialization" class="form-select" required>
-            <option value="" disabled selected hidden></option>
-            <option *ngFor="let spec of specializations" [value]="spec">{{ spec }}</option>
-          </select>
-        </div>
-        <div class="input-group">
-          <label for="gender">Gender</label>
-          <select id="gender" name="gender" [(ngModel)]="model.Gender" class="form-select">
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-
-          </select>
-        </div>
-        <div class="input-group">
-          <label for="birthDate">Birth Date</label>
-          <input matInput [matDatepicker]="birthDatePicker" id="birthDate" name="birthDate" [(ngModel)]="model.BirthDate" class="form-control" required>
-          <mat-datepicker-toggle matSuffix [for]="birthDatePicker"></mat-datepicker-toggle>
-          <mat-datepicker #birthDatePicker></mat-datepicker>
-        </div>
-        <div class="input-group">
-          <label for="street">Street</label>
-          <input type="text" id="street" name="street" [(ngModel)]="model.Street" class="form-control">
-        </div>
-        <div class="input-group">
-          <label for="city">City</label>
-          <input type="text" id="city" name="city" [(ngModel)]="model.City" class="form-control">
-        </div>
-        <div class="input-group">
-          <label for="governorate">Governorate</label>
-          <input type="text" id="governorate" name="governorate" [(ngModel)]="model.Governorate" class="form-control">
-        </div>
-        <div class="input-group">
-          <label for="country">Country</label>
-          <input type="text" id="country" name="country" [(ngModel)]="model.Country" class="form-control">
-        </div>
-        <div class="input-group">
-          <label for="experienceYears">Experience Years</label>
-          <input type="number" id="experienceYears" name="experienceYears" [(ngModel)]="model.ExperienceYears" class="form-control">
-        </div>
-        <div class="input-group">
-          <label for="licenseNumber">License Number</label>
-          <input type="text" id="licenseNumber" name="licenseNumber" [(ngModel)]="model.LicenseNumber" class="form-control">
-        </div>
-      </div>
-      <div class="right-column">
-        <div class="doctor-image modern-avatar">
-          <img *ngIf="imagePreview" [src]="imagePreview" alt="Doctor Image" class="preview-image" />
-          <span *ngIf="!imagePreview" class="avatar-placeholder">
-            <i class="fa fa-user-md"></i>
-          </span>
-        </div>
-        <input
-          type="file"
-          id="image"
-          #fileInput
-          (change)="onFileSelected($event)"
-          class="file-input"
-          accept="image/*"
-          style="display: none;"
-        />
-        <button type="button" class="upload-photo-btn" (click)="fileInput.click()">Upload photo</button>
-      </div>
-    </div>
-    <div class="button-container">
-      <button type="submit" class="submit-btn" [disabled]="isSubmitting">Save</button>
-    </div>
-    <div *ngIf="errorMessage" class="error">
-      <p>{{ errorMessage }}</p>
-    </div>
-  </form>
-</div>
-
-
 <!-- <div class="mt-3">
   <div class="add-provider-card p-4 rounded shadow-sm bg-white">
-    <button type="button" icon="pi pi-arrow-left" class="back-btn h-25 me-2" (click)="goBack()">
-      <i class="fa-solid fa-arrow-left"></i> Back
+    <button type="button" icon="bi bi-arrow-left" class="back-btn h-25 me-2" (click)="goBack()">
+      <i class="bi bi-arrow-left"></i> Back
     </button>
     <h4 class="mb-2 text-center fw-bold">Add Doctor</h4>
     <hr class="mb-4">
@@ -116,40 +15,28 @@
     <div class="row mx-3">
       <div class="col-md-12 col-lg-6">
         <form #providerForm="ngForm" (ngSubmit)="onSubmit()" class="w-100">
-          <div class="mb-3">
+          <div class="mb-3" *ngFor="let field of [
+            { id: 'userName', label: 'Username', type: 'text', model: model.UserName },
+            { id: 'firstName', label: 'First Name', type: 'text', model: model.FirstName },
+            { id: 'lastName', label: 'Last Name', type: 'text', model: model.LastName },
+            { id: 'email', label: 'Email', type: 'email', model: model.Email },
+            { id: 'phoneNumber', label: 'Phone Number', type: 'text', model: model.PhoneNumber },
+            { id: 'street', label: 'Street', type: 'text', model: model.Street },
+            { id: 'city', label: 'City', type: 'text', model: model.City },
+            { id: 'governorate', label: 'Governorate', type: 'text', model: model.Governorate },
+            { id: 'country', label: 'Country', type: 'text', model: model.Country },
+            { id: 'experienceYears', label: 'Experience Years', type: 'number', model: model.ExperienceYears },
+            { id: 'licenseNumber', label: 'License Number', type: 'text', model: model.LicenseNumber }
+          ]">
             <p-floatlabel variant="on">
-              <input pInputText id="userName" type="text" name="userName" [(ngModel)]="model.UserName" required />
-              <label for="userName">Username</label>
+              <input pInputText [id]="field.id" [type]="field.type" [name]="field.id" [(ngModel)]="model[field.id]" required />
+              <label [for]="field.id">{{ field.label }}</label>
             </p-floatlabel>
           </div>
+
           <div class="mb-3">
             <p-floatlabel variant="on">
-              <input pInputText id="firstName" type="text" name="firstName" [(ngModel)]="model.FirstName" required />
-              <label for="firstName">First Name</label>
-            </p-floatlabel>
-          </div>
-          <div class="mb-3">
-            <p-floatlabel variant="on">
-              <input pInputText id="lastName" type="text" name="lastName" [(ngModel)]="model.LastName" required />
-              <label for="lastName">Last Name</label>
-            </p-floatlabel>
-          </div>
-          <div class="mb-3">
-            <p-floatlabel variant="on">
-              <input pInputText id="email" type="email" name="email" [(ngModel)]="model.Email" required />
-              <label for="email">Email</label>
-            </p-floatlabel>
-          </div>
-          <div class="mb-3">
-            <p-floatlabel variant="on">
-              <input pInputText id="phoneNumber" type="text" name="phoneNumber" [(ngModel)]="model.PhoneNumber" required />
-              <label for="phoneNumber">Phone Number</label>
-            </p-floatlabel>
-          </div>
-          <div class="mb-3">
-            <p-floatlabel variant="on">
-              <p-autoComplete inputId="specialization" name="specialization" [(ngModel)]="model.Specialization" [dropdown]="true"
-                [suggestions]="specializationOptions" field="label" [forceSelection]="true" placeholder="Choose Specialization" styleClass="w-100">
+              <p-autoComplete inputId="specialization" name="specialization" [(ngModel)]="model.Specialization" [dropdown]="true" [suggestions]="filteredSpecializations" field="label" [forceSelection]="true" (completeMethod)="filterSpecialization($event)" placeholder="Specialization" styleClass="w-100">
                 <ng-template let-spec pTemplate="item">
                   <div>{{ spec.label }}</div>
                 </ng-template>
@@ -157,10 +44,10 @@
               <label for="specialization">Specialization</label>
             </p-floatlabel>
           </div>
+
           <div class="mb-3">
             <p-floatlabel variant="on">
-              <p-autoComplete inputId="gender" name="gender" [(ngModel)]="model.Gender" [dropdown]="true"
-                [suggestions]="filteredGenders" field="label" [forceSelection]="true" (completeMethod)="filterGender($event)" placeholder="Select Gender" styleClass="w-100">
+              <p-autoComplete inputId="gender" name="gender" [(ngModel)]="selectedGender" [dropdown]="true" [suggestions]="filteredGenders" field="label" [forceSelection]="true" (completeMethod)="filterGender($event)" placeholder="Select Gender" styleClass="w-100">
                 <ng-template let-gender pTemplate="item">
                   <div>{{ gender.label }}</div>
                 </ng-template>
@@ -168,61 +55,16 @@
               <label for="gender">Gender</label>
             </p-floatlabel>
           </div>
+
           <div class="mb-3">
             <p-floatlabel variant="on">
-              <input pInputText id="birthDate" type="date" name="birthDate" [(ngModel)]="model.BirthDate" required />
+              <p-calendar inputId="birthDate" name="birthDate" [(ngModel)]="model.BirthDate" [showIcon]="true" dateFormat="yy-mm-dd" placeholder="Choose Birth Date" styleClass="w-100" required></p-calendar>
               <label for="birthDate">Birth Date</label>
-            </p-floatlabel>
-          </div>
-          <div class="mb-3">
-            <p-floatlabel variant="on">
-              <input pInputText id="street" type="text" name="street" [(ngModel)]="model.Street" />
-              <label for="street">Street</label>
-            </p-floatlabel>
-          </div>
-          <div class="mb-3">
-            <p-floatlabel variant="on">
-              <input pInputText id="city" type="text" name="city" [(ngModel)]="model.City" />
-              <label for="city">City</label>
-            </p-floatlabel>
-          </div>
-          <div class="mb-3">
-            <p-floatlabel variant="on">
-              <input pInputText id="governorate" type="text" name="governorate" [(ngModel)]="model.Governorate" />
-              <label for="governorate">Governorate</label>
-            </p-floatlabel>
-          </div>
-          <div class="mb-3">
-            <p-floatlabel variant="on">
-              <input pInputText id="country" type="text" name="country" [(ngModel)]="model.Country" />
-              <label for="country">Country</label>
-            </p-floatlabel>
-          </div>
-          <div class="mb-3">
-            <p-floatlabel variant="on">
-              <input pInputText id="experienceYears" type="number" name="experienceYears" [(ngModel)]="model.ExperienceYears" />
-              <label for="experienceYears">Experience Years</label>
-            </p-floatlabel>
-          </div>
-          <div class="mb-3">
-            <p-floatlabel variant="on">
-              <input pInputText id="licenseNumber" type="text" name="licenseNumber" [(ngModel)]="model.LicenseNumber" />
-              <label for="licenseNumber">License Number</label>
-            </p-floatlabel>
-          </div>
-          <div class="mb-3">
-            <p-floatlabel variant="on">
-              <p-autoComplete inputId="providerType" name="providerType" [(ngModel)]="model.ProviderType" [dropdown]="true"
-                [suggestions]="providerTypeOptions" field="label" [forceSelection]="true" placeholder="Select Provider Type" styleClass="w-100">
-                <ng-template let-type pTemplate="item">
-                  <div>{{ type.label }}</div>
-                </ng-template>
-              </p-autoComplete>
-              <label for="providerType">Provider Type</label>
             </p-floatlabel>
           </div>
         </form>
       </div>
+
       <div class="col-md-12 col-lg-6 d-flex flex-column align-items-center justify-content-start mt-4 mt-md-0">
         <div class="profile-image-wrapper position-relative mb-3">
           <img *ngIf="imagePreview; else noImage" [src]="imagePreview" alt="Profile Preview" class="rounded-circle profile-image" />
@@ -231,16 +73,13 @@
               <span class="text-muted">No Image</span>
             </div>
           </ng-template>
-          <label for="imageUpload"
-            class="change-image-label position-absolute bottom-0 end-0 translate-middle p-1 bg-white rounded-circle shadow-sm"
-            style="cursor:pointer;">
-            <i class="pi pi-camera"></i>
+          <label for="imageUpload" class="change-image-label position-absolute bottom-0 end-0 translate-middle p-1 bg-white rounded-circle shadow-sm" style="cursor:pointer;">
+            <i class="bi bi-camera"></i>
           </label>
           <input type="file" id="imageUpload" (change)="onFileSelected($event)" accept="image/*" class="d-none" />
         </div>
-        <small class="text-muted mb-3">JPG, PNG, or GIF. Max 2MB.</small>
-        <button type="button" pButton label="Save" class="custom-register-btn mt-2 w-50"
-          [disabled]="isSubmitting || providerForm.invalid" (click)="onSubmit()"></button>
+        <small class="text-muted mb-3">JPG, PNG, or GIF. Max 5MB.</small>
+        <button type="button" pButton label="Save" class="custom-register-btn mt-2 w-50" [disabled]="isSubmitting || providerForm.invalid" (click)="onSubmit()"></button>
       </div>
     </div>
   </div>
