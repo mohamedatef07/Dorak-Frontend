@@ -63,11 +63,7 @@ export class OwnerSidebarComponent implements OnInit {
         },
       ],
     },
-    {
-      label: 'Manage Queues',
-      icon: 'pi pi-calendar',
-      routerLink: '/owner/center-shifts-table',
-    },
+
     {
       label: 'Manage Operators',
       icon: 'pi pi-cog',
@@ -136,7 +132,7 @@ export class OwnerSidebarComponent implements OnInit {
   ngOnInit() {
     this.userRole = this.authService.getUserRole();
 
-    if (this.userRole == 'Admin') {
+    if (this.userRole === 'Admin') {
       this.items = this.adminItems;
     } else {
       this.items = this.providerItems;

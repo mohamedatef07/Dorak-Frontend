@@ -1104,7 +1104,7 @@ body {
 }
 
 .appointment-btn {
-  min-width: 60px;
+  min-width: 10px;
 }
 
 .loader-container {
