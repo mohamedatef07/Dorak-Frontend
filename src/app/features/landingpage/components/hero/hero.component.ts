@@ -2,7 +2,7 @@ import { NgClass, NgStyle, CommonModule, NgFor } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { faClock, faZap, faBuilding, faCheckCircle,faCity, faBolt,faGlobe,faDesktop, faArrowRight, faChevronDown, faChevronUp, faHospital, faLandmark, faGraduationCap, faPhone, faStethoscope, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { faMobileAlt } from '@fortawesome/free-solid-svg-icons';
-import { faUsers } from '@fortawesome/free-solid-svg-icons'; 
+import { faUsers } from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({
@@ -11,7 +11,7 @@ import { faUsers } from '@fortawesome/free-solid-svg-icons';
   templateUrl: './hero.component.html',
    imports: [
     CommonModule,
-    NgFor,
+
 ],
   styleUrls: ['./hero.component.css',
 
@@ -106,5 +106,87 @@ features: { icon: string; title: string; description: string }[] = [];
   return `fa-solid ${iconName}`;
 }
 
+ isMinimized: boolean = false;
 
+  ngAfterViewInit(): void {
+    const themeToggle = document.getElementById('themeToggle') as HTMLElement;
+    const icon = themeToggle?.querySelector('i') as HTMLElement;
+
+    themeToggle?.addEventListener('click', () => {
+      document.body.classList.toggle('dark-mode');
+      if (document.body.classList.contains('dark-mode')) {
+        icon?.classList.remove('fa-moon');
+        icon?.classList.add('fa-sun');
+      } else {
+        icon?.classList.remove('fa-sun');
+        icon?.classList.add('fa-moon');
+      }
+    });
+
+    const floatingCTA = document.getElementById('floatingCTA') as HTMLElement;
+    const minimizeBtn = document.getElementById('minimizeBtn') as HTMLElement;
+
+    window.addEventListener('scroll', () => {
+      const scrolled = window.scrollY;
+      if (scrolled > 200) {
+        floatingCTA?.classList.add('visible');
+      } else {
+        floatingCTA?.classList.remove('visible');
+      }
+    });
+
+    minimizeBtn?.addEventListener('click', (event) => {
+      event.stopPropagation(); // علشان مايفتحش CTA لما تضغط على minimize
+      this.isMinimized = !this.isMinimized;
+
+      const ctaContent = floatingCTA.querySelector('.cta-content') as HTMLElement;
+      const minimizedContent = floatingCTA.querySelector('.minimized-content') as HTMLElement;
+
+      if (this.isMinimized) {
+        floatingCTA.classList.add('minimized');
+        ctaContent.style.display = 'none';
+        minimizedContent.classList.remove('d-none');
+      } else {
+        floatingCTA.classList.remove('minimized');
+        ctaContent.style.display = 'block';
+        minimizedContent.classList.add('d-none');
+      }
+    });
+
+    floatingCTA?.addEventListener('click', () => {
+      if (this.isMinimized) {
+        this.isMinimized = false;
+        const ctaContent = floatingCTA.querySelector('.cta-content') as HTMLElement;
+        const minimizedContent = floatingCTA.querySelector('.minimized-content') as HTMLElement;
+
+        floatingCTA.classList.remove('minimized');
+        ctaContent.style.display = 'block';
+        minimizedContent.classList.add('d-none');
+      }
+    });
+
+    // Hover effects for buttons
+    const ctaButtons = document.querySelectorAll('.cta-button, .btn-cta');
+    ctaButtons.forEach(button => {
+      button.addEventListener('mouseenter', function () {
+        // (this as HTMLElement).style.transform = 'translateY(-2px)';
+      });
+      button.addEventListener('mouseleave', function () {
+        // (this as HTMLElement).style.transform = 'translateY(0)';
+      });
+    });
+
+    // Hover effects for feature cards
+    const featureCards = document.querySelectorAll('.feature-card');
+    featureCards.forEach(card => {
+      card.addEventListener('mouseenter', function () {
+        // (this as HTMLElement).style.transform = 'translateY(-2px)';
+      });
+      card.addEventListener('mouseleave', function () {
+        // (this as HTMLElement).style.transform = 'translateY(0)';
+      });
+    });
+  }
 }
+
+
