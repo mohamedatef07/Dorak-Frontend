@@ -1,4 +1,4 @@
-/* .content-container {
+.content-container {
   padding-top: 6rem;
   min-height: calc(100vh - 4.5rem) !important;
   height: fit-content !important;
@@ -11,36 +11,4 @@
 .sidebar-container {
   width: 23%;
   height: fit-content;
-} */
-.content-container {
-  display: flex;
-  gap: 1.5rem;
-  align-items: flex-start;
-}
-
-/* خلي الـ sidebar ياخد حجم ثابت على الديسكتوب */
-.sidebar-container {
-  width: 250px;
-  flex-shrink: 0;
-}
-
-/* المحتوى الرئيسي ياخد الباقي */
-.primary-content {
-  flex: 1;
-  min-width: 0;
-}
-
-/* ✅ التعديل للموبايل */
-@media (max-width: 768px) {
-  .content-container {
-    flex-direction: column;
-  }
-
-  .sidebar-container {
-    width: 100%;
-  }
-
-  .primary-content {
-    width: 100%;
-  }
 }
