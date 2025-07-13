@@ -63,6 +63,7 @@ import { CenterDashboardComponent } from './features/owner/components/center-das
 
 import { LandingPageLayoutComponent } from './features/landingpage/components/landingPage-layout/landingPage-layout.component';
 import { ChooseSystemComponent } from './features/landingpage/components/ChooseSystem/HowITWork.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 
 export const routes: Routes = [
   {
@@ -398,6 +399,11 @@ export const routes: Routes = [
     path: 'terms-conditions',
     component: TermsConditionsComponent,
     title: 'Terms & Conditions',
+  },
+  { 
+    path: 'reset-password', 
+    component: ResetPasswordComponent, 
+    title: 'Reset Password' 
   },
   { path: '**', component: NotFoundComponent, title: 'Not Found' },
 ];

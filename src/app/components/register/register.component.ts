@@ -73,6 +73,8 @@ export class RegisterComponent {
   isLoading: boolean = false;
   showPassword: boolean = false;
 
+  today: Date = new Date();
+
   DoctorTitle = DoctorTitle;
   doctorTitles = Object.values(DoctorTitle).filter(value => typeof value === 'number' && value !== DoctorTitle.None);
 
