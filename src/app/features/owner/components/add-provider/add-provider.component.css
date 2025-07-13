@@ -242,7 +242,6 @@ body[data-theme="dark"] .back-btn:hover {
   color: #4a8eab;
 }
 
-/* Hide default date placeholder (mm/dd/yyyy) */
 :host ::ng-deep .p-inputtext[type="date"]::-webkit-date-and-time-value {
   color: transparent;
 }

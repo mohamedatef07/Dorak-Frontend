@@ -14,6 +14,7 @@ import { IProviderLiveQueueViewModel } from '../types/IProviderLiveQueueViewMode
 import { IUpdateQueueStatusViewModel } from '../types/IUpdateQueueStatusViewModel';
 import { GenderType } from '../Enums/GenderType.enum';
 import { IOperatorViewModel } from '../types/IOperatorViewModel';
+import { ICenterStatistics } from '../types/ICenterStatistics';
 import { IShift } from '../types/IShift';
 import { IContactEmail } from '../types/IContactEmail';
 
@@ -197,6 +198,12 @@ deleteProviderFromCenter(providerId: string, centerId: number): Observable<ApiRe
         console.error('API error in sendEmail:', error);
         throw error;
       })
+    );
+  }
+
+  getCenterStatistics(centerId: number): Observable<ApiResponse<ICenterStatistics>> {
+    return this.httpClient.get<ApiResponse<ICenterStatistics>>(
+      `${environment.apiUrl}/api/center/CenterStatistics?centerId=${centerId}`
     );
   }
 }

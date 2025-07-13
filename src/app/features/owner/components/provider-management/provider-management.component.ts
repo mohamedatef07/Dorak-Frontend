@@ -153,7 +153,7 @@ export class ProviderManagementComponent implements OnInit, AfterViewInit {
           }));
           this.providers.push(...newProviders);
           console.log(this.providers);
-          
+
           const totalPages = Math.ceil((response.Data.Total || 0) / this.pageSize);
           if (page < totalPages) {
             this.fetchAllPages(page + 1);
