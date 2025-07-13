@@ -1,13 +1,28 @@
-<app-nav-bar></app-nav-bar>
+<!-- <app-nav-bar></app-nav-bar>
 <div class="container">
   <div class="container-fluid d-flex justify-content-between content-container">
     <div class="sidebar-container main-radius mb-3">
       <app-SidebarClientProfile></app-SidebarClientProfile>
-    </div>
+    </div> -->
     <!-- Main Content -->
+    <!-- <div class="primary-content main-radius">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
+<app-client-footer></app-client-footer> -->
+<app-nav-bar></app-nav-bar>
+
+<div class="container">
+  <div class="container-fluid d-flex justify-content-between content-container">
+    <div class="sidebar-container ">
+      <app-SidebarClientProfile></app-SidebarClientProfile>
+    </div>
+
     <div class="primary-content main-radius">
       <router-outlet></router-outlet>
     </div>
   </div>
 </div>
+
 <app-client-footer></app-client-footer>

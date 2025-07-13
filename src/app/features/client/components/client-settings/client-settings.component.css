@@ -124,3 +124,9 @@ main .container .setting-btns button {
   border: none;
   transition: border-color 0.2s, color 0.2s;
 }
+@media (max-width: 768px) {
+  .main-text-Color {
+    font-size: 0.8rem !important;
+    text-align: center;
+  }
+}
