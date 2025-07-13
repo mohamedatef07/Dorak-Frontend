@@ -7,13 +7,21 @@ import { MessageService } from 'primeng/api';
 import { CommonModule } from '@angular/common';
 import { environment } from '../../../../../environments/environment';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { AvatarModule } from 'primeng/avatar';
 
 @Component({
   selector: 'app-doctor-main-info',
   standalone: true,
   templateUrl: './doctor-main-info.component.html',
   styleUrls: ['./doctor-main-info.component.css'],
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, RatingModule, ProgressSpinnerModule,],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    RatingModule,
+    AvatarModule,
+    ProgressSpinnerModule,
+  ],
 })
 export class DoctorMainInfoComponent implements OnInit {
   clientServices = inject(ClientService);
@@ -29,6 +37,9 @@ export class DoctorMainInfoComponent implements OnInit {
     Bio: '',
   };
 
+  fullImagePath: string = '';
+  imageLoadFailed = false;
+
   loading: boolean = false;
   ngOnInit() {
     this.loading = true;
@@ -36,11 +47,12 @@ export class DoctorMainInfoComponent implements OnInit {
       next: (res) => {
         this.mainInfo = {
           FullName: res.Data.FullName,
-         Image :environment.apiUrl+res.Data.Image,
+          Image: res.Data.Image ? environment.apiUrl + res.Data.Image : '',
           Specialization: res.Data.Specialization,
           Rate: res.Data.Rate,
-          Bio: res.Data.Bio
+          Bio: res.Data.Bio,
         };
+        this.fullImagePath = this.mainInfo.Image;
         this.loading = false;
       },
       error: (err) => {
@@ -50,8 +62,13 @@ export class DoctorMainInfoComponent implements OnInit {
           detail: 'The server is experiencing an issue, Please try again soon.',
           life: 4000,
         });
+        this.imageLoadFailed = true;
         this.loading = false;
       },
     });
+  }
+
+  onImageError() {
+    this.imageLoadFailed = true;
   }
 }

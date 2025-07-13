@@ -1,16 +1,21 @@
 <div class="sidebar-container main-radius">
   <div class="sidebar p-2 d-flex flex-column gap-2">
-    <div class="sidebar-header p-3 m-0">
+    <div class="sidebar-header  ">
       <div class="user-avatar">
         @if (fullImagePath && !hasImageLoadFailed('sidebar-client')) {
         <img
           [src]="fullImagePath"
           alt="User"
-          class="rounded-circle"
+          class="user-img rounded-circle"
           (error)="onImageError($event, 'sidebar-client')"
         />
         } @else {
-        <p-avatar icon="pi pi-user" shape="circle" size="xlarge"></p-avatar>
+        <p-avatar
+          icon="pi pi-user"
+          shape="circle"
+          class="user-img"
+          size="xlarge"
+        ></p-avatar>
         }
       </div>
       <p class="d-block mt-2">Patient Dashboard</p>

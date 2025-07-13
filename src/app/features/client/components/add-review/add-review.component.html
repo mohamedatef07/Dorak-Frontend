@@ -1,5 +1,5 @@
 <h3 class="main-text-Color fw-bold mb-4">Add Review</h3>
-<div class="row align-items-center mb-4">
+<div class="row align-items-center mb-4 flex-column flex-md-row text-center text-md-start">
   <div class="col-auto">
     <div class="doctor-image-container">
       <ng-container
@@ -54,15 +54,15 @@
       >Review Description</label
     >
     <textarea
-      id="review"
-      name="review"
-      [(ngModel)]="review"
-      maxlength="250"
-      class="form-control main-radius w-75"
-      rows="4"
-      [readonly]="submitting"
-      placeholder="Write your review here..."
-    ></textarea>
+  id="review"
+  name="review"
+  [(ngModel)]="review"
+  maxlength="270"
+  class="form-control main-radius w-100 w-md-75"
+  rows="4"
+  [readonly]="submitting"
+  placeholder="Write your review here..."
+></textarea>
   </div>
   <button
     type="submit"

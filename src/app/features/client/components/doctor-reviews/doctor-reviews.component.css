@@ -1,8 +1,11 @@
-::ng-deep .review-star .p-rating-icon {
-  width: 1rem !important;
-}
 .review-container{
   background-color: #edf1f2;
+}
+.reviews{
+  min-height: 15.5rem;
+}
+::ng-deep .review-star .p-rating-icon {
+  width: 1rem !important;
 }
 ::ng-deep .p-button {
   background-color: #2a6f97 !important;

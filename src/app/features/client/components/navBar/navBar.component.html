@@ -10,9 +10,17 @@
           >
         </li>
         <div class="links d-flex gap-3 main-text-Color">
-          <li><a [routerLink]="['/home']" class="navbar-link main-text-Color">Home</a></li>
           <li>
-            <a [routerLink]="['/client/doctors']" class="navbar-link main-text-Color">Doctors</a>
+            <a [routerLink]="['/home']" class="navbar-link main-text-Color"
+              >Home</a
+            >
+          </li>
+          <li>
+            <a
+              [routerLink]="['/client/doctors']"
+              class="navbar-link main-text-Color"
+              >Doctors</a
+            >
           </li>
         </div>
       </ul>
@@ -55,7 +63,7 @@
         </button>
       </div> -->
       <div class="profile-notifications d-flex gap-4">
-        <div class="notifications pe-4">
+        <div class="notifications d-flex justify-content-center align-items-center  pe-4">
           <div
             class="dropdown d-flex position-relative"
             (click)="toggleNotificationsDropDown($event)"
@@ -83,10 +91,12 @@
               </svg>
               <!-- Unread notification badge -->
               @if (unreadCount > 0) {
-                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                      style="font-size: 0.6rem; transform: translate(-50%, -50%); ">
-                  {{ unreadCount > 99 ? '99+' : unreadCount }}
-                </span>
+              <span
+                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                style="font-size: 0.6rem; transform: translate(-50%, -50%)"
+              >
+                {{ unreadCount > 99 ? "99+" : unreadCount }}
+              </span>
               }
             </button>
             <ul
@@ -99,7 +109,10 @@
               }"
             >
               @for (notification of notifications; track $index) {
-              <li class="dropdown-item" (click)="handleNotificationClick(notification)">
+              <li
+                class="dropdown-item"
+                (click)="handleNotificationClick(notification)"
+              >
                 <div class="d-flex justify-content-between align-items-start">
                   <div class="notification-content flex-grow-1 me-3">
                     <div class="d-flex align-items-center gap-2">
@@ -108,16 +121,18 @@
                       </h6>
                       <!-- Unread indicator -->
                       @if (!notification.IsRead) {
-                        <div class="unread-indicator">
-                          <div class="bg-primary rounded-circle"></div>
-                        </div>
+                      <div class="unread-indicator">
+                        <div class="bg-primary rounded-circle"></div>
+                      </div>
                       }
                     </div>
                     <p class="notification-message">
                       {{ notification.Message }}
                     </p>
                     <small class="notification-date">
-                      {{ notification.CreatedAt | date : "MMM d, y 'at' h:mm a" }}
+                      {{
+                        notification.CreatedAt | date : "MMM d, y 'at' h:mm a"
+                      }}
                     </small>
                   </div>
                 </div>
@@ -125,12 +140,14 @@
               } @empty {
               <li class="dropdown-item no-notifications">
                 <div class="d-flex flex-column align-items-center">
-                  <i class="fas fa-bell-slash mb-2" style="font-size: 1.5rem; color: #adb5bd;"></i>
+                  <i
+                    class="fas fa-bell-slash mb-2"
+                    style="font-size: 1.5rem; color: #adb5bd"
+                  ></i>
                   <span>No Notifications Found</span>
                 </div>
               </li>
-              }
-              @if (notifications.length > 0) {
+              } @if (notifications.length > 0) {
               <li class="dropdown-item show-all-notifications">
                 <a
                   class="d-flex align-items-center justify-content-center gap-1"
@@ -145,23 +162,21 @@
             </ul>
           </div>
         </div>
-        <div class="profile-img me-4">
+        <div class="profile-img d-flex justify-content-center align-items-center me-4">
           <a [routerLink]="['/client/client-profile']">
             @if (UserImage && !hasImageLoadFailed('user-profile')) {
-              <img
-                [src]="UserImage"
-                alt="User Image"
-                class="rounded-circle"
-                style="width: 40px; height: 40px;"
-                (error)="onImageError($event, 'user-profile')"
-              />
+            <img
+              [src]="UserImage"
+              alt="User Image"
+              (error)="onImageError($event, 'user-profile')"
+            />
             } @else {
-              <p-avatar
-                icon="pi pi-user"
-                shape="circle"
-                size="large"
-                class="w-100 h-100"
-              ></p-avatar>
+            <p-avatar
+              icon="pi pi-user"
+              shape="circle"
+              size="large"
+              class="user-img"
+            ></p-avatar>
             }
           </a>
         </div>

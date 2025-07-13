@@ -1,6 +1,9 @@
 .side-icon-color {
   color: #2a6f97;
 }
+.booking {
+  min-height: 85vh;
+}
 .info {
   border-bottom: 2px solid #012a4a;
 }

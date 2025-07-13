@@ -1,4 +1,5 @@
 import { ApiResponse } from './../../../types/ApiResponse';
+import { PaginationApiResponse } from './../../../types/PaginationApiResponse';
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
@@ -10,6 +11,7 @@ import { IQueueEntries } from '../models/IQueueEntries';
 import { IProviderProfile } from '../../../types/IProviderProfile';
 import { IGeneralStatistics } from '../models/IGeneralStatistics';
 import { INotification } from '../../../types/INotification';
+import { IProviderReviews } from '../models/IProviderReviews';
 
 @Injectable({
   providedIn: 'root',
@@ -75,5 +77,12 @@ export class ProviderService {
       `${environment.apiUrl}/api/provider/general-statistics`
     );
   }
-
+  getAllReviews(
+    pageNumber: number,
+    pageSize: number
+  ): Observable<PaginationApiResponse<Array<IProviderReviews>>> {
+    return this.httpClient.get<PaginationApiResponse<Array<IProviderReviews>>>(
+      `${environment.apiUrl}/api/provider/provider-reviews?providerId=${this.providerId}&pageNumber=${pageNumber}&pageSize=${pageSize}`
+    );
+  }
 }

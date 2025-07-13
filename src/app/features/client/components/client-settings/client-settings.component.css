@@ -1,4 +1,3 @@
-
 .settings-header {
   color: var(--text-color-Light);
   font-weight: bold;
@@ -27,6 +26,9 @@
   font-size: 20px;
   margin-bottom: 20px;
   font-weight: bold;
+}
+.nav {
+  z-index: 0 !important;
 }
 
 .settings-card {
@@ -121,4 +123,10 @@ main .container .setting-btns button {
   background: none;
   border: none;
   transition: border-color 0.2s, color 0.2s;
+}
+@media (max-width: 768px) {
+  .main-text-Color {
+    font-size: 0.8rem !important;
+    text-align: center;
+  }
 }

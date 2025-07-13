@@ -41,6 +41,7 @@ export class CheckoutComponent implements OnInit {
     this._clientservice.Checkout(this.checkoutRequest).subscribe({
       next: (res) => {
         this.messageServices.add({
+          key: 'main-toast',
           severity: 'success',
           summary: 'success',
           detail: 'Your Appointment has been booked successfully',
@@ -50,6 +51,7 @@ export class CheckoutComponent implements OnInit {
       },
       error: (err) => {
         this.messageServices.add({
+          key: 'main-toast',
           severity: 'error',
           summary: 'Error',
           detail: 'The server is experiencing an issue, Please try again soon.',
@@ -61,7 +63,6 @@ export class CheckoutComponent implements OnInit {
 
   onPaymentMethodChange(paymentMethod: string): void {
     this.selectedPaymentMethod = paymentMethod;
-
     // Update Stripe token if 'Credit Card' is selected
     if (this.selectedPaymentMethod === 'credit') {
       this.checkoutRequest.StripeToken = 'tok_visa'; // Set the Stripe token (replace with real token)
