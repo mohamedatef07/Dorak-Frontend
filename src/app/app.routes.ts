@@ -59,6 +59,8 @@ import { CenterRegisterCodeGuard } from './guards/center-register-code.guard';
 import { ProviderCenterServiceComponent } from './features/owner/components/ProviderCenterService/ProviderCenterService.component';
 import { AddReviewComponent } from './features/client/components/add-review/add-review.component';
 import { ProviderReviewsComponent } from './features/provider/components/provider-reviews/provider-reviews.component';
+import { LandingPageLayoutComponent } from './features/landingpage/components/landingPage-layout/landingPage-layout.component';
+import { ChooseSystemComponent } from './features/landingpage/components/ChooseSystem/HowITWork.component';
 
 export const routes: Routes = [
   {
@@ -339,13 +341,27 @@ export const routes: Routes = [
 
   {
     path: 'home',
-    component: HeroComponent,
+    component: LandingPageLayoutComponent,
+    children:[
+      {
+        path:'hero',
+        component:HeroComponent
+      },
+         {
+        path:'ChooseSystemComponent',
+        component:ChooseSystemComponent
+      },
+
+    ]
   },
   {
     path: 'login',
     component: LoginComponent,
     title: 'Login',
     data: { animation: 'login' },
+       children: [
+          { path: '', redirectTo: 'client/doctors', pathMatch: 'full' },
+       ]
   },
   {
     path: 'register',
