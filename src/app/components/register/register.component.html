@@ -404,11 +404,12 @@
                     <p-dropdown id="providerTitle" name="providerTitle"
                       [options]="doctorTitles"
                       [(ngModel)]="registrationData.providerTitle"
-                      [optionLabel]="'DoctorTitle'"
-                      [optionValue]="'DoctorTitle'"
                       placeholder="Select your professional title"
                       class="w-100" required #providerTitleInput="ngModel">
                       <ng-template let-title pTemplate="item">
+                        {{ DoctorTitle[title] }}
+                      </ng-template>
+                      <ng-template let-title pTemplate="selectedItem">
                         {{ DoctorTitle[title] }}
                       </ng-template>
                     </p-dropdown>
