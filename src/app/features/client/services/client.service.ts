@@ -1,4 +1,5 @@
-import { IDoctorCard } from './../models/IDoctorCard';
+import { IDoctorCard } from './../models/iDoctorcard';
+
 import { ICheckoutRequest } from '../models/ICheckoutRequest';
 import { ApiResponse } from './../../../types/ApiResponse';
 import { HttpClient, HttpParams } from '@angular/common/http';
@@ -94,7 +95,7 @@ export class ClientService {
     providerId: string
   ): Observable<ApiResponse<Array<IDoctorReviews>>> {
     return this.httpClient.get<ApiResponse<Array<IDoctorReviews>>>(
-      `${environment.apiUrl}/api/client/provider-reviews?providerId=${providerId}`
+      `${environment.apiUrl}/api/provider/provider-reviews?providerId=${providerId}`
     );
   }
   getDoctorCenterServices(
