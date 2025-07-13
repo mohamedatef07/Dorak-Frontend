@@ -1,0 +1,205 @@
+<!-- <div class="dashboard-container">
+  <h2 class="page-title">{{ statistics?.CenterName}} Center Dashboard</h2>
+
+  <div *ngIf="statistics && !isLoading" class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon main-bg">
+        <i class="bi bi-cash-stack"></i>
+      </div>
+      <div class="stat-content">
+        <h3 class="stat-title">Total Revenue</h3>
+        <p class="stat-value">E£ {{ statistics.TotalRevenue | number:'0.00' }}</p>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon main-bg">
+        <i class="fa fa-user-doctor"></i>
+      </div>
+      <div class="stat-content">
+        <h3 class="stat-title">Doctors</h3>
+        <p class="stat-value">{{ statistics.ProvidersCount }}</p>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon main-bg">
+        <i class="bi bi-people-fill"></i>
+      </div>
+      <div class="stat-content">
+        <h3 class="stat-title">Operators</h3>
+        <p class="stat-value">{{ statistics.OperatorsCount }}</p>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon main-bg">
+        <i class="fa-regular fa-calendar-check"></i>
+      </div>
+      <div class="stat-content">
+        <h3 class="stat-title">Appointments</h3>
+        <p class="stat-value">{{ statistics.AppointmentsCount }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!isLoading" class="calendar-section">
+    <div class="calendar-container">
+      <h2 class="inner-title">Center Assignments Calendar</h2>
+      <div class="calendar-controls">
+        <button class="btn btn-outline nav-button" (click)="prevMonth()">◄</button>
+        <span class="month-title">{{ getMonthName() }}</span>
+        <button class="btn btn-outline nav-button" (click)="nextMonth()">►</button>
+      </div>
+      <div class="calendar-wrapper">
+        <div class="calendar">
+          <div class="calendar-header">
+            <div class="day-header">Sun</div>
+            <div class="day-header">Mon</div>
+            <div class="day-header">Tue</div>
+            <div class="day-header">Wed</div>
+            <div class="day-header">Thu</div>
+            <div class="day-header">Fri</div>
+            <div class="day-header">Sat</div>
+          </div>
+
+          <div class="calendar-body">
+            <ng-container *ngFor="let day of daysInMonth">
+              <div class="calendar-day" [ngClass]="{ 'empty-day': !day.date, 'today': isToday(day.date) }">
+                <ng-container *ngIf="day.date">
+                  <span class="day-number">
+                    {{ day.date.getDate() }}
+                  </span>
+                  <span *ngIf="day.hasAssignment" class="assignment-dot">
+                    <span class="custom-tooltip">
+                    </span>
+                  </span>
+                </ng-container>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<div class="dashboard-container">
+  <h2 class="page-title">{{ statistics?.CenterName || 'Center' }} Center Dashboard</h2>
+
+  <div *ngIf="statistics && !isLoading" class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon main-bg">
+        <i class="bi bi-cash-stack"></i>
+      </div>
+      <div class="stat-content">
+        <h3 class="stat-title">Total Revenue</h3>
+        <p class="stat-value">E£ {{ statistics.TotalRevenue | number:'0.00' }}</p>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon main-bg">
+        <i class="fa fa-user-doctor"></i>
+      </div>
+      <div class="stat-content">
+        <h3 class="stat-title">Doctors</h3>
+        <p class="stat-value">{{ statistics.ProvidersCount }}</p>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon main-bg">
+        <i class="bi bi-people-fill"></i>
+      </div>
+      <div class="stat-content">
+        <h3 class="stat-title">Operators</h3>
+        <p class="stat-value">{{ statistics.OperatorsCount }}</p>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon main-bg">
+        <i class="fa-regular fa-calendar-check"></i>
+      </div>
+      <div class="stat-content">
+        <h3 class="stat-title">Appointments</h3>
+        <p class="stat-value">{{ statistics.AppointmentsCount }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!isLoading" class="dashboard-sections">
+    <div class="calendar-section">
+      <div class="calendar-container">
+        <h2 class="inner-title">Assignments Calendar</h2>
+        <div class="calendar-controls">
+          <button class="btn btn-outline nav-button" (click)="prevMonth()">◄</button>
+          <span class="month-title">{{ getMonthName() }}</span>
+          <button class="btn btn-outline nav-button" (click)="nextMonth()">►</button>
+        </div>
+        <div class="calendar-wrapper">
+          <div class="calendar">
+            <div class="calendar-header">
+              <div class="day-header">Sun</div>
+              <div class="day-header">Mon</div>
+              <div class="day-header">Tue</div>
+              <div class="day-header">Wed</div>
+              <div class="day-header">Thu</div>
+              <div class="day-header">Fri</div>
+              <div class="day-header">Sat</div>
+            </div>
+
+            <div class="calendar-body">
+              <ng-container *ngFor="let day of daysInMonth">
+                <div class="calendar-day" [ngClass]="{ 'empty-day': !day.date, 'today': isToday(day.date) }">
+                  <ng-container *ngIf="day.date">
+                    <span class="day-number">
+                      {{ day.date.getDate() }}
+                    </span>
+                    <span *ngIf="day.hasAssignment" class="assignment-dot">
+                      <span class="custom-tooltip">
+                        <ng-container *ngFor="let assignment of day.assignments; let i = index">
+                          <span class="assignment-details">
+                            <strong>Assignment {{ i + 1 }}:</strong><br>
+                            ID: {{ assignment.assignmentId }}<br>
+                            Start: {{ assignment.startDate }}<br>
+                            End: {{ assignment.endDate || 'Ongoing' }}
+                          </span>
+                          <br *ngIf="i < day.assignments.length - 1">
+                        </ng-container>
+                      </span>
+                    </span>
+                  </ng-container>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="shifts-table-section">
+      <div class="table-container">
+        <h2 class="inner-title">Shifts</h2>
+        <table class="shifts-table">
+          <thead>
+            <tr>
+              <th>Provider Name</th>
+              <th>Shift Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let shift of centerShifts; let i = index" [ngClass]="{ 'odd-row': i % 2 === 0 }">
+              <td>{{ shift.ProviderName }}</td>
+              <td>{{ shift.ShiftDate | date:'mediumDate' }}</td>
+            </tr>
+            <tr *ngIf="centerShifts.length === 0">
+              <td colspan="2" class="no-data">No shifts available</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

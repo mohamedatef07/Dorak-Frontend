@@ -58,6 +58,8 @@ import { CenterRegisterCodeComponent } from './components/CenterRegisterCode/Cen
 import { CenterRegisterCodeGuard } from './guards/center-register-code.guard';
 import { ProviderCenterServiceComponent } from './features/owner/components/ProviderCenterService/ProviderCenterService.component';
 import { AddReviewComponent } from './features/client/components/add-review/add-review.component';
+import { CenterDashboardComponent } from './features/owner/components/center-dashboard/center-dashboard.component';
+
 
 export const routes: Routes = [
   {
@@ -70,6 +72,13 @@ export const routes: Routes = [
         path: 'center-shifts',
         component: CenterShiftsComponent,
         title: 'Center Shifts',
+      },
+
+      {
+        path: 'dashboard',
+        component: CenterDashboardComponent,
+        title: 'Center Dashboard',
+
       },
       {
         path: 'assign-service-to-provider-center',
@@ -93,7 +102,6 @@ export const routes: Routes = [
         path: 'create-appointment',
         component: CreateAppointmentComponent,
         title: 'Create Appointment',
-        data: { expectedRole: ['Admin'] },
       },
       {
         path: 'provider-management',

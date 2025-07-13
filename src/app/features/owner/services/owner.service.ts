@@ -9,6 +9,7 @@ import { IShiftsTable } from '../models/IShiftsTable';
 import { ICenterShifts } from '../models/ICenterShifts';
 import { AuthService } from '../../../services/auth.service';
 import { PaginationApiResponse } from '../../../types/PaginationApiResponse';
+import { ICenterAssignments } from '../../../types/ICenterAssignments';
 
 @Injectable({
   providedIn: 'root',
@@ -82,5 +83,12 @@ export class OwnerService {
       `${environment.apiUrl}/api/Shift/get-all-centerShifts-and-services?centerId=${centerId}`
     );
   }
+
+  getCenterAssignments(centerId: number): Observable<ApiResponse<ICenterAssignments[]>> {
+    return this.httpClient.get<ApiResponse<ICenterAssignments[]>>(
+      `${environment.apiUrl}/api/center/get-center-assignments?centerId=${centerId}`
+    );
+  }
+
 
 }
