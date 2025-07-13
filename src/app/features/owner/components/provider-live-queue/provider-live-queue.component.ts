@@ -158,10 +158,11 @@ export class ProviderLiveQueueComponent implements OnInit {
         if (response.Status === 200) {
           liveQueue.Status = newStatus;
           if (newStatus === QueueAppointmentStatus.Waiting) {
+            this.loadLiveQueues();
             liveQueue.ArrivalTime = new Date().toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });
           } else if (newStatus === QueueAppointmentStatus.Completed) {
             this.loadLiveQueues();
-            console.log(this.liveQueues);
+
           }
           this.calculateStats();
           console.log('Queue status updated:', response.Data);
