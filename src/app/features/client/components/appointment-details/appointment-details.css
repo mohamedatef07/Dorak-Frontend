@@ -132,3 +132,55 @@
 :host ::ng-deep .p-progress-spinner-circle {
   stroke: var(--primary-color);
 }
+@media (max-width: 768px) {
+  .details-row {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .details-row > div {
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+
+  .detail-item {
+    justify-content: center !important;
+    font-size: 1.2rem;
+    padding: 1rem;
+  }
+
+  .doctor-image-container {
+    margin: auto;
+  }
+
+  .doctor-name {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+
+  .doctor-specialty,
+  .rating-container {
+    justify-content: center;
+    text-align: center;
+  }
+
+  .rating-text {
+    font-size: 1rem;
+  }
+
+  /* تصغير وتوسيط الأزرار */
+  .d-flex.gap-3.mt-5.pt-5 {
+    flex-direction: column;
+    gap: 1rem !important;
+    align-items: center;
+  }
+
+  .d-flex.gap-3.mt-5.pt-5 a,
+  .d-flex.gap-3.mt-5.pt-5 button {
+    width: 90% !important;
+    font-size: 0.9rem !important;
+    padding: 0.6rem 1.2rem !important;
+    text-align: center;
+    justify-content: center !important;
+  }
+}

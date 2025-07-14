@@ -12,6 +12,9 @@
   display: flex;
   align-items: center;
 }
+.btn-shift-left {
+  margin-right: 80% /* 👈 يزقه لجوه من الشمال */
+}
 
 .doctor-info {
   display: flex;
@@ -33,6 +36,7 @@
   flex-direction: row;
   gap: 2rem;
   align-items: center;
+
 }
 
 .doctor-image-container {
@@ -66,4 +70,141 @@
 
 :host ::ng-deep .p-progress-spinner-circle {
   stroke: var(--primary-color);
+}
+@media (max-width: 768px) {
+  .appointment-card {
+    flex-direction: column !important;
+    padding: 1rem !important;
+  }
+
+  .appointment-card > .d-flex {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .doctor-image-container {
+    margin: auto;
+  }
+
+  .doctor-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .appointment-details {
+    flex-direction: column !important;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  .appointment-details .detail-item {
+    justify-content: center !important;
+  }
+
+  .appointment-btn {
+    width: 90%;
+    font-size: 0.9rem;
+    padding: 0.6rem 1rem;
+  }
+
+  .section-header,
+  .section-title {
+    text-align: center;
+    justify-content: center;
+  }
+}
+@media (max-width: 768px) {
+  .appointment-card {
+    flex-direction: column !important;
+    padding: 1rem !important;
+    align-items: center !important;
+    text-align: center;
+  }
+
+  .appointment-card > .d-flex {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 1rem;
+  }
+
+  .doctor-image-container {
+    margin: 0 auto 1rem auto;
+  }
+
+  .doctor-info {
+    align-items: center;
+  }
+
+  .appointment-details {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 0.5rem;
+  }
+
+  .detail-item {
+    justify-content: center !important;
+  }
+
+  .appointment-card > .d-flex > div:last-child {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .appointment-btn {
+    width: 90% !important;
+    font-size: 0.9rem;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+  }
+}
+@media (max-width: 768px) {
+  .appointment-card {
+    flex-direction: column !important;
+    padding: 1rem !important;
+    align-items: center !important;
+    text-align: center;
+  }
+
+  .appointment-card > .d-flex {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 1rem;
+  }
+
+  .doctor-image-container {
+    margin: 0 auto 1rem auto;
+  }
+
+  .doctor-info {
+    align-items: center;
+    margin-top: 25%;
+  }
+
+  .appointment-details {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 0.5rem;
+  }
+
+  .detail-item {
+    justify-content: center !important;
+  }
+
+  /* ⛳️ الزرار تحت لوحده */
+  .appointment-card > .d-flex > div:last-child {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .appointment-btn {
+    width: 90% !important;
+    font-size: 0.9rem;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+  }
 }
