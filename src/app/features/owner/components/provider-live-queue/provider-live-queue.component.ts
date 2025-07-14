@@ -280,4 +280,8 @@ export class ProviderLiveQueueComponent implements OnInit {
   addPatient(): void {
     this.router.navigate(['/owner/create-appointment']);
   }
+
+  get filteredLiveQueues(): IProviderLiveQueueViewModel[] {
+    return this.liveQueues.filter(q => q.Status !== QueueAppointmentStatus.Completed);
+  }
 }
