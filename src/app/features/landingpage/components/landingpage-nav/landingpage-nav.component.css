@@ -51,7 +51,7 @@ root {
 
         .lang-btn {
             background-color: #2a6f97;
-            
+
             border: 1px solid var(--border-color);
             color: var(--text-primary);
             padding: 0.5rem 1rem;
@@ -134,6 +134,10 @@ root {
             background: linear-gradient(135deg, var(--teal) 0%, #0d9488 100%);
         } */
 
+.login-btn, .register-btn
+{
+  color: white;
+}
         .feature-title {
             font-size: 1.25rem;
             font-weight: bold;
