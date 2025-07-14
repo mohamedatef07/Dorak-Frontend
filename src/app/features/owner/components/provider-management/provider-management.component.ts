@@ -1,4 +1,12 @@
-import { Component, OnInit, ChangeDetectorRef, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectorRef,
+  AfterViewInit,
+  ViewChild,
+  ElementRef,
+  inject,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
@@ -14,7 +22,8 @@ import { IPaginationViewModel } from '../../../../types/IPaginationViewModel';
 import { IProviderViewModel } from '../../../../types/IProviderViewModel';
 import { ApiResponse } from '../../../../types/ApiResponse';
 import { AuthService } from '../../../../services/auth.service';
-
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-provider-schedule',
@@ -30,15 +39,25 @@ import { AuthService } from '../../../../services/auth.service';
     MatSelectModule,
     MatTableModule,
     MatSortModule,
-    MatButtonModule
-  ]
+    MatButtonModule,
+    ProgressSpinnerModule,
+  ],
 })
 export class ProviderManagementComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['id', 'name', 'phoneNumber', 'specialization', 'status'];
-  dataSource: MatTableDataSource<IProviderViewModel> = new MatTableDataSource<IProviderViewModel>([]);
+  private messageService = inject(MessageService);
+  displayedColumns: string[] = [
+    'id',
+    'name',
+    'phoneNumber',
+    'specialization',
+    'status',
+  ];
+  dataSource: MatTableDataSource<IProviderViewModel> =
+    new MatTableDataSource<IProviderViewModel>([]);
 
   providers: IProviderViewModel[] = [];
-  specializations: string[] = ['Cardiologist',
+  specializations: string[] = [
+    'Cardiologist',
     'Dermatologist',
     'Endocrinologist',
     'Gastroenterologist',
@@ -68,7 +87,8 @@ export class ProviderManagementComponent implements OnInit, AfterViewInit {
     'Sports Medicine Specialist',
     'Family Medicine',
     'Occupational Medicine',
-    'Emergency Medicine'];
+    'Emergency Medicine',
+  ];
 
   totalItems: number = 0;
   pageSize: number = 9;
@@ -83,16 +103,15 @@ export class ProviderManagementComponent implements OnInit, AfterViewInit {
   errorMessage: string = '';
   isLoading: boolean = false;
   centerId: number = 0;
-  // centerId: number = 3;
   showDeletePopup: boolean = false;
   selectedProviderId: string | null = null;
+  loading: boolean = false;
+  private pendingRequests: number = 0;
 
   private statusMap: { [key: string]: number } = {
     Online: 0,
     Offline: 1,
   };
-
-
 
   @ViewChild('deletePopup') deletePopup!: ElementRef;
 
@@ -103,7 +122,8 @@ export class ProviderManagementComponent implements OnInit, AfterViewInit {
     private authService: AuthService
   ) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.loading = true;
     this.userRole = this.authService.getUserRole();
     this.centerId = this.authService.getCenterId();
     this.hideActionButtons = this.userRole === 'Operator';
@@ -124,48 +144,73 @@ export class ProviderManagementComponent implements OnInit, AfterViewInit {
   }
 
   fetchAllPages(page: number): void {
-    this.apiService.getProviders(this.centerId, page, this.pageSize, this.sortBy, this.specializationFilter).subscribe({
-      next: (response: ApiResponse<IPaginationViewModel<IProviderViewModel>>) => {
-        if (response.Status === 200 && response.Data?.Data) {
-          const newProviders = (response.Data.Data as unknown as IProviderViewModel[]).map((provider: IProviderViewModel) => ({
-            AssignmentId: provider.AssignmentId,
-            ProviderId: provider.ProviderId || 'unknown',
-            FirstName: provider.FirstName || 'Unknown',
-            LastName: provider.LastName || '',
-            Specialization: provider.Specialization || 'N/A',
-            Bio: provider.Bio || '',
-            ExperienceYears: provider.ExperienceYears ?? 0,
-            LicenseNumber: provider.LicenseNumber || '',
-            Gender: provider.Gender || 0,
-            Street: provider.Street || '',
-            City: provider.City || '',
-            Governorate: provider.Governorate || '',
-            Country: provider.Country || '',
-            BirthDate: provider.BirthDate || '',
-            Image: provider.Image || '',
-            Availability: provider.Availability || '',
-            EstimatedDuration: provider.EstimatedDuration || 0,
-            AddDate: provider.AddDate ? this.formatDate(provider.AddDate) : 'N/A',
-            Email: provider.Email || 'N/A',
-            PhoneNumber: provider.PhoneNumber || 'N/A',
-            Status: provider.Status ?? 0
-          }));
-          this.providers.push(...newProviders);
+    this.apiService
+      .getProviders(
+        this.centerId,
+        page,
+        this.pageSize,
+        this.sortBy,
+        this.specializationFilter
+      )
+      .subscribe({
+        next: (
+          response: ApiResponse<IPaginationViewModel<IProviderViewModel>>
+        ) => {
+          if (response.Status === 200 && response.Data?.Data) {
+            const newProviders = (
+              response.Data.Data as unknown as IProviderViewModel[]
+            ).map((provider: IProviderViewModel) => ({
+              AssignmentId: provider.AssignmentId,
+              ProviderId: provider.ProviderId || 'unknown',
+              FirstName: provider.FirstName || 'Unknown',
+              LastName: provider.LastName || '',
+              Specialization: provider.Specialization || 'N/A',
+              Bio: provider.Bio || '',
+              ExperienceYears: provider.ExperienceYears ?? 0,
+              LicenseNumber: provider.LicenseNumber || '',
+              Gender: provider.Gender || 0,
+              Street: provider.Street || '',
+              City: provider.City || '',
+              Governorate: provider.Governorate || '',
+              Country: provider.Country || '',
+              BirthDate: provider.BirthDate || '',
+              Image: provider.Image || '',
+              Availability: provider.Availability || '',
+              EstimatedDuration: provider.EstimatedDuration || 0,
+              AddDate: provider.AddDate
+                ? this.formatDate(provider.AddDate)
+                : 'N/A',
+              Email: provider.Email || 'N/A',
+              PhoneNumber: provider.PhoneNumber || 'N/A',
+              Status: provider.Status ?? 0,
+            }));
+            this.providers.push(...newProviders);
 
-          const totalPages = Math.ceil((response.Data.Total || 0) / this.pageSize);
-          if (page < totalPages) {
-            this.fetchAllPages(page + 1);
+            const totalPages = Math.ceil(
+              (response.Data.Total || 0) / this.pageSize
+            );
+            if (page < totalPages) {
+              this.fetchAllPages(page + 1);
+            } else {
+              this.deduplicateAndPaginate();
+            }
           } else {
-            this.deduplicateAndPaginate();
+            this.handleError(response.Message || 'Failed to load providers.');
           }
-        } else {
-          this.handleError(response.Message || 'Failed to load providers.');
-        }
-      },
-      error: (err) => {
-        this.handleError('An error occurred while loading providers. Please try again later. (Status: ' + (err.status || 'Unknown') + ')');
-      }
-    });
+          this.decrementLoader();
+        },
+        error: (err) => {
+          this.messageService.add({
+            key: 'main-toast',
+            severity: 'error',
+            summary: 'Error',
+            detail:
+              'The server is experiencing an issue, Please try again soon.',
+            life: 4000,
+          });
+          this.decrementLoader();
+        },
+      });
   }
 
   deduplicateAndPaginate(): void {
@@ -173,12 +218,18 @@ export class ProviderManagementComponent implements OnInit, AfterViewInit {
     const providerMap = new Map<string, IProviderViewModel>();
     this.providers.forEach((provider) => {
       const providerId = provider.ProviderId || `temp-${Math.random()}`;
-      if (!providerMap.has(providerId) && provider.ProviderId && provider.ProviderId !== 'unknown') {
+      if (
+        !providerMap.has(providerId) &&
+        provider.ProviderId &&
+        provider.ProviderId !== 'unknown'
+      ) {
         providerMap.set(providerId, provider);
       }
     });
 
-    this.providers = Array.from(providerMap.values()).filter(p => p.ProviderId && p.ProviderId !== 'unknown');
+    this.providers = Array.from(providerMap.values()).filter(
+      (p) => p.ProviderId && p.ProviderId !== 'unknown'
+    );
     this.totalItems = this.providers.length;
     this.applyFilters();
   }
@@ -188,14 +239,18 @@ export class ProviderManagementComponent implements OnInit, AfterViewInit {
 
     if (this.sortFilter === 'Name') {
       filteredProviders.sort((a, b) => {
-        const nameA = ((a.FirstName || '') + ' ' + (a.LastName || '')).trim().toLowerCase();
-        const nameB = ((b.FirstName || '') + ' ' + (b.LastName || '')).trim().toLowerCase();
+        const nameA = ((a.FirstName || '') + ' ' + (a.LastName || ''))
+          .trim()
+          .toLowerCase();
+        const nameB = ((b.FirstName || '') + ' ' + (b.LastName || ''))
+          .trim()
+          .toLowerCase();
         return nameA.localeCompare(nameB);
       });
     }
 
     if (this.dateFilter) {
-      filteredProviders = filteredProviders.filter(provider => {
+      filteredProviders = filteredProviders.filter((provider) => {
         const year = new Date(provider.AddDate).getFullYear().toString();
         return year === this.dateFilter || (this.dateFilter === '' && !year);
       });
@@ -204,17 +259,26 @@ export class ProviderManagementComponent implements OnInit, AfterViewInit {
     if (this.statusFilter) {
       const statusValue = this.statusMap[this.statusFilter];
       if (statusValue !== undefined) {
-        filteredProviders = filteredProviders.filter(provider => provider.Status === statusValue);
+        filteredProviders = filteredProviders.filter(
+          (provider) => provider.Status === statusValue
+        );
       }
     }
 
     if (this.specializationFilter) {
-      filteredProviders = filteredProviders.filter(provider => provider.Specialization === this.specializationFilter || (this.specializationFilter === '' && !provider.Specialization));
+      filteredProviders = filteredProviders.filter(
+        (provider) =>
+          provider.Specialization === this.specializationFilter ||
+          (this.specializationFilter === '' && !provider.Specialization)
+      );
     }
 
     this.totalItems = filteredProviders.length;
     const startIndex = this.pageIndex * this.pageSize;
-    this.dataSource.data = filteredProviders.slice(startIndex, startIndex + this.pageSize);
+    this.dataSource.data = filteredProviders.slice(
+      startIndex,
+      startIndex + this.pageSize
+    );
     this.cdr.detectChanges();
   }
 
@@ -227,7 +291,11 @@ export class ProviderManagementComponent implements OnInit, AfterViewInit {
 
   formatDate(dateStr: string): string {
     const date = new Date(dateStr);
-    return date.toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric' });
+    return date.toLocaleDateString('en-US', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+    });
   }
 
   onSortChange(sort: Sort): void {
@@ -285,7 +353,7 @@ export class ProviderManagementComponent implements OnInit, AfterViewInit {
   }
 
   getDisplayRange(): string {
-    const start = (this.pageIndex * this.pageSize) + 1;
+    const start = this.pageIndex * this.pageSize + 1;
     const end = Math.min((this.pageIndex + 1) * this.pageSize, this.totalItems);
     return `${start}-${end}`;
   }
@@ -309,18 +377,25 @@ export class ProviderManagementComponent implements OnInit, AfterViewInit {
 
   confirmDelete(): void {
     if (this.selectedProviderId && this.selectedProviderId !== 'unknown') {
-      this.apiService.deleteProviderFromCenter(this.selectedProviderId, this.centerId).subscribe({
-        next: (response: ApiResponse<string>) => {
-          if (response.Status === 200) {
+      this.apiService
+        .deleteProviderFromCenter(this.selectedProviderId, this.centerId)
+        .subscribe({
+          next: (response: ApiResponse<string>) => {
             this.loadAllProviders();
-          } else {
-            this.handleError(response.Message || 'Failed to delete provider. Status: ' + response.Status);
-          }
-        },
-        error: (err) => {
-          this.handleError('An error occurred while deleting the provider. Please try again later. (Status: ' + (err.status || 'Unknown') + ')');
-        }
-      });
+            this.decrementLoader();
+          },
+          error: (err) => {
+            this.messageService.add({
+              key: 'main-toast',
+              severity: 'error',
+              summary: 'Error',
+              detail:
+                'The server is experiencing an issue, Please try again soon.',
+              life: 4000,
+            });
+            this.decrementLoader();
+          },
+        });
     }
     this.cancelDelete();
   }
@@ -330,12 +405,18 @@ export class ProviderManagementComponent implements OnInit, AfterViewInit {
     this.selectedProviderId = null;
   }
 
- navigateToScheduleOptions(providerId: string | undefined): void {
+  navigateToScheduleOptions(providerId: string | undefined): void {
     if (providerId) {
       this.router.navigate(['owner/manually-schedule', providerId]);
     } else {
-      this.errorMessage = 'Provider ID is missing. Cannot navigate to schedule options.';
+      this.errorMessage =
+        'Provider ID is missing. Cannot navigate to schedule options.';
     }
   }
-
+  private decrementLoader() {
+    this.pendingRequests--;
+    if (this.pendingRequests <= 0) {
+      this.loading = false;
+    }
+  }
 }

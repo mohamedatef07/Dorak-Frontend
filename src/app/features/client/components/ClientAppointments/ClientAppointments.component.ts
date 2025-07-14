@@ -18,10 +18,8 @@ export class ClientAppointmentsComponent implements OnInit {
   ngOnInit() {}
 
   editAppointment(index: number) {
-    console.log('Editing appointment at index:', index);
   }
 
   deleteAppointment(index: number) {
-    console.log('Deleting appointment at index:', index);
   }
 }

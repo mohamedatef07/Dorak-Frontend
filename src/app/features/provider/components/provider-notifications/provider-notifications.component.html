@@ -1,62 +1,76 @@
 <main>
   <div class="container d-flex flex-column gap-3 py-4 px-0 m-0">
+    @if(loading) {
+    <div class="loader-container">
+      <p-progressSpinner ariaLabel="loading" animationDuration=".5s">
+      </p-progressSpinner>
+    </div>
+    }@else{
     <p class="fw-bold m-0">Notifications</p>
-
     <!-- Mark All as Read button -->
     @if (unreadCount > 0) {
-      <div class="d-flex justify-content-end mb-3">
-        <button class="btn mark-all-read-btn main-btn-bg" (click)="markAllAsRead()">
-          <i class="fas fa-check-double me-2"></i>
-          Mark All as Read
-        </button>
-      </div>
-      }
-      <div class="notifications-list p-3">
-        @for(notification of notifications; track $index){
-        <div
-          class="notification-item"
-          (click)="handleNotificationClick(notification)"
-          [ngClass]="{ 'reading-notification': notification.IsRead }"
-        >
-          <div class="notification-header">
-            <div class="d-flex align-items-center gap-2">
-              <h6 class="notification-title">
-                {{ notification.Title }}
-              </h6>
-              <!-- Unread indicator -->
-              @if (!notification.IsRead) {
-              <div class="unread-indicator">
-                <div class="bg-primary rounded-circle"></div>
-              </div>
-              }
+    <div class="d-flex justify-content-end mb-3">
+      <button
+        class="btn mark-all-read-btn main-btn-bg"
+        (click)="markAllAsRead()"
+      >
+        <i class="fas fa-check-double me-2"></i>
+        Mark All as Read
+      </button>
+    </div>
+    }
+    <div class="notifications-list p-3">
+      @for(notification of notifications; track $index){
+      <div
+        class="notification-item"
+        (click)="handleNotificationClick(notification)"
+        [ngClass]="{ 'reading-notification': notification.IsRead }"
+      >
+        <div class="notification-header">
+          <div class="d-flex align-items-center gap-2">
+            <h6 class="notification-title">
+              {{ notification.Title }}
+            </h6>
+            <!-- Unread indicator -->
+            @if (!notification.IsRead) {
+            <div class="unread-indicator">
+              <div class="bg-primary rounded-circle"></div>
             </div>
-            <span class="notification-date">
-              {{ notification.CreatedAt | date : "MMM d, y 'at' h:mm a" }}
-            </span>
+            }
           </div>
-          <p class="notification-message">{{ notification.Message }}</p>
+          <span class="notification-date">
+            {{ notification.CreatedAt | date : "MMM d, y 'at' h:mm a" }}
+          </span>
         </div>
-        } @empty {
-        <div class="no-found-notifications">
-          <i class="fas fa-bell-slash"></i>
-          <span>No Notifications Found</span>
-        </div>
-        }
+        <p class="notification-message">{{ notification.Message }}</p>
       </div>
-      @if(notifications.length > 0){
-      <div class="d-flex justify-content-center align-items-center gap-2 mt-4">
-        <button
-          class="btn main-btn-bg"
-          (click)="previousPage()"
-          [disabled]="!canGoPrevious"
-        >
-          Previous
-        </button>
-        <span class="current-page">Page {{ currentPage }} of {{ totalPages }}</span>
-        <button class="btn main-btn-bg" (click)="nextPage()" [disabled]="!canGoNext">
-          Next
-        </button>
+      } @empty {
+      <div class="no-found-notifications">
+        <i class="fas fa-bell-slash"></i>
+        <span>No Notifications Found</span>
       </div>
       }
+    </div>
+    @if(notifications.length > 0){
+    <div class="d-flex justify-content-center align-items-center gap-2 mt-4">
+      <button
+        class="btn main-btn-bg"
+        (click)="previousPage()"
+        [disabled]="!canGoPrevious"
+      >
+        Previous
+      </button>
+      <span class="current-page"
+        >Page {{ currentPage }} of {{ totalPages }}</span
+      >
+      <button
+        class="btn main-btn-bg"
+        (click)="nextPage()"
+        [disabled]="!canGoNext"
+      >
+        Next
+      </button>
+    </div>
+    }}
   </div>
 </main>

@@ -1,5 +1,11 @@
 <main>
   <div class="container py-4 px-0 m-0">
+    @if(loading) {
+    <div class="loader-container">
+      <p-progressSpinner ariaLabel="loading" animationDuration="0.5s">
+      </p-progressSpinner>
+    </div>
+    }@else{
     <p class="fw-bold m-0 pb-4">Dashboard</p>
     <section class="general-statistics pb-4">
       <div class="total-appointments p-3">
@@ -169,7 +175,9 @@
       <div class="average-estimated-time p-3">
         <div class="statistic-info fw-semibold">
           <span class="info-name">Average Estimated Time</span>
-          <span class="info-value">{{generalStatistics.AverageEstimatedTime}} Min</span>
+          <span class="info-value"
+            >{{ generalStatistics.AverageEstimatedTime }} Min</span
+          >
         </div>
         <div class="statistic-icon fw-semibold">
           <svg
@@ -200,5 +208,6 @@
         </div>
       </div>
     </section>
+    }
   </div>
 </main>

@@ -28,7 +28,7 @@ import { ForgotPasswordComponent } from '../forgot-password/forgot-password.comp
     DividerModule,
     ToastModule,
     RouterModule,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
   ],
 })
 export class LoginComponent {
@@ -48,7 +48,6 @@ export class LoginComponent {
   ) {}
 
   onLogin(): void {
-    debugger;
     if (!this.validateForm()) return;
     this.isLoading = true;
     const loginData = {
@@ -58,7 +57,6 @@ export class LoginComponent {
     };
     this.authService.logIn(loginData).subscribe({
       next: (res) => {
-        console.log(res.Data);
         this.cookie.set('token', res.Data.Token);
         this.cookie.set('refreshToken', res.Data.RefreshToken);
         this.cookie.set('role', res.Data.Roles[0]);
@@ -69,12 +67,14 @@ export class LoginComponent {
           severity: 'success',
           summary: 'Login Successful',
           detail: 'Welcome back!',
-          life: 3000,
+          life: 4000,
         });
         if (res.Data.Roles.includes('Client')) {
           this.router.navigate(['/client/doctors']);
-        }
-        else if (res.Data.Roles.includes('Admin')|| res.Data.Roles.includes('Operator')) {
+        } else if (
+          res.Data.Roles.includes('Admin') ||
+          res.Data.Roles.includes('Operator')
+        ) {
           this.router.navigate(['/owner']);
         } else if (res.Data.Roles.includes('Provider')) {
           this.router.navigate(['/provider']);

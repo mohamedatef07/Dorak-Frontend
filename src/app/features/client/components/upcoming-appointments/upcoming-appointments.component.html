@@ -52,16 +52,21 @@
           Last Appointment
         </h4>
       </div>
+      @if(appointment && appointment.appointmentId){
       <div class="appointment-card last-appointment">
         <div class="appointment-status completed"></div>
         <div class="d-flex align-items-center justify-content-between">
           <div class="d-flex align-items-center">
             <div class="doctor-image-container me-3">
-              @if(appointment.ProviderImage){
+              @if(appointment.ProviderImage &&
+              !hasImageLoadFailed(appointment.appointmentId.toString())){
               <img
                 [src]="`${fullImagePath}${appointment.ProviderImage}`"
                 alt="Doctor Image"
                 class="doctor-image"
+                (error)="
+                  onImageError($event, appointment.appointmentId.toString())
+                "
               />
               }@else{
               <p-avatar
@@ -122,6 +127,22 @@
           </div>
         </div>
       </div>
+      }@else{
+      <div class="empty-state-card">
+        <div class="empty-state-icon">
+          <i class="fas fa-calendar-times"></i>
+        </div>
+        <h5 class="empty-state-title">No Last Appointment</h5>
+        <p class="empty-state-description">
+          You haven't had any appointments yet. Book your first appointment to
+          get started!
+        </p>
+        <button class="btn btn-gradient-primary" routerLink="/client/doctors">
+          <i class="fas fa-plus me-2"></i>
+          Book Appointment
+        </button>
+      </div>
+      }
     </div>
     <!-- Upcoming Appointment Section -->
     <div class="section-header">
@@ -130,17 +151,22 @@
         Upcoming Appointments
       </h4>
     </div>
+    @if(Appointments.length > 0){
     <div class="appointment-section d-flex flex-column gap-3">
       @for (appointment of Appointments; let i = $index; track $index){
       <div class="appointment-card upcoming-appointment">
         <div class="d-flex align-items-center justify-content-between">
           <div class="d-flex align-items-center">
             <div class="doctor-image-container me-3">
-              @if(appointment.ProviderImage){
+              @if(appointment.ProviderImage &&
+              !hasImageLoadFailed(appointment.AppointmentId.toString())){
               <img
                 [src]="`${fullImagePath}${appointment.ProviderImage}`"
                 alt="Doctor Image"
                 class="doctor-image"
+                (error)="
+                  onImageError($event, appointment.AppointmentId.toString())
+                "
               />
               }@else{
               <p-avatar
@@ -201,30 +227,43 @@
           </div>
         </div>
       </div>
-      } @empty {
-      <div class="text-muted text-center">No upcoming appointments found.</div>
-      } @if(Appointments.length > 0){
-      <div class="d-flex justify-content-center align-items-center gap-2 mt-4">
-        <button
-          class="btn main-btn-bg"
-          (click)="previousPage()"
-          [disabled]="!canGoPrevious"
-        >
-          Previous
-        </button>
-        <span class="current-page"
-          >Page {{ currentPage }} of {{ totalPages }}</span
-        >
-        <button
-          class="btn main-btn-bg"
-          (click)="nextPage()"
-          [disabled]="!canGoNext"
-        >
-          Next
-        </button>
-      </div>
       }
     </div>
+    <div class="d-flex justify-content-center align-items-center gap-2 mt-4">
+      <button
+        class="btn main-btn-bg"
+        (click)="previousPage()"
+        [disabled]="!canGoPrevious"
+      >
+        Previous
+      </button>
+      <span class="current-page"
+        >Page {{ currentPage }} of {{ totalPages }}</span
+      >
+      <button
+        class="btn main-btn-bg"
+        (click)="nextPage()"
+        [disabled]="!canGoNext"
+      >
+        Next
+      </button>
+    </div>
+    }@else{
+    <div class="empty-state-card">
+      <div class="empty-state-icon">
+        <i class="fas fa-calendar-plus"></i>
+      </div>
+      <h5 class="empty-state-title">No Upcoming Appointments</h5>
+      <p class="empty-state-description">
+        You don't have any upcoming appointments scheduled. Book a new
+        appointment to get started!
+      </p>
+      <button class="btn btn-gradient-primary" routerLink="/client/doctors">
+        <i class="fas fa-plus me-2"></i>
+        Book Appointment
+      </button>
+    </div>
+    }
   </div>
   }
 </div>
