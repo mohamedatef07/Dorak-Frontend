@@ -84,13 +84,16 @@ export class CenterShiftsTableComponent {
           this.decrementLoader();
         },
       });
-    } else {
-      this.messageServices.add({
-        key: 'main-toast',
-        severity: 'info',
-        summary: 'info',
-        detail: `This shift isn't ready to start just yet. Please wait for its scheduled time.`,
-        life: 4000,
+    }
+    else {
+      this.confirmService.confirm({
+        message: `This shift isn't ready to start yet. Please wait for its scheduled time: ${shiftDate.toLocaleString()}`,
+        icon: 'pi pi-exclamation-triangle',
+        acceptLabel: 'OK',
+        rejectVisible: false,
+        accept: () => {
+          // User acknowledged the warning
+        }
       });
     }
   }
