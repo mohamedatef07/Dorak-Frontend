@@ -27,6 +27,7 @@ import { Router } from '@angular/router';
 import { TimeStringToDatePipe } from "../../../../pipes/TimeStringToDate.pipe";
 import { AppointmentType } from '../../../../Enums/AppointmentType.enum';
 import { ClientType } from '../../../../Enums/ClientType.enum';
+import { ShiftType } from '../../../../Enums/ShiftType.enum';
 declare var bootstrap: any;
 
 @Component({
@@ -165,10 +166,6 @@ export class CreateAppointmentComponent implements OnInit {
     const serviceId = this.CreateAppointmentForm.get('ServiceId')?.value;
     const providerId = this.CreateAppointmentForm.get('ProviderId')?.value;
 
-    console.log('Filter Date:', formattedDate);
-    console.log('serviceId:', serviceId);
-    console.log('providerId:', providerId);
-
     this.filteredRecords = this.Records.reduce(
       (filtered: IShiftsTable[], record: IShiftsTable) => {
         const matchesDate =
@@ -185,10 +182,27 @@ export class CreateAppointmentComponent implements OnInit {
             (service) => service.ServiceId == serviceId
           );
           if (matchedService && matchesDate && matchesProvider) {
-            filtered.push({
-              ...record,
-              Services: [matchedService],
-            });
+            if (matchedService.ServiceName === 'Urgent') {
+              if (record.shiftType === ShiftType.OnGoing) {
+                filtered.push({
+                  ...record,
+                  Services: [matchedService],
+                });
+              }
+            } else if (
+              matchedService.ServiceName === 'Normal' ||
+              matchedService.ServiceName === 'Consultation'
+            ) {
+              filtered.push({
+                ...record,
+                Services: [matchedService],
+              });
+            } else {
+              filtered.push({
+                ...record,
+                Services: [matchedService],
+              });
+            }
           }
         }
         return filtered;
@@ -362,8 +376,7 @@ export class CreateAppointmentComponent implements OnInit {
         this.isSubmitting = false;
         this.successMessage =
           response.Message || 'Appointment reserved successfully!';
-        console.log(response.Data);
-        console.log(response.Message);
+
 
         const modalElement = document.getElementById('confirmationModal');
         if (modalElement) {
@@ -379,11 +392,19 @@ export class CreateAppointmentComponent implements OnInit {
             backdrops[0].parentNode?.removeChild(backdrops[0]);
           }
         }, 500);
-        
-        this.router.navigate([
-          '/owner/provider-live-queue',
-          appointmentData.ShiftId,
-        ]);
+        this.messageService.add({
+          key: 'main-toast',
+          severity: 'success',
+          summary: 'Success',
+          detail: this.successMessage || 'Appointment reserved successfully!'
+        });
+        setTimeout(() => {
+          window.history.back();
+        }, 3000);
+        // this.router.navigate([
+        //   '/owner/provider-live-queue',
+        //   appointmentData.ShiftId,
+        // ]);
       },
       error: (error) => {
         this.isSubmitting = false;
