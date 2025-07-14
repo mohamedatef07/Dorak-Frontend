@@ -1,19 +1,20 @@
-<section class="py-5 bg-white">
+<section class="why-choose-us-section py-5">
   <div class="container">
-    <div class="text-center mb-5">
-      <h2 class="display-5 fw-bold text-dark mb-3">Why Choose Our System?</h2>
-      <p class="fs-5 text-muted mx-auto" style="max-width: 600px;">
-        Experience the future of queue management with features designed for efficiency and customer satisfaction.
-      </p>
-    </div>
-    <div class="row g-4">
-      <div *ngFor="let feature of features" class="col-12 col-md-4">
-        <div class="card features-card bg-light-custom h-100 p-4 shadow-sm">
-          <div class="features-icon-bg">
-  <div style="font-size: 2rem;" class="step-icon">{{ feature.icon }}</div>
-          </div>
-          <h3 class="fs-5 fw-semibold text-dark mb-3">{{ feature.title }}</h3>
-          <p class="text-muted lh-base mb-0">{{ feature.description }}</p>
+    <div class="row align-items-center g-5 flex-wrap">
+      <!-- Left: Heading and Intro -->
+      <div class="col-12 col-lg-4 mb-4 mb-lg-0">
+        <h2 class="why-choose-heading mb-3">Why Choose <span class="brand-title">Dorak</span>?</h2>
+        <p class="why-choose-intro mb-0">Discover the advantages of our system, designed for efficiency, reliability, and a seamless experience for your business and customers.</p>
+      </div>
+      <!-- Right: Feature Cards Grid -->
+      <div class="col-12 col-lg-8">
+        <div class="why-choose-features-grid">
+  <div *ngFor="let feature of features" class="why-choose-feature-card">
+  <div class="why-choose-icon-bg" [innerHTML]="feature.icon"></div>
+  <div class="why-choose-title" [innerHTML]="feature.title"></div>
+  <div class="why-choose-desc">{{ feature.description }}</div>
+</div>
+
         </div>
       </div>
     </div>

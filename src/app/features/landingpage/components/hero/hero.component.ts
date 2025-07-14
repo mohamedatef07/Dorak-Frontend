@@ -3,7 +3,16 @@ import { Component, OnInit } from '@angular/core';
 import { faClock, faZap, faBuilding, faCheckCircle,faCity, faBolt,faGlobe,faDesktop, faArrowRight, faChevronDown, faChevronUp, faHospital, faLandmark, faGraduationCap, faPhone, faStethoscope, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { faMobileAlt } from '@fortawesome/free-solid-svg-icons';
 import { faUsers } from '@fortawesome/free-solid-svg-icons';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
+
+  interface Patient {
+  id: number;
+  name: string;
+  reason: string;
+  waitTime: string;
+  status: 'Waiting' | 'In Session' | 'Completed';
+}
 
 @Component({
   selector: 'app-hero',
@@ -40,47 +49,21 @@ faArrowRight = faArrowRight;
   openFAQ: number | null = null;
 
 
-features: { icon: string; title: string; description: string }[] = [];
+features: { icon: SafeHtml; title: string; description: string }[] = [];
   industries: { icon: IconDefinition; name: string; color: string }[] = [];
 
-  constructor() {
- this.features = [
+  constructor(private sanitizer: DomSanitizer) {
+this.features = [
   {
-    icon: '🕒',
-    title: 'Smart Queue Alerts',
-    description: 'Get notified when your turn is approaching with intelligent time predictions.'
-  },
-  {
-    icon: '⚡',
-    title: 'Time-saving Experience',
-    description: 'Eliminate physical waiting lines and optimize your valuable time.'
-  },
-  {
-    icon: '🏢',
-    title: 'Multi-branch Support',
-    description: 'Manage queues across multiple locations from a single dashboard.'
-  },
-  {
-    icon: '✅',
-    title: 'Instant Setup',
-    description: 'Get your queuing system up and running in minutes, not hours.'
-  },
-  {
-    icon: '🖥️',
-    title: 'Real-time Screens',
-    description: 'Digital displays show current queue status and estimated wait times.'
+    title: '<strong>Time-saving Experience</strong>',
+    description: 'Eliminate long wait times and improve efficiency.',
+    icon: this.sanitizer.bypassSecurityTrustHtml(`
+      
+    `)
   }
 ];
 
 
-    this.industries = [
-      { icon: this.faHospital, name: 'Hospitals', color: 'text-danger' },
-      { icon: this.faLandmark, name: 'Banks', color: 'text-success' },
-      { icon: this.faCity, name: 'Government', color: 'text-primary' },
-      { icon: this.faPhone, name: 'Telecom', color: 'text-purple' },
-      { icon: this.faStethoscope, name: 'Clinics', color: 'text-info' },
-      { icon: this.faGraduationCap, name: 'Universities', color: 'text-warning' }
-    ];
   }
 
   toggleFAQ(index: number): void {
@@ -187,6 +170,66 @@ features: { icon: string; title: string; description: string }[] = [];
       });
     });
   }
+
+
+
+Patients: Patient[] = [
+  {
+    id: 1,
+    name: 'Ahmed Hassan',
+    reason: 'Fever & Cough',
+    waitTime: '5 min',
+    status: 'Waiting'
+  },
+  {
+    id: 2,
+    name: 'Fatma Naser',
+    reason: 'Routine Checkup',
+    waitTime: '15 min',
+    status: 'Waiting'
+  },
+  {
+    id: 3,
+    name: 'Mohamed Ali',
+    reason: 'Back Pain',
+    waitTime: '25 min',
+    status: 'In Session'
+  },
+  {
+    id: 4,
+    name: 'Sara Mostafa',
+    reason: 'Headache',
+    waitTime: '35 min',
+    status: 'Completed'
+  }
+];
+
+ App() {
+  const getStatusBadge = (status: Patient['status']) => {
+    switch (status) {
+      case 'Waiting':
+        return 'bg-warning text-dark';
+      case 'In Session':
+        return 'bg-primary';
+      case 'Completed':
+        return 'bg-success';
+      default:
+        return 'bg-secondary';
+    }
+  };
+}
+getStatusBadge(status: Patient['status']): string {
+  switch (status) {
+    case 'Waiting':
+      return 'bg-warning text-dark';
+    case 'In Session':
+      return 'bg-primary';
+    case 'Completed':
+      return 'bg-success';
+    default:
+      return 'bg-secondary';
+  }
 }
 
 
+}

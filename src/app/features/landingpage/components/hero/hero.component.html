@@ -1,173 +1,137 @@
-<div class="medical-homepage">
-  <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-dark">
-    <div class="container">
-      <a class="navbar-brand d-flex align-items-center" href="#">
-        <div class="logo-circle me-2">
-          <i class="bi bi-heart text-white fs-5"></i>
-        </div>
-        <span class="fw-bold text-white fs-4">MediCo</span>
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav mx-auto">
-          <li class="nav-item">
-            <a class="nav-link text-white" href="#">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-white-50" href="#">Our Services</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-white-50" href="#">Find Doctor</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-white-50" href="#">How it works</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-white-50" href="#">Reviews</a>
-          </li>
-        </ul>
-        <div class="d-flex align-items-center text-white">
-          <i class="bi bi-telephone-fill me-2"></i>
-          <div>
-            <div class="fw-bold">+996685117544</div>
-            <small class="text-white-50">Mon-Sat 9am-7pm</small>
-          </div>
-        </div>
+<nav class="navbar navbar-expand-lg">
+  <div class="container">
+    <a class="navbar-brand" href="#">🏥 Dorak</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Doctors</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Register</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Certifications</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+      </ul>
+
+      <div class="d-flex align-items-center">
+        <button class="theme-toggle me-3" id="themeToggle" aria-label="Toggle dark mode">
+        </button>
+        <button class="lang-btn">ٌRegister</button>
       </div>
     </div>
-  </nav>
+  </div>
+</nav>
 
-  <!-- Hero Section -->
-  <section class="hero-section">
-    <div class="container">
-      <div class="row align-items-center min-vh-90">
-        <div class="col-lg-6">
+<!-- Hero Section -->
+<section class="hero-section">
+  <div class="container">
+    <div class="row align-items-center">
+      <!-- Content -->
+      <div class="col-lg-6">
+        <div class="text-center text-lg-start">
+          <h1 class="hero-title">
+            Modern Healthcare <span class="text-primary">Queuing System</span>
+          </h1>
+          <p class="hero-subtitle">
+            Skip the waiting room. Book appointments online and get real-time updates.
+          </p>
+        </div>
+
+        <!-- Features -->
+        <div class="mb-4">
+          <div class="feature-card">
+            <div class="d-flex align-items-start">
+              <div class="feature-icon patients"><i class="fas fa-users"></i></div>
+              <div class="ms-3">
+                <h3 class="feature-title">For Clients</h3>
+                <p class="feature-description">Book appointments online, get real-time updates, and avoid the waiting room.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <div class="d-flex align-items-start">
+              <div class="feature-icon doctors"><i class="fas fa-user-md"></i></div>
+              <div class="ms-3">
+                <h3 class="feature-title">For Providers</h3>
+                <p class="feature-description">Manage your patient queue efficiently, reduce no-shows, and optimize your schedule.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <div class="d-flex align-items-start">
+              <div class="feature-icon centers"><i class="fas fa-hospital-alt"></i></div>
+              <div class="ms-3">
+                <h3 class="feature-title">For Centers</h3>
+                <p class="feature-description">Streamline patient flow, minimize wait times, and enhance overall operational efficiency.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CTA Button -->
+        <div class="text-center text-lg-start">
+          <button class="cta-button">
+            <i class="fas fa-calendar-check"></i>
+            Book an Appointment
+          </button>
+        </div>
+      </div>
+
+      <!-- Illustration -->
+      <div class="col-lg-6">
+        <div class="hero-illustration">
+          <div class="decorative-circles">
+            <div class="circle circle-1"></div>
+            <div class="circle circle-2"></div>
+            <div class="circle circle-3"></div>
+          </div>
+
+          <div class="floating-elements">
+            <!-- <div class="floating-icon"><i class="fas fa-heartbeat"></i></div>
+            <div class="floating-icon"><i class="fas fa-pills"></i></div>
+            <div class="floating-icon"><i class="fas fa-stethoscope"></i></div>
+            <div class="floating-icon"><i class="fas fa-user-md"></i></div>
+            <div class="floating-icon"><i class="fas fa-ambulance"></i></div>
+            <div class="floating-icon"><i class="fas fa-hospital"></i></div>-->
+          </div>
+
           <div class="hero-content">
-            <h1 class="hero-title display-4 fw-bold text-dark mb-4">
-              Your Health Always Comes First.
-            </h1>
-            <div class="hero-text mb-4">
-              <p class="text-muted mb-3">
-                With Medicare services you will receive the best medical treatment in your home. Our team of skilled medical professionals and aids ensure that you get the care you need and deserve.
-              </p>
-              <p class="text-muted">
-                We offer a wide range of services, from routine check-ups and medication management to physical therapy and wound care. Our professionals work closely with you and your family to create a customized care plan that fits your unique needs and preferences.
-              </p>
-            </div>
-            <button class="btn btn-primary btn-lg px-4 py-3 fw-semibold">
-              Book Appointment
-            </button>
-          </div>
-        </div>
+              
 
-        <div class="col-lg-6">
-          <div class="hero-image-container position-relative">
-            <!-- Circular background -->
-            <div class="doctor-circle-bg"></div>
 
-            <!-- Doctor Image -->
-            <div class="doctor-image-wrapper">
-              <img
-                src="https://images.pexels.com/photos/5327585/pexels-photo-5327585.jpeg?auto=compress&cs=tinysrgb&w=800"
-                alt="Female doctor with stethoscope"
-                class="doctor-image"
-              />
-            </div>
-
-            <!-- Take a Tour Circle -->
-            <div class="tour-circle">
-              <div class="circular-text">
-                <svg width="120" height="120" class="rotating-text">
-                  <defs>
-                    <path id="circle-path" d="M 60, 60 m -45, 0 a 45,45 0 1,1 90,0 a 45,45 0 1,1 -90,0" />
-                  </defs>
-                  <text class="circular-text-path">
-                    <textPath href="#circle-path">
-                      HOW WE WORK • HOW WE WORK •
-                    </textPath>
-                  </text>
-                </svg>
-                <div class="play-button">
-                  <i class="bi bi-play-fill text-primary"></i>
-                  <span class="ms-2 small fw-semibold text-primary">TAKE A TOUR</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- Pulse Line -->
-            <div class="pulse-line">
-              <svg width="200" height="60" viewBox="0 0 200 60">
-                <path
-                  d="M10,30 L40,30 L50,15 L60,45 L70,20 L80,40 L90,30 L190,30"
-                  stroke="#e74c3c"
-                  stroke-width="2"
-                  fill="none"
-                  class="pulse-path"
-                />
-                <circle cx="190" cy="30" r="4" fill="#e74c3c" class="pulse-dot" />
-              </svg>
-            </div>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- Features Section -->
-  <section class="features-section">
-    <div class="container-fluid p-0">
-      <div class="row g-0">
-        <div class="col-md-4">
-          <div class="feature-card d-flex align-items-center p-4">
-            <div class="feature-icon me-4">
-              <div class="icon-box">
-                <i class="bi bi-clock text-dark fs-5"></i>
-              </div>
-            </div>
-            <div class="feature-content">
-              <h5 class="fw-bold text-white mb-2">For Clients</h5>
-              <p class="text-white-50 mb-0 small">
-                Book appointments online, get real-time updates, and avoid the waiting room.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-4">
-          <div class="feature-card d-flex align-items-center p-4">
-            <div class="feature-icon me-4">
-              <div class="icon-box">
-                <i class="bi bi-briefcase text-dark fs-5"></i>
-              </div>
-            </div>
-            <div class="feature-content">
-              <h5 class="fw-bold text-white mb-2">For Providers</h5>
-              <p class="text-white-50 mb-0 small">
-                Manage your patient queue efficiently, reduce no-shows, and optimize your schedule
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-4">
-          <div class="feature-card d-flex align-items-center p-4">
-            <div class="feature-icon me-4">
-              <div class="icon-box">
-                <i class="bi bi-award text-dark fs-5"></i>
-              </div>
-            </div>
-            <div class="feature-content">
-              <h5 class="fw-bold text-white mb-2">For Centers</h5>
-              <p class="text-white-50 mb-0 small">
-                Streamline patient flow, minimize wait times, and enhance overall operational efficiency.
-              </p>
-            </div>
-          </div>
+<!-- Floating CTA -->
+<!-- <div class="floating-cta" id="floatingCTA">
+  <div class="cta-content">
+    <div class="d-flex align-items-start justify-content-between mb-3">
+      <div class="d-flex align-items-center">
+        <div class="cta-icon me-3"><i class="fas fa-calendar-check"></i></div>
+        <div>
+          <h5>Quick Booking</h5>
+          <p>Skip the wait</p>
         </div>
       </div>
+      <button class="minimize-btn" id="minimizeBtn" aria-label="Minimize">
+        <i class="fas fa-times"></i>
+      </button>
     </div>
-  </section>
-</div>
+
+    <button class="btn-cta">Book Appointment Now</button>
+
+    <p class="cta-note">Available 24/7 • Instant confirmation</p>
+  </div>
+
+  <div class="minimized-content d-none">
+    <i class="fas fa-calendar-check" style="font-size: 1.5rem; color: var(--light-blue);"></i>
+  </div>
+</div> -->

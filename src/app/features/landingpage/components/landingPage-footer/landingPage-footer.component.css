@@ -385,44 +385,7 @@ body[data-theme="dark"] .testimonial-author .text-muted {
   color: rgba(236, 240, 241, 0.7) !important;
 }
 
-/* Certifications Section */
-.certifications-section {
-  background-color: var(--bg-primary);
-}
 
-body[data-theme="dark"] .certifications-section {
-  background-color: var(--bg-dark);
-}
-
-.certification-badge {
-  text-align: center;
-  padding: 30px 20px;
-  background-color: #fff;
-  border-radius: var(--card-radius);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-  height: 100%;
-}
-
-body[data-theme="dark"] .certification-badge {
-  background-color: #023e68;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-}
-
-.certification-badge:hover {
-  transform: translateY(-10px);
-}
-
-.certification-badge img {
-  width: 80px;
-  height: 80px;
-  margin-bottom: 15px;
-}
-
-.certification-badge h4 {
-  font-size: 18px;
-  color: var(--text-primary);
-}
 
 body[data-theme="dark"] .certification-badge h4 {
   color: var(--text-dark);
@@ -430,68 +393,84 @@ body[data-theme="dark"] .certification-badge h4 {
 
 /* Footer Styles */
 .footerpage {
-  background-color: var(--bg-primary);
+  background-color:  #133c66;
   padding: 60px 0 20px;
   margin-top: 60px;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-body[data-theme="dark"] .footer {
+/* body[data-theme="dark"] .footer {
   background-color: var(--bg-dark);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
+} */
 
 .footer-title {
   font-size: 20px;
   margin-bottom: 20px;
+  color: white;
+
 }
 
 .footer-links {
   list-style: none;
   padding: 0;
   margin: 0;
+  color: white;
 }
 
 .footer-links li {
   margin-bottom: 10px;
+
+
 }
 
 .footer-links a {
   color: var(--text-primary);
   text-decoration: none;
   transition: all 0.3s ease;
+  color: white;
+
+
+
+
 }
 
-body[data-theme="dark"] .footer-links a {
-  color: var(--text-dark);
-}
+
 
 .footer-links a:hover {
   color: var(--btn-bg);
   padding-left: 5px;
+  color: white;
 }
 
 .footer-contact {
   list-style: none;
   padding: 0;
   margin: 0;
+  color: white;
+
 }
 
 .footer-contact li {
   margin-bottom: 15px;
   display: flex;
   align-items: flex-start;
+  color: white;
 }
 
 .footer-contact i {
   margin-right: 10px;
-  color: var(--btn-bg);
+
+  color: white;
 }
 
 .social-icons {
   margin-top: 20px;
   display: flex;
   gap: 15px;
+  color: white;
+
+
 }
 
 .social-icons a {
@@ -506,39 +485,19 @@ body[data-theme="dark"] .footer-links a {
   transition: all 0.3s ease;
 }
 
-body[data-theme="dark"] .social-icons a {
-  color: var(--text-dark);
-  background-color: rgba(97, 165, 194, 0.2);
-}
 
-.social-icons a:hover {
-  background-color: var(--btn-bg);
-  color: #fff;
-  transform: translateY(-3px);
-}
+
+
 
 /* Footer Controls */
 .footer-controls {
   background-color: rgba(97, 165, 194, 0.1);
   border-radius: var(--card-radius);
   padding: 15px;
+  color: white;
+
 }
 
-.theme-switch-wrapper {
-  display: inline-block;
-}
-
-.theme-switch {
-  display: inline-block;
-  height: 26px;
-  position: relative;
-  width: 50px;
-  margin: 0;
-}
-
-.theme-switch input {
-  display: none;
-}
 
 .slider {
   background-color: #ccc;
@@ -608,6 +567,8 @@ input:checked + .slider:before {
   margin-top: 40px;
   padding-top: 20px;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
+  background:  color: white;
+
 }
 
 body[data-theme="dark"] .footer-bottom {
@@ -661,7 +622,8 @@ body[data-theme="dark"] .footer-bottom-links a {
 
 .toast {
   background-color: var(--bg-primary);
-  color: var(--text-primary);
+  color: white;
+
   border-radius: var(--card-radius);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   margin-bottom: 15px;
@@ -897,9 +859,7 @@ body[data-theme="dark"] .certification-title, body[data-theme="dark"] .education
   padding: 80px 0;
 }
 
-body[data-theme="dark"] .booking-section {
-  background-color: #01395e;
-}
+
 
 .calendar-container, .time-slots-container {
   background-color: #fff;
@@ -909,10 +869,6 @@ body[data-theme="dark"] .booking-section {
   height: 100%;
 }
 
-body[data-theme="dark"] .calendar-container, body[data-theme="dark"] .time-slots-container {
-  background-color: #023e68;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-}
 
 .inner-title {
   font-size: 20px;
