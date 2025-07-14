@@ -1,3 +1,4 @@
+import { ShiftType } from "../../../Enums/ShiftType.enum";
 import { IShiftServices } from "./IShiftServices";
 
 export interface IShiftsTable {
@@ -9,6 +10,9 @@ export interface IShiftsTable {
   ProviderId: string;
   ServiceId: number;
   Services: IShiftServices[];
+  AppointmentCount: number;
+  shiftType: ShiftType
+
 }
 
 export type { IShiftServices };

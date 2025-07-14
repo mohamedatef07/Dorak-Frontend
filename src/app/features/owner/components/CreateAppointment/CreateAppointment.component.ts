@@ -27,6 +27,7 @@ import { Router } from '@angular/router';
 import { TimeStringToDatePipe } from "../../../../pipes/TimeStringToDate.pipe";
 import { AppointmentType } from '../../../../Enums/AppointmentType.enum';
 import { ClientType } from '../../../../Enums/ClientType.enum';
+import { ShiftType } from '../../../../Enums/ShiftType.enum';
 declare var bootstrap: any;
 
 @Component({
@@ -165,10 +166,6 @@ export class CreateAppointmentComponent implements OnInit {
     const serviceId = this.CreateAppointmentForm.get('ServiceId')?.value;
     const providerId = this.CreateAppointmentForm.get('ProviderId')?.value;
 
-    console.log('Filter Date:', formattedDate);
-    console.log('serviceId:', serviceId);
-    console.log('providerId:', providerId);
-
     this.filteredRecords = this.Records.reduce(
       (filtered: IShiftsTable[], record: IShiftsTable) => {
         const matchesDate =
@@ -185,10 +182,20 @@ export class CreateAppointmentComponent implements OnInit {
             (service) => service.ServiceId == serviceId
           );
           if (matchedService && matchesDate && matchesProvider) {
-            filtered.push({
-              ...record,
-              Services: [matchedService],
-            });
+            // Only show OnGoing shifts if the selected service is 'Urgent'
+            if (matchedService.ServiceName === 'Urgent') {
+              if (record.shiftType === ShiftType.OnGoing) {
+                filtered.push({
+                  ...record,
+                  Services: [matchedService],
+                });
+              }
+            } else {
+              filtered.push({
+                ...record,
+                Services: [matchedService],
+              });
+            }
           }
         }
         return filtered;
