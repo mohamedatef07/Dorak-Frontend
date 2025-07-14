@@ -88,6 +88,13 @@
 
           <div class="mb-3">
             <p-floatlabel variant="on">
+              <input pInputText id="estimatedDuration" name="estimatedDuration" type="number" [(ngModel)]="model.EstimatedDuration" />
+              <label for="estimatedDuration">Estimated Duration</label>
+            </p-floatlabel>
+          </div>
+
+          <div class="mb-3">
+            <p-floatlabel variant="on">
               <input pInputText id="licenseNumber" name="LicenseNumber" [(ngModel)]="model.LicenseNumber" />
               <label for="licenseNumber">License Number</label>
             </p-floatlabel>

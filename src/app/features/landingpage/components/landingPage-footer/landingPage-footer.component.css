@@ -596,6 +596,11 @@ body[data-theme="dark"] .footer-bottom {
   color: rgba(0, 0, 0, 0.3);
 }
 
+.footer-txt
+{
+  color: #fff !important;
+}
+
 body[data-theme="dark"] .footer-bottom-links li:not(:last-child):after {
   color: rgba(255, 255, 255, 0.3);
 }

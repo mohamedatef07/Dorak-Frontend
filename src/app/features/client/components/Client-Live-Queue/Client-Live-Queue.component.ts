@@ -211,7 +211,7 @@ export class ClientLiveQueueComponent implements OnInit, OnDestroy {
     if (current >= myNumber) this.currentStep = 3;
 
     const remainingPatients = myNumber - current;
-    const estimatedMinutes = remainingPatients * 15;
+    const estimatedMinutes = remainingPatients * me.EstimatedDuration;
 
     if (estimatedMinutes <= 0) {
       this.estimatedTime = 'Your turn!';

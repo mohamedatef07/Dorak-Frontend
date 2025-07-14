@@ -27,7 +27,7 @@
 
   <div class="navigation-buttons">
     <button class="btn-primary" (click)="ManuallySchedule()">Manually</button>
-    <button class="btn-secondary" (click)="WeeklySchedule()">Weekly</button>
+    <button class="btn-secondary" (click)="WeeklySchedule()">Daily</button>
   </div>
 
   <form [formGroup]="scheduleForm" class="schedule-form">
@@ -108,9 +108,9 @@
           </div>
         </form>
         <div class="add-queue">
-          <button type="button" class="btn btn-primary queue-btn" (click)="addAssignment()">
+          <!-- <button type="button" class="btn btn-primary queue-btn" (click)="addAssignment()">
             <i class="fas fa-plus"></i> Add Assignment
-          </button>
+          </button> -->
         </div>
       </div>
     </div>
