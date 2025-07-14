@@ -11,14 +11,20 @@
       </tr>
     </thead>
     <tbody>
-      @for(entry of paginatedQueueEntries; track $index){
+      @if(loading) {
+      <div class="loader-container">
+        <p-progressSpinner ariaLabel="loading" animationDuration=".5s">
+        </p-progressSpinner>
+      </div>
+      }@else{ @for(entry of paginatedQueueEntries; track $index){
       <tr>
         <td class="patient-no">{{ entry.CurrentQueuePosition }}</td>
         <td class="patient-name">{{ entry.FullName }}</td>
         <td class="patient-arrival-time">
           @if (entry.ArrivalTime) {
-          {{ entry.ArrivalTime.toString()| TimeStringToDate | date :
-          "hh:mm a" }}
+          {{
+            entry.ArrivalTime.toString() | TimeStringToDate | date : "hh:mm a"
+          }}
           } @else { --:-- }
         </td>
         <td class="patient-date">
@@ -49,15 +55,26 @@
           No Queue Entries Found
         </td>
       </tr>
-      }
+      } }
     </tbody>
   </table>
   @if(paginatedQueueEntries.length > 0){
-    <div class="d-flex justify-content-center align-items-center gap-2 mt-4">
-      <button class="btn main-btn-bg" (click)="previousPage()" [disabled]="!canGoPrevious">Previous</button>
-      <span class="current-page">Page {{ currentPage }} of {{ totalPages}}</span>
-      <button class="btn main-btn-bg" (click)="nextPage()" [disabled]="!canGoNext">Next</button>
-    </div>
-    }
-
+  <div class="d-flex justify-content-center align-items-center gap-2 mt-4">
+    <button
+      class="btn main-btn-bg"
+      (click)="previousPage()"
+      [disabled]="!canGoPrevious"
+    >
+      Previous
+    </button>
+    <span class="current-page">Page {{ currentPage }} of {{ totalPages }}</span>
+    <button
+      class="btn main-btn-bg"
+      (click)="nextPage()"
+      [disabled]="!canGoNext"
+    >
+      Next
+    </button>
+  </div>
+  }
 </section>

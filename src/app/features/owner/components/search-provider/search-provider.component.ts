@@ -1,4 +1,12 @@
-import { Component, OnInit, AfterViewInit, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+  ChangeDetectorRef,
+  ViewChild,
+  ElementRef,
+  inject,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
@@ -13,7 +21,8 @@ import { IPaginationViewModel } from '../../../../types/IPaginationViewModel';
 import { IProviderViewModel } from '../../../../types/IProviderViewModel';
 import { ApiResponse } from '../../../../types/ApiResponse';
 import { AuthService } from '../../../../services/auth.service';
-
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-search-provider',
@@ -28,18 +37,28 @@ import { AuthService } from '../../../../services/auth.service';
     MatInputModule,
     MatSelectModule,
     MatTableModule,
-    MatButtonModule
-  ]
+    MatButtonModule,
+    ProgressSpinnerModule,
+  ],
 })
 export class SearchProviderComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['id', 'name', 'city', 'phoneNumber', 'specialization'];
+  private messageService = inject(MessageService);
+
+  displayedColumns: string[] = [
+    'id',
+    'name',
+    'city',
+    'phoneNumber',
+    'specialization',
+  ];
   dataSource = new MatTableDataSource<IProviderViewModel>([]);
 
   @ViewChild(MatTable) table: MatTable<IProviderViewModel> | undefined;
   @ViewChild('tableElement') tableElement: ElementRef | undefined;
 
   providers: IProviderViewModel[] = [];
-  specializations: string[] = ['Cardiologist',
+  specializations: string[] = [
+    'Cardiologist',
     'Dermatologist',
     'Endocrinologist',
     'Gastroenterologist',
@@ -69,7 +88,8 @@ export class SearchProviderComponent implements OnInit, AfterViewInit {
     'Sports Medicine Specialist',
     'Family Medicine',
     'Occupational Medicine',
-    'Emergency Medicine'];
+    'Emergency Medicine',
+  ];
 
   totalItems: number = 0;
   pageSize: number = 9;
@@ -78,7 +98,8 @@ export class SearchProviderComponent implements OnInit, AfterViewInit {
   searchText: string = '';
   sortFilter: string = '';
   centerId: number = 0;
-
+  loading: boolean = false;
+  private pendingRequests: number = 0;
 
   errorMessage: string = '';
   isLoading: boolean = false;
@@ -92,6 +113,7 @@ export class SearchProviderComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit(): void {
+    this.loading = true;
     this.centerId = this.authService.getCenterId();
     this.loadProviders();
   }
@@ -107,20 +129,24 @@ export class SearchProviderComponent implements OnInit, AfterViewInit {
 
     const pageNumber = this.pageIndex + 1;
 
-
-    this.apiService.searchProviders(
-      pageNumber,
-      this.pageSize,
-      '',
-      this.specializationFilter,
-      this.searchText,
-      this.centerId
-    ).subscribe({
-      next: (response: ApiResponse<IPaginationViewModel<IProviderViewModel>>) => {
-        this.isLoading = false;
-        if (response.Status === 200 && response.Data?.Data) {
-          const providerData = response.Data.Data.$values || (response.Data.Data as unknown as IProviderViewModel[]);
-          this.providers = providerData.map(provider => ({
+    this.apiService
+      .searchProviders(
+        pageNumber,
+        this.pageSize,
+        '',
+        this.specializationFilter,
+        this.searchText,
+        this.centerId
+      )
+      .subscribe({
+        next: (
+          response: ApiResponse<IPaginationViewModel<IProviderViewModel>>
+        ) => {
+          this.isLoading = false;
+          const providerData =
+            response.Data.Data.$values ||
+            (response.Data.Data as unknown as IProviderViewModel[]);
+          this.providers = providerData.map((provider) => ({
             AssignmentId: provider.AssignmentId ?? 0,
             ProviderId: provider.ProviderId ?? '',
             FirstName: provider.FirstName ?? 'Unknown',
@@ -138,45 +164,46 @@ export class SearchProviderComponent implements OnInit, AfterViewInit {
             Image: provider.Image ?? '',
             Availability: provider.Availability ?? '',
             EstimatedDuration: provider.EstimatedDuration ?? 0,
-            AddDate: provider.AddDate ? this.formatDate(provider.AddDate) : 'N/A',
+            AddDate: provider.AddDate
+              ? this.formatDate(provider.AddDate)
+              : 'N/A',
             Email: provider.Email ?? 'N/A',
             PhoneNumber: provider.PhoneNumber ?? 'N/A',
-            Status: provider.Status ?? 0
+            Status: provider.Status ?? 0,
           }));
           this.totalItems = response.Data.Total || 0;
-          this.dataSource = new MatTableDataSource<IProviderViewModel>(this.providers);
+          this.dataSource = new MatTableDataSource<IProviderViewModel>(
+            this.providers
+          );
           this.cdr.detectChanges();
           if (this.table) {
             this.table.renderRows();
             if (this.tableElement && this.tableElement.nativeElement) {
-              const rows = this.tableElement.nativeElement.querySelectorAll('mat-row').length;
-            } else {
-              console.warn('Table element not found in DOM at:', new Date().toISOString());
+              const rows =
+                this.tableElement.nativeElement.querySelectorAll(
+                  'mat-row'
+                ).length;
             }
-          } else {
-            console.warn('Table reference not initialized at:', new Date().toISOString());
           }
-        } else {
-          this.errorMessage = response.Message || 'Failed to load providers.';
+          this.decrementLoader();
+        },
+        error: (err) => {
+          this.isLoading = false;
           this.dataSource = new MatTableDataSource<IProviderViewModel>([]);
           this.cdr.detectChanges();
-        }
-      },
-      error: (err) => {
-        this.isLoading = false;
-        this.errorMessage = 'An error occurred while loading providers. Please try again later. (Status: ' + (err.status || 'Unknown') + ')';
-        console.error('API error:', err);
-        this.dataSource = new MatTableDataSource<IProviderViewModel>([]);
-        this.cdr.detectChanges();
-      }
-    });
+          this.decrementLoader();
+        },
+      });
   }
-applyFilters(): void {
+  applyFilters(): void {
     let filteredProviders = [...this.providers];
 
     if (this.sortFilter) {
       filteredProviders.sort((a, b) => {
-        if (this.sortFilter === 'Name') return `${a.FirstName} ${a.LastName}`.localeCompare(`${b.FirstName} ${b.LastName}`);
+        if (this.sortFilter === 'Name')
+          return `${a.FirstName} ${a.LastName}`.localeCompare(
+            `${b.FirstName} ${b.LastName}`
+          );
         return 0;
       });
     }
@@ -184,11 +211,14 @@ applyFilters(): void {
 
   formatDate(dateStr: string): string {
     const date = new Date(dateStr);
-    return date.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' });
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    });
   }
 
   onSpecializationFilterChange(event: any): void {
-
     this.specializationFilter = event === 'All' ? '' : event;
     this.pageIndex = 0;
     this.loadProviders();
@@ -221,8 +251,7 @@ applyFilters(): void {
     this.loadProviders();
   }
 
-  addProvider(): void
-  {
+  addProvider(): void {
     this.router.navigate(['owner/add-provider']);
   }
 
@@ -231,7 +260,7 @@ applyFilters(): void {
   }
 
   getDisplayRange(): string {
-    const start = (this.pageIndex * this.pageSize) + 1;
+    const start = this.pageIndex * this.pageSize + 1;
     const end = Math.min((this.pageIndex + 1) * this.pageSize, this.totalItems);
     return `${start}-${end}`;
   }
@@ -242,8 +271,12 @@ applyFilters(): void {
     // You may want to pass sortBy to your API if supported, otherwise sort locally:
     if (this.sortBy === 'Name') {
       this.providers.sort((a, b) => {
-        const nameA = ((a.FirstName || '') + ' ' + (a.LastName || '')).trim().toLowerCase();
-        const nameB = ((b.FirstName || '') + ' ' + (b.LastName || '')).trim().toLowerCase();
+        const nameA = ((a.FirstName || '') + ' ' + (a.LastName || ''))
+          .trim()
+          .toLowerCase();
+        const nameB = ((b.FirstName || '') + ' ' + (b.LastName || ''))
+          .trim()
+          .toLowerCase();
         return nameA.localeCompare(nameB);
       });
     } else {
@@ -253,7 +286,9 @@ applyFilters(): void {
         return new Date(b.AddDate).getTime() - new Date(a.AddDate).getTime();
       });
     }
-    this.dataSource = new MatTableDataSource<IProviderViewModel>(this.providers);
+    this.dataSource = new MatTableDataSource<IProviderViewModel>(
+      this.providers
+    );
     this.cdr.detectChanges();
   }
 
@@ -262,5 +297,10 @@ applyFilters(): void {
     this.pageIndex = 0;
     this.applyFilters();
   }
-
+  private decrementLoader() {
+    this.pendingRequests--;
+    if (this.pendingRequests <= 0) {
+      this.loading = false;
+    }
+  }
 }

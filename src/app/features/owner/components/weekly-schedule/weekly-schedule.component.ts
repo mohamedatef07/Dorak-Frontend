@@ -127,53 +127,43 @@ export class WeeklyScheduleComponent implements OnInit {
     this.isLoading = true;
     this.errorMessage = '';
 
-    this.apiService
-      .getAllProviderAssignments(providerId)
-      .subscribe({
-        next: (response: ApiResponse<any[]>) => {
-          this.isLoading = false;
-          if (
-            response.Status === 200 &&
-            response.Data &&
-            response.Data.length > 0
-          ) {
-            this.calendarAssignments = response.Data.map((item) => {
-              const startDate = new Date(item.startDate);
-              const endDate = new Date(item.endDate);
-              startDate.setHours(0, 0, 0, 0);
-              endDate.setHours(0, 0, 0, 0);
-              return { startDate, endDate };
-            }).filter(
-              (range) =>
-                !isNaN(range.startDate.getTime()) &&
-                !isNaN(range.endDate.getTime())
-            );
-          } else {
-            this.calendarAssignments = [];
-            console.log(
-              'No assignments found, assignments set to:',
-              this.calendarAssignments
-            );
-          }
-          this.updateCalendar();
-          this.cdr.detectChanges();
-        },
-        error: (err) => {
-          this.isLoading = false;
-          if (err.status !== 404) {
-            this.errorMessage = 'An error occurred while loading assignments.';
-            console.error('Assignment load error:', err);
-          } else {
-            this.calendarAssignments = [];
-            console.log(
-              'No assignments found (404), assignments set to:',
-              this.calendarAssignments
-            );
-          }
-          this.updateCalendar();
-          this.cdr.detectChanges();
-        },
-      });
+    this.apiService.getAllProviderAssignments(providerId).subscribe({
+      next: (response: ApiResponse<any[]>) => {
+        this.isLoading = false;
+        if (
+          response.Status === 200 &&
+          response.Data &&
+          response.Data.length > 0
+        ) {
+          this.calendarAssignments = response.Data.map((item) => {
+            const startDate = new Date(item.startDate);
+            const endDate = new Date(item.endDate);
+            startDate.setHours(0, 0, 0, 0);
+            endDate.setHours(0, 0, 0, 0);
+            return { startDate, endDate };
+          }).filter(
+            (range) =>
+              !isNaN(range.startDate.getTime()) &&
+              !isNaN(range.endDate.getTime())
+          );
+        } else {
+          this.calendarAssignments = [];
+        }
+        this.updateCalendar();
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        this.isLoading = false;
+        if (err.status !== 404) {
+          this.errorMessage = 'An error occurred while loading assignments.';
+          console.error('Assignment load error:', err);
+        } else {
+          this.calendarAssignments = [];
+        }
+        this.updateCalendar();
+        this.cdr.detectChanges();
+      },
+    });
   }
 
   private updateCalendar(): void {
@@ -486,8 +476,7 @@ export class WeeklyScheduleComponent implements OnInit {
     return date.getTime() === this.selectedStartDate.getTime();
   }
 
-  updateDateOptions(): void {
-  }
+  updateDateOptions(): void {}
 
   ManuallySchedule(): void {
     this.router.navigate([

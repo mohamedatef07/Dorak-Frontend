@@ -36,19 +36,23 @@
               <label for="Bio" class="form-label">About</label>
               <textarea class="form-control" formControlName="Bio"></textarea>
             </div>
+            <div class="setting-btns d-flex justify-content-end gap-5 pt-4">
+              <button
+                type="button"
+                class="btn Save-btn py-2 px-3"
+                (click)="onSubmit()"
+              >
+                Save
+              </button>
+              <!-- <button
+                type="button"
+                class="btn Cancel-btn mt-3"
+                (click)="onCancel()"
+              >
+                Cancel
+              </button> -->
+            </div>
           </div>
-        </div>
-        <div class="setting-btns d-flex gap-5 pt-4">
-          <button type="button" class="btn Save-btn mt-3" (click)="onSubmit()">
-            Save
-          </button>
-          <button
-            type="button"
-            class="btn Cancel-btn mt-3"
-            (click)="onCancel()"
-          >
-            Cancel
-          </button>
         </div>
       </div>
     </div>

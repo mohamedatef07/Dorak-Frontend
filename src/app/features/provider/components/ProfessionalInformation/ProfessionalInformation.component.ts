@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { ProviderService } from '../../services/provider.service';
 import { MessageService } from 'primeng/api';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-ProfessionalInformation',
@@ -17,6 +18,8 @@ import { MessageService } from 'primeng/api';
 })
 export class ProfessionalInformationComponent implements OnInit {
   messageServices = inject(MessageService);
+  route = inject(Router);
+
   personalForm!: FormGroup;
 
   constructor(
@@ -36,6 +39,7 @@ export class ProfessionalInformationComponent implements OnInit {
       },
       error: (err) => {
         this.messageServices.add({
+          key: 'main-toast',
           severity: 'error',
           summary: 'Error',
           detail: 'The server is experiencing an issue, Please try again soon.',
@@ -77,7 +81,11 @@ export class ProfessionalInformationComponent implements OnInit {
 
       this._providerService.updateProfileInformation(formData).subscribe({
         next: (res) => {
+          setTimeout(() => {
+            this.route.navigate(['/provider/dashboard']);
+          }, 2000);
           this.messageServices.add({
+            key: 'main-toast',
             severity: 'success',
             summary: 'Success',
             detail: 'Profile updated successfully!',
@@ -86,6 +94,7 @@ export class ProfessionalInformationComponent implements OnInit {
         },
         error: (err) => {
           this.messageServices.add({
+            key: 'main-toast',
             severity: 'error',
             summary: 'Error',
             detail: 'Failed to update profile. Please try again.',

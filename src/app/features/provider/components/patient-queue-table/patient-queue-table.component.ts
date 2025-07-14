@@ -10,6 +10,7 @@ import { QueueAppointmentStatusEnumValuePipe } from '../../../../pipes/QueueAppo
 import { FormsModule } from '@angular/forms';
 import { ClientType } from '../../../../Enums/ClientType.enum';
 import { UpdateQueueStatusSRService } from '../../../../services/signalR Services/updateQueueStatusSR.service';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-patient-queue-table',
@@ -20,7 +21,8 @@ import { UpdateQueueStatusSRService } from '../../../../services/signalR Service
     ClientTypeEnumValuePipe,
     QueueAppointmentStatusEnumValuePipe,
     CommonModule,
-    TimeStringToDatePipe
+    TimeStringToDatePipe,
+    ProgressSpinnerModule,
   ],
 })
 export class PatientQueueTableComponent implements OnInit {
@@ -31,6 +33,8 @@ export class PatientQueueTableComponent implements OnInit {
   allQueueEntries: Array<IQueueEntries> = [];
   filteredQueueEntries: Array<IQueueEntries> = [];
   paginatedQueueEntries: Array<IQueueEntries> = [];
+  loading: boolean = false;
+
   @Input() searchText: string = '';
   @Input() patientStatus: string = '';
   @Input() patientType: string = '';
@@ -39,7 +43,6 @@ export class PatientQueueTableComponent implements OnInit {
   pageSize: number = 10;
   totalRecords: number = 0;
   totalPages: number = 0;
-
 
   nextPage() {
     this.currentPage++;
@@ -74,13 +77,17 @@ export class PatientQueueTableComponent implements OnInit {
   ngOnInit() {
     this.loadQueues();
     this.updateQueueSignalR.updatedProviderQueue.subscribe((updatedQueue) => {
-    this.allQueueEntries = updatedQueue;
-    this.currentPage = 1;
-    this.updateDisplayedEntries();
-  });
+      this.allQueueEntries = updatedQueue;
+      this.currentPage = 1;
+      this.updateDisplayedEntries();
+    });
   }
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['searchText'] || changes['patientStatus'] || changes['patientType']) {
+    if (
+      changes['searchText'] ||
+      changes['patientStatus'] ||
+      changes['patientType']
+    ) {
       this.currentPage = 1; // Reset to first page on filter/search change
       this.updateDisplayedEntries();
     }
@@ -91,13 +98,15 @@ export class PatientQueueTableComponent implements OnInit {
     let entries = [...this.allQueueEntries];
     if (this.patientStatus && this.patientStatus.trim() !== '') {
       entries = entries.filter(
-        (entry) => this.getAppointmentStatusValue(entry.Status) === this.patientStatus
+        (entry) =>
+          this.getAppointmentStatusValue(entry.Status) === this.patientStatus
       );
     }
     // 2. Filter by patientType
     if (this.patientType && this.patientType.trim() !== '') {
       entries = entries.filter(
-        (entry) => this.getClientTypeValue(entry.ClientType) === this.patientType
+        (entry) =>
+          this.getClientTypeValue(entry.ClientType) === this.patientType
       );
     }
     // 3. Search by name
@@ -122,11 +131,13 @@ export class PatientQueueTableComponent implements OnInit {
     return QueueAppointmentStatus[value];
   }
   loadQueues() {
+    this.loading = true;
     this.providerServices.getQueueEntries().subscribe({
       next: (res) => {
         this.allQueueEntries = [...res.Data];
         this.currentPage = 1;
         this.updateDisplayedEntries();
+        this.loading = false;
       },
       error: (err) => {
         this.messageServices.add({
@@ -135,6 +146,7 @@ export class PatientQueueTableComponent implements OnInit {
           detail: 'The server is experiencing an issue, Please try again soon.',
           life: 4000,
         });
+        this.loading = false;
       },
     });
   }

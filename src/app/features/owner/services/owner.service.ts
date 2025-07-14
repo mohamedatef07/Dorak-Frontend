@@ -45,7 +45,6 @@ export class OwnerService {
   reserveAppointment(
     appointmentData: ICreateAppointment
   ): Observable<ApiResponse<any>> {
-    console.log("appointmentData From Owner Service: ",appointmentData);
     return this.httpClient.post<ApiResponse<any>>(
       `${environment.apiUrl}/api/Operator/reserve-appointment`,
       appointmentData
