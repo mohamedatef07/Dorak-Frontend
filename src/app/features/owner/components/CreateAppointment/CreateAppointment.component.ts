@@ -45,7 +45,7 @@ declare var bootstrap: any;
     AutoCompleteModule,
     ToastModule,
     TimeStringToDatePipe,
-    ProgressSpinnerModule
+    ProgressSpinnerModule,
   ],
 })
 export class CreateAppointmentComponent implements OnInit {
@@ -236,7 +236,6 @@ export class CreateAppointmentComponent implements OnInit {
     this.CreateAppointmentForm.get('ServiceId')?.setValue(selected.ServiceId);
     this.updateFees();
     this.filterRecords();
-    console.log('Service selected:', selected);
   }
 
   onClearService() {
@@ -244,21 +243,18 @@ export class CreateAppointmentComponent implements OnInit {
     this.CreateAppointmentForm.get('ServiceId')?.setValue(null);
     this.updateFees();
     this.filterRecords();
-    console.log('Service cleared');
   }
 
   onProviderSelect(event: AutoCompleteSelectEvent) {
     const selected = event.value as string;
     this.CreateAppointmentForm.get('ProviderId')?.setValue(selected);
     this.filterRecords();
-    console.log('Provider selected:', selected);
   }
 
   onClearProvider() {
     this.CreateAppointmentForm.get('ProviderId')?.setValue(null);
     this.filteredProviders = [...this.ProviderName];
     this.filterRecords();
-    console.log('Provider cleared');
   }
 
   updateFees() {
@@ -311,7 +307,6 @@ export class CreateAppointmentComponent implements OnInit {
 
   HandleSubmitForm() {
     debugger;
-    console.log(this.selectedShiftRecord);
 
     if (!this.selectedShiftRecord) {
       this.errorMessage = 'Please select a shift before booking.';

@@ -1,6 +1,13 @@
 <div class="dashboard-container">
-  <h2 class="page-title">{{ statistics?.CenterName || 'Center' }} Center Dashboard</h2>
-
+  <h2 class="page-title">
+    {{ statistics?.CenterName || "Center" }} Center Dashboard
+  </h2>
+  @if(loading) {
+  <div class="loader-container">
+    <p-progressSpinner ariaLabel="loading" animationDuration=".5s">
+    </p-progressSpinner>
+  </div>
+  }@else{
   <div *ngIf="statistics && !isLoading" class="stats-grid">
     <div class="stat-card">
       <div class="stat-icon main-bg">
@@ -8,13 +15,16 @@
       </div>
       <div class="stat-content">
         <h3 class="stat-title">Total Revenue</h3>
-        <p class="stat-value">E£ {{ statistics.TotalRevenue | number:'0.00' }}</p>
+        <p class="stat-value">
+          E£ {{ statistics.TotalRevenue | number : "0.00" }}
+        </p>
       </div>
     </div>
 
     <div class="stat-card">
       <div class="stat-icon main-bg">
-        <i class="bi bi-heart-pulse"></i>      </div>
+        <i class="bi bi-heart-pulse"></i>
+      </div>
       <div class="stat-content">
         <h3 class="stat-title">Doctors</h3>
         <p class="stat-value">{{ statistics.ProvidersCount }}</p>
@@ -33,22 +43,26 @@
 
     <div class="stat-card">
       <div class="stat-icon main-bg">
-        <i class="bi bi-calendar-event"></i>      </div>
+        <i class="bi bi-calendar-event"></i>
+      </div>
       <div class="stat-content">
         <h3 class="stat-title">Appointments</h3>
         <p class="stat-value">{{ statistics.AppointmentsCount }}</p>
       </div>
     </div>
   </div>
-
   <div *ngIf="!isLoading" class="dashboard-sections">
     <div class="calendar-section">
       <div class="calendar-container">
         <h2 class="inner-title">Assignments Calendar</h2>
         <div class="calendar-controls">
-          <button class="btn btn-outline nav-button" (click)="prevMonth()">◄</button>
+          <button class="btn btn-outline nav-button" (click)="prevMonth()">
+            ◄
+          </button>
           <span class="month-title">{{ getMonthName() }}</span>
-          <button class="btn btn-outline nav-button" (click)="nextMonth()">►</button>
+          <button class="btn btn-outline nav-button" (click)="nextMonth()">
+            ►
+          </button>
         </div>
         <div class="calendar-wrapper">
           <div class="calendar">
@@ -64,13 +78,18 @@
 
             <div class="calendar-body">
               <ng-container *ngFor="let day of daysInMonth">
-                <div class="calendar-day" [ngClass]="{ 'empty-day': !day.date, 'today': isToday(day.date) }">
+                <div
+                  class="calendar-day"
+                  [ngClass]="{
+                    'empty-day': !day.date,
+                    today: isToday(day.date)
+                  }"
+                >
                   <ng-container *ngIf="day.date">
                     <span class="day-number">
                       {{ day.date.getDate() }}
                     </span>
                     <span *ngIf="day.hasAssignment" class="assignment-dot">
-
                     </span>
                   </ng-container>
                 </div>
@@ -94,9 +113,12 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let shift of centerShifts; let i = index" [ngClass]="{ 'odd-row': i % 2 === 0 }">
+            <tr
+              *ngFor="let shift of centerShifts; let i = index"
+              [ngClass]="{ 'odd-row': i % 2 === 0 }"
+            >
               <td>{{ shift.ProviderName }}</td>
-              <td>{{ shift.ShiftDate | date:'mediumDate' }}</td>
+              <td>{{ shift.ShiftDate | date : "mediumDate" }}</td>
               <td>{{ formatTime(shift.StartTime) }}</td>
               <td>{{ formatTime(shift.EndTime) }}</td>
             </tr>
@@ -108,4 +130,5 @@
       </div>
     </div>
   </div>
+  }
 </div>

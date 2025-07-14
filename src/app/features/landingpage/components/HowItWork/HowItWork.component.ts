@@ -3,18 +3,21 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 @Component({
   selector: 'app-HowItWork',
   templateUrl: './HowItWork.component.html',
-  styleUrls: ['./HowItWork.component.css']
+  styleUrls: ['./HowItWork.component.css'],
 })
 export class HowItWorkComponent implements OnInit, OnDestroy {
   activeTab: 'client' | 'doctor' | 'center' = 'client';
   private autoSwitchInterval: any;
-  private readonly tabs: ('client' | 'doctor' | 'center')[] = ['client', 'doctor', 'center'];
+  private readonly tabs: ('client' | 'doctor' | 'center')[] = [
+    'client',
+    'doctor',
+    'center',
+  ];
   private currentTabIndex = 0;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   ngOnDestroy() {
     this.stopAutoSwitch();
@@ -24,7 +27,6 @@ export class HowItWorkComponent implements OnInit, OnDestroy {
     this.activeTab = tab;
     this.currentTabIndex = this.tabs.indexOf(tab);
     // Restart auto-switch when user manually changes tab
-
   }
 
   // private startAutoSwitch() {
@@ -51,7 +53,7 @@ export class HowItWorkComponent implements OnInit, OnDestroy {
     const activePanel = document.querySelector(`.content-panel.active`);
     if (activePanel) {
       const stepCards = activePanel.querySelectorAll('.step-card');
-      stepCards.forEach(card => {
+      stepCards.forEach((card) => {
         card.classList.add('active');
       });
     }
