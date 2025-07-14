@@ -15,7 +15,7 @@ import { environment } from '../../../../../environments/environment';
   selector: 'app-landingpage-nav',
   templateUrl: './landingpage-nav.component.html',
   styleUrls: ['./landingpage-nav.component.css'],
-  imports: [CommonModule, RouterLink, Avatar]
+  imports: [CommonModule, RouterLink]
 })
 export class LandingpageNavComponent implements OnInit {
   isAuthenticated = false;
