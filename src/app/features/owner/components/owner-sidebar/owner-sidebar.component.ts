@@ -126,7 +126,7 @@ export class OwnerSidebarComponent implements OnInit {
         },
 
       ],
-    }
+    },
   ];
 
   constructor(private authService: AuthService) {}
