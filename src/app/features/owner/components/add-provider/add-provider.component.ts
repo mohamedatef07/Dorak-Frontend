@@ -19,6 +19,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { AutoCompleteModule, AutoCompleteCompleteEvent } from 'primeng/autocomplete';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
+import { DropdownModule } from 'primeng/dropdown';
+
 
 @Component({
   selector: 'app-add-provider',
@@ -39,11 +41,42 @@ import { CalendarModule } from 'primeng/calendar';
     AutoCompleteModule,
     ButtonModule,
     CalendarModule,
+    DropdownModule
   ],
 })
 export class AddProviderComponent implements OnInit {
   model: IRegistrationViewModel = this.createEmptyModel();
-  specializations: string[] = [];
+  specializations: string[] = ['Cardiologist',
+    'Dermatologist',
+    'Endocrinologist',
+    'Gastroenterologist',
+    'General Practitioner',
+    'Geriatrician',
+    'Hematologist',
+    'Infectious Disease Specialist',
+    'Internal Medicine',
+    'Nephrologist',
+    'Neurologist',
+    'Obstetrician/Gynecologist (OB/GYN)',
+    'Oncologist',
+    'Ophthalmologist',
+    'Orthopedic Surgeon',
+    'Otolaryngologist (ENT)',
+    'Pediatrician',
+    'Plastic Surgeon',
+    'Psychiatrist',
+    'Pulmonologist',
+    'Radiologist',
+    'Rheumatologist',
+    'Surgeon',
+    'Urologist',
+    'Allergist/Immunologist',
+    'Anesthesiologist',
+    'Pathologist',
+    'Sports Medicine Specialist',
+    'Family Medicine',
+    'Occupational Medicine',
+    'Emergency Medicine'];
   specializationOptions = [] as { label: string; value: string }[];
   filteredSpecializations = [] as { label: string; value: string }[];
 
@@ -83,32 +116,32 @@ export class AddProviderComponent implements OnInit {
     this.filteredGenders = [...this.genderOptions];
   }
 
-  private createEmptyModel(): IRegistrationViewModel {
-    return {
-      UserName: '',
-      Email: '',
-      PhoneNumber: '',
-      Password: 'Password123@',
-      ConfirmPassword: 'Password123@',
-      Role: 'Provider',
-      FirstName: '',
-      LastName: '',
-      Gender: GenderType.Male,
-      BirthDate: '',
-      Street: '',
-      City: '',
-      Governorate: '',
-      Country: '',
-      Specialization: '',
-      Bio: 'No bio provided yet.',
-      ExperienceYears: null,
-      ProviderType: ProviderType.None,
-      LicenseNumber: '',
-      Availability: '',
-      EstimatedDuration: null,
-      Rate: null,
-    };
-  }
+private createEmptyModel(): IRegistrationViewModel {
+  return {
+    UserName: '',
+    Email: '',
+    PhoneNumber: '',
+    Password: 'Password123@',
+    ConfirmPassword: 'Password123@',
+    Role: 'Provider',
+    FirstName: '',
+    LastName: '',
+    Gender: GenderType.Male, // ✅ Already valid
+    BirthDate: '',
+    Street: '',
+    City: '',
+    Governorate: '',
+    Country: '',
+    Specialization: '',
+    Bio: 'No bio provided yet.',
+    ExperienceYears: null,
+    ProviderType: ProviderType.Permanent, 
+    LicenseNumber: '',
+    Availability: '',
+    EstimatedDuration: null,
+    Rate: null,
+  };
+}
 
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;

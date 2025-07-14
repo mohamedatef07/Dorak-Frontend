@@ -60,6 +60,8 @@ import { ProviderCenterServiceComponent } from './features/owner/components/Prov
 import { AddReviewComponent } from './features/client/components/add-review/add-review.component';
 import { ProviderReviewsComponent } from './features/provider/components/provider-reviews/provider-reviews.component';
 import { CenterDashboardComponent } from './features/owner/components/center-dashboard/center-dashboard.component';
+import { OwnerProfileComponent } from './features/owner/components/owner-profile/owner-profile.component';
+import { OwnerSettingsComponent } from './features/owner/components/owner-settings/owner-settings.component';
 
 import { LandingPageLayoutComponent } from './features/landingpage/components/landingPage-layout/landingPage-layout.component';
 import { ChooseSystemComponent } from './features/landingpage/components/ChooseSystem/HowITWork.component';
@@ -188,6 +190,16 @@ export const routes: Routes = [
         component: ProviderCenterServiceComponent,
         title: 'Provider Center Services',
         data: { expectedRole: ['Admin', 'Operator'] },
+      },
+      {
+        path: 'profile',
+        component: OwnerProfileComponent,
+        title: 'Profile',
+      },
+      {
+        path: 'settings',
+        component: OwnerSettingsComponent,
+        title: 'Settings',
       },
     ],
   },
@@ -400,10 +412,10 @@ export const routes: Routes = [
     component: TermsConditionsComponent,
     title: 'Terms & Conditions',
   },
-  { 
-    path: 'reset-password', 
-    component: ResetPasswordComponent, 
-    title: 'Reset Password' 
+  {
+    path: 'reset-password',
+    component: ResetPasswordComponent,
+    title: 'Reset Password'
   },
   { path: '**', component: NotFoundComponent, title: 'Not Found' },
 ];
