@@ -3,9 +3,7 @@
             <div class="row">
                 <div class="col-lg-4 mb-4 mb-lg-0">
                     <h3 class="footer-title" data-i18n="footer_about">About Dorak</h3>
-                    <p data-i18n="footer_about_text">Dorak is a modern medical queuing system designed to improve patient experience and streamline doctor appointments.</p>
-
-                  
+                    <p  class="footer-text" data-i18n="footer_about_text">Dorak is a modern medical queuing system designed to improve patient experience and streamline doctor appointments.</p>
                 </div>
                 <div class="col-lg-4 mb-4 mb-lg-0">
                     <h3 class="footer-title" data-i18n="footer_links">Quick Links</h3>
@@ -20,26 +18,21 @@
                 <div class="col-lg-4">
                     <h3 class="footer-title" data-i18n="footer_contact">Contact Us</h3>
                     <ul class="footer-contact">
-                        <li><i class="fas fa-map-marker-alt"></i> <span data-i18n="contact_address">123 Medical Center St, Cairo, Egypt</span></li>
-                        <li><i class="fas fa-phone"></i> <span data-i18n="contact_phone">+20 123 456 7890</span></li>
-                        <li><i class="fas fa-envelope"></i> <span data-i18n="contact_email"></span></li>
+                        <li><i class="fas fa-map-marker-alt"></i> <span data-i18n="contact_address">ITI Aswan, Sahary City, Aswan, Egypt</span></li>
+                        <li><i class="fas fa-phone"></i> <span data-i18n="contact_phone">(+20) 109 999 9999</span></li>
+                        <li><i class="fas fa-envelope"></i> <span data-i18n="contact_email">dorak.helpdesk&#64;gmail.com</span></li>
                     </ul>
-                    <div class="social-icons">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
+                
                 </div>
             </div>
             <div class="footer-bottom">
                 <div class="row">
                     <div class="col-md-12">
                         <ul class="footer-bottom-links">
-                            <li><a href="#" data-i18n="footer_copyright">&copy; 2023 Dorak Medical System</a></li>
-                            <li><a href="#" data-i18n="footer_help">Help & Support</a></li>
-                            <li><a href="#" data-i18n="footer_terms">Terms & Conditions</a></li>
-                            <li><a href="#" data-i18n="footer_contact_us">Contact Us</a></li>
+                            <li><a [routerLink]="['/']" data-i18n="footer_copyright">&copy; 2025 Dorak Management System</a></li>
+                            <li><a [routerLink]="['/help-support']" data-i18n="footer_help">Help & Support</a></li>
+                            <li><a [routerLink]="['/terms-conditions']" data-i18n="footer_terms">Terms & Conditions</a></li>
+                            <li><a [routerLink]="['/contact-us']" data-i18n="footer_contact_us">Contact Us</a></li>
                         </ul>
                     </div>
                 </div>
