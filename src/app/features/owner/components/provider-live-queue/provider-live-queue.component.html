@@ -11,7 +11,6 @@
     </div>
   </div>
 
-  <!-- Statistics Section -->
   <div class="stats-container" role="region" aria-label="Queue Statistics">
     <button class="stat-button">Total: {{ stats.total }}</button>
     <button class="stat-button">Normal: {{ stats.normal }}</button>
@@ -21,7 +20,6 @@
     <button class="stat-button">Done: {{ stats.done }}</button>
   </div>
 
-  <!-- Live Queue List -->
   <div class="queue-list" role="list">
     <div *ngFor="let queue of liveQueues; let i = index" class="queue-card" role="listitem">
       <div class="queue-number">{{ queue.CurrentQueuePosition }}</div>
@@ -62,30 +60,6 @@
     </div>
   </div>
 
-  <!-- Pagination (UI only, no logic)
-  <div class="pagination-container ms-5" style="margin-top: 24px;">
-    <div class="showing-text">
-      Showing 1-{{ liveQueues?.length || 0 }} of {{ liveQueues?.length || 0 }}
-    </div>
-    <div class="pagination-buttons d-flex">
-      <button class="pagination-btn" disabled aria-label="Previous page">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-          class="bi bi-chevron-left" viewBox="0 0 16 16">
-          <path fill-rule="evenodd"
-            d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
-        </svg>
-      </button>
-      <button class="pagination-btn" disabled aria-label="Next page">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-          class="bi bi-chevron-right" viewBox="0 0 16 16">
-          <path fill-rule="evenodd"
-            d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
-        </svg>
-      </button>
-    </div>
-  </div> -->
-
-  <!-- Custom Success Popup -->
   <div *ngIf="showPopup" #successPopup class="custom-popup">
     <div class="popup-content">
       <p>Shift ended successfully!</p>

@@ -36,7 +36,6 @@
 
 
 
-/* --- Card header/title styles --- */
 .inner-title {
   font-size: 1.45rem;
   font-weight: 800;
@@ -47,7 +46,6 @@
   text-shadow: 0 1px 0 #e3f2fd;
 }
 
-/* --- Back button container --- */
 .back-button-container {
   margin-bottom: 24px;
   margin-top: 20px;
@@ -74,7 +72,6 @@
   color: #fff;
   box-shadow: 0 2px 8px rgba(25, 118, 210, 0.13);
 }
-/* --- Profile card --- */
 .doctor-profile-card {
   display: flex;
   flex-direction: column;
@@ -133,7 +130,6 @@
   font-size: 1.15em;
 }
 
-/* --- Calendar card --- */
 .calendar-container {
   width: 100%;
 }
@@ -156,7 +152,6 @@
   border-radius: 6px;
 }
 
-/* --- Calendar styles --- */
 .calendar {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -234,7 +229,7 @@
   transition: box-shadow 0.2s;
   border: 2px solid #fff;
   outline: 1.5px solid #e53935;
-  z-index: 20; /* Ensure dot is above other elements */
+  z-index: 20;
 }
 
 .assignment-dot:hover {
@@ -278,7 +273,7 @@
   pointer-events: auto;
 }
 
-/* Profile card image constraints */
+
 .doctor-image-container {
   width: 130px;
   height: 130px;
@@ -300,7 +295,6 @@
   display: block;
 }
 
-/* Error Popup Styles */
 .error-popup {
   position: fixed;
   top: 32px;

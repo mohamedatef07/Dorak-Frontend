@@ -162,7 +162,6 @@ tr:last-child td {
   font-size: 14px;
 }
 
-/* Keep popup and error styles from previous version for completeness */
 .custom-popup {
   position: fixed;
   top: 0;
