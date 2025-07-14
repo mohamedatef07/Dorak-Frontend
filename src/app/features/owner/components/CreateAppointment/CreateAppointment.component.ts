@@ -389,7 +389,7 @@ export class CreateAppointmentComponent implements OnInit {
             backdrops[0].parentNode?.removeChild(backdrops[0]);
           }
         }, 500);
-        this.messageService.add({this.decrementLoader();
+        this.messageService.add({
           key: 'main-toast',
           severity: 'success',
           summary: 'Success',
@@ -398,6 +398,7 @@ export class CreateAppointmentComponent implements OnInit {
         setTimeout(() => {
           window.history.back();
         }, 3000);
+        this.decrementLoader();
         // this.router.navigate([
         //   '/owner/provider-live-queue',
         //   appointmentData.ShiftId,
