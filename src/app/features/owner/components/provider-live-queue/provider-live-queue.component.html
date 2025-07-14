@@ -26,7 +26,7 @@
   </div>
 
   <div class="queue-list" role="list">
-    <div *ngFor="let queue of liveQueues; let i = index" class="queue-card" role="listitem">
+    <div *ngFor="let queue of filteredLiveQueues; let i = index" class="queue-card" role="listitem">
       <div class="queue-number">{{ queue.CurrentQueuePosition }}</div>
       <div class="queue-details">
         <div class="client-name">{{ queue.ClientFullName }}</div>

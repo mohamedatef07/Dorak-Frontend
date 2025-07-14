@@ -80,12 +80,7 @@ export class OwnerSidebarComponent implements OnInit {
         },
 
       ],
-    },
-    // {
-    //   label: 'Analytics',
-    //   icon: 'pi pi-chart-bar',
-    //   routerLink: '/provider/reports',
-    // }
+    }
   ];
 
   private providerItems: MenuItem[] = [
@@ -132,11 +127,6 @@ export class OwnerSidebarComponent implements OnInit {
 
       ],
     },
-    // {
-    //   label: 'Analytics',
-    //   icon: 'pi pi-chart-bar',
-    //   routerLink: '/provider/reports',
-    // },
   ];
 
   constructor(private authService: AuthService) {}

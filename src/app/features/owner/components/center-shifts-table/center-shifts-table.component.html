@@ -19,7 +19,7 @@
       </tr>
     </thead>
     <tbody>
-      @for(shift of centerShifts; track $index){
+      @for(shift of filteredCenterShifts; track $index){
       <tr>
         <td class="provider-name">{{ shift.ProviderName }}</td>
         <td class="shift-date">{{ shift.ShiftDate | date : "MMM d, y" }}</td>

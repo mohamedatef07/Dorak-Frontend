@@ -393,7 +393,7 @@ body[data-theme="dark"] .certification-badge h4 {
 
 /* Footer Styles */
 .footerpage {
-  background-color:  #133c66;
+  background-color:  #2a6f97;
   padding: 60px 0 20px;
   margin-top: 60px;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
@@ -408,7 +408,6 @@ body[data-theme="dark"] .certification-badge h4 {
   font-size: 20px;
   margin-bottom: 20px;
   color: white;
-
 }
 
 .footer-links {
@@ -497,7 +496,9 @@ body[data-theme="dark"] .certification-badge h4 {
   color: white;
 
 }
-
+.footer-text{
+  color: white ;
+}
 
 .slider {
   background-color: #ccc;
@@ -567,7 +568,6 @@ input:checked + .slider:before {
   margin-top: 40px;
   padding-top: 20px;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
-  /* background:  color: white; */
 
 }
 
