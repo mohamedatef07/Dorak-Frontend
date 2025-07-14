@@ -107,7 +107,6 @@ export class ProviderManagementComponent implements OnInit, AfterViewInit {
     this.userRole = this.authService.getUserRole();
     this.centerId = this.authService.getCenterId();
     this.hideActionButtons = this.userRole === 'Operator';
-    console.log(this.centerId);
     this.loadAllProviders();
   }
 
@@ -152,7 +151,6 @@ export class ProviderManagementComponent implements OnInit, AfterViewInit {
             Status: provider.Status ?? 0
           }));
           this.providers.push(...newProviders);
-          console.log(this.providers);
 
           const totalPages = Math.ceil((response.Data.Total || 0) / this.pageSize);
           if (page < totalPages) {
@@ -317,7 +315,6 @@ export class ProviderManagementComponent implements OnInit, AfterViewInit {
             this.loadAllProviders();
           } else {
             this.handleError(response.Message || 'Failed to delete provider. Status: ' + response.Status);
-            console.log('Response Details:', response);
           }
         },
         error: (err) => {

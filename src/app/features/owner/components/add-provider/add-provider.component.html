@@ -16,7 +16,6 @@
     <div class="row mx-3">
       <div class="col-md-12 col-lg-6">
         <form #providerForm="ngForm" (ngSubmit)="onSubmit()" class="w-100">
-          <!-- Required Fields -->
           <div class="mb-3">
             <p-floatlabel variant="on">
               <input pInputText id="userName" name="UserName" [(ngModel)]="model.UserName" required />
@@ -52,7 +51,6 @@
             </p-floatlabel>
           </div>
 
-          <!-- Optional Fields -->
           <div class="mb-3">
             <p-floatlabel variant="on">
               <input pInputText id="street" name="Street" [(ngModel)]="model.Street" />
@@ -102,7 +100,6 @@
             </p-floatlabel>
           </div>
 
-          <!-- Specialization Autocomplete -->
           <div class="mb-3">
             <p-floatlabel variant="on">
               <p-autoComplete
@@ -125,7 +122,6 @@
             </p-floatlabel>
           </div>
 
-          <!-- Gender Dropdown -->
           <div class="mb-3">
             <p-floatlabel variant="on">
               <p-dropdown
@@ -142,7 +138,6 @@
             </p-floatlabel>
           </div>
 
-          <!-- Birth Date -->
           <div class="mb-3">
             <p-floatlabel variant="on">
               <p-calendar
@@ -160,7 +155,6 @@
         </form>
       </div>
 
-      <!-- Image Upload & Submit -->
       <div class="col-md-12 col-lg-6 d-flex flex-column align-items-center justify-content-start mt-4 mt-md-0">
         <div class="profile-image-wrapper position-relative mb-3">
           <img *ngIf="imagePreview; else noImage" [src]="imagePreview" alt="Profile Preview" class="rounded-circle profile-image" />

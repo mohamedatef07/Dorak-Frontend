@@ -1,3 +1,4 @@
+
 root {
             --primary-blue: #1e40af;
             --light-blue: #7dd3fc;
@@ -12,7 +13,7 @@ root {
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background-color: white;
+            background-color: rgb(95, 63, 63);
             color: var(--text-primary);
             line-height: 1.6;
         }
@@ -93,13 +94,14 @@ root {
 
         /* Feature Cards */
         .feature-card {
-            background: white;
+            background: #2a6f97;
             border-radius: 0.75rem;
             padding: 1.5rem;
             margin-bottom: 1.5rem;
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
             border: 1px solid var(--border-color);
             transition: all 0.3s ease;
+            color: white;
         }
 
         .feature-card:hover {
@@ -107,7 +109,7 @@ root {
             transform: translateY(-2px);
         }
 
-        .feature-icon {
+        /* .feature-icon {
             width: 3rem;
             height: 3rem;
             border-radius: 0.5rem;
@@ -117,9 +119,9 @@ root {
             font-size: 1.5rem;
             color: white;
             flex-shrink: 0;
-        }
+        } */
 
-        .feature-icon.patients {
+        /* .feature-icon.patients {
             background: linear-gradient(135deg, var(--light-blue) 0%, var(--sky-blue) 100%);
         }
 
@@ -129,12 +131,12 @@ root {
 
         .feature-icon.centers {
             background: linear-gradient(135deg, var(--teal) 0%, #0d9488 100%);
-        }
+        } */
 
         .feature-title {
             font-size: 1.25rem;
             font-weight: bold;
-            color: var(--text-primary);
+            color: white;
             margin-bottom: 0.5rem;
         }
 
@@ -166,13 +168,14 @@ root {
             box-shadow: 0 8px 20px rgba(125, 211, 252, 0.4);
             color: white;
         }
+       
 
         /* Hero Illustration */
         .hero-illustration {
             position: relative;
             width: 100%;
             height: 450px;
-            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            background: rgba(231, 231, 231, 0.9);
             border-radius: 1rem;
             display: flex;
             align-items: center;
@@ -327,7 +330,7 @@ root {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 1.5rem;
-            max-width: 350px;
+            max-width: 550px;
             margin: 0 auto;
         }
 

@@ -51,7 +51,6 @@ export class ManuallyScheduleComponent implements OnInit {
   isLoading: boolean = false;
   scheduleForm: FormGroup;
   centerId: number = 0;
-  // centerId: number = 3;
   dateOptions: Date[] = [];
   viewDate: Date = new Date();
   assignments: { startDate: Date; endDate: Date }[] = [];
@@ -97,7 +96,6 @@ export class ManuallyScheduleComponent implements OnInit {
         this.isLoading = false;
         if (response.Status === 200 && response.Data) {
           this.provider = response.Data;
-          console.log('Provider details loaded:', this.provider);
         } else {
           this.errorMessage =
             response.Message || 'Failed to load provider details.';
@@ -122,7 +120,6 @@ export class ManuallyScheduleComponent implements OnInit {
       .subscribe({
         next: (response: ApiResponse<any[]>) => {
           this.isLoading = false;
-          console.log('API response for assignments:', response);
           if (
             response.Status === 200 &&
             response.Data &&
@@ -133,20 +130,13 @@ export class ManuallyScheduleComponent implements OnInit {
               const endDate = new Date(item.endDate);
               startDate.setHours(0, 0, 0, 0);
               endDate.setHours(0, 0, 0, 0);
-              console.log('Parsed assignment range:', { startDate, endDate });
               return { startDate, endDate };
             }).filter(
               (range) =>
                 !isNaN(range.startDate.getTime()) &&
                 !isNaN(range.endDate.getTime())
             );
-            console.log('Assignments array after mapping:', this.assignments);
-          } else {
-            this.assignments = [];
-            console.log(
-              'No assignments found, assignments set to:',
-              this.assignments
-            );
+
           }
           this.updateCalendar();
           this.cdr.detectChanges();
@@ -158,10 +148,7 @@ export class ManuallyScheduleComponent implements OnInit {
             console.error('Assignment load error:', err);
           } else {
             this.assignments = [];
-            console.log(
-              'No assignments found (404), assignments set to:',
-              this.assignments
-            );
+
           }
           this.updateCalendar();
           this.cdr.detectChanges();
@@ -178,11 +165,9 @@ export class ManuallyScheduleComponent implements OnInit {
     const daysInMonth = new Date(year, month + 1, 0).getDate();
 
     this.daysInMonth = [];
-    console.log('Starting day:', startingDay, 'Days in month:', daysInMonth);
 
     for (let i = 0; i < startingDay; i++) {
       this.daysInMonth.push({ date: null, hasAssignment: false });
-      console.log('Added padding day at index:', i);
     }
 
     for (let day = 1; day <= daysInMonth; day++) {
@@ -193,18 +178,12 @@ export class ManuallyScheduleComponent implements OnInit {
         const end = new Date(assignment.endDate);
         start.setHours(0, 0, 0, 0);
         end.setHours(0, 0, 0, 0);
-        console.log(
-          `Checking day ${currentDate.toISOString().split('T')[0]} against ${
-            start.toISOString().split('T')[0]
-          } to ${end.toISOString().split('T')[0]}`
-        );
+
         return currentDate >= start && currentDate <= end;
       });
       this.daysInMonth.push({ date: currentDate, hasAssignment });
-      console.log(`Added day ${day}, hasAssignment: ${hasAssignment}`);
     }
 
-    console.log('Final daysInMonth array:', this.daysInMonth);
     this.updateDateOptions();
   }
 
@@ -296,13 +275,11 @@ export class ManuallyScheduleComponent implements OnInit {
           EndTime: this.formatTimeToString(shift.EndTime),
           MaxPatientsPerDay: shift.MaxPatientsPerDay,
           OperatorId: this.authService.getUserId()
-          // OperatorId: '1'
 
         })
       ),
     };
 
-    console.log('Sending payload to API:', JSON.stringify(model, null, 2));
 
     this.isLoading = true;
     this.errorMessage = '';
