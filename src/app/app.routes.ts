@@ -381,7 +381,8 @@ export const routes: Routes = [
       },
          {
         path:'ChooseSystemComponent',
-        component:ChooseSystemComponent
+        component:ChooseSystemComponent,
+        
       },
 
     ]
