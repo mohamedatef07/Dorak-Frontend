@@ -5,7 +5,7 @@ import { ClientService } from '../../services/client.service';
 import { Router } from '@angular/router';
 import { IDoctorFilter } from '../../..//..//types/IDoctorFilter';
 import { environment } from '../../../../../environments/environment';
-import { IDoctorCard } from    '../../models/iDoctorcard';
+
 import { ClientFooterComponent } from '../client-footer/client-footer.component';
 import { NavBarComponent } from '../navBar/navBar.component';
 import { DoctorTitle } from '../../../../Enums/DoctorTitle.enum';
@@ -20,6 +20,8 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { DatePickerModule } from 'primeng/datepicker';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { IDoctorCard } from '../../models/IDoctorCard';
+
 
 
 @Component({
