@@ -68,12 +68,23 @@ import { ChooseSystemComponent } from './features/landingpage/components/ChooseS
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 
 export const routes: Routes = [
+
+  {
+        path: '',
+        redirectTo: 'home',
+        pathMatch: 'full',
+      },
   {
     path: 'owner',
     component: OwnerLayoutComponent,
     canActivate: [AuthGuard, RoleGuard],
     data: { expectedRole: ['Admin', 'Operator'] },
     children: [
+      {
+        path: '',
+        redirectTo: 'dashboard',
+        pathMatch: 'full',
+      },
       {
         path: 'center-shifts',
         component: CenterShiftsComponent,

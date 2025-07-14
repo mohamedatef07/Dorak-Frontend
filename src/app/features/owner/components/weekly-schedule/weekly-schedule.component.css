@@ -26,11 +26,11 @@ body[data-theme="dark"] .schedule-container.modern-card {
 }
 
 .page-title {
- font-size: 1.8rem;
+    font-size: 1.8rem;
     margin-top: 20px;
     padding: 15px;
-color: #000;
-    /* background-color: var(--main-bg-color-Light); */    width: fit-content;
+    color: #000;
+    width: fit-content;
     border-radius: var(--border-radius);
     font-weight: 600;
 }
@@ -285,7 +285,6 @@ body[data-theme="dark"] .assignment-dot {
   box-shadow: 0 2px 12px rgba(243, 156, 18, 0.28);
 }
 
-/* Calendar Controls */
 .calendar-controls {
   display: flex;
   align-items: center;
@@ -325,7 +324,6 @@ body[data-theme="dark"] .month-title {
   box-shadow: 0 2px 8px rgba(25, 118, 210, 0.13);
 }
 
-/* Loading */
 .modern-loading {
   display: flex;
   align-items: center;
@@ -340,8 +338,6 @@ body[data-theme="dark"] .month-title {
 body[data-theme="dark"] .modern-loading {
   color: var(--text-dark);
 }
-
-/* Buttons */
 
 .save-btn  {
     font-size: 1rem;
@@ -401,7 +397,6 @@ body[data-theme="dark"] .modern-loading {
   box-shadow: 0 2px 8px rgba(243, 156, 18, 0.3);
 }
 
-/* Form Fields */
 .schedule-form label {
   font-weight: 600;
   color: var(--text-primary);
@@ -438,7 +433,6 @@ body[data-theme="dark"] .schedule-form select {
   box-shadow: 0 0 0 0.25rem rgba(97, 165, 194, 0.25);
 }
 
-/* Shift Card */
 .shift-card {
   background: var(--bg-primary);
   border-radius: var(--card-radius);
@@ -488,7 +482,6 @@ body[data-theme="dark"] .shift-label {
   flex-direction: column;
 }
 
-/* Calendar: Empty Days */
 .calendar-day:empty,
 .calendar-day .day-number:empty,
 .calendar-day:not(:has(.day-number)) {
@@ -498,7 +491,6 @@ body[data-theme="dark"] .shift-label {
   cursor: default !important;
 }
 
-/* Layout */
 .schedule-flex-row {
   display: flex;
   gap: 40px;
@@ -529,7 +521,6 @@ body[data-theme="dark"] .shifts-section.modern-card {
   box-shadow: 0 10px 40px rgba(25, 118, 210, 0.13), 0 2px 12px rgba(0, 0, 0, 0.06);
 }
 
-/* Navigation and Actions */
 .navigation-buttons,
 .actions {
   display: flex;
@@ -541,7 +532,7 @@ body[data-theme="dark"] .shifts-section.modern-card {
  .queue-btn {
   width:fit-content;
 }
-/* Inner Title */
+
 .inner-title {
   font-size: var(--font-inner-header);
   font-weight: 600;

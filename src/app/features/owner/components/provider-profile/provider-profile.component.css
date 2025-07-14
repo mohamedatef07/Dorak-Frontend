@@ -37,7 +37,6 @@
   background-color: #0056b3;
 }
 
-/* --- Layout wrapper for two-column modern design --- */
 .profile-calendar-wrapper {
   display: flex;
   gap: 40px;
@@ -346,7 +345,6 @@
   display: block;
 }
 
-/* Error Popup Styles */
 .error-popup {
   position: fixed;
   top: 32px;

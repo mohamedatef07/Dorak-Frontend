@@ -1,4 +1,3 @@
-<!-- Filter Bar -->
 <h2 class="page-title">View Doctors</h2>
 <div class="filter d-flex align-items-center my-3">
   <div class="icon px-2 filter-border">
@@ -46,7 +45,6 @@
   </div>
 </div>
 
-<!-- Table -->
 <div class="doctors-table my-3">
   <table>
     <thead>
@@ -89,7 +87,6 @@
   </table>
 </div>
 
-<!-- Pagination -->
 <div class="pagination-container ms-5">
   <div class="showing-text">
     Showing {{ getDisplayRange() }} of {{ totalItems }}
@@ -113,7 +110,6 @@
   </div>
 </div>
 
-<!-- Delete Popup -->
 <div *ngIf="showDeletePopup" #deletePopup class="custom-popup">
   <div class="popup-content">
     <p>Are you sure you want to delete this doctor?</p>

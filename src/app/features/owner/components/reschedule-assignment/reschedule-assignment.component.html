@@ -2,7 +2,6 @@
 
 <div *ngIf="errorMessage && !isLoading" class="error-popup">
   <div class="error-popup-content">
-    <i class="fas fa-exclamation-triangle error-icon"></i>
     <span>{{ errorMessage }}</span>
     <button class="close-btn" (click)="errorMessage = ''" aria-label="Close">×</button>
   </div>
@@ -21,14 +20,15 @@
 
 
 <div *ngIf="!isLoading && !errorMessage" class="schedule-container modern-card">
-   <div class="provider-info-modern">
+  <div class="provider-info-modern">
     <span class="doctor-name">Doctor Name: {{ providerName }}</span>
     <span class="doctor-specialty">Specialization: {{ providerSpecialization || 'N/A' }}</span>
   </div>
 
   <div class="navigation-buttons">
-    <button class="btn-secondary options-btn" (click)="toggleMode()" [ngClass]="{'active': !isWeeklyMode}">Manually</button>
-    <button class="btn-primary options-btn" (click)="toggleMode()" [ngClass]="{'active': isWeeklyMode}">Weekly</button>
+    <button class="btn-secondary options-btn" (click)="toggleMode()"
+      [ngClass]="{'active': !isWeeklyMode}">Manually</button>
+    <button class="btn-primary options-btn" (click)="toggleMode()" [ngClass]="{'active': isWeeklyMode}">Daily</button>
   </div>
 
   <form [formGroup]="scheduleForm" class="schedule-form">
@@ -69,10 +69,12 @@
 
       <div class="shifts-section modern-card">
         <div formArrayName="assignments">
-          <div *ngFor="let assignment of assignmentsArray.controls; let i = index" [formGroupName]="i" class="shift-card">
+          <div *ngFor="let assignment of assignmentsArray.controls; let i = index" [formGroupName]="i"
+            class="shift-card">
             <div class="shift-card-header">
               <div class="shift-header-content">
-                <button type="button" class="btn btn-danger btn-remove-shift" (click)="removeAssignment(i)" *ngIf="isWeeklyMode && assignmentsArray.length > 1">
+                <button type="button" class="btn btn-danger btn-remove-shift" (click)="removeAssignment(i)"
+                  *ngIf="isWeeklyMode && assignmentsArray.length > 1">
                   Remove
                 </button>
               </div>
@@ -92,7 +94,8 @@
               <div formArrayName="Shifts" *ngFor="let shift of getShifts(i).controls; let j = index">
                 <div [formGroupName]="j" class="shift-fields">
                   <div class="shift-fields-header" *ngIf="!isWeeklyMode">
-                    <button type="button" class="btn btn-danger btn-remove-shift" (click)="removeShift(i, j)" *ngIf="!isWeeklyMode && getShifts(i).length > 1">
+                    <button type="button" class="btn btn-danger btn-remove-shift" (click)="removeShift(i, j)"
+                      *ngIf="!isWeeklyMode && getShifts(i).length > 1">
                       Remove
                     </button>
                   </div>
@@ -119,8 +122,8 @@
                 </div>
               </div>
               <div class="add-shift-action">
-                <button type="button" class="btn btn-primary queue-btn" (click)="isWeeklyMode ? addAssignment() : addShift(i)">
-                  <i class="fas fa-plus"></i> Add {{ isWeeklyMode ? 'Assignment' : 'Shift' }}
+                <button *ngIf="!isWeeklyMode" type="button" class="btn btn-primary queue-btn" (click)="addShift(i)">
+                  <i class="fas fa-plus"></i> Add Shift
                 </button>
               </div>
             </div>
