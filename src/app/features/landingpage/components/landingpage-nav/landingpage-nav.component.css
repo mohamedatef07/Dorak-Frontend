@@ -50,7 +50,8 @@ root {
 
 
         .lang-btn {
-            background-color: #f8fafc;
+            background-color: #2a6f97;
+
             border: 1px solid var(--border-color);
             color: var(--text-primary);
             padding: 0.5rem 1rem;
@@ -61,7 +62,7 @@ root {
         }
 
         .lang-btn:hover {
-            background-color: #f1f5f9;
+            background-color: #3596ff;
             border-color: var(--primary-blue);
         }
 
@@ -133,6 +134,10 @@ root {
             background: linear-gradient(135deg, var(--teal) 0%, #0d9488 100%);
         } */
 
+.login-btn, .register-btn
+{
+  color: white;
+}
         .feature-title {
             font-size: 1.25rem;
             font-weight: bold;
@@ -168,7 +173,7 @@ root {
             box-shadow: 0 8px 20px rgba(125, 211, 252, 0.4);
             color: white;
         }
-       
+
 
         /* Hero Illustration */
         .hero-illustration {
