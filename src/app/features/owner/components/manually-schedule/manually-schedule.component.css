@@ -13,12 +13,6 @@ body[data-theme="dark"] .schedule-container {
   color: var(--text-dark);
 }
 
-/* .schedule-container.modern-card {
-  background: var(--bg-primary);
-  border-radius: var(--card-radius);
-  box-shadow: 0 6px 32px rgba(25, 118, 210, 0.10), 0 1.5px 8px rgba(0, 0, 0, 0.04);
-  transition: box-shadow 0.2s;
-} */
 
 body[data-theme="dark"] .schedule-container.modern-card {
   background: var(--bg-dark);
@@ -39,7 +33,6 @@ body[data-theme="dark"] .schedule-container.modern-card {
     margin-top: 20px;
     padding: 15px;
     color: #000;
-    /* background-color: var(--main-bg-color-Light); */
     width: fit-content;
     border-radius: var(--border-radius);
     font-weight: 600;
@@ -300,7 +293,6 @@ body[data-theme="dark"] .assignment-dot {
 }
 
 
-/* Calendar Controls */
 .calendar-controls {
   display: flex;
   align-items: center;
@@ -340,7 +332,6 @@ body[data-theme="dark"] .month-title {
   box-shadow: 0 2px 8px rgba(25, 118, 210, 0.13);
 }
 
-/* Loading */
 .modern-loading {
   display: flex;
   align-items: center;
@@ -356,7 +347,6 @@ body[data-theme="dark"] .modern-loading {
   color: var(--text-dark);
 }
 
-/* Buttons */
 .save-btn  {
     font-size: 1rem;
     padding: .8rem 0.75rem;
@@ -374,7 +364,6 @@ body[data-theme="dark"] .modern-loading {
 .btn-primary {
      font-size: 1rem;
     padding: .8rem 0.75rem;
-    /* background-color: var(--button-bg-color-Light); */
     background-color: #2a6f97b5;
     color: var(--button-text-color-Light);
     transition: var(--transition);
@@ -417,7 +406,6 @@ body[data-theme="dark"] .modern-loading {
   box-shadow: 0 2px 8px rgba(243, 156, 18, 0.3);
 }
 
-/* Form Fields */
 .schedule-form label {
   font-weight: 600;
   color: var(--text-primary);
@@ -454,7 +442,6 @@ body[data-theme="dark"] .schedule-form select {
   box-shadow: 0 0 0 0.25rem rgba(97, 165, 194, 0.25);
 }
 
-/* Shift Card */
 .shift-card {
   background: var(--bg-primary);
   border-radius: var(--card-radius);
@@ -511,7 +498,6 @@ option {
 }
 
 
-/* Calendar: Empty Days */
 .calendar-day:empty,
 .calendar-day .day-number:empty,
 .calendar-day:not(:has(.day-number)) {
@@ -521,7 +507,6 @@ option {
   cursor: default !important;
 }
 
-/* Layout */
 .schedule-flex-row {
   display: flex;
   gap: 40px;
@@ -552,7 +537,6 @@ body[data-theme="dark"] .shifts-section.modern-card {
   box-shadow: 0 10px 40px rgba(25, 118, 210, 0.13), 0 2px 12px rgba(0, 0, 0, 0.06);
 }
 
-/* Navigation and Actions */
 .navigation-buttons,
 .actions,
 .add-shift-action {
@@ -565,7 +549,6 @@ body[data-theme="dark"] .shifts-section.modern-card {
   width:fit-content;
 }
 
-/* Inner Title */
 .inner-title {
   font-size: var(--font-inner-header);
   font-weight: 600;
