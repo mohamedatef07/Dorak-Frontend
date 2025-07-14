@@ -23,7 +23,7 @@ import { IShiftViewModel } from '../../../../types/IShiftViewModel';
 import { AssignmentType } from '../../../../Enums/AssignmentType.enum';
 import { ShiftType } from '../../../../Enums/ShiftType.enum';
 import { AuthService } from '../../../../services/auth.service';
-
+import { CalendarModule } from 'primeng/calendar';
 
 
 @Component({
@@ -41,6 +41,7 @@ import { AuthService } from '../../../../services/auth.service';
     MatSelectModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    CalendarModule,
   ],
 })
 export class ManuallyScheduleComponent implements OnInit {

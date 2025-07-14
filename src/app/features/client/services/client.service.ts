@@ -1,4 +1,4 @@
-import { IDoctorCard } from '../models/IDoctorCard';
+import { IDoctorCard } from '../models/iDoctorcard';
 import { ICheckoutRequest } from '../models/ICheckoutRequest';
 import { ApiResponse } from './../../../types/ApiResponse';
 import { HttpClient, HttpParams } from '@angular/common/http';
