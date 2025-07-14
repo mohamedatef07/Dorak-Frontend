@@ -351,7 +351,7 @@ export class CenterDashboardComponent implements OnInit {
     });
   }
 
-  loadAllCenterShifts(): void {
+    loadAllCenterShifts(): void {
     this.isLoading = true;
     this.ownerService.getAllCenterShifts(this.centerId).subscribe({
       next: (response: ApiResponse<ICenterShifts[]>) => {
@@ -359,14 +359,50 @@ export class CenterDashboardComponent implements OnInit {
         if (response.Status === 200 && Array.isArray(response.Data)) {
           this.centerShifts = response.Data.map(shift => {
             const shiftDate = new Date(shift.ShiftDate);
+
+                        // Handle time strings (e.g., "09:00:00", "21:00:00")
+            let startTime: Date;
+            let endTime: Date;
+
+            // Handle StartTime
+            if (typeof shift.StartTime === 'string') {
+              // If it's a time string, create a date object with today's date and the time
+              const today = new Date();
+              const timeString = shift.StartTime as string;
+              const [hours, minutes, seconds] = timeString.split(':').map(Number);
+              startTime = new Date(today.getFullYear(), today.getMonth(), today.getDate(), hours, minutes, seconds || 0);
+            } else {
+              startTime = new Date(shift.StartTime);
+            }
+
+            // Handle EndTime
+            if (typeof shift.EndTime === 'string') {
+              // If it's a time string, create a date object with today's date and the time
+              const today = new Date();
+              const timeString = shift.EndTime as string;
+              const [hours, minutes, seconds] = timeString.split(':').map(Number);
+              endTime = new Date(today.getFullYear(), today.getMonth(), today.getDate(), hours, minutes, seconds || 0);
+            } else {
+              endTime = new Date(shift.EndTime);
+            }
+
             if (isNaN(shiftDate.getTime())) {
               console.error(`Invalid ShiftDate for ShiftId ${shift.ShiftId}: ${shift.ShiftDate}`);
             }
+            if (isNaN(startTime.getTime())) {
+              console.error(`Invalid StartTime for ShiftId ${shift.ShiftId}: ${shift.StartTime}`);
+            }
+            if (isNaN(endTime.getTime())) {
+              console.error(`Invalid EndTime for ShiftId ${shift.ShiftId}: ${shift.EndTime}`);
+            }
+
             return {
               ...shift,
-              ShiftDate: shiftDate
+              ShiftDate: shiftDate,
+              StartTime: startTime,
+              EndTime: endTime
             };
-          }).filter(shift => !isNaN(shift.ShiftDate.getTime()));
+          }).filter(shift => !isNaN(shift.ShiftDate.getTime()) && !isNaN(shift.StartTime.getTime()) && !isNaN(shift.EndTime.getTime()));
           console.log('Processed shifts:', this.centerShifts);
         } else {
           console.error('Invalid shifts response:', response);
@@ -398,10 +434,15 @@ export class CenterDashboardComponent implements OnInit {
             const endDate = assignment.EndDate ? new Date(assignment.EndDate) : null;
             startDate.setHours(0, 0, 0, 0);
             if (endDate) endDate.setHours(0, 0, 0, 0);
-            return (
-              currentDate.getTime() === startDate.getTime() ||
-              (endDate && currentDate.getTime() === endDate.getTime())
-            );
+            currentDate.setHours(0, 0, 0, 0);
+
+            // Check if current date falls within the assignment range (inclusive)
+            if (endDate) {
+              return currentDate.getTime() >= startDate.getTime() && currentDate.getTime() <= endDate.getTime();
+            } else {
+              // If no end date, only check if it matches the start date
+              return currentDate.getTime() === startDate.getTime();
+            }
           }).map(assignment => ({
             assignmentId: assignment.AssignmentId,
             startDate: new Date(assignment.StartDate).toLocaleDateString(),
@@ -419,11 +460,7 @@ export class CenterDashboardComponent implements OnInit {
     console.log('Updated daysInMonth:', this.daysInMonth);
   }
 
-  getAssignmentTooltip(day: { assignments: { assignmentId: number; startDate: string; endDate: string | null }[] }): string {
-    return day.assignments.map((assignment, index) =>
-      `Assignment ${index + 1}:\nID: ${assignment.assignmentId}\nStart: ${assignment.startDate}\nEnd: ${assignment.endDate || 'Ongoing'}`
-    ).join('\n\n') || 'No assignments';
-  }
+
 
   nextMonth(): void {
     this.viewDate = new Date(this.viewDate.getFullYear(), this.viewDate.getMonth() + 1, 1);
@@ -454,6 +491,14 @@ export class CenterDashboardComponent implements OnInit {
     this.errorMessage = message;
     this.statistics = null;
     this.cdr.detectChanges();
+  }
+
+  formatTime(date: Date): string {
+    return date.toLocaleTimeString('en-US', {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true
+    });
   }
 
 }

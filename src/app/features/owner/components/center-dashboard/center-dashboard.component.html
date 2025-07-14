@@ -100,8 +100,7 @@
 
     <div class="stat-card">
       <div class="stat-icon main-bg">
-        <i class="fa fa-user-doctor"></i>
-      </div>
+        <i class="bi bi-heart-pulse"></i>      </div>
       <div class="stat-content">
         <h3 class="stat-title">Doctors</h3>
         <p class="stat-value">{{ statistics.ProvidersCount }}</p>
@@ -120,8 +119,7 @@
 
     <div class="stat-card">
       <div class="stat-icon main-bg">
-        <i class="fa-regular fa-calendar-check"></i>
-      </div>
+        <i class="bi bi-calendar-event"></i>      </div>
       <div class="stat-content">
         <h3 class="stat-title">Appointments</h3>
         <p class="stat-value">{{ statistics.AppointmentsCount }}</p>
@@ -158,17 +156,7 @@
                       {{ day.date.getDate() }}
                     </span>
                     <span *ngIf="day.hasAssignment" class="assignment-dot">
-                      <span class="custom-tooltip">
-                        <ng-container *ngFor="let assignment of day.assignments; let i = index">
-                          <span class="assignment-details">
-                            <strong>Assignment {{ i + 1 }}:</strong><br>
-                            ID: {{ assignment.assignmentId }}<br>
-                            Start: {{ assignment.startDate }}<br>
-                            End: {{ assignment.endDate || 'Ongoing' }}
-                          </span>
-                          <br *ngIf="i < day.assignments.length - 1">
-                        </ng-container>
-                      </span>
+
                     </span>
                   </ng-container>
                 </div>
@@ -185,17 +173,21 @@
         <table class="shifts-table">
           <thead>
             <tr>
-              <th>Provider Name</th>
+              <th>Doctor Name</th>
               <th>Shift Date</th>
+              <th>Start Time</th>
+              <th>End Time</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let shift of centerShifts; let i = index" [ngClass]="{ 'odd-row': i % 2 === 0 }">
               <td>{{ shift.ProviderName }}</td>
               <td>{{ shift.ShiftDate | date:'mediumDate' }}</td>
+              <td>{{ formatTime(shift.StartTime) }}</td>
+              <td>{{ formatTime(shift.EndTime) }}</td>
             </tr>
             <tr *ngIf="centerShifts.length === 0">
-              <td colspan="2" class="no-data">No shifts available</td>
+              <td colspan="4" class="no-data">No shifts available</td>
             </tr>
           </tbody>
         </table>

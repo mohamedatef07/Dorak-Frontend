@@ -307,6 +307,7 @@ export class CreateAppointmentComponent implements OnInit {
   }
 
   HandleSubmitForm() {
+    debugger;
     console.log(this.selectedShiftRecord);
 
     if (!this.selectedShiftRecord) {
@@ -320,19 +321,17 @@ export class CreateAppointmentComponent implements OnInit {
     }
 
     const raw = this.CreateAppointmentForm.getRawValue();
-
+    console.log(raw);
     // Determine AppointmentType and clientType based on selectedService
     let appointmentType = AppointmentType.Normal;
     let clientType = ClientType.Normal;
-    if (this.selectedService) {
-      const serviceName = this.selectedService.ServiceName?.toLowerCase();
-      if (serviceName === 'urgent') {
+    console.log(this.selectedService);
+    if (raw.ServiceId) {
+      // const serviceName = this.selectedService.ServiceName?.toLowerCase();
+      if (raw.ServiceId === 3) {
         appointmentType = AppointmentType.Urgent;
         clientType = ClientType.Urgent;
-      } else if (serviceName === 'normal') {
-        appointmentType = AppointmentType.Normal;
-        clientType = ClientType.Normal;
-      } else if (serviceName === 'consultation') {
+      }else if (raw.ServiceId === 2) {
         appointmentType = AppointmentType.Normal; // as per your rule
         clientType = ClientType.Consultation;
       }
