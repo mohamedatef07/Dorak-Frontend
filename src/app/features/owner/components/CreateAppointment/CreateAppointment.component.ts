@@ -57,7 +57,7 @@ export class CreateAppointmentComponent implements OnInit {
   private AuthService = inject(AuthService);
   private messageService = inject(MessageService);
   OperatorId: string = '';
-  CenterId: number = 0;
+  CenterId!: number;
   selectedShiftRecord: IShiftsTable | null = null;
   Records: IShiftsTable[] = [];
   filteredRecords: IShiftsTable[] = [];
@@ -66,7 +66,6 @@ export class CreateAppointmentComponent implements OnInit {
   selectedService: IShiftServices | null = null;
   filteredServices: IShiftServices[] = [];
   filteredProviders: string[] = [];
-  centerId = 1;
   CreateAppointmentForm: FormGroup;
   errorMessage: string | null = null;
   successMessage: string | null = null;
@@ -93,10 +92,10 @@ export class CreateAppointmentComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.ownerService.getShiftsDetailsforbooking(this.centerId).subscribe({
+    this.CenterId = Number(this.AuthService.getCenterId());
+    this.ownerService.getShiftsDetailsforbooking(this.CenterId).subscribe({
       next: (res: ApiResponse<IShiftsTable[]>) => {
         this.OperatorId = this.AuthService.getUserId();
-        this.CenterId = Number(this.AuthService.getCenterId());
         console.log(this.OperatorId);
         console.log(this.CenterId);
         this.Records = [...res.Data];
