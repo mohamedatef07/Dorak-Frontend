@@ -1,0 +1,246 @@
+<section class="how-it-works-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="section-header text-center mb-5">
+          <div class="header-badge">
+            <span>🚀</span>
+          </div>
+          <h2 class="section-title">How It Works</h2>
+          <p class="section-subtitle">Experience seamless queuing for every role in our ecosystem</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Card Container -->
+    <div class="row justify-content-center">
+      <div class="col-12 col-lg-11 col-xl-10">
+        <div class="main-card">
+          <!-- Card Header with Tabs -->
+          <div class="card-header">
+            <div class="role-tabs">
+              <button
+                class="role-tab active"
+                [class.active]="activeTab === 'client'"
+                (click)="setActiveTab('client')">
+                <div class="tab-icon">
+                  <i class="pi pi-user"></i>
+                </div>
+                <div class="tab-content">
+                  <h4>Client</h4>
+                  <p>Skip the wait</p>
+                </div>
+              </button>
+              <button
+                class="role-tab"
+                [class.active]="activeTab === 'doctor'"
+                (click)="setActiveTab('doctor')">
+                <div class="tab-icon">
+                  <i class="pi pi-user-plus"></i>
+                </div>
+                <div class="tab-content">
+                  <h4>Doctor</h4>
+                  <p>Focus on care</p>
+                </div>
+              </button>
+              <button
+                class="role-tab"
+                [class.active]="activeTab === 'center'"
+                (click)="setActiveTab('center')">
+                <div class="tab-icon">
+                  <i class="pi pi-building"></i>
+                </div>
+                <div class="tab-content">
+                  <h4>Center</h4>
+                  <p>Total control</p>
+                </div>
+              </button>
+            </div>
+          </div>
+
+          <!-- Card Content -->
+          <div class="card-content">
+            <!-- Client Content -->
+            <div class="content-panel" [class.active]="activeTab === 'client'">
+              <div class="panel-header">
+                <div class="header-icon">
+                  <i class="pi pi-user"></i>
+                </div>
+                <div class="header-text">
+                  <h3>Client Journey</h3>
+                  <p>Your seamless experience from booking to completion</p>
+                </div>
+              </div>
+
+              <div class="steps-grid">
+                <div class="step-card active" >
+                  <div class="step-card" data-step="1">
+                  <div class="step-number">01</div>
+                  <div class="step-icon">
+                    <i class="pi pi-pencil"></i>
+                  </div>
+                  <div class="step-content">
+                    <h5>Quick Registration</h5>
+                    <p>Create your account in seconds with secure authentication</p>
+                  </div>
+                </div>
+                </div>
+
+                <div class="step-card" data-step="2">
+                  <div class="step-number">02</div>
+                  <div class="step-icon">
+                    <i class="pi pi-calendar"></i>
+                  </div>
+                  <div class="step-content">
+                    <h5>Book Appointment</h5>
+                    <p>Choose your preferred doctor and reserve your spot instantly</p>
+                  </div>
+                </div>
+
+                <div class="step-card" data-step="3">
+                  <div class="step-number">03</div>
+                  <div class="step-icon">
+                    <i class="pi pi-credit-card"></i>
+                  </div>
+                  <div class="step-content">
+                    <h5>Secure Payment</h5>
+                    <p>Complete your booking with encrypted payment processing</p>
+                  </div>
+                </div>
+
+                <div class="step-card" data-step="4">
+                  <div class="step-number">04</div>
+                  <div class="step-icon">
+                    <i class="pi pi-eye"></i>
+                  </div>
+                  <div class="step-content">
+                    <h5>Real-time Tracking</h5>
+                    <p>Monitor your position and get notified when it's your turn</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Doctor Content -->
+            <div class="content-panel" [class.active]="activeTab === 'doctor'">
+              <div class="panel-header">
+                <div class="header-icon">
+                  <i class="pi pi-user-plus"></i>
+                </div>
+                <div class="header-text">
+                  <h3>Doctor Workflow</h3>
+                  <p>Streamlined process to focus on what matters most</p>
+                </div>
+              </div>
+
+              <div class="steps-grid">
+                <div class="step-card active" data-step="1">
+                  <div class="step-number">01</div>
+                  <div class="step-icon">
+                    <i class="pi pi-clock"></i>
+                  </div>
+                  <div class="step-content">
+                    <h5>Set Availability</h5>
+                    <p>Manage your schedule and working hours with ease</p>
+                  </div>
+                </div>
+
+                <div class="step-card" data-step="2">
+                  <div class="step-number">02</div>
+                  <div class="step-icon">
+                    <i class="pi pi-chart-line"></i>
+                  </div>
+                  <div class="step-content">
+                    <h5>Monitor Queue</h5>
+                    <p>View real-time patient flow and queue status</p>
+                  </div>
+                </div>
+
+                <div class="step-card" data-step="3">
+                  <div class="step-number">03</div>
+                  <div class="step-icon">
+                    <i class="pi pi-volume-up"></i>
+                  </div>
+                  <div class="step-content">
+                    <h5>Call Patient</h5>
+                    <p>One-click system to call the next patient efficiently</p>
+                  </div>
+                </div>
+
+                <div class="step-card" data-step="4">
+                  <div class="step-number">04</div>
+                  <div class="step-icon">
+                    <i class="pi pi-check-circle"></i>
+                  </div>
+                  <div class="step-content">
+                    <h5>Complete & Continue</h5>
+                    <p>Mark appointments complete and move to the next patient</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Center Content -->
+            <div class="content-panel" [class.active]="activeTab === 'center'">
+              <div class="panel-header">
+                <div class="header-icon">
+                  <i class="pi pi-building"></i>
+                </div>
+                <div class="header-text">
+                  <h3>Center Management</h3>
+                  <p>Complete control over your medical facility operations</p>
+                </div>
+              </div>
+
+              <div class="steps-grid">
+                <div class="step-card active" data-step="1">
+                  <div class="step-number active">01</div>
+                  <div class="step-icon">
+                    <i class="pi pi-users"></i>
+                  </div>
+                  <div class="step-content">
+                    <h5>Manage Staff</h5>
+                    <p>Add and organize your medical team efficiently</p>
+                  </div>
+                </div>
+
+                <div class="step-card" data-step="2">
+                  <div class="step-number">02</div>
+                  <div class="step-icon">
+                    <i class="pi pi-desktop"></i>
+                  </div>
+                  <div class="step-content">
+                    <h5>Monitor Operations</h5>
+                    <p>Track all active queues and center performance in real-time</p>
+                  </div>
+                </div>
+
+                <div class="step-card" data-step="3">
+                  <div class="step-number">03</div>
+                  <div class="step-icon">
+                    <i class="pi pi-cog"></i>
+                  </div>
+                  <div class="step-content">
+                    <h5>Optimize Workflow</h5>
+                    <p>Streamline processes and improve operational efficiency</p>
+                  </div>
+                </div>
+
+                <div class="step-card" data-step="4">
+                  <div class="step-number active">04</div>
+                  <div class="step-icon">
+                    <i class="pi pi-chart-bar"></i>
+                  </div>
+                  <div class="step-content">
+                    <h5>Analytics & Reports</h5>
+                    <p>Get insights into performance and patient flow patterns</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
