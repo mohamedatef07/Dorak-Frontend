@@ -47,6 +47,7 @@ export class BookingComponent implements OnInit {
     StripeToken: '',
     Amount: 0,
   };
+  
 
   centerServices: Array<IDoctorCenterServices> = [];
   services: Array<IDoctorService> = [];

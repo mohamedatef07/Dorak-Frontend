@@ -70,7 +70,16 @@ export class LoginComponent {
           detail: 'Welcome back!',
           life: 3000,
         });
-        this.router.navigate(['/home']);
+        if (res.Data.Roles.includes('Client')) {
+          this.router.navigate(['/client/doctors']);
+        }
+        else if (res.Data.Roles.includes('Admin')|| res.Data.Roles.includes('Operator')) {
+          this.router.navigate(['/owner']);
+        } else if (res.Data.Roles.includes('Provider')) {
+          this.router.navigate(['/provider']);
+        } else {
+          this.router.navigate(['/home']);
+        }
       },
       error: (err) => {
         this.isLoading = false;
