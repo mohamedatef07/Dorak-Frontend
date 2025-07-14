@@ -5,12 +5,19 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RatingModule } from 'primeng/rating';
 import { CommonModule } from '@angular/common';
 import { MessageService } from 'primeng/api';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-provider-reviews',
   templateUrl: './provider-reviews.component.html',
   styleUrls: ['./provider-reviews.component.css'],
-  imports: [ReactiveFormsModule, FormsModule, RatingModule, CommonModule],
+  imports: [
+    ReactiveFormsModule,
+    FormsModule,
+    RatingModule,
+    CommonModule,
+    ProgressSpinnerModule,
+  ],
 })
 export class ProviderReviewsComponent implements OnInit {
   providerServices = inject(ProviderService);
@@ -21,10 +28,12 @@ export class ProviderReviewsComponent implements OnInit {
   pageSize: number = 10;
   totalRecords: number = 0;
   totalPages: number = 0;
+  loading: boolean = false;
 
   constructor() {}
 
   ngOnInit() {
+    this.loading = true;
     this.loadReviews();
   }
 
@@ -39,11 +48,11 @@ export class ProviderReviewsComponent implements OnInit {
             this.currentPage = res.CurrentPage;
             this.pageSize = res.PageSize;
             this.totalPages = res.TotalPages;
-            console.log(res.Data);
           } else {
             this.reviews = [];
             this.totalRecords = 0;
           }
+          this.loading = false;
         },
         error: (err) => {
           this.messageServices.add({
@@ -54,6 +63,7 @@ export class ProviderReviewsComponent implements OnInit {
               'The server is experiencing an issue, Please try again soon.',
             life: 4000,
           });
+          this.loading = false;
         },
       });
   }

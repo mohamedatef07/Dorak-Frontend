@@ -9,9 +9,10 @@ import { OwnerService } from '../../services/owner.service';
 import { ButtonModule } from 'primeng/button';
 import { UpdateShiftsListSRService } from '../../../../services/signalR Services/updateShiftsListSR.service';
 import { ShiftType } from '../../../../Enums/ShiftType.enum';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 @Component({
   selector: 'app-center-shifts-table',
-  imports: [TimeStringToDatePipe, DatePipe, ButtonModule, CommonModule],
+  imports: [TimeStringToDatePipe, DatePipe, ButtonModule, CommonModule, ProgressSpinnerModule],
   templateUrl: './center-shifts-table.component.html',
   styleUrl: './center-shifts-table.component.css',
 })
@@ -29,8 +30,11 @@ export class CenterShiftsTableComponent {
   pageSize: number = 10;
   totalRecords: number = 0;
   totalPages: number = 0;
+  loading: boolean = false;
+  private pendingRequests: number = 0;
 
   ngOnInit() {
+    this.loading = true;
     this.loadCenterShifts();
     this.srService.updatedShiftsList.subscribe({
       next: (PaginationupdatedList) => {
@@ -43,15 +47,17 @@ export class CenterShiftsTableComponent {
         if (this.currentPage < 1) {
           this.currentPage = 1;
         }
-
+        this.decrementLoader();
       },
       error: (err) => {
         this.messageServices.add({
+          key: 'main-toast',
           severity: 'error',
           summary: 'Error',
           detail: 'The server is experiencing an issue, Please try again soon.',
           life: 4000,
         });
+        this.decrementLoader();
       },
     });
   }
@@ -60,20 +66,22 @@ export class CenterShiftsTableComponent {
     if (
       shiftDate <= new Date() &&
       shiftDate.getDate() === new Date().getDate()
-    )
-    {
+    ) {
       this.ownerServices.startShift(shift.ShiftId).subscribe({
         next: (res) => {
           this.route.navigate(['owner/provider-live-queue', shift.ShiftId]);
+          this.decrementLoader();
         },
         error: (err) => {
           this.messageServices.add({
+            key: 'main-toast',
             severity: 'error',
             summary: 'Error',
             detail:
               'The server is experiencing an issue, Please try again soon.',
             life: 4000,
           });
+          this.decrementLoader();
         },
       });
     }
@@ -98,12 +106,14 @@ export class CenterShiftsTableComponent {
         this.ownerServices.cancelShift(shiftId, this.centerId).subscribe({
           error: (err) => {
             this.messageServices.add({
+              key: 'main-toast',
               severity: 'error',
               summary: 'Error',
               detail:
                 'The server is experiencing an issue, Please try again soon.',
               life: 4000,
             });
+            this.decrementLoader();
           },
         });
       },
@@ -118,21 +128,27 @@ export class CenterShiftsTableComponent {
   }
 
   loadCenterShifts() {
-    this.ownerServices.getAllCenterShifts(this.centerId, this.currentPage, this.pageSize).subscribe({
-      next: (res) => {
-        this.centerShifts = [...res.Data];
-        this.totalRecords = res.TotalRecords;
-        this.totalPages = res.TotalPages;
-      },
-      error: (err) => {
-        this.messageServices.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'The server is experiencing an issue, Please try again soon.',
-          life: 4000,
-        });
-      },
-    });
+    this.ownerServices
+      .getAllCenterShifts(this.centerId, this.currentPage, this.pageSize)
+      .subscribe({
+        next: (res) => {
+          this.centerShifts = [...res.Data];
+          this.totalRecords = res.TotalRecords;
+          this.totalPages = res.TotalPages;
+          this.decrementLoader();
+        },
+        error: (err) => {
+          this.messageServices.add({
+            key: 'main-toast',
+            severity: 'error',
+            summary: 'Error',
+            detail:
+              'The server is experiencing an issue, Please try again soon.',
+            life: 4000,
+          });
+          this.decrementLoader();
+        },
+      });
   }
   nextPage() {
     this.currentPage++;
@@ -165,5 +181,11 @@ export class CenterShiftsTableComponent {
 
   get filteredCenterShifts() {
     return this.centerShifts.filter(s => s.ShiftType !== ShiftType.Completed);
+  }
+  private decrementLoader() {
+    this.pendingRequests--;
+    if (this.pendingRequests <= 0) {
+      this.loading = false;
+    }
   }
 }

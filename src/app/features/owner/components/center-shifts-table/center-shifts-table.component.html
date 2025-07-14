@@ -1,5 +1,10 @@
 <h1 class="page-title">View Queues</h1>
-
+@if(loading) {
+<div class="loader-container">
+  <p-progressSpinner ariaLabel="loading" animationDuration=".5s">
+  </p-progressSpinner>
+</div>
+}@else{
 <section class="center-shifts">
   <table class="table">
     <thead>
@@ -25,31 +30,19 @@
           {{ shift.EndTime.toString() | TimeStringToDate | date : "h:mm a" }}
         </td>
         <td class="start">
-          <button
-            type="button"
-            class="btn start-btn"
-            (click)="startShift(shift)"
+          <button type="button" class="btn start-btn" (click)="startShift(shift)"
             [disabled]="shift.ShiftType === ShiftType.OnGoing"
-            [ngClass]="{ isStarted: shift.ShiftType === ShiftType.OnGoing }"
-          >
+            [ngClass]="{ isStarted: shift.ShiftType === ShiftType.OnGoing }">
             @if(shift.ShiftType === ShiftType.OnGoing){On Going}@else{Start}
           </button>
         </td>
         <td class="cancel">
-          <button
-            type="button"
-            class="btn cancel-btn"
-            (click)="cancelShift(shift.ShiftId, $event)"
-          >
+          <button type="button" class="btn cancel-btn" (click)="cancelShift(shift.ShiftId, $event)">
             Cancel
           </button>
         </td>
         <td class="details">
-          <button
-            type="button"
-            class="btn details-btn"
-            (click)="shiftDetails(shift.ShiftId, shift.ShiftType)"
-          >
+          <button type="button" class="btn details-btn" (click)="shiftDetails(shift.ShiftId, shift.ShiftType)">
             Details
           </button>
         </td>
@@ -61,11 +54,11 @@
       }
     </tbody>
   </table>
-    @if( centerShifts.length > 0){
-    <div class="d-flex justify-content-center align-items-center gap-2 mt-4">
-      <button class="btn main-btn-bg" (click)="previousPage()" [disabled]="!canGoPrevious">Previous</button>
-      <span class="current-page">Page {{ currentPage }} of {{ totalPages}}</span>
-      <button class="btn main-btn-bg" (click)="nextPage()" [disabled]="!canGoNext">Next</button>
-    </div>
-    }
-</section>
+  @if( centerShifts.length > 0){
+  <div class="d-flex justify-content-center align-items-center gap-2 mt-4">
+    <button class="btn main-btn-bg" (click)="previousPage()" [disabled]="!canGoPrevious">Previous</button>
+    <span class="current-page">Page {{ currentPage }} of {{ totalPages}}</span>
+    <button class="btn main-btn-bg" (click)="nextPage()" [disabled]="!canGoNext">Next</button>
+  </div>
+  }
+</section>}

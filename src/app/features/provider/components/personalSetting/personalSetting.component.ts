@@ -12,6 +12,7 @@ import { MessageService } from 'primeng/api';
 import { AvatarModule } from 'primeng/avatar';
 import { CalendarModule } from 'primeng/calendar';
 import { DatePickerModule } from 'primeng/datepicker';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-personalSetting',
@@ -27,6 +28,8 @@ import { DatePickerModule } from 'primeng/datepicker';
 })
 export class PersonalSettingComponent implements OnInit {
   messageServices = inject(MessageService);
+  router = inject(Router);
+
 
   personalForm!: FormGroup;
   imagePreview: string | null = null;
@@ -121,6 +124,9 @@ export class PersonalSettingComponent implements OnInit {
       }
       this._providerService.updateProfile(formData).subscribe({
         next: (res) => {
+          setTimeout(() => {
+            this.router.navigate(['/provider/dashboard']);
+          }, 2000);
           this.messageServices.add({
             key: 'main-toast',
             severity: 'success',

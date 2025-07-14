@@ -27,6 +27,7 @@ export class ClientNotificationsComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
+    this.loading = true;
     this.loadNotifications();
   }
 
@@ -60,12 +61,10 @@ export class ClientNotificationsComponent implements OnInit {
   }
 
   loadNotifications() {
-    this.loading = true;
     this.notificationService
       .getNotifications(this.currentPage, this.pageSize)
       .subscribe({
         next: (res) => {
-
           const notificationsWithLocalStatus =
             this.notificationService.updateNotificationsWithLocalStatus(
               res.Data
@@ -77,7 +76,7 @@ export class ClientNotificationsComponent implements OnInit {
           this.totalPages = res.TotalPages;
           this.loading = false;
           this.updateUnreadCount();
-
+          this.loading = false;
         },
         error: (err) => {
           this.messageService.add({

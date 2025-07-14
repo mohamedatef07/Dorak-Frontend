@@ -13,7 +13,7 @@ import { AvatarModule } from 'primeng/avatar';
 
 @Component({
   selector: 'app-owner-navbar',
-  imports: [CommonModule, RouterLink,AvatarModule],
+  imports: [CommonModule,AvatarModule],
   templateUrl: './owner-navbar.component.html',
   styleUrl: './owner-navbar.component.css',
 })

@@ -7,7 +7,21 @@
 } @else {
 <div class="doctor-profile-section">
   <div class="doctor-avatar">
-    <img [src]="doctorMainInfo.Image" alt="Doctor" class="doctor-image" />
+    @if(doctorMainInfo.Image && !hasImageLoadFailed('doctor')){
+    <img
+      [src]="doctorMainInfo.Image"
+      alt="Doctor"
+      class="doctor-image"
+      (error)="onImageError($event, 'doctor')"
+    />
+    }@else{
+    <p-avatar
+      icon="pi pi-user"
+      size="xlarge"
+      shape="circle"
+      class="doctor-image"
+    />
+    }
   </div>
   <div class="doctor-info">
     <h4 class="doctor-name">{{ doctorMainInfo.FullName }}</h4>
@@ -117,8 +131,14 @@
             <div class="queue-item-content">
               <div class="user-info">
                 <div class="client-avatar">
-                  @if(entry.IsCurrentClient){
-                  <img [src]="fullImagePath" alt="User" class="avatar-image" />
+                  @if(entry.IsCurrentClient && fullImagePath &&
+                  !hasImageLoadFailed('client')){
+                  <img
+                    [src]="fullImagePath"
+                    alt="User"
+                    class="avatar-image"
+                    (error)="onImageError($event, 'client')"
+                  />
                   }@else{
                   <p-avatar
                     icon="pi pi-user"

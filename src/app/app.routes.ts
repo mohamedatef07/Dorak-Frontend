@@ -220,6 +220,11 @@ export const routes: Routes = [
     canActivate: [AuthGuard, RoleGuard],
     data: { expectedRole: ['Provider'] },
     children: [
+      {
+        path: '',
+        redirectTo: 'dashboard',
+        pathMatch: 'full',
+      },
       { path: 'dashboard', component: DashboardComponent, title: 'Dashboard' },
       {
         path: 'profile',
@@ -382,7 +387,7 @@ export const routes: Routes = [
          {
         path:'ChooseSystemComponent',
         component:ChooseSystemComponent,
-        
+
       },
 
     ]

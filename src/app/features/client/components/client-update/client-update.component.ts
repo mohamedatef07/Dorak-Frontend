@@ -120,7 +120,6 @@ hasImageLoadFailed(key: string): boolean {
 
     this._clientService.updateProfile(formData).subscribe({
       next: (res) => {
-        console.log('Profile updated successfully!', res);
         this.successMessage = 'Profile updated successfully!';
 
         this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {

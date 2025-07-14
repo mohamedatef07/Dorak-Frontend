@@ -24,7 +24,6 @@ export class NotificationsSRService {
   }
   public startConnection() {
     const token = this.authService.getAuthToken();
-    console.log('token : ', token);
     if (!token) {
       console.warn('No auth token found. SignalR connection aborted.');
       return;
@@ -38,13 +37,10 @@ export class NotificationsSRService {
     this.hubConnection
       .start()
       .then(() => {
-        console.log('SignalR connection started');
-
         const connectionId = this.hubConnection?.connectionId;
         this.registerUserToNotificationHub(connectionId || '').subscribe(
           (data) => {}
         );
-        console.log('SignalR connection ID: ', connectionId);
       })
       .catch((err) =>
         console.error('Error while starting SignalR connection: ', err)
