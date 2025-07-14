@@ -14,7 +14,6 @@ export class HowItWorkComponent implements OnInit, OnDestroy {
   constructor() { }
 
   ngOnInit() {
-    this.startAutoSwitch();
   }
 
   ngOnDestroy() {
@@ -25,17 +24,16 @@ export class HowItWorkComponent implements OnInit, OnDestroy {
     this.activeTab = tab;
     this.currentTabIndex = this.tabs.indexOf(tab);
     // Restart auto-switch when user manually changes tab
-    this.restartAutoSwitch();
-    this.activateAllSteps();
+
   }
 
-  private startAutoSwitch() {
-    this.autoSwitchInterval = setInterval(() => {
-      this.currentTabIndex = (this.currentTabIndex + 1) % this.tabs.length;
-      this.activeTab = this.tabs[this.currentTabIndex];
-      this.activateAllSteps();
-    }, 6000); // 6 seconds for tab switching
-  }
+  // private startAutoSwitch() {
+  //   this.autoSwitchInterval = setInterval(() => {
+  //     this.currentTabIndex = (this.currentTabIndex + 1) % this.tabs.length;
+  //     this.activeTab = this.tabs[this.currentTabIndex];
+  //     this.activateAllSteps();
+  //   }, 6000);
+  // }
 
   private stopAutoSwitch() {
     if (this.autoSwitchInterval) {
@@ -43,10 +41,10 @@ export class HowItWorkComponent implements OnInit, OnDestroy {
     }
   }
 
-  private restartAutoSwitch() {
-    this.stopAutoSwitch();
-    this.startAutoSwitch();
-  }
+  // private restartAutoSwitch() {
+  //   this.stopAutoSwitch();
+  //   this.startAutoSwitch();
+  // }
 
   private activateAllSteps() {
     // Activate all steps in the active panel
