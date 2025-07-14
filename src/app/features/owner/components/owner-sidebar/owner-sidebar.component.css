@@ -7,7 +7,10 @@
 ::ng-deep .pi-calendar-plus:before,
 ::ng-deep .pi-cog:before,
 ::ng-deep .pi-chart-bar:before,
-::ng-deep .pi-user-plus:before {
+::ng-deep .pi-briefcase:before,
+::ng-deep .pi-user-plus:before,
+::ng-deep .pi-list:before,
+::ng-deep .pi-plus-circle {
   color: var(--text-color-Light);
   font-size: 18px;
   margin: 0 10px;
