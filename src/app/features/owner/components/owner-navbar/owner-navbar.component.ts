@@ -68,9 +68,17 @@ export class OwnerNavbarComponent implements OnInit {
     this.authServices.logOut().subscribe({
       next: (res) => {
         this.cookie.delete('token');
+        this.cookie.delete('refreshToken');
+        this.cookie.delete('role');
+        
         this.router.navigate(['/login']);
       },
       error: (err) => {
+        this.cookie.delete('token');
+        this.cookie.delete('refreshToken');
+        this.cookie.delete('role');
+        this.router.navigate(['/login']);
+        
         this.messageServices.add({
           key: 'main-toast',
           severity: 'error',

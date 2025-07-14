@@ -62,10 +62,20 @@ export class NavBarComponent implements OnInit {
   handelLogout() {
     this.authServices.logOut().subscribe({
       next: (res) => {
+        // Clear all cookies (AuthService already does this, but ensure consistency)
         this.cookie.delete('token');
+        this.cookie.delete('refreshToken');
+        this.cookie.delete('role');
+        
         this.router.navigate(['/login']);
       },
       error: (err) => {
+        // Even on error, clear cookies and navigate to login
+        this.cookie.delete('token');
+        this.cookie.delete('refreshToken');
+        this.cookie.delete('role');
+        this.router.navigate(['/login']);
+        
         this.messageServices.add({
           key: 'main-toast',
           severity: 'error',

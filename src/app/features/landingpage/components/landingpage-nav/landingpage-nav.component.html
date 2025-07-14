@@ -100,23 +100,32 @@
 
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav me-auto">
-        <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">OurSystem</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">HOwITWork</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Industries</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">FAQ</a></li>
+        <li class="nav-item"><a class="nav-link" (click)="scrollTo('hero')">Home</a></li>
+        <li class="nav-item"><a class="nav-link" (click)="scrollTo('ChooseSystem')">Our System</a></li>
+        <li class="nav-item"><a class="nav-link" (click)="scrollTo('howitworks')">How It Works</a></li>
+        <li class="nav-item"><a class="nav-link" (click)="scrollTo('industries')">Industries</a></li>
+        <li class="nav-item"><a class="nav-link" (click)="scrollTo('faq')">FAQ</a></li>
       </ul>
 
       <div class="d-flex align-items-center">
-  <button class="lang-btn me-2 register-btn" [routerLink]="['/register']">Register</button>
-  <button class="lang-btn login-btn" [routerLink]="['/login']">Login</button>
-</div>
-
-
-      <div class="d-flex align-items-center">
-
-
+        <ng-container *ngIf="!isAuthenticated; else loggedIn">
+          <button class="lang-btn me-2 register-btn" [routerLink]="['/register']">Register</button>
+          <button class="lang-btn login-btn" [routerLink]="['/login']">Login</button>
+        </ng-container>
       </div>
+
+      <ng-template #loggedIn>
+        <div class="d-flex align-items-center">
+          <ng-container *ngIf="userImage; else defaultAvatar">
+            <img [src]="userImage" alt="User" class="rounded-circle me-2" style="width:40px;height:40px;object-fit:cover;cursor:pointer;" (click)="navigateToDashboard()" />
+          </ng-container>
+          <ng-template #defaultAvatar>
+            <div class="rounded-circle me-2 d-flex align-items-center justify-content-center" style="width:40px;height:40px;background-color:#e9ecef;cursor:pointer;" (click)="navigateToDashboard()">
+              <i class="pi pi-user"></i>
+            </div>
+          </ng-template>
+        </div>
+      </ng-template>
     </div>
   </div>
 </nav>

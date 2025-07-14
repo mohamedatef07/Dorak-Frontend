@@ -1,13 +1,13 @@
 <div class="help-support-container">
   <p-toast></p-toast>
-  
+
   <!-- Hero Section -->
   <div class="hero-section">
     <div class="container">
       <div class="hero-content text-center">
         <h1 class="hero-title">Help & Support</h1>
         <p class="hero-subtitle">Find answers to common questions and get the help you need</p>
-        
+
         <!-- Search Bar -->
         <div class="search-section mt-4">
           <div class="search-container">
@@ -15,22 +15,10 @@
               <span class="input-group-text">
                 <i class="pi pi-search"></i>
               </span>
-              <input 
-                type="text" 
-                pInputText 
-                [ngModel]="searchQuery" 
-                (ngModelChange)="searchQuery = $event"
-                placeholder="Search for help topics, questions, or keywords..."
-                class="form-control search-input"
-              />
-              <button 
-                pButton 
-                type="button" 
-                icon="pi pi-times" 
-                class="p-button-text" 
-                (click)="clearSearch()"
-                *ngIf="searchQuery"
-              ></button>
+              <input type="text" pInputText [ngModel]="searchQuery" (ngModelChange)="searchQuery = $event"
+                placeholder="Search for help topics, questions, or keywords..." class="form-control search-input" />
+              <button pButton type="button" icon="pi pi-times" class="p-button-text" (click)="clearSearch()"
+                *ngIf="searchQuery"></button>
             </div>
           </div>
         </div>
@@ -41,128 +29,81 @@
   <!-- Main Content -->
   <div class="main-content">
     <div class="container">
-      
+
       <!-- Category Filters -->
       <div class="category-filters mb-4">
         <div class="row">
           <div class="col-12">
             <h3 class="filter-title mb-3">Browse by Category</h3>
             <div class="category-chips">
-              <p-chip 
-                *ngFor="let category of categories" 
-                [label]="category.label"
-                [removable]="false"
-                [class.active]="selectedCategory === category.value"
-                (click)="selectedCategory = category.value"
-                class="category-chip"
-              ></p-chip>
+              <p-chip *ngFor="let category of categories" [label]="category.label" [removable]="false"
+                [class.active]="selectedCategory === category.value" (click)="selectedCategory = category.value"
+                class="category-chip"></p-chip>
             </div>
           </div>
         </div>
       </div>
 
       <!-- FAQ Section -->
-      <div class="faq-section mb-5">
-        <div class="row">
-          <div class="col-lg-8">
-            <h2 class="section-title">Frequently Asked Questions</h2>
-            <p class="section-desc mb-4">Find quick answers to the most common questions about using Dorak.</p>
-            
-            <!-- FAQ Results Count -->
-            <div class="results-info mb-3">
-              <p class="text-muted">
-                Showing {{ filteredFaqData.length }} of {{ faqData.length }} questions
-                <span *ngIf="searchQuery"> for "{{ searchQuery }}"</span>
-                <span *ngIf="selectedCategory !== 'all'"> in {{ getCategoryLabel(selectedCategory) }}</span>
-              </p>
-            </div>
+      <div class="row">
 
-            <!-- FAQ Accordion -->
-            <div class="faq-accordion">
-              <div 
-                *ngFor="let item of filteredFaqData" 
-                class="faq-item"
-                [class.expanded]="isExpanded(item.id)"
-              >
-                <div class="faq-header" (click)="toggleItem(item.id)">
-                  <div class="faq-question">
-                    <h4>{{ item.question }}</h4>
-                  </div>
-                  <div class="faq-toggle">
-                    <i [class]="isExpanded(item.id) ? 'pi pi-chevron-up' : 'pi pi-chevron-down'"></i>
-                  </div>
+        <div class="col-lg-9">
+          <h2 class="section-title">Frequently Asked Questions</h2>
+          <p class="section-desc mb-4">Find quick answers to the most common questions about using Dorak.</p>
+
+          <!-- FAQ Results Count -->
+          <div class="results-info mb-3">
+            <p class="text-muted">
+              Showing {{ filteredFaqData.length }} of {{ faqData.length }} questions
+              <span *ngIf="searchQuery"> for "{{ searchQuery }}"</span>
+              <span *ngIf="selectedCategory !== 'all'"> in {{ getCategoryLabel(selectedCategory) }}</span>
+            </p>
+          </div>
+
+          <!-- FAQ Accordion -->
+          <div class="faq-accordion">
+            <div *ngFor="let item of filteredFaqData" class="faq-item" [class.expanded]="isExpanded(item.id)">
+              <div class="faq-header" (click)="toggleItem(item.id)">
+                <div class="faq-question">
+                  <h4>{{ item.question }}</h4>
                 </div>
-                
-                <div class="faq-content" [class.show]="isExpanded(item.id)">
-                  <div class="faq-answer">
-                    <p>{{ item.answer }}</p>
-                    <div class="faq-tags mt-3">
-                      <p-chip 
-                        *ngFor="let tag of item.tags" 
-                        [label]="tag"
-                        class="tag-chip"
-                      ></p-chip>
-                    </div>
+                <div class="faq-toggle">
+                  <i [class]="isExpanded(item.id) ? 'pi pi-chevron-up' : 'pi pi-chevron-down'"></i>
+                </div>
+              </div>
+
+              <div class="faq-content" [class.show]="isExpanded(item.id)">
+                <div class="faq-answer">
+                  <p>{{ item.answer }}</p>
+                  <div class="faq-tags mt-3">
+                    <p-chip *ngFor="let tag of item.tags" [label]="tag" class="tag-chip"></p-chip>
                   </div>
                 </div>
               </div>
-            </div>
-
-            <!-- No Results Message -->
-            <div *ngIf="filteredFaqData.length === 0" class="no-results text-center py-5">
-              <i class="pi pi-search" style="font-size: 3rem; color: #ccc;"></i>
-              <h3 class="mt-3">No results found</h3>
-              <p class="text-muted">Try adjusting your search terms or browse different categories.</p>
-              <button pButton type="button" label="Contact Support" icon="pi pi-envelope" class="p-button-outlined" (click)="contactSupport()"></button>
             </div>
           </div>
 
-          <!-- Support Resources Sidebar -->
-          <div class="col-lg-4">
-            <div class="support-resources">
-              <h3 class="section-title">Support Resources</h3>
-              <p class="section-desc mb-4">Additional resources to help you get the most out of Dorak.</p>
-              
-              <div class="resource-cards">
-                <div *ngFor="let resource of supportResources" class="resource-card mb-3">
-                  <div class="resource-icon" [class]="'bg-' + resource.color">
-                    <i [class]="resource.icon"></i>
-                  </div>
-                  <div class="resource-content">
-                    <h4>{{ resource.title }}</h4>
-                    <p>{{ resource.description }}</p>
-                    <button pButton type="button" label="Learn More" icon="pi pi-external-link" class="p-button-text p-button-sm"></button>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Quick Contact -->
-              <div class="quick-contact-card">
-                <h4>Still Need Help?</h4>
-                <p>Our support team is here to help you with any questions or issues.</p>
-                <div class="contact-info">
-                  <p><i class="pi pi-envelope me-2"></i> dorak.helpdesk&#64;gmail.com</p>
-                  <p><i class="pi pi-clock me-2"></i> 24/7 Support Available</p>
-                </div>
-                <button pButton type="button" label="Contact Support" icon="pi pi-send" class="p-button-primary w-100" (click)="contactSupport()"></button>
-              </div>
-            </div>
+          <!-- No Results Message -->
+          <div *ngIf="filteredFaqData.length === 0" class="no-results text-center py-5">
+            <i class="pi pi-search" style="font-size: 3rem; color: #ccc;"></i>
+            <h3 class="mt-3">No results found</h3>
+            <p class="text-muted">Try adjusting your search terms or browse different categories.</p>
+            <button pButton type="button" label="Contact Support" icon="pi pi-envelope" class="p-button-outlined"
+              (click)="contactSupport()"></button>
           </div>
         </div>
-      </div>
 
-      <!-- Popular Topics -->
-      <div class="popular-topics mb-5">
-        <h3 class="section-title">Popular Topics</h3>
-        <div class="row">
-          <div class="col-md-3 mb-3" *ngFor="let category of categories.slice(1, 5)">
-            <div class="topic-card" (click)="selectedCategory = category.value">
-              <div class="topic-icon">
-                <i class="pi pi-star"></i>
-              </div>
-              <h4>{{ category.label }}</h4>
-              <p>{{ getCategoryCount(category.value) }} questions</p>
+        <!-- Still Need Help Sidebar -->
+        <div class="col-lg-3">
+          <div class="quick-contact-card">
+            <h4>Still Need Help?</h4>
+            <p>Our support team is here to help you with any questions or issues.</p>
+            <div class="contact-info">
+              <p><i class="pi pi-envelope me-2"></i> dorak.helpdesk&#64;gmail.com</p>
+              <p><i class="pi pi-clock me-2"></i> 24/7 Support Available</p>
             </div>
+            <button pButton type="button" label="Contact Support" icon="pi pi-send" class="p-button-primary w-75"
+              (click)="contactSupport()"></button>
           </div>
         </div>
       </div>
