@@ -1,3 +1,15 @@
+   .page-title {
+ font-size: 1.6rem;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  padding: 15px;
+  color: #fff;
+  background-color: var(--main-bg-color-Light);
+  width: fit-content;
+  border-radius: var(--border-radius);
+  font-weight: 600;
+}
+
    .filter{
     border-radius: var(--border-radius);
     font-size: 0.8rem;

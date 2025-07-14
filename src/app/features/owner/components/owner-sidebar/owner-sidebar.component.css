@@ -2,7 +2,9 @@
 
 ::ng-deep .pi-desktop:before,
 ::ng-deep .pi-users:before,
+::ng-deep .pi-calendar-clock:before,
 ::ng-deep .pi-calendar:before,
+::ng-deep .pi-calendar-plus:before,
 ::ng-deep .pi-cog:before,
 ::ng-deep .pi-chart-bar:before,
 ::ng-deep .pi-user-plus:before {
