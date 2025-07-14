@@ -23,7 +23,6 @@ export class CenterShiftsTableComponent {
   srService = inject(UpdateShiftsListSRService);
   route = inject(Router);
   centerShifts: Array<ICenterShifts> = [];
-  // centerId = 3;
   centerId = this.authServices.getCenterId();
   ShiftType = ShiftType;
   currentPage: number = 1;

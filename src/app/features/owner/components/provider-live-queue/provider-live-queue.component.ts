@@ -70,7 +70,6 @@ export class ProviderLiveQueueComponent implements OnInit {
             const normalizedData = Array.isArray(response.Data)
               ? { $values: response.Data }
               : response.Data || { $values: [] };
-            console.log('Normalized Data:', normalizedData);
             this.liveQueues = normalizedData.$values.map((item) => ({
               LiveQueueId: Number(item.LiveQueueId),
               ClientFullName: item.ClientFullName,
@@ -151,7 +150,6 @@ export class ProviderLiveQueueComponent implements OnInit {
       AdditionalFees: additionalFeesValue,
     };
 
-    console.log('Update Request Payload:', updateModel);
 
     this.apiService.updateLiveQueueStatus(updateModel).subscribe({
       next: (response: ApiResponse<string>) => {
@@ -165,7 +163,6 @@ export class ProviderLiveQueueComponent implements OnInit {
 
           }
           this.calculateStats();
-          console.log('Queue status updated:', response.Data);
         } else {
           console.error('Error updating queue status:', response.Message);
         }
@@ -184,10 +181,7 @@ export class ProviderLiveQueueComponent implements OnInit {
     this.apiService.endShift(this.shiftId, operatorId).subscribe({
       next: (response: ApiResponse<IOperatorViewModel>) => {
         if (response.Status === 200) {
-          console.log('Shift ended successfully:', response.Message);
-          if (response.Data) {
-            console.log('Operator data:', response.Data);
-          }
+
           this.showPopup = true;
           setTimeout(() => {
             this.showPopup = false;

@@ -95,26 +95,25 @@ export class ProviderProfilesComponent implements OnInit {
             return { startDate, endDate };
           }).filter(range => !isNaN(range.startDate.getTime()) && !isNaN(range.endDate.getTime()));
         } else {
-          this.assignments = []; // No assignments, clear the array
-          this.errorMessage = response.Message || 'No assignments found.';
+          this.assignments = [];           this.errorMessage = response.Message || 'No assignments found.';
         }
         this.loadShiftsForAllAssignments();
       },
       error: (err) => {
         this.isLoading = false;
         if (err.status === 404) {
-          this.assignments = []; // Treat 404 as no assignments
-          this.errorMessage = ''; // Clear error message for 404
+          this.assignments = [];
+          this.errorMessage = '';
         } else {
           this.errorMessage = 'An error occurred while loading assignments. (Status: ' + (err.status || 'Unknown') + ')';
         }
-        this.loadShiftsForAllAssignments(); // Always reload calendar
+        this.loadShiftsForAllAssignments();
       }
     });
   }
 
   private loadShiftsForAllAssignments(): void {
-    this.initializeCalendar(); // Reinitialize calendar before loading shifts
+    this.initializeCalendar();
     if (!this.assignments.length) {
       this.updateCalendar();
       this.cdr.detectChanges();
@@ -154,7 +153,7 @@ export class ProviderProfilesComponent implements OnInit {
       this.updateCalendar();
       this.cdr.detectChanges();
     }).catch(err => {
-      this.updateCalendar(); // Update calendar even if shift loading fails
+      this.updateCalendar();
       this.cdr.detectChanges();
     });
   }
@@ -212,7 +211,6 @@ export class ProviderProfilesComponent implements OnInit {
             end.setHours(0, 0, 0, 0);
             return currentDate >= start && currentDate <= end;
           });
-          console.log(`Day ${currentDate.toDateString()}: hasAssignment = ${day.hasAssignment}`);
         }
       }
     });

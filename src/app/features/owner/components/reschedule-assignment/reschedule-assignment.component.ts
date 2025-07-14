@@ -90,7 +90,6 @@ export class RescheduleAssignmentComponent implements OnInit {
     this.route.paramMap.pipe(
       switchMap(params => {
         this.providerId = params.get('id') || '';
-        console.log('Retrieved providerId:', this.providerId);
         if (!this.providerId) {
           this.errorMessage = 'Provider ID not found.';
           this.updateCalendar();
@@ -101,10 +100,6 @@ export class RescheduleAssignmentComponent implements OnInit {
             if (response.Status === 200 && response.Data) {
               this.providerName = response.Data.FirstName + " " + response.Data.LastName || 'Unknown Provider';
               this.providerSpecialization = response.Data.Specialization || 'Unknown Specialization';
-              console.log('Provider details:', {
-                name: this.providerName,
-                specialization: this.providerSpecialization
-              });
             } else {
               this.errorMessage = response.Message || 'Failed to fetch provider details.';
             }
@@ -344,7 +339,6 @@ export class RescheduleAssignmentComponent implements OnInit {
             OperatorId: this.operatorId,
           };
         });
-        console.log('Submitting shifts:', shifts);
       }
 
       return {

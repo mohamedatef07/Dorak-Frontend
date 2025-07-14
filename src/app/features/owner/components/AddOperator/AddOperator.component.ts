@@ -78,7 +78,7 @@ export class AddOperatorComponent implements OnInit {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files[0]) {
       const file = input.files[0];
-      if (file.size > 2 * 1024 * 1024) { // 2MB
+      if (file.size > 2 * 1024 * 1024) { 
         this.messageService.add({
           severity: 'error',
           summary: 'Image Too Large',
@@ -112,7 +112,6 @@ export class AddOperatorComponent implements OnInit {
 
     const formValues = { ...this.AddOperatorForm.value };
 
-    // 🔁 Convert string gender to enum
     if (formValues.Gender === 'Male') {
       formValues.Gender = GenderType.Male;
     } else if (formValues.Gender === 'Female') {

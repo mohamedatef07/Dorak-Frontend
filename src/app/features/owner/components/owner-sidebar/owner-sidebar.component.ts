@@ -118,7 +118,19 @@ export class OwnerSidebarComponent implements OnInit {
     {
       label: 'Manage Queues',
       icon: 'pi pi-calendar',
-      routerLink: '/owner/center-shifts-table',
+      items: [
+        {
+          label: 'View Queues',
+          icon: 'pi pi-calendar-clock',
+          routerLink: '/owner/center-shifts-table',
+        },
+        {
+          label: 'Create Appointment',
+          icon: 'pi pi-calendar-plus',
+          routerLink: '/owner/create-appointment',
+        },
+
+      ],
     },
   ];
 

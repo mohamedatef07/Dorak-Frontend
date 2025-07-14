@@ -78,7 +78,6 @@ export class SearchProviderComponent implements OnInit, AfterViewInit {
   searchText: string = '';
   sortFilter: string = '';
   centerId: number = 0;
-  // centerId: number = 3;
 
 
   errorMessage: string = '';
@@ -98,7 +97,6 @@ export class SearchProviderComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    console.log('ngAfterViewInit called at:', new Date().toISOString());
     this.cdr.detectChanges();
   }
 
@@ -108,13 +106,7 @@ export class SearchProviderComponent implements OnInit, AfterViewInit {
     this.dataSource = new MatTableDataSource<IProviderViewModel>([]);
 
     const pageNumber = this.pageIndex + 1;
-    console.log('Sending API request with params:', {
-      page: pageNumber,
-      pageSize: this.pageSize,
-      specializationFilter: this.specializationFilter,
-      searchText: this.searchText,
-      centerId: this.centerId
-    });
+
 
     this.apiService.searchProviders(
       pageNumber,
@@ -126,7 +118,6 @@ export class SearchProviderComponent implements OnInit, AfterViewInit {
     ).subscribe({
       next: (response: ApiResponse<IPaginationViewModel<IProviderViewModel>>) => {
         this.isLoading = false;
-        console.log('API response:', response);
         if (response.Status === 200 && response.Data?.Data) {
           const providerData = response.Data.Data.$values || (response.Data.Data as unknown as IProviderViewModel[]);
           this.providers = providerData.map(provider => ({
@@ -153,18 +144,12 @@ export class SearchProviderComponent implements OnInit, AfterViewInit {
             Status: provider.Status ?? 0
           }));
           this.totalItems = response.Data.Total || 0;
-          console.log('Total items from API:', this.totalItems);
-          console.log('Mapped providers:', this.providers);
           this.dataSource = new MatTableDataSource<IProviderViewModel>(this.providers);
-          console.log('dataSource.data after update:', this.dataSource.data);
-          console.log('Data source row count:', this.dataSource.data.length);
           this.cdr.detectChanges();
           if (this.table) {
-            console.log('Forcing table renderRows at:', new Date().toISOString());
             this.table.renderRows();
             if (this.tableElement && this.tableElement.nativeElement) {
               const rows = this.tableElement.nativeElement.querySelectorAll('mat-row').length;
-              console.log('DOM row count after render:', rows);
             } else {
               console.warn('Table element not found in DOM at:', new Date().toISOString());
             }
@@ -203,7 +188,7 @@ applyFilters(): void {
   }
 
   onSpecializationFilterChange(event: any): void {
-    console.log('Specialization filter changed to:', event);
+
     this.specializationFilter = event === 'All' ? '' : event;
     this.pageIndex = 0;
     this.loadProviders();
