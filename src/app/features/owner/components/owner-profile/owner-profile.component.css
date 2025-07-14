@@ -1,0 +1,75 @@
+/* General Information */
+main .container .general-info > p {
+  color: var(--text-color-Light);
+  font-size: 1.4rem;
+}
+main .container .general-info .info-container {
+  width: 80%;
+  background-color: white;
+  border-radius: var(--border-radius);
+}
+main .container .general-info img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+main .container .general-info .info {
+  border-left: 2px solid var(--main-bg-color-Light);
+}
+main .container .general-info .info-container .info div span {
+  font-size: 1.2rem;
+  color: var(--text-color-Light);
+}
+main .container .general-info .info-container .info div p {
+  color: var(--text-color-Light);
+}
+main .container .general-info .info-container .profile-image {
+  width: 7.5rem;
+  height: 7.5rem;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+/* Center Information */
+main .container .center-information > p {
+  color: var(--text-color-Light);
+  font-size: 1.4rem;
+}
+main .container .center-information .info-container {
+  width: 80%;
+  background-color: white;
+  border-radius: var(--border-radius);
+}
+main .container .center-information .info-container .info div span {
+  font-size: 1.2rem;
+  color: var(--text-color-Light);
+}
+main .container .center-information .info-container .info div p {
+  color: var(--text-color-Light);
+}
+/* Bio */
+main .container .bio > p {
+  color: var(--text-color-Light);
+  font-size: 1.4rem;
+}
+main .container .bio .info-container {
+  width: 80%;
+  background-color: white;
+  border-radius: var(--border-radius);
+}
+main .container .bio .info-container .info {
+  color: var(--text-color-Light);
+  font-size: 1.2rem;
+}
+.info-label {
+  color: var(--text-color-Light) !important;
+  font-weight: bold !important;
+  font-size: 1.3rem !important;
+  flex-basis: 6.3rem !important;
+}
+.professional-info-label {
+  color: var(--text-color-Light) !important;
+  font-weight: bold !important;
+  font-size: 1.2rem !important;
+  flex-basis: 17rem !important;
+}

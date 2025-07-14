@@ -14,12 +14,22 @@ import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { AutoCompleteModule, AutoCompleteSelectEvent } from 'primeng/autocomplete';
+import { GenderType } from '../../../../Enums/GenderType.enum';
 
 @Component({
   selector: 'app-add-operator',
   templateUrl: './AddOperator.component.html',
   styleUrls: ['./AddOperator.component.css'],
-  imports: [ReactiveFormsModule, CommonModule, InputTextModule, FloatLabelModule, DropdownModule, ButtonModule, ToastModule, AutoCompleteModule],
+  imports: [
+    ReactiveFormsModule,
+    CommonModule,
+    InputTextModule,
+    FloatLabelModule,
+    DropdownModule,
+    ButtonModule,
+    ToastModule,
+    AutoCompleteModule
+  ],
   providers: [MessageService]
 })
 export class AddOperatorComponent implements OnInit {
@@ -27,18 +37,19 @@ export class AddOperatorComponent implements OnInit {
   private authService = inject(AuthService);
   private messageService = inject(MessageService);
   private router = inject(Router);
+
   AddOperatorForm: FormGroup;
-  genders = ['Male', 'Female'];
   genderOptions = [
-    { label: 'Male', value: 1 },
-    { label: 'Female', value: 2 }
+    { label: 'Male', value: 'Male' },
+    { label: 'Female', value: 'Female' }
   ];
+  filteredGenders: { label: string, value: string }[] = [];
+
+  imagePreview: string | ArrayBuffer | null = null;
+  selectedImageFile: File | null = null;
   errorMessage: string | null = null;
   successMessage: string | null = null;
   isSubmitting = false;
-  imagePreview: string | ArrayBuffer | null = null;
-  selectedImageFile: File | null = null;
-  filteredGenders: { label: string, value: number }[] = [];
 
   constructor(private fb: FormBuilder, private http: HttpClient) {
     this.AddOperatorForm = new FormGroup({
@@ -50,16 +61,16 @@ export class AddOperatorComponent implements OnInit {
       Role: new FormControl('Operator'),
       FirstName: new FormControl('', Validators.required),
       LastName: new FormControl('', Validators.required),
-      // image: [''],
       Gender: new FormControl('', Validators.required),
     });
   }
 
   ngOnInit(): void {
-    // Set initial gender if present
     const genderValue = this.AddOperatorForm.get('Gender')?.value;
     if (genderValue) {
-      this.AddOperatorForm.get('Gender')?.setValue(this.genderOptions.find(g => g.value === genderValue) || null);
+      this.AddOperatorForm.get('Gender')?.setValue(
+        this.genderOptions.find(g => g.value === genderValue) || null
+      );
     }
   }
 
@@ -77,14 +88,14 @@ export class AddOperatorComponent implements OnInit {
       }
       this.selectedImageFile = file;
       const reader = new FileReader();
-      reader.onload = e => {
+      reader.onload = () => {
         this.imagePreview = reader.result;
       };
       reader.readAsDataURL(this.selectedImageFile);
     }
   }
 
-  HandleSubmitForm() {
+  HandleSubmitForm(): void {
     if (this.AddOperatorForm.invalid) {
       this.AddOperatorForm.markAllAsTouched();
       this.messageService.add({
@@ -99,10 +110,20 @@ export class AddOperatorComponent implements OnInit {
     this.errorMessage = null;
     this.successMessage = null;
 
+    const formValues = { ...this.AddOperatorForm.value };
+
+    // 🔁 Convert string gender to enum
+    if (formValues.Gender === 'Male') {
+      formValues.Gender = GenderType.Male;
+    } else if (formValues.Gender === 'Female') {
+      formValues.Gender = GenderType.Female;
+    }
+
     const operatorData = new FormData();
-    Object.entries(this.AddOperatorForm.value).forEach(([key, value]) => {
+    Object.entries(formValues).forEach(([key, value]) => {
       operatorData.append(key, value as string);
     });
+
     const centerId = this.authService.getCenterId();
     if (centerId) {
       operatorData.append('CenterId', String(centerId));
@@ -141,15 +162,14 @@ export class AddOperatorComponent implements OnInit {
     });
   }
 
-  filterGender(event: any) {
+  filterGender(event: any): void {
     const query = event.query.toLowerCase();
     this.filteredGenders = this.genderOptions.filter(option =>
       option.label.toLowerCase().includes(query)
     );
   }
 
-  goBack() {
+  goBack(): void {
     this.router.navigate(['owner/manage-operators']);
   }
-
 }
