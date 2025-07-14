@@ -1,10 +1,10 @@
-<!-- <div class="mt-3">
+<div class="mt-3">
   <div class="add-provider-card p-4 rounded shadow-sm bg-white">
     <button type="button" icon="bi bi-arrow-left" class="back-btn h-25 me-2" (click)="goBack()">
       <i class="bi bi-arrow-left"></i> Back
     </button>
     <h4 class="mb-2 text-center fw-bold">Add Doctor</h4>
-    <hr class="mb-4">
+    <hr class="mb-4" />
     <div *ngIf="errorMessage" class="error-popup">
       <div class="error-popup-content">
         <i class="fas fa-exclamation-triangle error-icon"></i>
@@ -12,31 +12,104 @@
         <button class="close-btn" (click)="errorMessage = ''" aria-label="Close">×</button>
       </div>
     </div>
+
     <div class="row mx-3">
       <div class="col-md-12 col-lg-6">
         <form #providerForm="ngForm" (ngSubmit)="onSubmit()" class="w-100">
-          <div class="mb-3" *ngFor="let field of [
-            { id: 'userName', label: 'Username', type: 'text', model: model.UserName },
-            { id: 'firstName', label: 'First Name', type: 'text', model: model.FirstName },
-            { id: 'lastName', label: 'Last Name', type: 'text', model: model.LastName },
-            { id: 'email', label: 'Email', type: 'email', model: model.Email },
-            { id: 'phoneNumber', label: 'Phone Number', type: 'text', model: model.PhoneNumber },
-            { id: 'street', label: 'Street', type: 'text', model: model.Street },
-            { id: 'city', label: 'City', type: 'text', model: model.City },
-            { id: 'governorate', label: 'Governorate', type: 'text', model: model.Governorate },
-            { id: 'country', label: 'Country', type: 'text', model: model.Country },
-            { id: 'experienceYears', label: 'Experience Years', type: 'number', model: model.ExperienceYears },
-            { id: 'licenseNumber', label: 'License Number', type: 'text', model: model.LicenseNumber }
-          ]">
+          <!-- Required Fields -->
+          <div class="mb-3">
             <p-floatlabel variant="on">
-              <input pInputText [id]="field.id" [type]="field.type" [name]="field.id" [(ngModel)]="model[field.id]" required />
-              <label [for]="field.id">{{ field.label }}</label>
+              <input pInputText id="userName" name="UserName" [(ngModel)]="model.UserName" required />
+              <label for="userName">Username</label>
             </p-floatlabel>
           </div>
 
           <div class="mb-3">
             <p-floatlabel variant="on">
-              <p-autoComplete inputId="specialization" name="specialization" [(ngModel)]="model.Specialization" [dropdown]="true" [suggestions]="filteredSpecializations" field="label" [forceSelection]="true" (completeMethod)="filterSpecialization($event)" placeholder="Specialization" styleClass="w-100">
+              <input pInputText id="firstName" name="FirstName" [(ngModel)]="model.FirstName" required />
+              <label for="firstName">First Name</label>
+            </p-floatlabel>
+          </div>
+
+          <div class="mb-3">
+            <p-floatlabel variant="on">
+              <input pInputText id="lastName" name="LastName" [(ngModel)]="model.LastName" required />
+              <label for="lastName">Last Name</label>
+            </p-floatlabel>
+          </div>
+
+          <div class="mb-3">
+            <p-floatlabel variant="on">
+              <input pInputText id="email" name="Email" [(ngModel)]="model.Email" type="email" required />
+              <label for="email">Email</label>
+            </p-floatlabel>
+          </div>
+
+          <div class="mb-3">
+            <p-floatlabel variant="on">
+              <input pInputText id="phoneNumber" name="PhoneNumber" [(ngModel)]="model.PhoneNumber" required />
+              <label for="phoneNumber">Phone Number</label>
+            </p-floatlabel>
+          </div>
+
+          <!-- Optional Fields -->
+          <div class="mb-3">
+            <p-floatlabel variant="on">
+              <input pInputText id="street" name="Street" [(ngModel)]="model.Street" />
+              <label for="street">Street</label>
+            </p-floatlabel>
+          </div>
+
+          <div class="mb-3">
+            <p-floatlabel variant="on">
+              <input pInputText id="city" name="City" [(ngModel)]="model.City" />
+              <label for="city">City</label>
+            </p-floatlabel>
+          </div>
+
+          <div class="mb-3">
+            <p-floatlabel variant="on">
+              <input pInputText id="governorate" name="Governorate" [(ngModel)]="model.Governorate" />
+              <label for="governorate">Governorate</label>
+            </p-floatlabel>
+          </div>
+
+          <div class="mb-3">
+            <p-floatlabel variant="on">
+              <input pInputText id="country" name="Country" [(ngModel)]="model.Country" />
+              <label for="country">Country</label>
+            </p-floatlabel>
+          </div>
+
+          <div class="mb-3">
+            <p-floatlabel variant="on">
+              <input pInputText id="experienceYears" name="ExperienceYears" type="number" [(ngModel)]="model.ExperienceYears" />
+              <label for="experienceYears">Experience Years</label>
+            </p-floatlabel>
+          </div>
+
+          <div class="mb-3">
+            <p-floatlabel variant="on">
+              <input pInputText id="licenseNumber" name="LicenseNumber" [(ngModel)]="model.LicenseNumber" />
+              <label for="licenseNumber">License Number</label>
+            </p-floatlabel>
+          </div>
+
+          <!-- Specialization Autocomplete -->
+          <div class="mb-3">
+            <p-floatlabel variant="on">
+              <p-autoComplete
+                inputId="specialization"
+                name="Specialization"
+                [(ngModel)]="model.Specialization"
+                [dropdown]="true"
+                [suggestions]="filteredSpecializations"
+                field="label"
+                [forceSelection]="true"
+                (completeMethod)="filterSpecialization($event)"
+
+                styleClass="w-100"
+              >
                 <ng-template let-spec pTemplate="item">
                   <div>{{ spec.label }}</div>
                 </ng-template>
@@ -45,26 +118,42 @@
             </p-floatlabel>
           </div>
 
+          <!-- Gender Dropdown -->
           <div class="mb-3">
             <p-floatlabel variant="on">
-              <p-autoComplete inputId="gender" name="gender" [(ngModel)]="selectedGender" [dropdown]="true" [suggestions]="filteredGenders" field="label" [forceSelection]="true" (completeMethod)="filterGender($event)" placeholder="Select Gender" styleClass="w-100">
-                <ng-template let-gender pTemplate="item">
-                  <div>{{ gender.label }}</div>
-                </ng-template>
-              </p-autoComplete>
+              <p-dropdown
+                inputId="gender"
+                name="Gender"
+                [(ngModel)]="model.Gender"
+                [options]="genderOptions"
+                optionLabel="label"
+                optionValue="value"
+                placeholder="Select Gender"
+                styleClass="w-100"
+              ></p-dropdown>
               <label for="gender">Gender</label>
             </p-floatlabel>
           </div>
 
+          <!-- Birth Date -->
           <div class="mb-3">
             <p-floatlabel variant="on">
-              <p-calendar inputId="birthDate" name="birthDate" [(ngModel)]="model.BirthDate" [showIcon]="true" dateFormat="yy-mm-dd" placeholder="Choose Birth Date" styleClass="w-100" required></p-calendar>
+              <p-calendar
+                inputId="birthDate"
+                name="BirthDate"
+                [(ngModel)]="model.BirthDate"
+                [showIcon]="true"
+                dateFormat="yy-mm-dd"
+                styleClass="w-100"
+                required
+              ></p-calendar>
               <label for="birthDate">Birth Date</label>
             </p-floatlabel>
           </div>
         </form>
       </div>
 
+      <!-- Image Upload & Submit -->
       <div class="col-md-12 col-lg-6 d-flex flex-column align-items-center justify-content-start mt-4 mt-md-0">
         <div class="profile-image-wrapper position-relative mb-3">
           <img *ngIf="imagePreview; else noImage" [src]="imagePreview" alt="Profile Preview" class="rounded-circle profile-image" />
@@ -83,4 +172,4 @@
       </div>
     </div>
   </div>
-</div> -->
+</div>

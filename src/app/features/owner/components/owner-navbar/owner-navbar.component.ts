@@ -9,10 +9,11 @@ import { environment } from '../../../../../environments/environment';
 import { Subscription } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { NotificationService } from '../../../../services/Notification.service';
+import { AvatarModule } from 'primeng/avatar';
 
 @Component({
   selector: 'app-owner-navbar',
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink,AvatarModule],
   templateUrl: './owner-navbar.component.html',
   styleUrl: './owner-navbar.component.css',
 })
@@ -29,6 +30,7 @@ export class OwnerNavbarComponent implements OnInit {
   isDropDownOpen = false;
   isNotificationsDropDownOpen = false;
   UserImage!: string;
+  imageLoadFailedMap: { [key: string]: boolean } = {};
 
   toggleDropDown(event: MouseEvent) {
     event.stopPropagation();
@@ -38,6 +40,14 @@ export class OwnerNavbarComponent implements OnInit {
   toggleNotificationsDropDown(event: MouseEvent) {
     event.stopPropagation();
     this.isNotificationsDropDownOpen = !this.isNotificationsDropDownOpen;
+    this.isDropDownOpen = false;
+  }
+  goToProfile() {
+    this.router.navigate(['/owner/profile']);
+    this.isDropDownOpen = false;
+  }
+  goToSettings() {
+    this.router.navigate(['/owner/settings']);
     this.isDropDownOpen = false;
   }
   @HostListener('document:click', ['$event'])
@@ -112,4 +122,15 @@ export class OwnerNavbarComponent implements OnInit {
   ngOnDestroy(): void {
     this.notificationsListSubscription.unsubscribe();
   }
+
+  onImageError(event: Event, key: string) {
+    this.imageLoadFailedMap[key] = true;
+  }
+
+  hasImageLoadFailed(key: string): boolean {
+    return !!this.imageLoadFailedMap[key];
+  }
+
+
+
 }
