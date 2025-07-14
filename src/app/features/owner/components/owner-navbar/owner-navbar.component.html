@@ -1,29 +1,25 @@
 <nav class="nav d-flex align-items-center main-text-Color">
   <div class="container d-flex justify-content-end gap-2 p-0">
-
     <div class="profile-notifications d-flex gap-4">
-
       <div class="profile-img me-4">
-        <a [routerLink]="['/provider/profile']">
+        <a>
           @if (UserImage && !hasImageLoadFailed('user-profile')) {
-            <img
-              [src]="UserImage"
-              alt="User Image"
-              (error)="onImageError($event, 'user-profile')"
-            />
-            } @else {
-            <p-avatar
-              icon="pi pi-user"
-              shape="circle"
-              size="large"
-              class="user-img"
-            ></p-avatar>
-            }
+          <img
+            [src]="UserImage"
+            alt="User Image"
+            (error)="onImageError($event, 'user-profile')"
+          />
+          } @else {
+          <p-avatar
+            icon="pi pi-user"
+            shape="circle"
+            size="large"
+            class="user-img"
+          ></p-avatar>
+          }
         </a>
       </div>
-      <div>
-
-      </div>
+      <div></div>
     </div>
     <div
       class="dropdown d-flex position-relative"
@@ -51,7 +47,7 @@
           'd-flex flex-column gap-2 position-absolute': isDropDownOpen
         }"
       >
-        <li>
+        <!-- <li>
           <a class="dropdown-item" (click)="goToProfile()">
             Profile
             <div class="profile-icon">
@@ -76,8 +72,8 @@
               </svg>
             </div>
           </a>
-        </li>
-        <li>
+        </li> -->
+        <!-- <li>
           <a class="dropdown-item" (click)="goToSettings()">
             Settings
             <div class="settings-icon">
@@ -94,7 +90,7 @@
                 />
               </svg></div
           ></a>
-        </li>
+        </li> -->
         <!-- <li>
           <a class="dropdown-item" href="#">
             Language
@@ -104,7 +100,7 @@
             </div></a
           >
         </li> -->
-        <li (click)="handelLogout()">
+        <li (click)="handelLogout()" class="log-out">
           <a class="dropdown-item">
             Logout
             <div class="logout-icon">

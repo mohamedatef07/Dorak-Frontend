@@ -1,21 +1,39 @@
-
 <h1 class="page-title">Create Appointment</h1>
-
-<p-toast></p-toast>
+@if(loading) {
+<div class="loader-container">
+  <p-progressSpinner ariaLabel="loading" animationDuration=".5s">
+  </p-progressSpinner>
+</div>
+}@else{
 <form [formGroup]="CreateAppointmentForm">
   <div class="ClientInfo d-flex space-between gap-3 mt-4 mb-3">
     <p-floatlabel variant="on">
-      <input pInputText id="firstName" formControlName="FirstName" autocomplete="off" />
+      <input
+        pInputText
+        id="firstName"
+        formControlName="FirstName"
+        autocomplete="off"
+      />
       <label for="firstName" class="ms-3">First Name</label>
     </p-floatlabel>
 
     <p-floatlabel variant="on">
-      <input pInputText id="lastName" formControlName="LastName" autocomplete="off" />
+      <input
+        pInputText
+        id="lastName"
+        formControlName="LastName"
+        autocomplete="off"
+      />
       <label for="lastName" class="ms-3">Last Name</label>
     </p-floatlabel>
 
     <p-floatlabel variant="on">
-      <input pInputText id="contactInfo" formControlName="ContactInfo" autocomplete="off" />
+      <input
+        pInputText
+        id="contactInfo"
+        formControlName="ContactInfo"
+        autocomplete="off"
+      />
       <label for="contactInfo" class="ms-3">Contact Info</label>
     </p-floatlabel>
   </div>
@@ -25,30 +43,57 @@
 
     <div class="p-fluid card flex flex-wrap gap-4">
       <div class="flex-auto">
-        <p-datepicker formControlName="AppointmentDate" inputId="appointmentDate" [iconDisplay]="'input'"
-          [showIcon]="true" dateFormat="yy-mm-dd" [minDate]="today" (onSelect)="filterRecords()"
-          (onClear)="filterRecords()"></p-datepicker>
+        <p-datepicker
+          formControlName="AppointmentDate"
+          inputId="appointmentDate"
+          [iconDisplay]="'input'"
+          [showIcon]="true"
+          dateFormat="yy-mm-dd"
+          [minDate]="today"
+          (onSelect)="filterRecords()"
+          (onClear)="filterRecords()"
+        ></p-datepicker>
       </div>
     </div>
 
     <div class="card flex align-items-center gap-2">
-      <p-autoComplete inputId="serviceInput" formControlName="ServiceId" [dropdown]="true"
-        [suggestions]="filteredServices" field="ServiceName" (completeMethod)="searchServices($event)"
-        [forceSelection]="true" [(ngModel)]="selectedService" (onSelect)="onServiceSelect($event)"
-        (onClear)="onClearService()" placeholder="Select Service" styleClass="w-100">
+      <p-autoComplete
+        inputId="serviceInput"
+        formControlName="ServiceId"
+        [dropdown]="true"
+        [suggestions]="filteredServices"
+        field="ServiceName"
+        (completeMethod)="searchServices($event)"
+        [forceSelection]="true"
+        [(ngModel)]="selectedService"
+        (onSelect)="onServiceSelect($event)"
+        (onClear)="onClearService()"
+        placeholder="Select Service"
+        styleClass="w-100"
+      >
         <ng-template let-service pTemplate="item">
           <div>
-            {{ service.ServiceName }} ({{ service.BasePrice | currency:'USD':'symbol':'1.2-2' }})
+            {{ service.ServiceName }} ({{
+              service.BasePrice | currency : "USD" : "symbol" : "1.2-2"
+            }})
           </div>
         </ng-template>
       </p-autoComplete>
     </div>
 
     <div class="card flex align-items-center gap-2">
-      <p-autoComplete inputId="providerInput" formControlName="ProviderId" [dropdown]="true"
-        [suggestions]="filteredProviders" (completeMethod)="searchProviders($event)"
-        [forceSelection]="true" (onSelect)="onProviderSelect($event)" (onClear)="onClearProvider()"
-        placeholder="Select Provider" styleClass="w-100">
+      <p-autoComplete
+        inputId="providerInput"
+        formControlName="ProviderId"
+        [dropdown]="true"
+        [suggestions]="filteredProviders"
+        (completeMethod)="searchProviders($event)"
+        [forceSelection]="true"
+        (onSelect)="onProviderSelect($event)"
+        (onClear)="onClearProvider()"
+        placeholder="Select Provider"
+        styleClass="w-100"
+      >
         <ng-template let-provider pTemplate="item">
           <div>{{ provider }}</div>
         </ng-template>
@@ -78,11 +123,21 @@
           <td>{{ (currentPage - 1) * pageSize + i + 1 }}</td>
           <td>{{ record.ProviderName }}</td>
           <td>{{ record.ShiftDate }}</td>
-          <td>{{ record.StartTime.toString() | TimeStringToDate | date : "h:mm a" }}</td>
-          <td>{{ record.EndTime.toString() | TimeStringToDate | date : "h:mm a" }}</td>
+          <td>
+            {{
+              record.StartTime.toString() | TimeStringToDate | date : "h:mm a"
+            }}
+          </td>
+          <td>
+            {{ record.EndTime.toString() | TimeStringToDate | date : "h:mm a" }}
+          </td>
           <td>{{ record.Services[0].BasePrice }}</td>
           <td>
-            <button type="button" class="view-doc-profile" (click)="bookNow(record)">
+            <button
+              type="button"
+              class="view-doc-profile"
+              (click)="bookNow(record)"
+            >
               Book Now
             </button>
           </td>
@@ -98,42 +153,86 @@
     {{ getPaginationEndIndex() }} of {{ filteredRecords.length }}
   </div>
   <div class="pagination-buttons d-flex">
-    <button class="pagination-btn" (click)="goToPreviousPage()" [disabled]="currentPage === 1">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left"
-        viewBox="0 0 16 16">
-        <path fill-rule="evenodd"
-          d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
+    <button
+      class="pagination-btn"
+      (click)="goToPreviousPage()"
+      [disabled]="currentPage === 1"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        fill="currentColor"
+        class="bi bi-chevron-left"
+        viewBox="0 0 16 16"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"
+        />
       </svg>
     </button>
 
-    <button class="pagination-btn" (click)="goToNextPage()" [disabled]="currentPage === totalPages">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right"
-        viewBox="0 0 16 16">
-        <path fill-rule="evenodd"
-          d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+    <button
+      class="pagination-btn"
+      (click)="goToNextPage()"
+      [disabled]="currentPage === totalPages"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        fill="currentColor"
+        class="bi bi-chevron-right"
+        viewBox="0 0 16 16"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"
+        />
       </svg>
     </button>
   </div>
 </div>
 
-<div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div
+  class="modal fade"
+  id="confirmationModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Confirm Appointment</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
       </div>
       <div class="modal-body">
         Are you sure you want to confirm this appointment?
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="cancelBooking()">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="cancelBooking()"
+        >
           Cancel
         </button>
-        <button type="button" class="btn btn-primary" (click)="confirmBooking()">
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="confirmBooking()"
+        >
           Confirm
         </button>
       </div>
     </div>
   </div>
 </div>
+}

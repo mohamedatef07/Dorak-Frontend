@@ -24,9 +24,10 @@ import { FluidModule } from 'primeng/fluid';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
-import { TimeStringToDatePipe } from "../../../../pipes/TimeStringToDate.pipe";
+import { TimeStringToDatePipe } from '../../../../pipes/TimeStringToDate.pipe';
 import { AppointmentType } from '../../../../Enums/AppointmentType.enum';
 import { ClientType } from '../../../../Enums/ClientType.enum';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 declare var bootstrap: any;
 
 @Component({
@@ -43,10 +44,9 @@ declare var bootstrap: any;
     FluidModule,
     AutoCompleteModule,
     ToastModule,
-    TimeStringToDatePipe
-],
-  providers: [MessageService],
-  standalone: true,
+    TimeStringToDatePipe,
+    ProgressSpinnerModule
+  ],
 })
 export class CreateAppointmentComponent implements OnInit {
   date1: Date | undefined;
@@ -74,6 +74,8 @@ export class CreateAppointmentComponent implements OnInit {
   pageSize = 9;
   paginatedRecords: IShiftsTable[] = [];
   today: Date = new Date();
+  loading: boolean = false;
+  private pendingRequests: number = 0;
 
   constructor(private router: Router) {
     this.CreateAppointmentForm = new FormGroup({
@@ -92,16 +94,15 @@ export class CreateAppointmentComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loading = true;
     this.ownerService.getShiftsDetailsforbooking(this.centerId).subscribe({
       next: (res: ApiResponse<IShiftsTable[]>) => {
         this.OperatorId = this.AuthService.getUserId();
         this.CenterId = Number(this.AuthService.getCenterId());
-        console.log(this.OperatorId);
-        console.log(this.CenterId);
+
         this.Records = [...res.Data];
         this.filteredRecords = [...this.Records];
-        console.log(this.Records);
-        console.log(this.filteredRecords);
+
         this.updatePaginatedRecords();
         this.Services = Array.from(
           new Map(
@@ -125,9 +126,17 @@ export class CreateAppointmentComponent implements OnInit {
         this.CreateAppointmentForm.get('ProviderId')?.valueChanges.subscribe(
           () => this.filterRecords()
         );
+        this.decrementLoader();
       },
       error: (err: any) => {
-        console.error('Error while fetching operators:', err);
+        this.decrementLoader();
+        this.messageService.add({
+          key: 'main-toast',
+          severity: 'error',
+          summary: 'Error',
+          detail: 'The server is experiencing an issue, Please try again soon.',
+          life: 4000,
+        });
       },
     });
   }
@@ -164,10 +173,6 @@ export class CreateAppointmentComponent implements OnInit {
     const formattedDate = this.formatDateToYMD(calendarDate);
     const serviceId = this.CreateAppointmentForm.get('ServiceId')?.value;
     const providerId = this.CreateAppointmentForm.get('ProviderId')?.value;
-
-    console.log('Filter Date:', formattedDate);
-    console.log('serviceId:', serviceId);
-    console.log('providerId:', providerId);
 
     this.filteredRecords = this.Records.reduce(
       (filtered: IShiftsTable[], record: IShiftsTable) => {
@@ -259,11 +264,9 @@ export class CreateAppointmentComponent implements OnInit {
   updateFees() {
     const fees = this.selectedService ? this.selectedService.BasePrice : 0;
     this.CreateAppointmentForm.patchValue({ Fees: fees });
-    console.log('Updated Fees:', fees);
   }
 
   bookNow(record: IShiftsTable) {
-    console.log('bookNow called'); // For debugging
     if (!this.CreateAppointmentForm.get('ContactInfo')?.valid) {
       this.messageService.add({
         key: 'main-toast',
@@ -321,17 +324,15 @@ export class CreateAppointmentComponent implements OnInit {
     }
 
     const raw = this.CreateAppointmentForm.getRawValue();
-    console.log(raw);
     // Determine AppointmentType and clientType based on selectedService
     let appointmentType = AppointmentType.Normal;
     let clientType = ClientType.Normal;
-    console.log(this.selectedService);
     if (raw.ServiceId) {
       // const serviceName = this.selectedService.ServiceName?.toLowerCase();
       if (raw.ServiceId === 3) {
         appointmentType = AppointmentType.Urgent;
         clientType = ClientType.Urgent;
-      }else if (raw.ServiceId === 2) {
+      } else if (raw.ServiceId === 2) {
         appointmentType = AppointmentType.Normal; // as per your rule
         clientType = ClientType.Consultation;
       }
@@ -354,16 +355,12 @@ export class CreateAppointmentComponent implements OnInit {
       AdditionalFees: raw.AdditionalFees,
     };
 
-    console.log('appointmentData: ', appointmentData);
-
     this.isSubmitting = true;
     this.ownerService.reserveAppointment(appointmentData).subscribe({
       next: (response: ApiResponse<ICreateAppointment>) => {
         this.isSubmitting = false;
         this.successMessage =
           response.Message || 'Appointment reserved successfully!';
-        console.log(response.Data);
-        console.log(response.Message);
 
         const modalElement = document.getElementById('confirmationModal');
         if (modalElement) {
@@ -379,7 +376,7 @@ export class CreateAppointmentComponent implements OnInit {
             backdrops[0].parentNode?.removeChild(backdrops[0]);
           }
         }, 500);
-
+        this.decrementLoader();
         this.router.navigate([
           '/owner/provider-live-queue',
           appointmentData.ShiftId,
@@ -388,8 +385,7 @@ export class CreateAppointmentComponent implements OnInit {
       error: (error) => {
         this.isSubmitting = false;
         this.errorMessage = error.message || 'Error during reservation.';
-        console.error('Error:', error);
-        console.log(error.message);
+        this.decrementLoader();
       },
     });
   }
@@ -440,5 +436,11 @@ export class CreateAppointmentComponent implements OnInit {
       }
     }, 100);
     this.errorMessage = null;
+  }
+  private decrementLoader() {
+    this.pendingRequests--;
+    if (this.pendingRequests <= 0) {
+      this.loading = false;
+    }
   }
 }
