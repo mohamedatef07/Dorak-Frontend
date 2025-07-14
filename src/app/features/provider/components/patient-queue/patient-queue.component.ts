@@ -19,8 +19,6 @@ export class PatientQueueComponent implements OnInit {
   filterPatientStatusValue: string = '';
 
   ngOnInit() {
-    console.log(this.filterPatientStatusValue)
-    console.log(this.filterPatientTypeValue)
   }
 
   onSearchInputChange(searchValue: string) {

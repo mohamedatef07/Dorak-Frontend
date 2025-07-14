@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { ProviderService } from '../../services/provider.service';
 import { MessageService } from 'primeng/api';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-SecurityProfile',
@@ -16,6 +17,7 @@ import { MessageService } from 'primeng/api';
 })
 export class SecurityProfileComponent implements OnInit {
   messageServices = inject(MessageService);
+  route = inject(Router);
 
   personalForm!: FormGroup;
 
@@ -44,7 +46,11 @@ export class SecurityProfileComponent implements OnInit {
       );
       this._providerService.changePassword(formData).subscribe({
         next: (res) => {
+          setTimeout(() => {
+            this.route.navigate(['/provider/dashboard']);
+          }, 2000);
           this.messageServices.add({
+            key: 'main-toast',
             severity: 'success',
             summary: 'Success',
             detail: 'Password updated successfully!',

@@ -41,6 +41,15 @@ export class AppointmentsHistoryComponent implements OnInit {
   pageSize: number = 10;
   totalRecords: number = 0;
   totalPages: number = 0;
+  imageLoadFailures: { [appointmentId: string]: boolean } = {};
+
+  hasImageLoadFailed(appointmentId: string): boolean {
+    return !!this.imageLoadFailures[appointmentId];
+  }
+
+  onImageError(event: Event, appointmentId: string) {
+    this.imageLoadFailures[appointmentId] = true;
+  }
   constructor() {}
 
   ngOnInit() {

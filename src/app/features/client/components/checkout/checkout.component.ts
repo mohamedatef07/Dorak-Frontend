@@ -31,8 +31,8 @@ export class CheckoutComponent implements OnInit {
 
   paymentMethods = [
     { label: 'Credit Card', value: 'credit' },
-    { label: 'My Wallet', value: 'wallet' },
-    { label: 'Easy Pay', value: 'easypay' },
+    // { label: 'My Wallet', value: 'wallet' },
+    // { label: 'Easy Pay', value: 'easypay' },
   ];
 
   selectedPaymentMethod: string = 'credit'; // Default payment method
@@ -47,7 +47,7 @@ export class CheckoutComponent implements OnInit {
           detail: 'Your Appointment has been booked successfully',
           life: 4000,
         });
-        this.route.navigate(['/home']);
+        this.route.navigate(['/client/client-upcoming-appointments']);
       },
       error: (err) => {
         this.messageServices.add({
