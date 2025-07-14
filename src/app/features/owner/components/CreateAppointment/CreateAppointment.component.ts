@@ -379,11 +379,11 @@ export class CreateAppointmentComponent implements OnInit {
             backdrops[0].parentNode?.removeChild(backdrops[0]);
           }
         }, 500);
-
-        this.router.navigate([
-          '/owner/provider-live-queue',
-          appointmentData.ShiftId,
-        ]);
+        window.history.back();
+        // this.router.navigate([
+        //   '/owner/provider-live-queue',
+        //   appointmentData.ShiftId,
+        // ]);
       },
       error: (error) => {
         this.isSubmitting = false;
