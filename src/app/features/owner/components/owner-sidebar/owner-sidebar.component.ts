@@ -120,11 +120,6 @@ export class OwnerSidebarComponent implements OnInit {
       icon: 'pi pi-calendar',
       routerLink: '/owner/center-shifts-table',
     },
-    {
-      label: 'Analytics',
-      icon: 'pi pi-chart-bar',
-      routerLink: '/provider/reports',
-    },
   ];
 
   constructor(private authService: AuthService) {}

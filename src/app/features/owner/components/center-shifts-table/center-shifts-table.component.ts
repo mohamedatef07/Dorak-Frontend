@@ -160,4 +160,8 @@ export class CenterShiftsTableComponent {
     const end = this.currentPage * this.pageSize;
     return end > this.totalRecords ? this.totalRecords : end;
   }
+
+  get filteredCenterShifts() {
+    return this.centerShifts.filter(s => s.ShiftType !== ShiftType.Completed);
+  }
 }
