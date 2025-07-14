@@ -7,19 +7,21 @@ import { environment } from '../../../../../environments/environment';
 import { DatePipe } from '@angular/common';
 import { MessageService } from 'primeng/api';
 import { AvatarModule } from 'primeng/avatar';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-provider-profile',
   standalone: true,
   templateUrl: './provider-profile.component.html',
   styleUrls: ['./provider-profile.component.css'],
-  imports: [DatePipe, AvatarModule],
+  imports: [DatePipe, AvatarModule, ProgressSpinnerModule],
 })
 export class ProviderProfileComponent implements OnInit {
   profile: IProviderProfile | null = null;
   genderEnum = GenderType;
   fullImagePath: string = '';
   imageLoadFailed = false;
+  loading: boolean = false;
 
   constructor(
     private ProviderProfileService: ProviderService,
@@ -35,9 +37,9 @@ export class ProviderProfileComponent implements OnInit {
         } else {
           this.fullImagePath = '';
         }
+        this.loading = false;
       },
       error: (err) => {
-        console.error('Error loading profile:', err);
         this.messageServices.add({
           key: 'main-toast',
           severity: 'error',
@@ -45,16 +47,17 @@ export class ProviderProfileComponent implements OnInit {
           detail: 'Error loading profile',
           life: 4000,
         });
+        this.loading = false;
       },
     });
   }
 
   onImageError() {
-    console.log('Image error occurred, setting imageLoadFailed to true');
     this.imageLoadFailed = true;
   }
 
   ngOnInit(): void {
+    this.loading = true;
     this.getProviderProfile();
   }
 }

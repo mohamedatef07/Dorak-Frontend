@@ -5,12 +5,13 @@ import { INotification } from '../../../../types/INotification';
 import { NotificationService } from '../../../../services/Notification.service';
 import { MessageService } from 'primeng/api';
 import { NotificationsSRService } from '../../../../services/signalR Services/notificationsSR.service';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-provider-notifications',
   templateUrl: './provider-notifications.component.html',
   styleUrls: ['./provider-notifications.component.css'],
-  imports: [DatePipe, CommonModule],
+  imports: [DatePipe, CommonModule, ProgressSpinnerModule],
 })
 export class ProviderNotificationsComponent implements OnInit {
   providerServices = inject(ProviderService);
@@ -23,10 +24,12 @@ export class ProviderNotificationsComponent implements OnInit {
   totalRecords: number = 0;
   totalPages: number = 0;
   unreadCount = 0;
+  loading: boolean = false;
 
   constructor() {}
 
   ngOnInit() {
+    this.loading = true;
     this.loadNotifications();
   }
 
@@ -74,6 +77,7 @@ export class ProviderNotificationsComponent implements OnInit {
           this.pageSize = res.PageSize;
           this.totalPages = res.TotalPages;
           this.updateUnreadCount();
+          this.loading = false;
         },
         error: (err) => {
           this.messageService.add({
@@ -84,6 +88,7 @@ export class ProviderNotificationsComponent implements OnInit {
               'The server is experiencing an issue, Please try again soon.',
             life: 4000,
           });
+          this.loading = false;
         },
       });
 

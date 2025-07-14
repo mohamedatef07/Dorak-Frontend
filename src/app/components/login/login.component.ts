@@ -48,7 +48,6 @@ export class LoginComponent {
   ) {}
 
   onLogin(): void {
-    debugger;
     if (!this.validateForm()) return;
     this.isLoading = true;
     const loginData = {

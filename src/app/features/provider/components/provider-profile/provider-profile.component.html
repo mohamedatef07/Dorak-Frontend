@@ -1,5 +1,11 @@
 <main>
   <div class="container d-flex flex-column gap-3 py-4 px-0 m-0">
+    @if(loading) {
+    <div class="loader-container">
+      <p-progressSpinner ariaLabel="loading" animationDuration=".5s">
+      </p-progressSpinner>
+    </div>
+    }@else{
     <p class="fw-bold m-0">Profile</p>
     <!-- General Information -->
     <section class="general-info">
@@ -84,5 +90,6 @@
         <div class="info">{{ profile?.About }}</div>
       </div>
     </section>
+    }
   </div>
 </main>
