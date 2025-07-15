@@ -135,37 +135,6 @@ export class HelpSupportComponent implements OnInit {
     }
   ];
 
-  // Support Resources
-  supportResources = [
-    {
-      title: 'Video Tutorials',
-      description: 'Step-by-step video guides for common tasks',
-      icon: 'pi pi-video',
-      link: '#',
-      color: 'primary'
-    },
-    {
-      title: 'User Manual',
-      description: 'Comprehensive documentation and user guides',
-      icon: 'pi pi-book',
-      link: '#',
-      color: 'success'
-    },
-    {
-      title: 'API Documentation',
-      description: 'Technical documentation for developers',
-      icon: 'pi pi-code',
-      link: '#',
-      color: 'warning'
-    },
-    {
-      title: 'Community Forum',
-      description: 'Connect with other users and share tips',
-      icon: 'pi pi-users',
-      link: '#',
-      color: 'info'
-    }
-  ];
 
   constructor(private messageService: MessageService) { }
 

@@ -16,4 +16,10 @@ export class LandingPageFooterComponent implements OnInit {
   ngOnInit() {
   }
 
+  scrollTo(section: string) {
+    const el = document.getElementById(section);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
 }

@@ -10,11 +10,11 @@
                 <div class="col-lg-4 mb-4 mb-lg-0">
                     <h3 class="footer-title" data-i18n="footer_links">Quick Links</h3>
                     <ul class="footer-links">
-                        <li><a href="index.html" data-i18n="nav_home">Home</a></li>
-                        <li><a href="#doctors" data-i18n="nav_doctors">Doctors</a></li>
-                        <li><a href="#registration" data-i18n="nav_register">Register</a></li>
-                        <li><a href="#certifications" data-i18n="nav_certifications">Certifications</a></li>
-                        <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
+                        <li><a (click)="scrollTo('hero')" data-i18n="nav_home">Home</a></li>
+                        <li><a (click)="scrollTo('ChooseSystem')" data-i18n="nav_doctors">Our System</a></li>
+                        <li><a (click)="scrollTo('howitworks')" data-i18n="nav_register">How It Works</a></li>
+                        <li><a (click)="scrollTo('industries')" data-i18n="nav_certifications">Industries</a></li>
+                        <li><a (click)="scrollTo('faq')" data-i18n="nav_contact">FAQ</a></li>
                     </ul>
                 </div>
                 <div class="col-lg-4">
@@ -32,7 +32,7 @@
                     <div class="col-md-12">
                         <ul class="footer-bottom-links">
                             <li><a [routerLink]="['/']" data-i18n="footer_copyright">&copy; 2025 Dorak Management System</a></li>
-                            <li><a [routerLink]="['/help-support']" data-i18n="footer_help">Help & Support</a></li>
+                            <li><a [routerLink]="['/Help-Support']" data-i18n="footer_help">Help & Support</a></li>
                             <li><a [routerLink]="['/terms-conditions']" data-i18n="footer_terms">Terms & Conditions</a></li>
                             <li><a [routerLink]="['/contact-us']" data-i18n="footer_contact_us">Contact Us</a></li>
                         </ul>

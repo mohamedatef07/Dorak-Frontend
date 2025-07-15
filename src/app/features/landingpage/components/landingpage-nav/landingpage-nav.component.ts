@@ -15,8 +15,69 @@ import { environment } from '../../../../../environments/environment';
   selector: 'app-landingpage-nav',
   templateUrl: './landingpage-nav.component.html',
   styleUrls: ['./landingpage-nav.component.css'],
-  imports: [CommonModule,RouterLink]
+  imports: [CommonModule, RouterLink]
 })
-export class LandingpageNavComponent {
+export class LandingpageNavComponent implements OnInit {
+  isAuthenticated = false;
+  userImage: string | null = null;
+  userRole: string | null = null;
 
+  constructor(private authService: AuthService, private router: Router) {}
+
+  ngOnInit() {
+    this.isAuthenticated = this.authService.isAuthenticated();
+    if (this.isAuthenticated) {
+      const image = this.authService.getUserImage();
+      this.userImage = image ? `${environment.apiUrl}${image}` : null;
+      this.userRole = this.authService.getUserRole();
+    }
+  }
+
+  scrollTo(section: string) {
+    const el = document.getElementById(section);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
+  getDashboardUrl(): string {
+    switch (this.userRole) {
+      case 'Client':
+        return '/client/doctors';
+      case 'Admin':
+      case 'Operator':
+        return '/owner';
+      case 'Provider':
+        return '/provider';
+      default:
+        return '/home';
+    }
+  }
+
+  getDashboardDisplayName(): string {
+    switch (this.userRole) {
+      case 'Client':
+        return 'Doctors';
+      case 'Admin':
+      case 'Operator':
+        return 'Dashboard';
+      case 'Provider':
+        return 'Dashboard';
+      default:
+        return 'Dashboard';
+    }
+  }
+
+  navigateToDashboard() {
+    this.router.navigate([this.getDashboardUrl()]);
+  }
+
+  logout() {
+    this.authService.logOut().subscribe(() => {
+      this.router.navigate(['/login']);
+      this.isAuthenticated = false;
+      this.userImage = null;
+      this.userRole = null;
+    });
+  }
 }
