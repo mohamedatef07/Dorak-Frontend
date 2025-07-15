@@ -5,7 +5,6 @@
 <div *ngIf="provider && !isLoading">
   <div *ngIf="errorMessage && !isLoading" class="error-popup">
     <div class="error-popup-content">
-      <i class="fas fa-exclamation-triangle error-icon"></i>
       <span>{{ errorMessage }}</span>
       <button class="close-btn" (click)="errorMessage = ''" aria-label="Close">&times;</button>
     </div>

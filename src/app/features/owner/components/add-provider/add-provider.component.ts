@@ -126,8 +126,7 @@ private createEmptyModel(): IRegistrationViewModel {
     Role: 'Provider',
     FirstName: '',
     LastName: '',
-    Gender: GenderType.Male, // ✅ Already valid
-    BirthDate: '',
+    Gender: GenderType.Male,
     Street: '',
     City: '',
     Governorate: '',
@@ -135,7 +134,7 @@ private createEmptyModel(): IRegistrationViewModel {
     Specialization: '',
     Bio: 'No bio provided yet.',
     ExperienceYears: null,
-    ProviderType: ProviderType.Permanent, 
+    ProviderType: ProviderType.Permanent,
     LicenseNumber: '',
     Availability: '',
     EstimatedDuration: null,

@@ -142,7 +142,6 @@ body[data-theme="dark"] .change-image-label:hover {
   border-radius: 8px;
   border: 1px solid #ddd;
   font-family: var(--font-body);
-  /* font-size: var(--font-p); */
   transition: border-color 0.3s, box-shadow 0.3s;
 }
 
@@ -163,7 +162,6 @@ body[data-theme="dark"] :host ::ng-deep .p-inputtext {
   border-radius: 8px;
   border: 1px solid #ddd;
   font-family: var(--font-body);
-  /* font-size: var(--font-p); */
 }
 
 body[data-theme="dark"] :host ::ng-deep .p-autocomplete .p-inputtext {

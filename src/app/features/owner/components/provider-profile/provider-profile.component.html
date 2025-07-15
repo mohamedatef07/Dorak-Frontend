@@ -11,7 +11,6 @@
 </div>
 
 <div *ngIf="provider && !isLoading && !errorMessage">
-  <!-- Back Button at Top -->
   <div class="back-button-container">
     <button class="btn btn-outline" (click)="goBack()">
       <i class="fas fa-arrow-left"></i> Back to Search
@@ -19,7 +18,6 @@
   </div>
 
   <div class="profile-calendar-wrapper">
-    <!-- Profile Section -->
     <section class="doctor-profile-section">
       <div class="doctor-profile-card">
         <div class="doctor-image-container">
@@ -47,7 +45,6 @@
       </div>
     </section>
 
-    <!-- Calendar Section -->
     <section class="calendar-section">
       <div class="calendar-container">
         <h2 class="inner-title">Assignments Calendar</h2>
@@ -58,7 +55,6 @@
         </div>
         <div class="calendar-wrapper">
           <div class="calendar">
-            <!-- Weekday Headers -->
             <div class="calendar-header">
               <div class="day-header">Sun</div>
               <div class="day-header">Mon</div>
@@ -68,7 +64,6 @@
               <div class="day-header">Fri</div>
               <div class="day-header">Sat</div>
             </div>
-            <!-- Days Grid -->
             <div class="calendar-body">
               <div *ngFor="let day of daysInMonth" class="calendar-day"
                 [ngClass]="{'today': isToday(day.date), 'empty-day': !day.date}">
