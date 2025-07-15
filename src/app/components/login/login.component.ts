@@ -17,7 +17,6 @@ import { ForgotPasswordComponent } from '../forgot-password/forgot-password.comp
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  providers: [MessageService],
   standalone: true,
   imports: [
     CommonModule,
@@ -101,13 +100,12 @@ export class LoginComponent {
         } else if (err.error?.message) {
           errorMessage = err.error.message;
         }
-
         this.messageService.add({
           key: 'main-toast',
           severity: 'error',
           summary: 'Login Failed',
           detail: errorMessage,
-          life: 5000,
+          life: 4000,
         });
       },
     });
@@ -141,7 +139,7 @@ export class LoginComponent {
         severity: 'error',
         summary: 'Validation Error',
         detail: 'Please fill in all required fields',
-        life: 3000,
+        life: 4000,
       });
       return false;
     }
@@ -153,7 +151,7 @@ export class LoginComponent {
         severity: 'error',
         summary: 'Validation Error',
         detail: 'Username or email must be at least 8 characters long',
-        life: 3000,
+        life: 4000,
       });
       return false;
     }
@@ -165,7 +163,7 @@ export class LoginComponent {
         severity: 'error',
         summary: 'Validation Error',
         detail: 'Password must be at least 8 characters long',
-        life: 3000,
+        life: 4000,
       });
       return false;
     }
@@ -176,7 +174,7 @@ export class LoginComponent {
         severity: 'error',
         summary: 'Validation Error',
         detail: 'Password must not contain spaces',
-        life: 3000,
+        life: 4000,
       });
       return false;
     }
@@ -190,7 +188,7 @@ export class LoginComponent {
           severity: 'error',
           summary: 'Validation Error',
           detail: 'Please enter a valid email address',
-          life: 3000,
+          life: 4000,
         });
         return false;
       }
