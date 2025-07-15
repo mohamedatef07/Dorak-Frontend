@@ -1128,144 +1128,52 @@ body {
   stroke: var(--primary-color);
 }
 
-/* Empty State Styles */
-.empty-state-card {
-  background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-light) 100%);
-  border-radius: var(--border-radius-xl);
-  padding: 0.7rem;
-  text-align: center;
-  box-shadow: var(--shadow-md);
-  border: 2px dashed var(--border-color);
-  transition: all 0.4s ease;
-  position: relative;
-  overflow: hidden;
-}
-
-.empty-state-card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(42, 111, 151, 0.05),
-    transparent
-  );
-  transition: left 0.8s;
-}
-
-.empty-state-card:hover::before {
-  left: 100%;
-}
-
-.empty-state-card:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-lg);
-  border-color: var(--primary-color);
-}
-
-.empty-state-icon {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  background: linear-gradient(
-    135deg,
-    var(--primary-color) 0%,
-    var(--secondary-color) 100%
-  );
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 1rem;
-  box-shadow: var(--shadow-md);
-  transition: all 0.4s ease;
-}
-
-.empty-state-card:hover .empty-state-icon {
-  transform: scale(1.1) rotate(5deg);
-  box-shadow: var(--shadow-lg);
-}
-
-.empty-state-icon i {
-  font-size: 1.5rem;
-  color: white;
-}
-
-.empty-state-title {
-  color: var(--text-primary);
-  font-weight: 700;
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-  background: linear-gradient(
-    135deg,
-    var(--primary-color) 0%,
-    var(--secondary-color) 100%
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.empty-state-description {
-  color: var(--text-secondary);
-  font-size: 1.1rem;
-  margin-bottom: 1rem;
-  line-height: 1.2;
-  max-width: 400px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.empty-state-card .btn {
-  padding: 0.5rem 1rem;
-  font-weight: 600;
-  border-radius: var(--border-radius);
-  transition: all 0.4s ease;
-  box-shadow: var(--shadow-md);
-}
-
-.empty-state-card .btn:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
-}
-
-/* Responsive adjustments for empty state */
 @media (max-width: 768px) {
-  .empty-state-card {
-    padding: 2rem 1.5rem;
+  .appointment-card {
+    flex-direction: column !important;
+    padding: 1rem !important;
+    align-items: center !important;
+    text-align: center;
   }
 
-  .empty-state-icon {
-    width: 60px;
-    height: 60px;
+  .appointment-card > .d-flex {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 1rem;
   }
 
-  .empty-state-icon i {
-    font-size: 1.5rem;
+  .doctor-image-container {
+    margin: 0 auto 1rem auto;
   }
 
-  .empty-state-title {
-    font-size: 1.3rem;
+  .doctor-info {
+    align-items: center;
+        margin-top: 30%;
+
   }
 
-  .empty-state-description {
-    font-size: 1rem;
-  }
-}
-
-@media (max-width: 576px) {
-  .empty-state-card {
-    padding: 1.5rem 1rem;
+  .appointment-details {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 0.5rem;
   }
 
-  .empty-state-title {
-    font-size: 1.2rem;
+  .detail-item {
+    justify-content: center !important;
   }
 
-  .empty-state-description {
-    font-size: 0.95rem;
+  /* ⛳️ الزرار تحت لوحده */
+  .appointment-card > .d-flex > div:last-child {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-top: 20%;
+  }
+
+  .appointment-btn {
+    width: 90% !important;
+    font-size: 0.9rem;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
   }
 }
