@@ -12,3 +12,19 @@
   width: 23%;
   height: fit-content;
 }
+@media (max-width: 768px) {
+  .content-container {
+    flex-direction: column !important;
+  }
+
+  .sidebar-container {
+    width: 100% !important;
+    order: 1;
+  }
+
+  .primary-content {
+    width: 100% !important;
+    order: 2;
+    padding: 1.5rem !important;
+  }
+}

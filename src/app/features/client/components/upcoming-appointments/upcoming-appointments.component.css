@@ -1122,3 +1122,53 @@ body {
 :host ::ng-deep .p-progress-spinner-circle {
   stroke: var(--primary-color);
 }
+
+@media (max-width: 768px) {
+  .appointment-card {
+    flex-direction: column !important;
+    padding: 1rem !important;
+    align-items: center !important;
+    text-align: center;
+  }
+
+  .appointment-card > .d-flex {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 1rem;
+  }
+
+  .doctor-image-container {
+    margin: 0 auto 1rem auto;
+  }
+
+  .doctor-info {
+    align-items: center;
+        margin-top: 30%;
+
+  }
+
+  .appointment-details {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 0.5rem;
+  }
+
+  .detail-item {
+    justify-content: center !important;
+  }
+
+  /* ⛳️ الزرار تحت لوحده */
+  .appointment-card > .d-flex > div:last-child {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-top: 20%;
+  }
+
+  .appointment-btn {
+    width: 90% !important;
+    font-size: 0.9rem;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+  }
+}
