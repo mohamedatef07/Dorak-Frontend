@@ -29,7 +29,7 @@ export class UpdateQueueStatusSRService {
     const token = this.authService.getAuthToken();
     this.hubConnection = new signalR.HubConnectionBuilder()
       .withUrl(`${environment.apiUrl}/queueHub`, {
-        accessTokenFactory: () => token
+        accessTokenFactory: () => token,
       })
       .withAutomaticReconnect()
       .build();
@@ -37,7 +37,6 @@ export class UpdateQueueStatusSRService {
     this.hubConnection
       .start()
       .then(() => {
-        console.log('SignalR connection started');
         this.registerOnServerEvents();
       })
       .catch((err) =>
@@ -45,7 +44,6 @@ export class UpdateQueueStatusSRService {
       );
 
     this.hubConnection.onreconnected(() => {
-      console.log('SignalR reconnected');
       //this.registerOnServerEvents();
     });
     this.hubConnection.onclose(() =>
@@ -62,13 +60,11 @@ export class UpdateQueueStatusSRService {
         }
       );
       this.hubConnection.on('QueueUpdated', (lres: Array<IClientLiveQueue>) => {
-        console.log('Live Queue Updated:', lres);
         this.LiveQueueListSubject.next(lres);
       });
       this.hubConnection.on(
         'ProviderQueueUpdated',
         (queueEntries: Array<IQueueEntries>) => {
-          console.log('Provider queue updated:', queueEntries);
           this.ProviderQueueSubject.next(queueEntries);
         }
       );

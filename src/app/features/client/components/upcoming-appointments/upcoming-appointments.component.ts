@@ -51,10 +51,18 @@ export class UpcomingAppointmentsComponent implements OnInit {
   totalPages: number = 0;
   loading: boolean = false;
   private pendingRequests: number = 0;
+  imageLoadFailures: { [appointmentId: string]: boolean } = {};
+
+  hasImageLoadFailed(appointmentId: string): boolean {
+    return !!this.imageLoadFailures[appointmentId];
+  }
+
+  onImageError(event: Event, appointmentId: string) {
+    this.imageLoadFailures[appointmentId] = true;
+  }
   constructor() {}
   ngOnInit() {
     this.loading = true;
-    this.pendingRequests = 2;
     this.loadUpcomingAppointments();
     this.clientServices.getGeneralAppointmentStatistics().subscribe({
       next: (res) => {
@@ -63,6 +71,7 @@ export class UpcomingAppointmentsComponent implements OnInit {
       },
       error: (err) => {
         this.messageServices.add({
+          key: 'main-toast',
           severity: 'error',
           summary: 'Error',
           detail: 'The server is experiencing an issue, Please try again soon.',
@@ -75,14 +84,17 @@ export class UpcomingAppointmentsComponent implements OnInit {
       next: (res) => {
         this.appointment = res.Data;
         let ProviderId = this.appointment.ProviderId;
+        this.decrementLoader();
       },
       error: (err) => {
         this.messageServices.add({
+          key: 'main-toast',
           severity: 'error',
           summary: 'Error',
           detail: 'The server is experiencing an issue, Please try again soon.',
           life: 4000,
         });
+        this.decrementLoader();
       },
     });
 
@@ -92,15 +104,18 @@ export class UpcomingAppointmentsComponent implements OnInit {
       this.clientServices.getAppointmentById(this.appointmentId).subscribe({
         next: (res) => {
           this.appointment = res.Data;
+          this.decrementLoader();
         },
         error: (err) => {
           this.messageServices.add({
+            key: 'main-toast',
             severity: 'error',
             summary: 'Error',
             detail:
               'The server is experiencing an issue, Please try again soon.',
             life: 4000,
           });
+          this.decrementLoader();
         },
       });
     }
@@ -134,27 +149,30 @@ export class UpcomingAppointmentsComponent implements OnInit {
     return end > this.totalRecords ? this.totalRecords : end;
   }
   loadUpcomingAppointments() {
-    this.clientServices.getUpcomingAppointments(this.userid, this.currentPage, this.pageSize).subscribe({
-      next: (res) => {
-        this.Appointments = [...res.Data];
-        this.totalRecords = res.TotalRecords;
-        this.currentPage = res.CurrentPage;
-        this.pageSize = res.PageSize;
-        this.totalPages = res.TotalPages;
-        this.decrementLoader();
-      },
-      error: (err) => {
-        this.messageServices.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'The server is experiencing an issue, Please try again soon.',
-          life: 4000,
-        });
-        this.decrementLoader();
-      },
-    });
+    this.clientServices
+      .getUpcomingAppointments(this.userid, this.currentPage, this.pageSize)
+      .subscribe({
+        next: (res) => {
+          this.Appointments = [...res.Data];
+          this.totalRecords = res.TotalRecords;
+          this.currentPage = res.CurrentPage;
+          this.pageSize = res.PageSize;
+          this.totalPages = res.TotalPages;
+          this.decrementLoader();
+        },
+        error: (err) => {
+          this.messageServices.add({
+            severity: 'error',
+            summary: 'Error',
+            detail:
+              'The server is experiencing an issue, Please try again soon.',
+            life: 4000,
+          });
+          this.decrementLoader();
+        },
+      });
   }
-    private decrementLoader() {
+  private decrementLoader() {
     this.pendingRequests--;
     if (this.pendingRequests <= 0) {
       this.loading = false;

@@ -8,6 +8,7 @@ import { DatePickerModule } from 'primeng/datepicker';
 import { TooltipModule } from 'primeng/tooltip';
 import { IShiftDetails } from '../../models/IShiftDetails';
 import { TimeStringToDatePipe } from '../../../../pipes/TimeStringToDate.pipe';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 @Component({
   selector: 'app-schedule',
   templateUrl: './schedule.component.html',
@@ -19,6 +20,7 @@ import { TimeStringToDatePipe } from '../../../../pipes/TimeStringToDate.pipe';
     DatePickerModule,
     CommonModule,
     TooltipModule,
+    ProgressSpinnerModule,
   ],
   providers: [DatePipe, TimeStringToDatePipe],
 })
@@ -29,6 +31,9 @@ export class ScheduleComponent implements OnInit {
   timeStringToDatePipe = inject(TimeStringToDatePipe);
   scheduleShifts: Array<IDoctorScheduleDetails> = [];
   shiftDetails: IShiftDetails | undefined;
+  loading: boolean = false;
+  private pendingRequests: number = 0;
+
   dateNow = new Date();
 
   constructor() {}
@@ -78,6 +83,7 @@ export class ScheduleComponent implements OnInit {
                   `,
             life: 10000,
           });
+          this.decrementLoader();
         }
       },
       error: (err) => {
@@ -88,11 +94,13 @@ export class ScheduleComponent implements OnInit {
           detail: 'The server is experiencing an issue, Please try again soon.',
           life: 4000,
         });
+        this.decrementLoader();
       },
     });
   }
 
   ngOnInit() {
+    this.loading = true;
     this.providerServices.getDoctorScheduleDetails().subscribe({
       next: (res) => {
         this.scheduleShifts = res.Data.map((shift) => {
@@ -106,6 +114,7 @@ export class ScheduleComponent implements OnInit {
             EndTime: shift.EndTime,
           };
         });
+        this.decrementLoader();
       },
       error: (err) => {
         this.messageServices.add({
@@ -115,7 +124,14 @@ export class ScheduleComponent implements OnInit {
           detail: 'The server is experiencing an issue, Please try again soon.',
           life: 4000,
         });
+        this.decrementLoader();
       },
     });
+  }
+  private decrementLoader() {
+    this.pendingRequests--;
+    if (this.pendingRequests <= 0) {
+      this.loading = false;
+    }
   }
 }

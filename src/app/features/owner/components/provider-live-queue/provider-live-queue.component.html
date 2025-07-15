@@ -10,7 +10,12 @@
       </button>
     </div>
   </div>
-
+  @if(loading) {
+    <div class="loader-container">
+      <p-progressSpinner ariaLabel="loading" animationDuration=".5s">
+      </p-progressSpinner>
+    </div>
+    }@else{
   <div class="stats-container" role="region" aria-label="Queue Statistics">
     <button class="stat-button">Total: {{ stats.total }}</button>
     <button class="stat-button">Normal: {{ stats.normal }}</button>
@@ -59,7 +64,7 @@
       </div>
     </div>
   </div>
-
+    }
   <div *ngIf="showPopup" #successPopup class="custom-popup">
     <div class="popup-content">
       <p>Shift ended successfully!</p>

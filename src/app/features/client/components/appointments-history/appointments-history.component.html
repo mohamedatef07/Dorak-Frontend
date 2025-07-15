@@ -7,11 +7,9 @@
         Appointments History
       </h4>
     </div>
-        @if(loading) {
+    @if(loading) {
     <div class="loader-container">
-      <p-progressSpinner
-        ariaLabel="loading"
-        animationDuration=".5s">
+      <p-progressSpinner ariaLabel="loading" animationDuration=".5s">
       </p-progressSpinner>
     </div>
     } @else {
@@ -21,11 +19,15 @@
         <div class="d-flex align-items-center justify-content-between">
           <div class="d-flex align-items-center">
             <div class="doctor-image-container me-3">
-              @if(appointment.ProviderImage){
+              @if(appointment.ProviderImage &&
+              !hasImageLoadFailed(appointment.AppointmentId.toString())){
               <img
                 [src]="`${fullImagePath}${appointment.ProviderImage}`"
                 alt="Doctor Image"
                 class="doctor-image"
+                (error)="
+                  onImageError($event, appointment.AppointmentId.toString())
+                "
               />
               }@else{
               <p-avatar
@@ -90,12 +92,25 @@
       <div class="text-muted text-center">No appointment history found.</div>
       }
     </div>
-  }
-    @if(AppointmentsHistory.length > 0){
+    } @if(AppointmentsHistory.length > 0){
     <div class="d-flex justify-content-center align-items-center gap-2 mt-4">
-      <button class="btn main-btn-bg" (click)="previousPage()" [disabled]="!canGoPrevious">Previous</button>
-      <span class="current-page">Page {{ currentPage }} of {{ totalPages}}</span>
-      <button class="btn main-btn-bg" (click)="nextPage()" [disabled]="!canGoNext">Next</button>
+      <button
+        class="btn main-btn-bg"
+        (click)="previousPage()"
+        [disabled]="!canGoPrevious"
+      >
+        Previous
+      </button>
+      <span class="current-page"
+        >Page {{ currentPage }} of {{ totalPages }}</span
+      >
+      <button
+        class="btn main-btn-bg"
+        (click)="nextPage()"
+        [disabled]="!canGoNext"
+      >
+        Next
+      </button>
     </div>
     }
   </div>

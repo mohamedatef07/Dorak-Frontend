@@ -1,6 +1,11 @@
 import { AuthService } from './../../../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { S_ServicesService } from '../../services/S_Services.service';
 import { IShiftServices } from '../../models/IShiftServices';
 import { IAddProviderCenterService } from '../../models/IAddProviderCenterService';
@@ -19,8 +24,8 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
     CommonModule,
     ReactiveFormsModule,
     DropdownModule,
-    AutoCompleteModule
-  ]
+    AutoCompleteModule,
+  ],
 })
 export class AssignServiceToProviderCenterComponent implements OnInit {
   assignForm!: FormGroup;
@@ -47,7 +52,7 @@ export class AssignServiceToProviderCenterComponent implements OnInit {
       ServiceId: [null, Validators.required],
       CenterId: [this.centerId, Validators.required],
       Price: [null, [Validators.required, Validators.min(0)]],
-      Priority: [1, [Validators.required, Validators.min(1)]]
+      Priority: [1, [Validators.required, Validators.min(1)]],
     });
     this.fetchServices();
     this.fetchProviders();
@@ -61,7 +66,7 @@ export class AssignServiceToProviderCenterComponent implements OnInit {
       },
       error: () => {
         this.errorMessage = 'Failed to load services.';
-      }
+      },
     });
   }
 
@@ -70,24 +75,23 @@ export class AssignServiceToProviderCenterComponent implements OnInit {
       next: (res) => {
         this.providers = res.Data;
         this.filteredProviders = this.providers;
-        console.log("Providers:-",this.providers);
       },
       error: () => {
         this.errorMessage = 'Failed to load providers.';
-      }
+      },
     });
   }
 
   filterProviders(event: any) {
     const query = event.query.toLowerCase();
-    this.filteredProviders = this.providers.filter(p =>
+    this.filteredProviders = this.providers.filter((p) =>
       p.FullName.toLowerCase().includes(query)
     );
   }
 
   filterServices(event: any) {
     const query = event.query.toLowerCase();
-    this.filteredServices = this.services.filter(s =>
+    this.filteredServices = this.services.filter((s) =>
       s.ServiceName.toLowerCase().includes(query)
     );
   }
@@ -98,7 +102,7 @@ export class AssignServiceToProviderCenterComponent implements OnInit {
       ServiceId: null,
       Price: null,
       CenterId: this.centerId,
-      Priority: 1
+      Priority: 1,
     });
   }
 
@@ -124,7 +128,7 @@ export class AssignServiceToProviderCenterComponent implements OnInit {
           ServiceId: null,
           Price: null,
           CenterId: this.centerId,
-          Priority: 1
+          Priority: 1,
         });
       },
       error: () => {
@@ -132,7 +136,7 @@ export class AssignServiceToProviderCenterComponent implements OnInit {
       },
       complete: () => {
         this.loading = false;
-      }
+      },
     });
   }
 }

@@ -75,7 +75,6 @@ deleteProviderFromCenter(providerId: string, centerId: number): Observable<ApiRe
       providerId: providerId,
       centerId: centerId
     };
-    console.log('Sending delete request with providerId:', providerId, 'and centerId:', centerId);
     return this.httpClient.post<ApiResponse<string>>(`${environment.apiUrl}/api/center/DeleteProviderFromCenter`, body).pipe(
       catchError(error => {
         console.error('API Error Response:', error);
@@ -85,7 +84,6 @@ deleteProviderFromCenter(providerId: string, centerId: number): Observable<ApiRe
   }
 
   assignProviderToCenterManually(model: IProviderAssignmentViewModel): Observable<ApiResponse<string>> {
-    console.log('Sending to AssignProviderToCenterManually:', JSON.stringify(model, null, 2));
     return this.httpClient.post<ApiResponse<string>>(
       `${environment.apiUrl}/api/center/AssignProviderToCenterManually`,
       model

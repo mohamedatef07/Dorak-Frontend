@@ -469,3 +469,15 @@ main .container > p {
 .p-toast-message.p-toast-message-info .p-toast-icon-close:hover {
   background-color: rgba(0, 0, 0, 0.05) !important;
 } */
+.loader-container {
+  position: fixed;
+  top: 0;
+  left: 10%;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: transparent !important;
+  z-index: 9999;
+}

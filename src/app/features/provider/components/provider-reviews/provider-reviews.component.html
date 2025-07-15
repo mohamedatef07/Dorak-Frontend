@@ -1,5 +1,11 @@
 <main>
   <div class="container d-flex flex-column gap-3 pt-4 pb-4 pe-0 ps-0 m-0">
+    @if(loading) {
+    <div class="loader-container">
+      <p-progressSpinner ariaLabel="loading" animationDuration=".5s">
+      </p-progressSpinner>
+    </div>
+    }@else{
     <h3 class="main-text-Color fw-bold">All Reviews</h3>
     <div class="reviews main-padding main-radius bg-white">
       @if(reviews.length > 0){
@@ -65,5 +71,6 @@
       </div>
       }
     </div>
+    }
   </div>
 </main>

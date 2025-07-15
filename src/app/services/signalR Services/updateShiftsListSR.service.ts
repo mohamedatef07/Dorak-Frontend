@@ -33,7 +33,7 @@ export class UpdateShiftsListSRService {
       .build();
     this.hubConnection
       .start()
-      .then(() => console.log('SignalR connection started'))
+      .then(() => {})
       .catch((err) =>
         console.error('Error while starting SignalR connection: ', err)
       );

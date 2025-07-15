@@ -25,7 +25,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     FormsModule,
     AvatarModule,
     CarouselModule,
-    ProgressSpinnerModule
+    ProgressSpinnerModule,
   ],
   styleUrls: ['./Client-Live-Queue.component.css'],
 })
@@ -56,6 +56,15 @@ export class ClientLiveQueueComponent implements OnInit, OnDestroy {
   currentStep = 1;
   waitingProgress = 0;
   estimatedTime = '';
+  imageLoadFailures: { [imageId: string]: boolean } = {};
+
+  hasImageLoadFailed(imageId: string): boolean {
+    return !!this.imageLoadFailures[imageId];
+  }
+
+  onImageError(event: Event, imageId: string) {
+    this.imageLoadFailures[imageId] = true;
+  }
 
   ngOnInit() {
     this.loading = true; // Start loading when component initializes
@@ -136,8 +145,6 @@ export class ClientLiveQueueComponent implements OnInit, OnDestroy {
         IsCurrentClient: queue.AppointmentId === this.appointmentId,
       };
     });
-
-    console.log('Updated Live Queue List:', this.LiveQueues);
   }
   ngOnDestroy() {
     this.subscription?.unsubscribe();
