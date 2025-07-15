@@ -115,6 +115,11 @@ export class PatientQueueTableComponent implements OnInit {
         entry.FullName.toLowerCase().includes(this.searchText.toLowerCase())
       );
     }
+      entries = entries.sort((a, b) => {
+  const posA = a.CurrentQueuePosition ?? Number.MAX_SAFE_INTEGER;
+  const posB = b.CurrentQueuePosition ?? Number.MAX_SAFE_INTEGER;
+  return posA - posB; // Ascending
+});
     this.filteredQueueEntries = entries;
     this.totalRecords = entries.length;
     this.totalPages = Math.ceil(this.totalRecords / this.pageSize) || 1;
