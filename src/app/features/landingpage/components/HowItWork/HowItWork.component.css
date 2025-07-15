@@ -22,9 +22,15 @@
 
 /* Section Header */
 .section-header {
-  margin-bottom: 4rem;
-  position: relative;
-  z-index: 2;
+
+            color: #2a6f97;
+            -webkit-background-clip: text;
+            background-clip: text;
+            font-weight: 800;
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 1s ease-out;
+
 
 }
 
@@ -37,24 +43,19 @@
   background: #b4ccff;
   border-radius: 50%;
   margin-bottom: 2rem;
-  box-shadow: 0 20px 40px rgba(59, 130, 246, 0.3);
 
 }
 
-
-
 .header-badge span {
   font-size: 2.5rem;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
 }
 
 .section-title {
   font-size: 3rem;
-  color: #133c66;
+  color: #080e14;
   font-weight: 800;
   margin-bottom: 1rem;
   font-family: var(--font-heading);
-  background:  #abc6ff;
 
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -67,15 +68,14 @@
   max-width: 600px;
   margin: 0 auto;
   font-family: var(--font-body);
-  line-height: 1.6;
-  font-weight: 500;
+  /* line-height: 1.6;
+  font-weight: 500; */
 }
 
 /* Main Card */
 .main-card {
   background: white;
   border-radius: 24px;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
   overflow: hidden;
   position: relative;
 
@@ -83,7 +83,6 @@
 
 .main-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.2);
 }
 
 .main-card::before {
@@ -132,7 +131,6 @@
 
 .role-tab:hover {
   transform: translateY(-4px);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
   border-color: #3b82f6;
 }
 
@@ -141,7 +139,6 @@
   border-color: #3b82f6;
   color: white;
   transform: translateY(-4px);
-  box-shadow: 0 15px 35px rgba(59, 130, 246, 0.3);
 }
 
 .tab-icon {
@@ -192,15 +189,15 @@
   right: 0;
   opacity: 0;
   visibility: hidden;
-  transform: translateY(30px);
-  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  /* transform: translateY(6px);
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1); */
   padding: 0;
 }
 
 .content-panel.active {
   opacity: 1;
   visibility: visible;
-  transform: translateY(0);
+  /* transform: translateY(0); */
   position: relative;
 }
 
@@ -234,7 +231,6 @@
   align-items: center;
   justify-content: center;
   margin: 0 auto 2rem;
-  box-shadow: 0 12px 30px rgba(59, 130, 246, 0.3);
 }
 
 .header-icon i {
@@ -281,14 +277,12 @@
 
 .step-card.active {
   opacity: 1;
-  transform: translateY(0) scale(1);
 
 }
 
-.step-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
-}
+/* .step-card:hover {
+  transform: translateY(6px);
+} */
 
 
 
@@ -296,8 +290,8 @@
   position: absolute;
   top: 1rem;
   right: 1rem;
-  width: 32px;
-  height: 32px;
+  width: 40px;
+  height: 40px;
  background:#2a6f97;
   border-radius: 50%;
   display: flex;
@@ -309,10 +303,10 @@
   box-shadow: 0 3px 10px rgba(59, 130, 246, 0.3);
 }
 
-.step-card.active .step-number {
+/* .step-card.active .step-number {
   transform: scale(1.2);
   box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5);
-}
+} */
 
 .step-icon {
   width: 50px;
@@ -323,13 +317,12 @@
   align-items: center;
   justify-content: center;
   margin-bottom: 1.25rem;
-  transform: scale(1);
+  /* transform: scale(1); */
 }
 
 .step-card.active .step-icon {
   background:#2a6f97;
-  transform: scale(1.1);
-  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+  /* transform: scale(1.1); */
 }
 
 .step-icon i {
@@ -339,7 +332,7 @@
 
 .step-card.active .step-icon i {
   color: white;
-  transform: scale(1.1);
+  /* transform: scale(1.1); */
 }
 
 .step-content h5 {
@@ -383,13 +376,12 @@
   text-transform: uppercase;
   letter-spacing: 0.5px;
   opacity: 1;
-  transform: scale(1);
+  /* transform: scale(1); */
 }
 
 .step-card.active .step-badge {
   opacity: 1;
-  transform: scale(1);
-  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+  /* transform: scale(1); */
 }
 
 
